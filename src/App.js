@@ -1,10 +1,11 @@
 import './App.css';
+import Mainmenu from './Pages/MainMenu'
 
 function App() {
   return (
-    <div className="App text-3xl font-bold underline">
-      Hello world
-    </div>
+    <>
+    <Mainmenu/>
+    </>
   );
 }
 
