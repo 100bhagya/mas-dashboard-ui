@@ -5,7 +5,7 @@ import NotificationBar from './NotificationBar'
 
 const Content = () => {
     return (
-        <div className = "basis-3/5">
+        <div className = "flex-grow">
             <div className ="md:p-10 p-6">
                 <div className="text-3xl text-sky-800">
                     Hello, Lorem
@@ -21,7 +21,7 @@ const Content = () => {
                     Latest test Performance
                 </div>
                 
-                <div id = "performanceCard" className="grid grid-cols-5 gap-4 md:p-10 p-6 shadow-xl">
+                <div id = "performanceCard" className="grid grid-cols-5 gap-4 md:p-10 p-6 shadow-xl  rounded-2xl">
                     <div>
                        <div className = "md:text-2xl  text-xl border-b-2 w-fit pb-2 border-gray-500">
                            Tech
@@ -94,7 +94,7 @@ const Content = () => {
                  <div className="text-xl text-sky-800 my-10">
                   Notification
                 </div>
-                <div className = "shadow-lg rounded-2xl">
+                <div className = "shadow-xl rounded-2xl">
                     <NotificationBar/>
                     <NotificationBar/>
                     <NotificationBar/>

@@ -4,7 +4,7 @@ const CourseCard = () => {
     return (
         <div>
             <div classname = "">
-                <div className = " shadow-lg p-4 rounded-3xl">
+                <div className = " shadow-xl p-4 rounded-3xl">
                    <h3 className = "text-cyan-600 lg:text-2xl lg:p-10 md:p-2 text-center"> Casestudy </h3>
                    <p className = "mt-10"> 4 hour | 75%</p>
                     <div class="w-full bg-gray-200 h-1">
