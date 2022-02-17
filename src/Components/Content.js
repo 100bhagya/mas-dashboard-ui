@@ -1,7 +1,7 @@
-import React from 'react'
-
-import CourseCard from './CourseCard'
-import NotificationBar from './NotificationBar'
+import React from "react";
+import Graph from "./Graph";
+import CourseCard from "./CourseCard";
+import NotificationBar from "./NotificationBar";
 
 const Content = () => {
     return (
@@ -102,13 +102,15 @@ const Content = () => {
                 </div>
 
 
-            </div>
-            </div>
+        
 
             <p className = "text-3xl text-center text-sky-800 mt-24" style={{fontFamily:  'Cookie, cursive'}}>
                 Remember why you started
             </p>
         </div>
-    )
-}
-export default Content
+        </div>
+        </div>
+       
+  );
+};
+export default Content;
