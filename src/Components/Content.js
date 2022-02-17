@@ -104,6 +104,10 @@ const Content = () => {
 
             </div>
             </div>
+
+            <p className = "text-3xl text-center text-sky-800 mt-24" style={{fontFamily:  'Cookie, cursive'}}>
+                Remember why you started
+            </p>
         </div>
     )
 }

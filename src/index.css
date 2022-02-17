@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cookie&display=swap');
+
+.triangle-right {
+	width: 0;
+	height: 0;
+    
+	border-top: 1rem solid transparent
+    ;
+	border-left: 2rem solid white;
+	border-bottom: 1rem solid transparent ;
+}
