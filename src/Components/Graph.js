@@ -12,7 +12,7 @@ import Data from "../data/graphData";
 const Graph = () => {
   return (
     <AreaChart
-      width={1000}
+      width={940}
       height={370}
       data={Data}
       margin={{

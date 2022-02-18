@@ -1,178 +1,69 @@
-import React, { useState } from "react";
-import account_logo from "../images/Aashish.jpg";
-import arrow from "../images/down arrow.png";
-import {
-  HomeIcon,
-  ClipboardCheckIcon,
-  CogIcon,
-  DocumentTextIcon,
-  MapIcon,
-  PencilAltIcon,
-  ChatAlt2Icon,
-  LogoutIcon,
-} from "@heroicons/react/outline";
+import React from "react";
+import TopicBar from "../Components/TopicBar";
+import Calendar from "../Components/Calender/Calender";
 
 const WordOfDay = () => {
-  const [isOpen, setIsOpen] = useState(true);
-  const [aptitudeOpen, setAptitudeOpen] = useState(true);
-  const [techOpen, setTechOpen] = useState(true);
   return (
     <div className="flex">
-      <div className="w-[15%] bg-blue-100 min-h-[100vh]">
-        <div className="text-center mt-12">
-          <img src={account_logo} alt="" className="w-32 relative left-[20%]" />
-          <div className="mt-5 max-w-[100%] text-xl font-medium">
-            Pawan Kumar
-          </div>
-          <div className="text-[12px] mt-1">sahupawan9749568594@gmail.com</div>
-          <div className="flex ml-7 mt-8 mb-4">
-            <HomeIcon className="w-6 text-blue-500" />
-            <div className="ml-5 text-blue-500 text-[16px]">Home</div>
-          </div>
-          <div className="">
-            <div className="flex ml-7 mt-8 mb-4">
-              <ClipboardCheckIcon className="w-6 text-blue-500" />
-              <div className="ml-5 text-blue-500 text-[16px]">Tasks</div>
-              <img
-                src={arrow}
-                alt=""
-                className="w-3 h-2 relative left-[15%] top-2 cursor-pointer"
-                style={{ transform: isOpen ? "rotate(180deg)" : null }}
-                onClick={() => {
-                  setIsOpen(!isOpen);
-                }}
+      <TopicBar />
+      <div className="flex-grow py-10 md:px-20 px-10">
+        <div className=" pb-4 border-b-2 border-[#2255B8]">
+          <div className="text-3xl text-sky-800">Word of The Day Content</div>
+          <div className="text-slate-600 text-md">22 february ,2022</div>
+        </div>
+        <div className="md:flex mt-8 gap-4">
+          <div className="basis-4/5 flex flex-col">
+            <div className="py-4 px-8  rounded-lg shadow-xl my-3">
+              <h3 className="text-xl text-[#2255B8] py-2">Analytics</h3>
+              <p className="py-2 text-[#898989]">
+                {" "}
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem
+                ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </p>
+              <input
+                placeholder="Let’s make a sentence out of the word !"
+                type="text"
+                id="large-input"
+                className="block p-4 w-full bg-[#EDF3FF] text-grey-900 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
-            </div>
-            {isOpen ? (
-              <div></div>
-            ) : (
-              <div className="flex ml-10">
-                <div className="bg-blue-700 w-[1.5px]"></div>
-                <div className="ml-4 mt-2">
-                  <div className="text-sm text-blue-500 text-left mb-3">
-                    Word of the day
-                  </div>
-                  <div className="text-sm text-blue-500 text-left mb-3 ">
-                    Summary Writing
-                  </div>
-                  <div className="text-sm text-blue-500 text-left mb-3 ">
-                    Tech Articles
-                  </div>
-                  <div className="text-sm text-blue-500 text-left mb-3 ">
-                    Untimed Quizzes
-                  </div>
-                  <div className="">
-                    <div className="flex">
-                      <div className="text-sm text-blue-500 text-left mb-3 ">
-                        Aptitude Preparation
-                      </div>
-                      <img
-                        src={arrow}
-                        alt=""
-                        className="w-3 h-2 relative left-[10%] top-2 cursor-pointer"
-                        style={{
-                          transform: aptitudeOpen ? "rotate(180deg)" : null,
-                        }}
-                        onClick={() => {
-                          setAptitudeOpen(!aptitudeOpen);
-                        }}
-                      />
-                    </div>
-                    {aptitudeOpen ? (
-                      <div></div>
-                    ) : (
-                      <div className="flex ml-2">
-                        <div className="bg-blue-700 w-[1px]"></div>
-                        <div className="ml-4 mt-2">
-                          <div className="text-sm text-blue-500 text-left mb-3">
-                            Quant
-                          </div>
-                          <div className="text-sm text-blue-500 text-left mb-3">
-                            LR and DI
-                          </div>
-                          <div className="text-sm text-blue-500 text-left mb-3">
-                            Verbal
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                  <div className="text-sm text-blue-500 text-left mb-3 ">
-                    ML and Python
-                  </div>
-                  <div className="text-sm text-blue-500 text-left mb-3 ">
-                    Data Analysis
-                  </div>
-                  <div className="text-sm text-blue-500 text-left mb-3 ">
-                    SQL
-                  </div>
-                  <div className="">
-                    <div className="flex">
-                      <div className="text-sm text-blue-500 text-left mb-3 ">
-                        Non-Tech Prep
-                      </div>
-                      <img
-                        src={arrow}
-                        alt=""
-                        className="w-3 h-2 relative left-[10%] top-2 cursor-pointer"
-                        style={{
-                          transform: techOpen ? "rotate(180deg)" : null,
-                        }}
-                        onClick={() => {
-                          setTechOpen(!techOpen);
-                        }}
-                      />
-                    </div>
-                    {techOpen ? (
-                      <div></div>
-                    ) : (
-                      <div className="flex ml-2">
-                        <div className="bg-blue-700 w-[1px]"></div>
-                        <div className="ml-4 mt-2">
-                          <div className="text-sm text-blue-500 text-left mb-3">
-                            Quant
-                          </div>
-                          <div className="text-sm text-blue-500 text-left mb-3">
-                            LR and DI
-                          </div>
-                          <div className="text-sm text-blue-500 text-left mb-3">
-                            Verbal
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
+              <div className="text-right mt-3">
+                <button className="py-2 px-6 text-white rounded-xl bg-[#2255B8]">
+                  {" "}
+                  Submit
+                </button>
               </div>
-            )}
+            </div>
+            <div className="py-4 px-8  rounded-lg shadow-xl my-3">
+              <h3 className="text-xl text-[#2255B8] py-2">Statistice</h3>
+              <p className="py-2 text-[#898989]">
+                {" "}
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem
+                ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </p>
+              <input
+                placeholder="Let’s make a sentence out of the word !"
+                type="text"
+                id="large-input"
+                className="block p-4 w-full bg-[#EDF3FF] text-grey-900 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              />
+              <div className="text-right mt-3">
+                <button className="py-2 px-6 text-white rounded-xl bg-[#2255B8]">
+                  {" "}
+                  Submit
+                </button>
+              </div>
+            </div>
           </div>
-          <div className="flex ml-7 mt-8 mb-4">
-            <CogIcon className="w-6 text-blue-500" />
-            <div className="ml-5 text-blue-500 text-[16px]">Settings</div>
-          </div>
-          <div className="flex ml-7 mt-8 mb-4">
-            <DocumentTextIcon className="w-6 text-blue-500" />
-            <div className="ml-5 text-blue-500 text-[16px]">Notice Board</div>
-          </div>
-          <div className="flex ml-7 mt-8 mb-4">
-            <MapIcon className="w-6 text-blue-500" />
-            <div className="ml-5 text-blue-500 text-[16px]">Roadmap</div>
-          </div>
-          <div className="flex ml-7 mt-8 mb-4">
-            <PencilAltIcon className="w-6 text-blue-500" />
-            <div className="ml-5 text-blue-500 text-[16px]">Exams</div>
-          </div>
-          <div className="flex ml-7 mt-8 mb-4">
-            <ChatAlt2Icon className="w-6 text-blue-500" />
-            <div className="ml-5 text-blue-500 text-[16px]">Forum</div>
-          </div>
-          <div className="flex ml-7 mt-8 mb-4">
-            <LogoutIcon className="w-6 text-blue-500" />
-            <div className="ml-5 text-blue-500 text-[16px]">Logout</div>
+          <div className="basis-1/5">
+            {/* <div inline-datepicker data-date="02/25/2022"></div> */}
+            <Calendar />
           </div>
         </div>
       </div>
-      <div className=""></div>
     </div>
   );
 };
