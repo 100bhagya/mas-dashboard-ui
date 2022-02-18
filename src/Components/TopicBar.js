@@ -98,9 +98,11 @@ const TopicBar = () => {
                       Tech Articles
                     </div>
                   </Link>
-                  <div className="text-sm text-blue-500 text-left mb-3 ">
-                    Untimed Quizzes
-                  </div>
+                  <Link to="/quizes">
+                    <div className="text-sm text-blue-500 text-left mb-3 ">
+                      Untimed Quizzes
+                    </div>
+                  </Link>
                   <div className="">
                     <div className="flex">
                       <div className="text-sm text-blue-500 text-left mb-3 ">
