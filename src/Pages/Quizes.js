@@ -55,7 +55,7 @@ const Card = () => {
 const Quizes = () => {
   return (
     <div className="flex">
-      <TopicBar />
+    
       <div className=" py-10 md:px-20 px-10 flex-grow">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
           <div className="text-3xl text-sky-800">Tech Articles</div>
@@ -70,7 +70,7 @@ const Quizes = () => {
           <Card />
           <Card />
           <Card />
-          <Tag />
+        
         </div>
       </div>
     </div>

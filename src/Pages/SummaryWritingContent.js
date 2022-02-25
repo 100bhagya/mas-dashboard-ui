@@ -4,7 +4,7 @@ import TopicBar from "../Components/TopicBar";
 const SummaryWritingContent = () => {
   return (
     <div className="flex">
-      <TopicBar />
+    
       <div className="flex-grow py-10 md:px-20 px-10">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
           <div className="text-3xl text-sky-800">Summary Writing</div>

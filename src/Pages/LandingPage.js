@@ -44,8 +44,9 @@ const LandingPage = () => {
     setLeaderboard(!leaderboard);
   };
   return (
-    <div className="flex">
-      <TopicBar />
+    <>
+    <div className="flex flex-grow basis-3/5">
+     
       <div className="flex-grow">
         <div className="md:p-10 p-6">
           <div className="text-3xl text-sky-800">Hello, Lorem</div>
@@ -148,18 +149,10 @@ const LandingPage = () => {
           </p>
         </div>
       </div>
-      <div className="flex">
-        <div className="w-6 h-10 bg-blue-100 relative top-[50vh]">
-          <img
-            src={arrow}
-            alt=""
-            className={`${
-              leaderboard ? "rotate-90" : "-rotate-90"
-            } h-4 w-6 cursor-pointer relative top-3`}
-            onClick={activateLeaderboard}
-          />
-        </div>
-        <div
+      
+        
+      </div>
+      <div
           className={`basis-1/5 bg-[#EDF3FF] top-8 md:top-0 md:relative w-full transition duration-700 ease-in-out absolute md:-translate-x-0 ${
             leaderboard ? "hidden" : ""
           }`}
@@ -231,8 +224,8 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </>
+    
   );
 };
 

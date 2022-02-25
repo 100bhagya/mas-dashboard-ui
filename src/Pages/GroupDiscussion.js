@@ -1,14 +1,16 @@
 import React from "react";
 import TableContent from "../Components/TableContent";
+import { useLocation } from "react-router-dom";
 
 const GroupDiscussion = () => {
+  const {state} = useLocation()
   return (
     <div className="flex-grow py-10 md:px-20 px-10">
       <div className=" pb-4 border-b-2 border-[#2255B8]">
-        <div className="text-3xl text-sky-800">GroupDiscussion</div>
+        <div className="text-3xl text-sky-800">{state.name}</div>
         <div className="text-slate-600 text-md">22 february ,2022</div>
       </div>
-      <div className="mt-2 flex gap-8 pt-10">
+      <div className="mt-2 flex gap-8 pt-10 lg:flex-row md:flex-col">
         <p className="px-2 basis-1/2 ">
           Lörem ipsum mansskatt postform, förutom genusbudgetering pretrede.
           Lunchdisco jigusm vis Annika Lundgren i kosk. Nes belönade med
@@ -40,7 +42,7 @@ const GroupDiscussion = () => {
           </div>
         </div>
       </div>
-      <div className="text-3xl text-sky-800">Upcoming Gd</div>
+      <div className="text-3xl text-sky-800 mt-12">Upcoming {state.name}</div>
       <div className="text-[#898989] text-md w-full mt-4">
         Lörem ipsum mansskatt postform, förutom genusbudgetering pretrede.
         Lunchdisco

@@ -27,14 +27,14 @@ const TableContent = ({ name }) => {
         <div className="px-6 py-4">
           <table className="table-auto w-full  py-2 px-4">
             <tbody className="px-2 py-4">
-              <tr className="text-[#2255B8] text-lg">
+              <tr className="text-[#2255B8] lg:text-lg md:text-md">
                 <td>S.no</td>
                 <td>Name</td>
                 <td>Contact</td>
                 <td>Status</td>
               </tr>
               {buddy.map((a) => (
-                <tr className="py-2">
+                <tr className="py-2 lg:text-lg md:text-sm">
                   <td> {a.id}</td>
                   <td> {a.name}</td>
                   <td> {a.name}</td>
@@ -60,14 +60,14 @@ const TableContent = ({ name }) => {
         <div className="px-6 py-4">
           <table className="table-auto w-full  py-2 px-4">
             <tbody className="px-2 py-4">
-              <tr className="text-[#2255B8] text-lg">
+              <tr className="text-[#2255B8] lg:text-lg md:text-md">
                 <td>S.no</td>
                 <td>Name</td>
                 <td>Contact</td>
                 <td>Status</td>
               </tr>
               {mentor.map((a) => (
-                <tr className="py-2">
+                <tr className="py-2 lg:text-lg md:text-sm">
                   <td> {a.id}</td>
                   <td> {a.name}</td>
                   <td> {a.name}</td>

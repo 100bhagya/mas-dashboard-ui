@@ -3,13 +3,58 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Cookie&display=swap');
+@import url('//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css');
+
 
 .triangle-right {
 	width: 0;
 	height: 0;
-    
-	border-top: 1rem solid transparent
-    ;
+	border-top: 1rem solid transparent;
 	border-left: 2rem solid white;
 	border-bottom: 1rem solid transparent ;
+}
+.rating {
+	border: none;
+	float: left;
+}
+
+.rating > input {
+	display: none;
+}
+.rating > label:before {
+	margin: 5px;
+	font-size: 1em;
+	font-family: FontAwesome;
+	display: inline-block;
+	content: '\f005';
+	/* text-shadow: -2px 0 blue, 0 2px blue, 2px 0 blue, 0 -2px blue;  */
+
+}
+
+.rating > .half:before {
+	content: '\f005';
+	position: absolute;
+}
+
+.rating > label {
+	/* color: #ddd; */
+	color : #ddd;
+	float: right;
+	/* text-shadow: -2px 0 blue, 0 2px blue, 2px 0 blue, 0 -2px blue;   */
+}
+
+.rating > input:checked ~ label {
+	color: #2255B8;
+}
+
+.userRating:not(:checked) > label:hover,
+.userRating:not(:checked) > label:hover ~ label {
+	color: #2255B8;
+}
+
+.userRating > input:checked + label:hover,
+.userRating > input:checked ~ label:hover,
+.userRating > label:hover ~ input:checked ~ label,
+.userRating > input:checked ~ label:hover ~ label {
+	color: #2255B8;
 }
