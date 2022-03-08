@@ -3,7 +3,7 @@ import TableContent from "../Components/TableContent";
 import { useLocation } from "react-router-dom";
 
 const GroupDiscussion = () => {
-  const {state} = useLocation()
+  const { state } = useLocation();
   return (
     <div className="flex-grow py-10 md:px-20 px-10">
       <div className=" pb-4 border-b-2 border-[#2255B8]">
@@ -31,14 +31,20 @@ const GroupDiscussion = () => {
               {" "}
               Practice Mode
             </span>
-            <img src="https://thumbs.dreamstime.com/z/mobile-learning-abstract-concept-vector-illustration-m-application-portable-device-educational-trend-assignment-individual-plan-196329472.jpg" />
+            <img
+              src="https://thumbs.dreamstime.com/z/mobile-learning-abstract-concept-vector-illustration-m-application-portable-device-educational-trend-assignment-individual-plan-196329472.jpg"
+              alt=""
+            />
           </div>
           <div className="basis-1/2 shadow-xl rounded-xl px-4">
             <span className="text-center block text-[#2255B8] text-lg">
               {" "}
               Practice Mode
             </span>
-            <img src="https://thumbs.dreamstime.com/z/mobile-learning-abstract-concept-vector-illustration-m-application-portable-device-educational-trend-assignment-individual-plan-196329472.jpg" />
+            <img
+              src="https://thumbs.dreamstime.com/z/mobile-learning-abstract-concept-vector-illustration-m-application-portable-device-educational-trend-assignment-individual-plan-196329472.jpg"
+              alt=""
+            />
           </div>
         </div>
       </div>

@@ -30,10 +30,10 @@ const Calendar = () => {
   }, [activeMonth]);
 
   return (
-    <div className="shadow-xl md:rounded p-4 bg-white dark:bg-gray-700 md:w-96 mx-4 md:mx-auto mt-16">
+    <div className="shadow-xl md:rounded p-4 bg-white  md:w-96 mx-4 md:mx-auto mt-16">
       <div className="w-full rounded">
         <div className="flex items-center justify-between mb-4">
-          <div className="text-left font-bold text-xl text-black dark:text-white">
+          <div className="text-left font-bold text-xl text-black ">
             {`${activeMonthString} ${activeYear}`}
           </div>
           <div className="flex space-x-4">
