@@ -1,62 +1,50 @@
 import React from "react";
 import TopicBar from "../Components/TopicBar";
 
-const RatingCard = () => {
+const RatingCard = ({ serialNo, Title }) => {
   return (
     <>
-      <div className="rounded-xl shadow-xl flex w-full items-center  gap-2">
-        <div className="w-1/5 bg-[#EDF3FF] py-2 rounded-l-lg">
-          <span className="text-2xl text-[#2255B8] flex items-center justify-center">
+      <div className="rounded-xl shadow-xl flex w-full items-center h-20">
+        <div className="w-1/5 bg-[#EDF3FF] h-full rounded-l-lg">
+          <div className="text-2xl text-[#2255B8] flex items-center justify-center mt-6">
             {" "}
-            1{" "}
-          </span>
+            {serialNo}{" "}
+          </div>
         </div>
-        <div className="w-2/5 pl-6 flex items-center">Probabiliyt</div>
+        <div className="w-2/5 pl-6 flex items-center">{Title}</div>
 
-        <fieldset className="rating userRating items-center" >
-	<input
-		type="radio"
-    
+        <fieldset className="rating userRating items-center">
+          <input type="radio" />
+          <label className="full "></label>
 
-	/>
-  <label className="full "></label>
- 
-	<input
-		type="radio"
+          <input type="radio" />
+          <label className="full"></label>
 
-	/><label className="full"></label>
- 
-	<input
-		type="radio"
+          <input type="radio" />
+          <label className="full"></label>
 
-	/><label className="full"></label>
-    
-	<input
-		type="radio"
-    checked
+          <input type="radio" checked />
+          <label className="full"></label>
 
-	/><label className="full"></label>
-  
-	<input
-		type="radio"
-
-	/><label className="full"></label>
-  </fieldset>
+          <input type="radio" />
+          <label className="full"></label>
+        </fieldset>
       </div>
     </>
   );
 };
 
-const Verbal = () => {
+const Quant = () => {
   return (
     <div className="flex">
+      <TopicBar />
       <div className="flex-grow py-10 md:px-20 px-10">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
-          <div className="text-3xl text-sky-800">Verbal</div>
+          <div className="text-3xl text-sky-800">Quant</div>
           <div className="text-slate-600 text-md">22 february ,2022</div>
         </div>
         <div className="mt-2 flex gap-8 pt-10 lg:flex-row md:flex-col">
-          <p className="px-2 basis-1/2 ">
+          <p className="pr-8 basis-1/2 ">
             Lörem ipsum mansskatt postform, förutom genusbudgetering pretrede.
             Lunchdisco jigusm vis Annika Lundgren i kosk. Nes belönade med
             refaliga synmatisk. Nyssa lotesk ASMR plankning komvalens. Pälogi
@@ -93,24 +81,26 @@ const Verbal = () => {
             </div>
           </div>
         </div>
-        <div className="text-3xl text-sky-800 mt-12">Priority</div>
-        <span className="text-[#898989] text-md w-full">
+        <div className="text-3xl text-sky-800 mt-20">Priority</div>
+        <div className="text-[#898989] text-md w-full mt-2">
           Lörem ipsum mansskatt postform, förutom genusbudgetering pretrede.
           Lunchdisco
-        </span>
+        </div>
 
-        <div className="grid lg:grid-cols-3 md:grid-cols-1 flex gap-6 justify-between mt-12">
-          <RatingCard />
-          <RatingCard />
-          <RatingCard />
-          <RatingCard />
-          <RatingCard />
-          <RatingCard />
-          <RatingCard />
+        <div className="grid lg:grid-cols-3 md:grid-cols-1 gap-6 justify-between mt-12">
+          <RatingCard serialNo={1} Title="Probability" />
+          <RatingCard serialNo={2} Title="Statistics" />
+          <RatingCard serialNo={3} Title="P & C" />
+          <RatingCard serialNo={4} Title="Probability" />
+          <RatingCard serialNo={5} Title="Probability" />
+          <RatingCard serialNo={6} Title="Probability" />
+          <RatingCard serialNo={7} Title="Probability" />
+          <RatingCard serialNo={8} Title="Probability" />
+          <RatingCard serialNo={9} Title="Probability" />
         </div>
       </div>
     </div>
   );
 };
 
-export default Verbal;
+export default Quant;

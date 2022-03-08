@@ -1,50 +1,18 @@
 import React from "react";
+import TableContent from "../Components/TableContent";
 import TopicBar from "../Components/TopicBar";
 
-const RatingCard = ({ serialNo, Title }) => {
-  return (
-    <>
-      <div className="rounded-xl shadow-xl flex w-full items-center h-20">
-        <div className="w-1/5 bg-[#EDF3FF] h-full rounded-l-lg">
-          <div className="text-2xl text-[#2255B8] flex items-center justify-center mt-6">
-            {" "}
-            {serialNo}{" "}
-          </div>
-        </div>
-        <div className="w-2/5 pl-6 flex items-center">{Title}</div>
-
-        <fieldset className="rating userRating items-center">
-          <input type="radio" />
-          <label className="full "></label>
-
-          <input type="radio" />
-          <label className="full"></label>
-
-          <input type="radio" />
-          <label className="full"></label>
-
-          <input type="radio" checked />
-          <label className="full"></label>
-
-          <input type="radio" />
-          <label className="full"></label>
-        </fieldset>
-      </div>
-    </>
-  );
-};
-
-const Verbal = () => {
+const Puzzles = () => {
   return (
     <div className="flex">
       <TopicBar />
       <div className="flex-grow py-10 md:px-20 px-10">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
-          <div className="text-3xl text-sky-800">Verbal</div>
+          <div className="text-3xl text-sky-800">Puzzles</div>
           <div className="text-slate-600 text-md">22 february ,2022</div>
         </div>
         <div className="mt-2 flex gap-8 pt-10 lg:flex-row md:flex-col">
-          <p className="pr-8 basis-1/2 ">
+          <p className="px-2 basis-1/2 ">
             Lörem ipsum mansskatt postform, förutom genusbudgetering pretrede.
             Lunchdisco jigusm vis Annika Lundgren i kosk. Nes belönade med
             refaliga synmatisk. Nyssa lotesk ASMR plankning komvalens. Pälogi
@@ -81,26 +49,33 @@ const Verbal = () => {
             </div>
           </div>
         </div>
-        <div className="text-3xl text-sky-800 mt-20">Priority</div>
-        <div className="text-[#898989] text-md w-full mt-2">
+        <div className="text-3xl text-sky-800 mt-12">Upcoming Puzzles</div>
+        <div className="text-[#898989] text-md w-full mt-4">
           Lörem ipsum mansskatt postform, förutom genusbudgetering pretrede.
           Lunchdisco
         </div>
 
-        <div className="grid lg:grid-cols-3 md:grid-cols-1 gap-6 justify-between mt-12">
-          <RatingCard serialNo={1} Title="Probability" />
-          <RatingCard serialNo={2} Title="Statistics" />
-          <RatingCard serialNo={3} Title="P & C" />
-          <RatingCard serialNo={4} Title="Probability" />
-          <RatingCard serialNo={5} Title="Probability" />
-          <RatingCard serialNo={6} Title="Probability" />
-          <RatingCard serialNo={7} Title="Probability" />
-          <RatingCard serialNo={8} Title="Probability" />
-          <RatingCard serialNo={9} Title="Probability" />
+        <div className="rounded-lg flex shadow-xl py-6 px-6 justify-between w-4/5">
+          <div className="text-lg text-[#2C4251]">
+            Date
+            <span className="text-sm text-gray-400 pl-4"> 22/09/2023</span>
+          </div>
+          <div className="text-lg text-[#2C4251]">
+            Time
+            <span className="text-sm text-gray-400 pl-4"> 3 PM</span>
+          </div>
+          <div className="text-lg text-[#2C4251]">
+            Link
+            <span className="text-sm text-gray-400 pl-4"> google.com </span>
+          </div>
+        </div>
+        <div className="flex gap-6">
+          <TableContent name={"buddy"} />
+          <TableContent name={"buddy1"} />
         </div>
       </div>
     </div>
   );
 };
 
-export default Verbal;
+export default Puzzles;
