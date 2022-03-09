@@ -50,14 +50,14 @@ const GuessEstimate = () => {
           </div>
         </div>
         <div className="text-3xl text-sky-800 mt-12">
-          Upcoming Guess Estimates
+          Guess Estimate Practice
         </div>
         <div className="text-[#898989] text-md w-full mt-4">
           Lörem ipsum mansskatt postform, förutom genusbudgetering pretrede.
           Lunchdisco
         </div>
 
-        <div className="rounded-lg flex shadow-xl py-6 px-6 justify-between w-4/5">
+        {/* <div className="rounded-lg flex shadow-xl py-6 px-6 justify-between w-4/5">
           <div className="text-lg text-[#2C4251]">
             Date
             <span className="text-sm text-gray-400 pl-4"> 22/09/2023</span>
@@ -70,10 +70,37 @@ const GuessEstimate = () => {
             Link
             <span className="text-sm text-gray-400 pl-4"> google.com </span>
           </div>
-        </div>
-        <div className="flex gap-6">
+        </div> */}
+        <div className="flex gap-6 mt-8">
           <TableContent name={"buddy"} />
-          <TableContent name={"buddy1"} />
+          <div className="">
+            <TableContent name={"buddy1"} />
+            <div className="bg-white text-center justify-center shadow-2xl mt-8 pb-16">
+              <div className="pt-3 pb-3 text-2xl font-semibold">
+                Self Evaluation
+              </div>
+              <div className="px-10 text-center">
+                Lörem ipsum mansskatt postform, förutom genusbudgetering
+                pretrede
+              </div>
+              <fieldset className="rating userRating items-center relative left-[35%] mt-3">
+                <input type="radio" />
+                <label className="full text-2xl"></label>
+
+                <input type="radio" />
+                <label className="full text-2xl"></label>
+
+                <input type="radio" />
+                <label className="full text-2xl"></label>
+
+                <input type="radio" checked />
+                <label className="full text-2xl"></label>
+
+                <input type="radio" />
+                <label className="full text-2xl"></label>
+              </fieldset>
+            </div>
+          </div>
         </div>
       </div>
     </div>
