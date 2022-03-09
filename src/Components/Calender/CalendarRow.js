@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-
 const CalendarRow = ({
   firstDay,
   lastDayInMonth,
@@ -45,6 +44,7 @@ const CalendarRow = ({
     return <>{content}</>;
   }
   //other rows
+
   for (let i = 1; i <= 7; i++) {
     if (i + (7 * row - firstDay) <= lastDayInMonth) {
       content.push(
