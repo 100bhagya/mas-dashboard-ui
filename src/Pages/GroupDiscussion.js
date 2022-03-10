@@ -57,23 +57,44 @@ const GroupDiscussion = () => {
           Lunchdisco
         </div>
 
-        <div className="rounded-lg flex shadow-xl py-6 px-6 justify-between w-4/5">
+        <div className="rounded-lg flex shadow-xl py-6 mt-8 px-6 justify-between w-4/5">
           <div className="text-lg text-[#2C4251]">
-            Date
+            Date:
             <span className="text-sm text-gray-400 pl-4"> 22/09/2023</span>
           </div>
           <div className="text-lg text-[#2C4251]">
-            Time
+            Time:
             <span className="text-sm text-gray-400 pl-4"> 3 PM</span>
           </div>
           <div className="text-lg text-[#2C4251]">
-            Link
-            <span className="text-sm text-gray-400 pl-4"> google.com </span>
+            Link:
+            <span className="text-sm text-gray-400 pl-4"> www.google.com </span>
           </div>
         </div>
-        <div className="flex gap-6">
-          <TableContent name={"buddy"} />
-          <TableContent name={"buddy1"} />
+        <div className="flex">
+          <div className="">
+            <div className="text-3xl text-sky-800 mt-12">Self Evaluation</div>
+            <div className="text-[#898989] text-md w-full mt-4">
+              Lörem ipsum mansskatt postform, förutom genusbudgetering pretrede.
+            </div>
+          </div>
+
+          <fieldset className="rating userRating items-center ml-20 mt-16">
+            <input type="radio" />
+            <label className="full text-4xl"></label>
+
+            <input type="radio" />
+            <label className="full text-4xl"></label>
+
+            <input type="radio" />
+            <label className="full text-4xl"></label>
+
+            <input type="radio" checked />
+            <label className="full text-4xl"></label>
+
+            <input type="radio" />
+            <label className="full text-4xl"></label>
+          </fieldset>
         </div>
       </div>
     </div>
