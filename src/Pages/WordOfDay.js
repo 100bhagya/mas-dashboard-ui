@@ -1,6 +1,6 @@
 import React from "react";
 import TopicBar from "../Components/TopicBar";
-import Calendar from "../Components/Calender/Calender";
+import Calendar from "../Components/Calender";
 
 const WordOfDay = () => {
   return (
