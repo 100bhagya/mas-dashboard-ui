@@ -12,6 +12,8 @@ import Quizes from "./Pages/Quizes";
 import Quant from "./Pages/Quant";
 import LRandDI from "./Pages/LRandDI";
 import Verbal from "./Pages/Verbal";
+import Signin from "./Pages/Signin";
+import Signup from "./Pages/Signup";
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
           <Route path="casestudy" element={<CaseStudy />} />
           <Route path="guessestimate" element={<GuessEstimate />} />
           <Route path="puzzles" element={<Puzzles />} />
+          <Route path="signin" element={<Signin />} />
+          <Route path="signup" element={<Signup />} />
         </Routes>
       </Router>
     </>
