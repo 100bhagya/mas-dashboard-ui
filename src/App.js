@@ -16,6 +16,7 @@ import Signin from "./Pages/Signin";
 import Signup from "./Pages/Signup";
 import RecordSummary from "./Pages/RecordSummary";
 
+
 function App() {
   return (
     <>
@@ -39,7 +40,6 @@ function App() {
           <Route path="guessestimate" element={<GuessEstimate />} />
           <Route path="puzzles" element={<Puzzles />} />
           <Route path="signin" element={<Signin />} />
-          <Route path="signup" element={<Signup />} />
           <Route path="signup" element={<Signup />} />
         </Routes>
       </Router>
