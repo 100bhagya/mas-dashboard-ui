@@ -66,6 +66,7 @@ const Signin = () => {
                 </a>
               </div>
               <p className="text-gray-400 my-3">or use your email account</p> */}
+
               <div className="flex flex-col items-center">
                 <div className="bg-gray-100 w-64 p-2 flex items-center mb-3">
                   <FaRegEnvelope className="text-gray-400 m-2" />
