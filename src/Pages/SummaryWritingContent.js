@@ -105,7 +105,7 @@ const SummaryWritingContent = () => {
             {" "}
             Next
           </button>
-          <Link to="/recordsummary">
+          <Link to="/videorecord">
             <button className="py-2 px-6 text-white rounded-xl bg-[#2255B8] mx-4">
               {" "}
               Record Summary{" "}
