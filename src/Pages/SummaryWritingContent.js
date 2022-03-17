@@ -1,12 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import TopicBar from "../Components/TopicBar";
 import { Link } from "react-router-dom";
+import WeekData from "../data/WeekData";
+
+function WEEK({ week, index, toggleWEEK }) {
+  return (
+    <div>
+      <div key={index} onClick={() => toggleWEEK(index)}>
+        <div className="faq-question cursor-pointer my-4">{week.question}</div>
+      </div>
+      <div className={`faq-answer flex ml-1 ${!week.open ? "hidden" : null}`}>
+        <div className="w-1 bg-blue-500"></div>
+        <div className="ml-3">
+          {week.answer.map((post) => {
+            return <div className="cursor-pointer mb-2">{post.role}</div>;
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const SummaryWritingContent = () => {
+  // const [isOpen, setIsOpen] = useState(false);
+  const [weeks, setweeks] = useState(WeekData);
+
+  const toggleWEEK = (index) => {
+    setweeks(
+      weeks.map((week, i) => {
+        if (i === index) {
+          week.open = !week.open;
+        } else {
+          week.open = false;
+        }
+
+        return week;
+      })
+    );
+  };
   return (
     <div className="flex">
       <TopicBar />
-      <div className="flex-grow py-10 md:px-20 px-10">
+      <div className="flex-grow py-10 md:px-20 px-10 mr-32">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
           <div className="text-3xl text-sky-800">Summary Writing</div>
           <div className="text-slate-600 text-md">22 february ,2022</div>
@@ -111,6 +146,14 @@ const SummaryWritingContent = () => {
               Record Summary{" "}
             </button>
           </Link>
+        </div>
+      </div>
+      <div className="bg-blue-200 h-[100vh] fixed left-[89vw] w-48 pt-10 pl-10">
+        <div className="cursor-pointer text-2xl">Weeks</div>
+        <div className="ml-3 mt-4 overflow-y-scroll h-[87vh] overflow-x-hidden">
+          {weeks.map((week, i) => (
+            <WEEK week={week} index={i} toggleWEEK={toggleWEEK} />
+          ))}
         </div>
       </div>
     </div>
