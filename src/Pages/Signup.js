@@ -3,7 +3,6 @@ import {
   // FaFacebookF,
   // FaGoogle,
   // FaLinkedinIn,
-
   FaRegEnvelope,
 } from "react-icons/fa";
 import { MdLockOutline } from "react-icons/md";

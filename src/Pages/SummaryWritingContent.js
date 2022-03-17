@@ -1,5 +1,6 @@
 import React from "react";
 import TopicBar from "../Components/TopicBar";
+import { Link } from "react-router-dom";
 
 const SummaryWritingContent = () => {
   return (
@@ -104,10 +105,12 @@ const SummaryWritingContent = () => {
             {" "}
             Next
           </button>
-          <button className="py-2 px-6 text-white rounded-xl bg-[#2255B8] mx-4">
-            {" "}
-            Record Summary{" "}
-          </button>
+          <Link to="/videorecord">
+            <button className="py-2 px-6 text-white rounded-xl bg-[#2255B8] mx-4">
+              {" "}
+              Record Summary{" "}
+            </button>
+          </Link>
         </div>
       </div>
     </div>

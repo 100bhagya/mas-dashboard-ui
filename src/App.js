@@ -14,6 +14,8 @@ import LRandDI from "./Pages/LRandDI";
 import Verbal from "./Pages/Verbal";
 import Signin from "./Pages/Signin";
 import Signup from "./Pages/Signup";
+import Record from "./Pages/Record";
+
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
             path="summarywriting"
             element={<SummaryWritingContent />}
           />
+
+          <Route path="videorecord" element={<Record />} />
           <Route path="groupdiscussion" element={<GroupDiscussion />} />
           <Route path="quizes" element={<Quizes />} />
           <Route path="quant" element={<Quant />} />

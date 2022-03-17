@@ -2,59 +2,78 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Cookie&display=swap');
-@import url('//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css');
-
+@import url("https://fonts.googleapis.com/css2?family=Cookie&display=swap");
+@import url("//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css");
 
 .triangle-right {
-	width: 0;
-	height: 0;
-	border-top: 1rem solid transparent;
-	border-left: 2rem solid white;
-	border-bottom: 1rem solid transparent ;
+  width: 0;
+  height: 0;
+  border-top: 1rem solid transparent;
+  border-left: 2rem solid white;
+  border-bottom: 1rem solid transparent;
 }
 .rating {
-	border: none;
-	float: left;
+  border: none;
+  float: left;
 }
 
 .rating > input {
-	display: none;
+  display: none;
 }
 .rating > label:before {
-	margin: 5px;
-	font-size: 1em;
-	font-family: FontAwesome;
-	display: inline-block;
-	content: '\f005';
-	/* text-shadow: -2px 0 blue, 0 2px blue, 2px 0 blue, 0 -2px blue;  */
-
+  margin: 5px;
+  font-size: 1em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+  /* text-shadow: -2px 0 blue, 0 2px blue, 2px 0 blue, 0 -2px blue;  */
 }
 
 .rating > .half:before {
-	content: '\f005';
-	position: absolute;
+  content: "\f005";
+  position: absolute;
 }
 
 .rating > label {
-	/* color: #ddd; */
-	color : #ddd;
-	float: right;
-	/* text-shadow: -2px 0 blue, 0 2px blue, 2px 0 blue, 0 -2px blue;   */
+  /* color: #ddd; */
+  color: #ddd;
+  float: right;
+  /* text-shadow: -2px 0 blue, 0 2px blue, 2px 0 blue, 0 -2px blue;   */
 }
 
 .rating > input:checked ~ label {
-	color: #2255B8;
+  color: #2255b8;
 }
 
 .userRating:not(:checked) > label:hover,
 .userRating:not(:checked) > label:hover ~ label {
-	color: #2255B8;
+  color: #2255b8;
 }
 
 .userRating > input:checked + label:hover,
 .userRating > input:checked ~ label:hover,
 .userRating > label:hover ~ input:checked ~ label,
 .userRating > input:checked ~ label:hover ~ label {
-	color: #2255B8;
+  color: #2255b8;
+}
+
+.voice-recorder {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+}
+
+.title {
+  margin-bottom: 2rem;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.recorder-container {
+  min-width: 300px;
+  width: 30vw;
+  height: 70vh;
+  border-radius: 1rem;
+  background: linear-gradient(to right, #3b82f6, #2563eb);
+  color: #fff;
 }
