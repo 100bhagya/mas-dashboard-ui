@@ -86,7 +86,7 @@ const TopicBar = () => {
                 className={`w-3 h-2 relative left-[15%] top-2 cursor-pointer ${
                   sidebar ? "hidden" : ""
                 }`}
-                style={{ transform: isOpen ? "rotate(180deg)" : null }}
+                style={{ transform: !isOpen ? "rotate(180deg)" : null }}
               />
             </div>
             {isOpen ? (
@@ -156,7 +156,7 @@ const TopicBar = () => {
                         alt=""
                         className="w-3 h-2 relative top-2 cursor-pointer"
                         style={{
-                          transform: aptitudeOpen ? "rotate(180deg)" : null,
+                          transform: !aptitudeOpen ? "rotate(180deg)" : null,
                         }}
                       />
                     </div>
@@ -227,7 +227,7 @@ const TopicBar = () => {
                         alt=""
                         className="w-3 h-2 relative left-[10%] top-2 cursor-pointer"
                         style={{
-                          transform: techOpen ? "rotate(180deg)" : null,
+                          transform: !techOpen ? "rotate(180deg)" : null,
                         }}
                         onClick={() => {
                           setTechOpen(!techOpen);
