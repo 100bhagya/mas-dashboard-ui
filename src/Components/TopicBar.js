@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import account_logo from "../images/Aashish.jpg";
 import arrow from "../images/down arrow.png";
 import {
   HomeIcon,
@@ -11,9 +10,11 @@ import {
   ChatAlt2Icon,
   LogoutIcon,
 } from "@heroicons/react/outline";
+import user from "../images/user.png";
 import { Link, useLocation } from "react-router-dom";
 
 const TopicBar = () => {
+  const [selectedimage, setSelectedimage] = useState();
   const [isOpen, setIsOpen] = useState(true);
   const [aptitudeOpen, setAptitudeOpen] = useState(true);
   const [techOpen, setTechOpen] = useState(true);
@@ -34,13 +35,44 @@ const TopicBar = () => {
     <div className={`flex shrink-0 ${sidebar ? "basis-1/10" : "basis-1/5"}`}>
       <div className="bg-blue-100 w-full min-h-[100vh]">
         <div className="text-center mt-12">
-          <img
-            src={account_logo}
-            alt=""
-            className={`relative  ${
-              sidebar ? "w-16 left-[8%]" : "w-32 m-auto "
-            }`}
-          />
+          {selectedimage ? (
+            <label>
+              <input
+                type="file"
+                name="myImage"
+                className="text-sm hidden"
+                onChange={(event) => {
+                  setSelectedimage(event.target.files[0]);
+                }}
+              />
+              <img
+                src={URL.createObjectURL(selectedimage)}
+                alt=""
+                className={`relative rounded-full ${
+                  sidebar ? "w-16 h-16 left-[8%]" : "w-32 h-32 m-auto "
+                }`}
+              />
+            </label>
+          ) : (
+            <label>
+              <input
+                type="file"
+                name="myImage"
+                className="text-sm hidden"
+                onChange={(event) => {
+                  setSelectedimage(event.target.files[0]);
+                }}
+              />
+              <img
+                src={user}
+                alt=""
+                className={`relative rounded-full ${
+                  sidebar ? "w-16 h-16 left-[8%]" : "w-32 h-32 m-auto "
+                }`}
+              />
+            </label>
+          )}
+
           <div
             className={`mt-5 max-w-[100%] text-xl font-medium ${
               sidebar ? "hidden" : ""
@@ -203,15 +235,21 @@ const TopicBar = () => {
                       </div>
                     )}
                   </div>
-                  <div className="text-sm text-blue-500 text-left md:px-2 lg:pl-8 py-2 rounded-md hover:bg-white">
-                    ML and Python
-                  </div>
-                  <div className="text-sm text-blue-500 text-left md:px-2 lg:pl-8 py-2 rounded-md hover:bg-white">
-                    Data Analysis
-                  </div>
-                  <div className="text-sm text-blue-500 text-left md:px-2 lg:pl-8 py-2 rounded-md hover:bg-white">
-                    SQL
-                  </div>
+                  <Link to="/mlandpython">
+                    <div className="text-sm text-blue-500 text-left md:px-2 lg:pl-8 py-2 rounded-md hover:bg-white">
+                      ML and Python
+                    </div>
+                  </Link>
+                  <Link to="/dataanalysis">
+                    <div className="text-sm text-blue-500 text-left md:px-2 lg:pl-8 py-2 rounded-md hover:bg-white">
+                      Data Analysis
+                    </div>
+                  </Link>
+                  <Link to="/sql">
+                    <div className="text-sm text-blue-500 text-left md:px-2 lg:pl-8 py-2 rounded-md hover:bg-white">
+                      SQL
+                    </div>
+                  </Link>
                   <div className="">
                     <div
                       className="flex px-2 py-2 lg:pl-8 rounded-md hover:bg-white"

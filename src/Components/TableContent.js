@@ -16,7 +16,7 @@ const TableContent = ({ name }) => {
     { id: 2, name: "Bird" },
   ];
 
-  if (name == "buddy")
+  if (name === "buddy")
     return (
       <div className="rounded-lg shadow-xl basis-1/2">
         <div className="text-xl text-[#2255B8] text-center py-2 border-b-2 border-[#2255B8]">

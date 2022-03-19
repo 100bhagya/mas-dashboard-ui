@@ -7,7 +7,13 @@ function WEEK({ week, index, toggleWEEK }) {
   return (
     <div>
       <div key={index} onClick={() => toggleWEEK(index)}>
-        <div className="faq-question cursor-pointer my-4">{week.question}</div>
+        <div
+          className={`faq-question cursor-pointer my-6 ${
+            week.open ? "text-blue-800 font-semibold" : null
+          }`}
+        >
+          {week.question}
+        </div>
       </div>
       <div className={`faq-answer flex ml-1 ${!week.open ? "hidden" : null}`}>
         <div className="w-1 bg-blue-500"></div>
@@ -149,7 +155,9 @@ const SummaryWritingContent = () => {
         </div>
       </div>
       <div className="bg-blue-200 h-[100vh] fixed left-[89vw] w-48 pt-10 pl-10">
-        <div className="cursor-pointer text-2xl">Weeks</div>
+        <div className="cursor-pointer text-2xl text-blue-800 font-semibold">
+          Weeks
+        </div>
         <div className="ml-3 mt-4 overflow-y-scroll h-[87vh] overflow-x-hidden">
           {weeks.map((week, i) => (
             <WEEK week={week} index={i} toggleWEEK={toggleWEEK} />

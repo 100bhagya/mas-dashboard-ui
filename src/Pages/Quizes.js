@@ -1,6 +1,7 @@
 import React from "react";
 import TopicBar from "../Components/TopicBar";
 import Data from "../data/QuizData";
+import { Link } from "react-router-dom";
 
 const Quizes = () => {
   return (
@@ -15,17 +16,19 @@ const Quizes = () => {
           {Data.map((item) => {
             return (
               <div className="relative">
-                <div className="rounded-xl shadow-xl flex w-full h-fit md:pr-1 top-0">
-                  <div className="w-1/5 bg-[#EDF3FF] py-2 rounded-l-lg justify-center items-center flex">
-                    <span className="text-2xl text-[#2255B8] flex items-center">
-                      {" "}
-                      {item.id}{" "}
-                    </span>
+                <Link to="/quizdetail">
+                  <div className="rounded-xl shadow-xl flex w-full h-fit md:pr-1 top-0">
+                    <div className="w-1/5 bg-[#EDF3FF] py-2 rounded-l-lg justify-center items-center flex">
+                      <span className="text-2xl text-[#2255B8] flex items-center">
+                        {" "}
+                        {item.id}{" "}
+                      </span>
+                    </div>
+                    <div className=" w-3/5 py-6 pl-6 flex items-center text-sm text-[#2255B8]">
+                      {item.quiz}
+                    </div>
                   </div>
-                  <div className=" w-3/5 py-6 pl-6 flex items-center text-sm text-[#2255B8]">
-                    {item.quiz}
-                  </div>
-                </div>
+                </Link>
               </div>
             );
           })}

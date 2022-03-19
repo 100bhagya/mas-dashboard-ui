@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import TopicBar from "../Components/TopicBar";
 
 const TechArticles = () => {
+  const [limit, setLimit] = useState(800);
+  const Continue = () => {
+    setLimit((prevValue) => prevValue + 100);
+  };
+  const str =
+    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis, non. In unde tempora dolorem expedita quasi possimus provident ut minima, reiciendis quo fugit similique vel labore dolor perferendis quod delectus consequuntur, beatae eligendi temporibus atque laborum cupiditate commodi autem! Modi, id aspernatur. Voluptas facilis inventore ipsum modi recusandae sed autem? Quae eveniet soluta nostrum eum ratione? Aperiam earum nam atque, cum beatae incidunt facere a. Amet laborum vel consectetur voluptatibus rem harum similique excepturi tenetur possimus vitae? Aspernatur exercitationem, sint atque dicta labore pariatur nihil tempore est itaque magni aliquid quasi excepturi architecto tempora optio perspiciatis saepe provident doloribus ut dolores reiciendis! Et ut dolor odio, nisi repellendus saepe velit perspiciatis ipsa corporis autem veritatis, ab reprehenderit eos est! Ad aspernatur consectetur nemo sunt doloribus soluta? Blanditiis, non. In unde tempora dolorem expedita quasi possimus provident ut minima, reiciendis quo fugit similique vel labore dolor perferendis quod delectus consequuntur, beatae eligendi temporibus atque laborum cupiditate commodi autem! Modi, id aspernatur. Voluptas facilis inventore ipsum modi recusandae sed autem? Quae eveniet soluta nostrum eum ratione? Aperiam earum nam atque, cum beatae incidunt facere a. Amet laborum vel consectetur voluptatibus rem harum similique excepturi tenetur possimus vitae? Aspernatur exercitationem, sint atque dicta labore pariatur nihil tempore est itaque magni aliquid quasi excepturi architecto tempora optio perspiciatis saepe provident doloribus ut dolores reiciendis! Et ut dolor odio, nisi repellendus saepe velit perspiciatis ipsa corporis autem veritatis, ab reprehenderit eos est!";
   return (
     <div className="flex">
       <TopicBar />
@@ -13,25 +19,12 @@ const TechArticles = () => {
 
         <div className="flex items-center">
           <div className="lg:basis-1/2 md:basis-3/5 mt-16">
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Blanditiis, non. In unde tempora dolorem expedita quasi possimus
-              provident ut minima, reiciendis quo fugit similique vel labore
-              dolor perferendis quod delectus consequuntur, beatae eligendi
-              temporibus atque laborum cupiditate commodi autem! Modi, id
-              aspernatur. Voluptas facilis inventore ipsum modi recusandae sed
-              autem? Quae eveniet soluta nostrum eum ratione? Aperiam earum nam
-              atque, cum beatae incidunt facere a. Amet laborum vel consectetur
-              voluptatibus rem harum similique excepturi tenetur possimus vitae?
-              Aspernatur exercitationem, sint atque dicta labore pariatur nihil
-              tempore est itaque magni aliquid quasi excepturi architecto
-              tempora optio perspiciatis saepe provident doloribus ut dolores
-              reiciendis! Et ut dolor odio, nisi repellendus saepe velit
-              perspiciatis ipsa corporis autem veritatis, ab reprehenderit eos
-              est! Ad aspernatur consectetur nemo sunt doloribus soluta?
-            </p>
+            <p>{str.slice(0, limit)}</p>
             <div className="mt-12">
-              <button className="py-2 px-6 text-white rounded-xl bg-[#2255B8]">
+              <button
+                className="py-2 px-6 text-white rounded-xl bg-[#2255B8]"
+                onClick={Continue}
+              >
                 {" "}
                 Click here to continue reading
               </button>

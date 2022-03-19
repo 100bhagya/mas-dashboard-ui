@@ -1,6 +1,7 @@
 import React from "react";
 import TopicBar from "../Components/TopicBar";
 import Calendar from "../Components/Calender";
+import CurrentDate from "../Components/CurrentDate";
 
 const WordOfDay = () => {
   return (
@@ -8,8 +9,10 @@ const WordOfDay = () => {
       <TopicBar />
       <div className="flex-grow py-10 md:px-20 px-10">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
-          <div className="text-3xl text-sky-800">Word of The Day Content</div>
-          <div className="text-slate-600 text-md">22 february ,2022</div>
+          <div className="text-3xl text-sky-800">Word of the day</div>
+          <div className="text-slate-600 text-md">
+            <CurrentDate />
+          </div>
         </div>
         <div className="md:flex mt-8 gap-4 md:flex-col lg:flex-row">
           <div className="basis-4/5 flex flex-col">

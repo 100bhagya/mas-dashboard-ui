@@ -40,7 +40,7 @@ const LRandDI = () => {
       <TopicBar />
       <div className="flex-grow py-10 md:px-20 px-10">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
-          <div className="text-3xl text-sky-800">LR & DI</div>
+          <div className="text-3xl text-sky-800">LR & DI Preparation</div>
           <div className="text-slate-600 text-md">22 february ,2022</div>
         </div>
         <div className="mt-2 flex gap-8 pt-10 lg:flex-row md:flex-col">
@@ -72,7 +72,7 @@ const LRandDI = () => {
             <div className="basis-1/2 shadow-xl rounded-xl px-4">
               <span className="text-center block text-[#2255B8] text-lg">
                 {" "}
-                Practice Mode
+                Test Mode
               </span>
               <img
                 src="https://thumbs.dreamstime.com/z/mobile-learning-abstract-concept-vector-illustration-m-application-portable-device-educational-trend-assignment-individual-plan-196329472.jpg"
