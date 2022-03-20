@@ -36,16 +36,22 @@ const CaseStudy = () => {
                 src="https://thumbs.dreamstime.com/z/mobile-learning-abstract-concept-vector-illustration-m-application-portable-device-educational-trend-assignment-individual-plan-196329472.jpg"
                 alt=""
               />
+              <div className="my-4 text-center">
+                Lorem ipsum dolor sit amet, consectetur adipisicing.
+              </div>
             </div>
             <div className="basis-1/2 shadow-xl rounded-xl px-4">
               <span className="text-center block text-[#2255B8] text-lg">
                 {" "}
-                Practice Mode
+                Test Mode
               </span>
               <img
                 src="https://thumbs.dreamstime.com/z/mobile-learning-abstract-concept-vector-illustration-m-application-portable-device-educational-trend-assignment-individual-plan-196329472.jpg"
                 alt=""
               />
+              <div className="my-4 text-center">
+                Lorem ipsum dolor sit amet, consectetur adipisicing.
+              </div>
             </div>
           </div>
         </div>

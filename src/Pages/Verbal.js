@@ -40,7 +40,7 @@ const Verbal = () => {
       <TopicBar />
       <div className="flex-grow py-10 md:px-20 px-10">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
-          <div className="text-3xl text-sky-800">Verbal</div>
+          <div className="text-3xl text-sky-800">Verbal Preparation</div>
           <div className="text-slate-600 text-md">22 february ,2022</div>
         </div>
         <div className="mt-2 flex gap-8 pt-10 lg:flex-row md:flex-col">

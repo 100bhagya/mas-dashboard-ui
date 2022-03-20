@@ -15,7 +15,10 @@ import Verbal from "./Pages/Verbal";
 import Signin from "./Pages/Signin";
 import Signup from "./Pages/Signup";
 import Record from "./Pages/Record";
-
+import MLandPython from "./Pages/MLandPython";
+import DataAnalysis from "./Pages/DataAnalysis";
+import SQL from "./Pages/SQL";
+import QuizDetail from "./Pages/QuizDetail";
 
 function App() {
   return (
@@ -25,12 +28,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="techarticles" element={<TechArticles />} />
           <Route path="wordofday" element={<WordOfDay />} />
-          <Route
-            exact
-            path="summarywriting"
-            element={<SummaryWritingContent />}
-          />
-
+          <Route path="summarywriting" element={<SummaryWritingContent />} />
           <Route path="videorecord" element={<Record />} />
           <Route path="groupdiscussion" element={<GroupDiscussion />} />
           <Route path="quizes" element={<Quizes />} />
@@ -42,6 +40,10 @@ function App() {
           <Route path="puzzles" element={<Puzzles />} />
           <Route path="signin" element={<Signin />} />
           <Route path="signup" element={<Signup />} />
+          <Route path="mlandpython" element={<MLandPython />} />
+          <Route path="dataanalysis" element={<DataAnalysis />} />
+          <Route path="sql" element={<SQL />} />
+          <Route path="quizdetail" element={<QuizDetail />} />
         </Routes>
       </Router>
     </>
