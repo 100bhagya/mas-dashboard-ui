@@ -2,6 +2,7 @@ import React from "react";
 import TopicBar from "../Components/TopicBar";
 import Calendar from "../Components/Calender";
 import CurrentDate from "../Components/CurrentDate";
+import Artboard from "../images/wordofday.png";
 
 const WordOfDay = () => {
   return (
@@ -64,6 +65,7 @@ const WordOfDay = () => {
           <div className="basis-1/5">
             {/* <div inline-datepicker data-date="02/25/2022"></div> */}
             <Calendar />
+            <img src={Artboard} alt="" className="mt-24" />
           </div>
         </div>
       </div>
