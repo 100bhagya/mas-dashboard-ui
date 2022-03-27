@@ -1,6 +1,8 @@
 import React from "react";
 import TableContent from "../Components/TableContent";
 import TopicBar from "../Components/TopicBar";
+import Artboard1 from "../images/Practice 2.png";
+import Artboard2 from "../images/Test 2.png";
 
 const GroupDiscussion = () => {
   return (
@@ -32,10 +34,8 @@ const GroupDiscussion = () => {
                 {" "}
                 Practice Mode
               </span>
-              <img
-                src="https://thumbs.dreamstime.com/z/mobile-learning-abstract-concept-vector-illustration-m-application-portable-device-educational-trend-assignment-individual-plan-196329472.jpg"
-                alt=""
-              />
+              <img src={Artboard1} alt="" className="mt-3" />
+
               <div className="my-4 text-center">
                 Lorem ipsum dolor sit amet, consectetur adipisicing.
               </div>
@@ -45,10 +45,8 @@ const GroupDiscussion = () => {
                 {" "}
                 Test Mode
               </span>
-              <img
-                src="https://thumbs.dreamstime.com/z/mobile-learning-abstract-concept-vector-illustration-m-application-portable-device-educational-trend-assignment-individual-plan-196329472.jpg"
-                alt=""
-              />
+              <img src={Artboard2} alt="" className="mt-12" />
+
               <div className="my-4 text-center">
                 Lorem ipsum dolor sit amet, consectetur adipisicing.
               </div>

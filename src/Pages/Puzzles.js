@@ -1,6 +1,7 @@
 import React from "react";
 import TableContent from "../Components/TableContent";
 import TopicBar from "../Components/TopicBar";
+import Puzzle from "../images/puzzles.png";
 
 const Puzzles = () => {
   return (
@@ -39,11 +40,7 @@ const Puzzles = () => {
             </div>
           </div>
           <div className="md:basis-2/5 lg:basis-1/2 ml-20">
-            <img
-              className=""
-              alt=""
-              src="https://thumbs.dreamstime.com/z/mobile-learning-abstract-concept-vector-illustration-m-application-portable-device-educational-trend-assignment-individual-plan-196329472.jpg"
-            />
+            <img className="" alt="" src={Puzzle} />
           </div>
         </div>
       </div>

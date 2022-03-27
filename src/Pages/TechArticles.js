@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import TopicBar from "../Components/TopicBar";
+import Artboard from "../images/Tech Article.png";
 
 const TechArticles = () => {
   const [limit, setLimit] = useState(800);
@@ -31,11 +32,7 @@ const TechArticles = () => {
             </div>
           </div>
           <div className="md:basis-2/5 lg:basis-1/2 ml-20">
-            <img
-              className=""
-              alt=""
-              src="https://thumbs.dreamstime.com/z/mobile-learning-abstract-concept-vector-illustration-m-application-portable-device-educational-trend-assignment-individual-plan-196329472.jpg"
-            />
+            <img className="" alt="" src={Artboard} />
           </div>
         </div>
       </div>
