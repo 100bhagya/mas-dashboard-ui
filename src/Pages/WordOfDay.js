@@ -4,6 +4,7 @@ import Calendar from "../Components/Calender";
 import CurrentDate from "../Components/CurrentDate";
 import Artboard from "../images/wordofday.png";
 
+
 const WordOfDay = () => {
   return (
     <div className="flex">
