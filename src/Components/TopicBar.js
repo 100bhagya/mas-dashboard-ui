@@ -19,6 +19,8 @@ const TopicBar = () => {
   const [aptitudeOpen, setAptitudeOpen] = useState(true);
   const [techOpen, setTechOpen] = useState(true);
   const [sidebar, setSidebar] = useState(false);
+  const userName = localStorage.getItem("username");
+  const email = localStorage.getItem("email-id");
 
   const location = useLocation();
   // const check = (state) => {
@@ -78,10 +80,10 @@ const TopicBar = () => {
               sidebar ? "hidden" : ""
             }`}
           >
-            Pawan Kumar
+            {userName}
           </div>
           <div className={`text-[12px] mt-1 ${sidebar ? "hidden" : ""}`}>
-            sahupawan9749568594@gmail.com
+            {email}
           </div>
           <Link to="/">
             <div className=" py-2 ">
