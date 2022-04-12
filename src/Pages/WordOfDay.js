@@ -1,10 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import TopicBar from "../Components/TopicBar";
 import Calendar from "../Components/Calender";
 import CurrentDate from "../Components/CurrentDate";
 import Artboard from "../images/wordofday.png";
 
 const WordOfDay = () => {
+  const [date, setDate] = useState("11-04-2022");
+  const [wordings, setWordings] = useState();
+  const [error, setError] = useState();
+
+  var token = localStorage.getItem("access");
+
+  useEffect(() => {
+    let info = async () => {
+      let dailywords = await fetch(
+        `http://localhost:8081/api/task/daily-words?date=${date}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      let words = await dailywords.json();
+      console.log(words);
+      setWordings(words);
+      console.log(wordings);
+    };
+    info();
+  }, wordings);
+
   return (
     <div className="flex">
       <TopicBar />

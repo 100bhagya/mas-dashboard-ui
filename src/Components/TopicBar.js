@@ -22,6 +22,11 @@ const TopicBar = () => {
   const userName = localStorage.getItem("username");
   const email = localStorage.getItem("email-id");
 
+  const Logout = () => {
+    localStorage.clear();
+    window.location.reload(false);
+  };
+
   const location = useLocation();
   // const check = (state) => {
   //   if (location.pathname === "GroupDiscussion") {
@@ -392,8 +397,8 @@ const TopicBar = () => {
               </div>
             </div>
           </div>
-          <Link to="/signin">
-            <div className=" py-2 ">
+          {userName ? (
+            <div className=" py-2 cursor-pointer" onClick={Logout}>
               <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
                 <LogoutIcon className="w-6 text-blue-500" />
                 <div
@@ -401,11 +406,26 @@ const TopicBar = () => {
                     sidebar ? "hidden" : ""
                   }`}
                 >
-                  Login
+                  Logout
                 </div>
               </div>
             </div>
-          </Link>
+          ) : (
+            <Link to="/signin">
+              <div className=" py-2 cursor-pointer">
+                <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
+                  <LogoutIcon className="w-6 text-blue-500" />
+                  <div
+                    className={`ml-5 text-blue-500 md:text-md ${
+                      sidebar ? "hidden" : ""
+                    }`}
+                  >
+                    Login
+                  </div>
+                </div>
+              </div>
+            </Link>
+          )}
         </div>
       </div>
       <div className="w-6 h-10 bg-blue-100 relative top-[50vh]">

@@ -34,6 +34,8 @@ const Signin = () => {
     localStorage.setItem("login-info", JSON.stringify(result));
     localStorage.setItem("username", result.username);
     localStorage.setItem("email-id", result.email);
+    localStorage.setItem("access", result.accessToken);
+    localStorage.setItem("token", result.tokenType);
     // console.log(token.access);
     var length = Object.keys(result).length;
 
