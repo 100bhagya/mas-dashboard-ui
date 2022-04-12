@@ -6,7 +6,7 @@ import Artboard from "../images/wordofday.png";
 
 const WordOfDay = () => {
   const [date, setDate] = useState("11-04-2022");
-  const [wordings, setWordings] = useState();
+  const [wordings, setWordings] = useState({});
   const [error, setError] = useState();
 
   var token = localStorage.getItem("access");
@@ -24,12 +24,10 @@ const WordOfDay = () => {
         }
       );
       let words = await dailywords.json();
-      console.log(words);
-      setWordings(words);
-      console.log(wordings);
+      setWordings(words);      
     };
     info();
-  }, wordings);
+  }, []);
 
   return (
     <div className="flex">
@@ -44,13 +42,10 @@ const WordOfDay = () => {
         <div className="md:flex mt-8 gap-4 md:flex-col lg:flex-row">
           <div className="basis-4/5 flex flex-col">
             <div className="py-4 px-8  rounded-lg shadow-xl my-3">
-              <h3 className="text-xl text-[#2255B8] py-2">Analytics</h3>
+              <h3 className="text-xl text-[#2255B8] py-2">{wordings.wordOne}</h3>
               <p className="py-2 text-[#898989]">
-                {" "}
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem
-                ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                {wordings.wordOneMeaning}
+                
               </p>
               <input
                 placeholder="Let’s make a sentence out of the word !"
@@ -66,13 +61,9 @@ const WordOfDay = () => {
               </div>
             </div>
             <div className="py-4 px-8  rounded-lg shadow-xl my-3">
-              <h3 className="text-xl text-[#2255B8] py-2">Statistics</h3>
+              <h3 className="text-xl text-[#2255B8] py-2">{wordings.wordTwo}</h3>
               <p className="py-2 text-[#898989]">
-                {" "}
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem
-                ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                {wordings.wordTwoMeaning}              
               </p>
               <input
                 placeholder="Let’s make a sentence out of the word !"
