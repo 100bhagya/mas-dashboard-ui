@@ -30,7 +30,6 @@ const Signin = () => {
     });
 
     let result = await response.json();
-    console.log(result.accessToken);
     localStorage.setItem("login-info", JSON.stringify(result));
     localStorage.setItem("username", result.username);
     localStorage.setItem("email-id", result.email);

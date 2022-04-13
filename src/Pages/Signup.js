@@ -41,7 +41,7 @@ const Signup = () => {
       body: JSON.stringify(item),
     });
     result = await result.json();
-    console.log("result", result);
+    // console.log("result", result);
 
     if (
       password === confirmpassword &&
