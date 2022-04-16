@@ -35,6 +35,7 @@ const CaseStudy = () => {
                 Practice Mode
               </span>
               <img src={Artboard1} alt="" className="mt-3" />
+
               <div className="my-4 text-center">
                 Lorem ipsum dolor sit amet, consectetur adipisicing.
               </div>
@@ -45,6 +46,7 @@ const CaseStudy = () => {
                 Test Mode
               </span>
               <img src={Artboard2} alt="" className="mt-12" />
+
               <div className="my-4 text-center">
                 Lorem ipsum dolor sit amet, consectetur adipisicing.
               </div>

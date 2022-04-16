@@ -4,6 +4,7 @@ import Calendar from "../Components/Calender";
 import CurrentDate from "../Components/CurrentDate";
 import Artboard from "../images/wordofday.png";
 
+
 const WordOfDay = () => {
   const [date, setDate] = useState("11-04-2022");
   const [wordings, setWordings] = useState({});
