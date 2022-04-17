@@ -4,7 +4,6 @@ import Calendar from "../Components/Calender";
 import CurrentDate from "../Components/CurrentDate";
 import Artboard from "../images/wordofday.png";
 
-
 const WordOfDay = () => {
   // todo: get latest date for which daily word is present and use it below for date
   const [date, setDate] = useState("11-04-2022");
@@ -12,9 +11,9 @@ const WordOfDay = () => {
   const [wordingsResponse, setWordingsResponse] = useState({});
   const [error, setError] = useState();
   // todo: dailyWordsId comes by calling dailywords get api, date is used as parameter
-  const [dailyWordsId, setDailyWordsId] = useState(1);
+  const [dailyWordsId, setDailyWordsId] = useState();
   // student id comes from local storage
-  const [studentId, setStudentId] = useState(1);
+  const [studentId, setStudentId] = useState();
   const [responseOne, setResponseOne] = useState("");
   const [responseTwo, setResponseTwo] = useState("");
   const [completed, setCompleted] = useState(true);
@@ -22,12 +21,17 @@ const WordOfDay = () => {
   // code to fetch student id
   var token = localStorage.getItem("access");
   var data = localStorage.getItem("login-info");
-  var loginInfo = JSON.parse(data);  
+  var loginInfo = JSON.parse(data);
+
   // todo: setStudentId to state -> studentId
-  
+
+  // useEffect = () => {
+  //   setStudentId(loginInfo.id);
+  // };
+
   const sendResponse = async () => {
     let item = { dailyWordsId, studentId, responseOne, responseTwo, completed };
-
+    console.log("POST" + wordingsResponse);
     var response = await fetch(
       "http://localhost:8081/api/task/daily-words-response",
       {
@@ -45,7 +49,32 @@ const WordOfDay = () => {
     console.log(result);
   };
 
-  useEffect(() => {    
+  const updateResponse = async () => {
+    let item = { dailyWordsId, studentId, responseOne, responseTwo, completed };
+    console.log(dailyWordsId);
+    console.log(studentId);
+    console.log("PUT");
+    console.log(wordingsResponse.status);
+
+    var response = await fetch(
+      "http://localhost:8081/api/task/daily-words-response",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify(item),
+      }
+    );
+
+    let result = await response.json();
+    console.log(result);
+  };
+
+  useEffect(() => {
+    setStudentId(loginInfo.id);
     let info = async () => {
       let dailywords = await fetch(
         `http://localhost:8081/api/task/daily-words?date=${date}`,
@@ -59,12 +88,17 @@ const WordOfDay = () => {
       );
       let words = await dailywords.json();
       setWordings(words);
+      console.log(words.id);
+      setDailyWordsId(words.id);
     };
     info();
   }, []);
 
   useEffect(() => {
+    console.log(loginInfo.id);
     setStudentId(loginInfo.id);
+    console.log(studentId);
+    console.log(dailyWordsId);
     let Response = async () => {
       let dailywordsresponse = await fetch(
         `http://localhost:8081/api/task/daily-words-response?studentId=${studentId}&dailyWordsId=${dailyWordsId}`,
@@ -77,7 +111,10 @@ const WordOfDay = () => {
         }
       );
       let wordsResponse = await dailywordsresponse.json();
-      setWordingsResponse(wordsResponse);          
+      setWordingsResponse(wordsResponse);
+
+      console.log(wordsResponse);
+      console.log(wordingsResponse);
     };
     Response();
   }, []);
@@ -104,18 +141,10 @@ const WordOfDay = () => {
                 type="text"
                 id="large-input"
                 onChange={(e) => setResponseOne(e.target.value)}
-                value = {wordingsResponse.responseOne}
+                defaultValue={wordingsResponse.responseOne}
                 className="block p-4 w-full bg-[#dee9ff] text-blue-900 rounded-lg border border-gray-300 sm:text-[16px] focus:ring-blue-500 focus:border-blue-500 "
               />
-              <div className="text-right mt-3">
-                <button
-                  className="py-2 px-6 text-white rounded-xl bg-[#2255B8]"
-                  onClick={sendResponse}
-                >
-                  {" "}
-                  Submit
-                </button>
-              </div>
+              <div className="text-right mt-3"></div>
             </div>
             <div className="py-4 px-8  rounded-lg shadow-xl my-3">
               <h3 className="text-xl text-[#2255B8] py-2">
@@ -127,19 +156,28 @@ const WordOfDay = () => {
                 type="text"
                 id="large-input"
                 onChange={(e) => setResponseTwo(e.target.value)}
-                value={wordingsResponse.responseTwo}
+                defaultValue={wordingsResponse.responseTwo}
                 className="block p-4 w-full bg-[#dee9ff] text-blue-900 rounded-lg border border-gray-300 sm:text-[16px] focus:ring-blue-500 focus:border-blue-500 "
               />
-              <div className="text-right mt-3">
-                <button
-                  className="py-2 px-6 text-white rounded-xl bg-[#2255B8]"
-                  onClick={sendResponse}
-                >
-                  {" "}
-                  Submit
-                </button>
-              </div>
+              <div className="text-right mt-3"></div>
             </div>
+            {wordingsResponse.status === 200 ? (
+              <button
+                className="py-2 px-6 text-white rounded-xl bg-[#2255B8] w-[50%] relative  left-[27%]"
+                onClick={updateResponse}
+              >
+                {" "}
+                Submit
+              </button>
+            ) : (
+              <button
+                className="py-2 px-6 text-white rounded-xl bg-[#2255B8] w-[50%] relative  left-[27%]"
+                onClick={sendResponse}
+              >
+                {" "}
+                Submit
+              </button>
+            )}
           </div>
           <div className="basis-1/5">
             {/* <div inline-datepicker data-date="02/25/2022"></div> */}
