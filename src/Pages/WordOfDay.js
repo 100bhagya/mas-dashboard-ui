@@ -30,8 +30,7 @@ const WordOfDay = () => {
   // };
 
   const sendResponse = async () => {
-    let item = { dailyWordsId, studentId, responseOne, responseTwo, completed };
-    console.log("POST" + wordingsResponse);
+    let item = { dailyWordsId, studentId, responseOne, responseTwo, completed };  
     var response = await fetch(
       "http://localhost:8081/api/task/daily-words-response",
       {
@@ -45,16 +44,12 @@ const WordOfDay = () => {
       }
     );
 
-    let result = await response.json();
-    console.log(result);
+    let result = await response.json();  
+    setWordingsResponse(result)
   };
 
   const updateResponse = async () => {
     let item = { dailyWordsId, studentId, responseOne, responseTwo, completed };
-    console.log(dailyWordsId);
-    console.log(studentId);
-    console.log("PUT");
-    console.log(wordingsResponse.status);
 
     var response = await fetch(
       "http://localhost:8081/api/task/daily-words-response",
@@ -69,8 +64,7 @@ const WordOfDay = () => {
       }
     );
 
-    let result = await response.json();
-    console.log(result);
+    let result = await response.json();    
   };
 
   useEffect(() => {
@@ -87,37 +81,32 @@ const WordOfDay = () => {
         }
       );
       let words = await dailywords.json();
-      setWordings(words);
-      console.log(words.id);
+      setWordings(words);      
       setDailyWordsId(words.id);
     };
     info();
   }, []);
 
   useEffect(() => {
-    console.log(loginInfo.id);
-    setStudentId(loginInfo.id);
-    console.log(studentId);
-    console.log(dailyWordsId);
     let Response = async () => {
-      let dailywordsresponse = await fetch(
-        `http://localhost:8081/api/task/daily-words-response?studentId=${studentId}&dailyWordsId=${dailyWordsId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
-      let wordsResponse = await dailywordsresponse.json();
-      setWordingsResponse(wordsResponse);
+      if (!(studentId === undefined || dailyWordsId === undefined)) {
+        let dailywordsresponse = await fetch(
+          `http://localhost:8081/api/task/daily-words-response?studentId=${studentId}&dailyWordsId=${dailyWordsId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        let wordsResponse = await dailywordsresponse.json();
+        setWordingsResponse(wordsResponse);
+      }
 
-      console.log(wordsResponse);
-      console.log(wordingsResponse);
     };
     Response();
-  }, []);
+  }, [dailyWordsId]);
 
   return (
     <div className="flex">
@@ -161,7 +150,7 @@ const WordOfDay = () => {
               />
               <div className="text-right mt-3"></div>
             </div>
-            {wordingsResponse.status === 200 ? (
+            {!(wordingsResponse.id === undefined) ? (
               <button
                 className="py-2 px-6 text-white rounded-xl bg-[#2255B8] w-[50%] relative  left-[27%]"
                 onClick={updateResponse}
