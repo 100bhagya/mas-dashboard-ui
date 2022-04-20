@@ -6,7 +6,7 @@ import Artboard from "../images/wordofday.png";
 
 const WordOfDay = () => {
   // todo: get latest date for which daily word is present and use it below for date
-  const [date, setDate] = useState("11-04-2022");
+  const [date, setDate] = useState(CurrentDate);
   const [wordings, setWordings] = useState({});
   const [wordingsResponse, setWordingsResponse] = useState({});
   const [error, setError] = useState();
@@ -28,7 +28,9 @@ const WordOfDay = () => {
   // useEffect = () => {
   //   setStudentId(loginInfo.id);
   // };
-
+  function props(data) {
+    setDate(data);
+  }
   const sendResponse = async () => {
     let item = { dailyWordsId, studentId, responseOne, responseTwo, completed };
     console.log("POST" + wordingsResponse);
@@ -125,9 +127,7 @@ const WordOfDay = () => {
       <div className="flex-grow py-10 md:px-20 px-10">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
           <div className="text-3xl text-sky-800">Word of the day</div>
-          <div className="text-slate-600 text-md">
-            <CurrentDate />
-          </div>
+          <div className="text-slate-600 text-md">{date}</div>
         </div>
         <div className="md:flex mt-8 gap-4 md:flex-col lg:flex-row">
           <div className="basis-4/5 flex flex-col">
@@ -181,7 +181,7 @@ const WordOfDay = () => {
           </div>
           <div className="basis-1/5">
             {/* <div inline-datepicker data-date="02/25/2022"></div> */}
-            <Calendar />
+            <Calendar alert={props} />
             <img src={Artboard} alt="" className="mt-24" />
           </div>
         </div>
