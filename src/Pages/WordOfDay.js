@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import TopicBar from "../Components/TopicBar";
 import Calendar from "../Components/Calender";
-import CurrentDate from "../Components/CurrentDate";
 import Artboard from "../images/wordofday.png";
+import moment from "moment";
 
 const WordOfDay = () => {
   // todo: get latest date for which daily word is present and use it below for date
-  const [date, setDate] = useState(CurrentDate);
+  const [date, setDate] = useState(moment(new Date()).format("DD-MM-YYYY"));
   const [wordings, setWordings] = useState({});
   const [wordingsResponse, setWordingsResponse] = useState({});
   const [error, setError] = useState();
@@ -32,7 +32,7 @@ const WordOfDay = () => {
     setDate(data);
   }
   const sendResponse = async () => {
-    let item = { dailyWordsId, studentId, responseOne, responseTwo, completed };  
+    let item = { dailyWordsId, studentId, responseOne, responseTwo, completed };
     var response = await fetch(
       "http://localhost:8081/api/task/daily-words-response",
       {
@@ -46,8 +46,8 @@ const WordOfDay = () => {
       }
     );
 
-    let result = await response.json();  
-    setWordingsResponse(result)
+    let result = await response.json();
+    setWordingsResponse(result);
   };
 
   const updateResponse = async () => {
@@ -66,11 +66,12 @@ const WordOfDay = () => {
       }
     );
 
-    let result = await response.json();    
+    let result = await response.json();
   };
 
   useEffect(() => {
     setStudentId(loginInfo.id);
+    console.log(date);
     let info = async () => {
       let dailywords = await fetch(
         `http://localhost:8081/api/task/daily-words?date=${date}`,
@@ -83,11 +84,11 @@ const WordOfDay = () => {
         }
       );
       let words = await dailywords.json();
-      setWordings(words);      
+      setWordings(words);
       setDailyWordsId(words.id);
     };
     info();
-  }, []);
+  }, [date]);
 
   useEffect(() => {
     let Response = async () => {
@@ -105,7 +106,6 @@ const WordOfDay = () => {
         let wordsResponse = await dailywordsresponse.json();
         setWordingsResponse(wordsResponse);
       }
-
     };
     Response();
   }, [dailyWordsId]);
