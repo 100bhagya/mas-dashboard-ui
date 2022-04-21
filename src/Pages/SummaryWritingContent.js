@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TopicBar from "../Components/TopicBar";
 import { Link } from "react-router-dom";
 import WeekData from "../data/WeekData";
+import moment from "moment";
 
 function WEEK({ week, index, toggleWEEK }) {
   return (
@@ -30,6 +31,29 @@ function WEEK({ week, index, toggleWEEK }) {
 const SummaryWritingContent = () => {
   // const [isOpen, setIsOpen] = useState(false);
   const [weeks, setweeks] = useState(WeekData);
+  const [summary, setSummary] = useState();
+  const [date, setDate] = useState(moment(new Date()).format("DD-MM-YYYY"));
+  var token = localStorage.getItem("access");
+
+  useEffect(() => {
+    let info = async () => {
+      let dailywords = await fetch(
+        `http://localhost:8081/api/task/weekly-summary?date=${date}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      let words = await dailywords.json();
+      setSummary(words);
+    };
+    info();
+  }, []);
+
+  console.log(summary);
 
   const toggleWEEK = (index) => {
     setweeks(

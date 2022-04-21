@@ -6,16 +6,6 @@ import moment from "moment";
 export default function App(props) {
   const [dateState, setDateState] = useState(new Date());
 
-  // const changeDate = (e) => {
-  //   console.log("pawan1");
-  //   setDateState(e);
-  //   console.log(dateState);
-  //   const dated = moment(dateState).format("DD-MM-YYYY");
-  //   console.log(dated);
-  //   console.log("pawan2");
-  //   props.alert(dated);
-  // };
-
   const Dated = moment(dateState).format("DD-MM-YYYY");
   return (
     <>
