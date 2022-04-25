@@ -1,20 +1,24 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-// import moment from "moment";
+import moment from "moment";
 
-export default function App() {
+export default function App(props) {
   const [dateState, setDateState] = useState(new Date());
-  const changeDate = (e) => {
-    setDateState(e);
-  };
+
+  const Dated = moment(dateState).format("DD-MM-YYYY");
   return (
     <>
-      <Calendar value={dateState} onChange={changeDate} />
-      {/* <p>
-        Current selected date is{" "}
-        <b>{moment(dateState).format("MMMM Do YYYY")}</b>
-      </p> */}
+      <Calendar
+        value={dateState}
+        onChange={(e) => {
+          setDateState(e);
+        }}
+      />
+      {props.alert(Dated)}
+      <p>
+        Current selected date is <b>{Dated}</b>
+      </p>
     </>
   );
 }

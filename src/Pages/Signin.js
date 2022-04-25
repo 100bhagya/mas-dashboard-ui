@@ -8,23 +8,43 @@ import {
 import { MdLockOutline } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../images/logo.png";
+import { AiOutlineUser } from "react-icons/ai";
 
 const Signin = () => {
-  const [email, setEmail] = useState();
+  const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [error, setError] = useState();
   const navigate = useNavigate();
 
-  const SignIn = () => {
-    if (
-      email === "saubhagyagaurav3@gmail.com" &&
-      password === "Saubhagya@123"
-    ) {
+  const SignIn = async () => {
+    // console.log("data", username, password);
+    let item = { username: username, password: password };
+
+    var response = await fetch("http://localhost:8081/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(item),
+    });
+
+    let result = await response.json();
+    localStorage.setItem("login-info", JSON.stringify(result));
+    localStorage.setItem("username", result.username);
+    localStorage.setItem("email-id", result.email);
+    localStorage.setItem("access", result.accessToken);
+    localStorage.setItem("token", result.tokenType);
+    // console.log(token.access);
+    var length = Object.keys(result).length;
+
+    if (length !== 0) {
       navigate("/");
     } else {
-      setError("Please Enter Your Correct Credentials");
+      setError("Please Enter Correct Credentials");
     }
   };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
       <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
@@ -69,14 +89,14 @@ const Signin = () => {
 
               <div className="flex flex-col items-center">
                 <div className="bg-gray-100 w-64 p-2 flex items-center mb-3">
-                  <FaRegEnvelope className="text-gray-400 m-2" />
+                  <AiOutlineUser className="text-gray-400 m-2" />
                   <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
+                    type="username"
+                    name="username"
+                    placeholder="Username"
                     className="bg-gray-100 outline-none text-sm flex-1"
                     onChange={(e) => {
-                      setEmail(e.target.value);
+                      setUsername(e.target.value);
                       setError("");
                     }}
                   />
