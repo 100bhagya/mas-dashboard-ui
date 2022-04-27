@@ -31,6 +31,7 @@ const WordOfDay = () => {
   function props(data) {
     setDate(data);
   }
+
   const sendResponse = async () => {
     let item = { dailyWordsId, studentId, responseOne, responseTwo, completed };
     var response = await fetch(

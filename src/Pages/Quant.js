@@ -1,9 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TopicBar from "../Components/TopicBar";
 import Artboard1 from "../images/Practice 1.png";
 import Artboard2 from "../images/Testtttttt 1.png";
+import StarsRating from "stars-rating";
 
 const RatingCard = ({ serialNo, Title }) => {
+  var token = localStorage.getItem("access");
+  var data = localStorage.getItem("login-info");
+  var loginInfo = JSON.parse(data);
+  const [studentId, setStudentId] = useState(loginInfo.id);
+  const [chapter, setChapter] = useState();
+  const [rating, setRating] = useState();
+
+  const ratingChanged = async (newRating) => {
+    console.log(newRating, Title, token);
+    setChapter(Title);
+    setRating(newRating);
+    let item = {
+      category: "Quant",
+      chapter: chapter,
+      studentId,
+      rating: rating,
+      deleted: "false",
+    };
+    var response = await fetch("http://localhost:8081/api/task/task-rating", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify(item),
+    });
+
+    let result = await response.json();
+    console.log(result);
+  };
+
   return (
     <>
       <div className="rounded-xl shadow-xl flex w-full items-center h-20">
@@ -13,24 +46,13 @@ const RatingCard = ({ serialNo, Title }) => {
             {serialNo}{" "}
           </div>
         </div>
-        <div className="w-2/5 pl-6 flex items-center">{Title}</div>
-
-        <fieldset className="rating userRating items-center">
-          <input type="radio" />
-          <label className="full "></label>
-
-          <input type="radio" />
-          <label className="full"></label>
-
-          <input type="radio" />
-          <label className="full"></label>
-
-          <input type="radio" checked />
-          <label className="full"></label>
-
-          <input type="radio" />
-          <label className="full"></label>
-        </fieldset>
+        <div className="w-[38%] pl-6 flex items-center">{Title}</div>
+        <StarsRating
+          count={5}
+          onChange={ratingChanged}
+          size={24}
+          color2={"#1b70c4"}
+        />
       </div>
     </>
   );

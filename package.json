@@ -18,11 +18,13 @@
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-media-recorder": "^1.6.3",
+    "react-rating": "^2.0.5",
     "react-router-dom": "^6.2.1",
     "react-scripts": "^5.0.0",
     "react-video-recorder": "^3.19.1",
     "react-voice-recorder": "^2.1.2",
     "recharts": "^2.1.9",
+    "stars-rating": "^1.1.0",
     "styled-components": "^5.3.3",
     "web-vitals": "^2.1.4"
   },
