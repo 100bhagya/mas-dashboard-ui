@@ -8,6 +8,7 @@ const RatingCard = ({ serialNo, Title }) => {
   var token = localStorage.getItem("access");
   var data = localStorage.getItem("login-info");
   var loginInfo = JSON.parse(data);
+
   const [studentId, setStudentId] = useState(loginInfo.id);
   const [chapter, setChapter] = useState();
   const [rating, setRating] = useState();
@@ -23,18 +24,35 @@ const RatingCard = ({ serialNo, Title }) => {
       rating: rating,
       deleted: "false",
     };
-    var response = await fetch("http://localhost:8081/api/task/task-rating", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: JSON.stringify(item),
-    });
 
-    let result = await response.json();
-    console.log(result);
+    if (newRating === null) {
+      var response = await fetch("http://localhost:8081/api/task/task-rating", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify(item),
+      });
+
+      let result = await response.json();
+      console.log(result);
+    } else {
+      var updateresponse = await fetch(
+        "http://localhost:8081/api/task/task-rating",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify(item),
+        }
+      );
+      let result = await updateresponse.json();
+    }
   };
 
   return (
@@ -59,6 +77,32 @@ const RatingCard = ({ serialNo, Title }) => {
 };
 
 const Quant = () => {
+  var token = localStorage.getItem("access");
+  var data = localStorage.getItem("login-info");
+  var loginInfo = JSON.parse(data);
+  const [ratingResponse, setRatingResponse] = useState();
+  const [studentId, setStudentId] = useState(loginInfo.id);
+  const category = "Quant";
+  useEffect(() => {
+    let Response = async () => {
+      if (!(studentId === undefined)) {
+        let ratings = await fetch(
+          `http://localhost:8081/api/task/task-rating?studentId=${studentId}&category=Quant`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        let Rate = await ratings.json();
+        setRatingResponse(Rate);
+        console.log(ratingResponse);
+      }
+    };
+    Response();
+  }, []);
   return (
     <div className="flex">
       <TopicBar />
