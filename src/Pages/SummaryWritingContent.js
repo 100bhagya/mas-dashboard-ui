@@ -5,6 +5,7 @@ import WeekData from "../data/WeekData";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 
+
 function WEEK({ week, index, toggleWEEK }) {
   return (
     <div>
@@ -44,7 +45,6 @@ const SummaryWritingContent = () => {
       navigate("/signin");
     }
   });
-
   useEffect(() => {
     let info = async () => {
       let dailywords = await fetch(

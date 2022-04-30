@@ -5,6 +5,7 @@ import Artboard from "../images/wordofday.png";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 
+
 const WordOfDay = () => {
   // todo: get latest date for which daily word is present and use it below for date
   const [date, setDate] = useState(moment(new Date()).format("DD-MM-YYYY"));
@@ -33,6 +34,7 @@ const WordOfDay = () => {
     }
   });
 
+
   // todo: setStudentId to state -> studentId
 
   // useEffect = () => {
@@ -45,6 +47,7 @@ const WordOfDay = () => {
       setResponseTwo(null);
     }
   }
+
 
   const sendResponse = async () => {
     let item = { dailyWordsId, studentId, responseOne, responseTwo, completed };

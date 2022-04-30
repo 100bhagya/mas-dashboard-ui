@@ -16,7 +16,6 @@ export default function App(props) {
         }}
       />
       {props.alert(Dated)}
-
       <p>
         Current selected date is <b>{Dated}</b>
       </p>
