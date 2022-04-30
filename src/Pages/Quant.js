@@ -3,23 +3,22 @@ import TopicBar from "../Components/TopicBar";
 import Artboard1 from "../images/Practice 1.png";
 import Artboard2 from "../images/Testtttttt 1.png";
 import StarsRating from "stars-rating";
+import { useNavigate } from "react-router-dom";
 
 const RatingCard = ({ serialNo, Title }) => {
   var token = localStorage.getItem("access");
   var data = localStorage.getItem("login-info");
   var loginInfo = JSON.parse(data);
 
-  const [studentId, setStudentId] = useState(loginInfo.id);
-  const [chapter, setChapter] = useState();
+  const studentId = loginInfo.id;
   const [rating, setRating] = useState();
 
   const ratingChanged = async (newRating) => {
     console.log(newRating, Title, token);
-    setChapter(Title);
     setRating(newRating);
     let item = {
       category: "Quant",
-      chapter: chapter,
+      chapter: Title,
       studentId,
       rating: rating,
       deleted: "false",
@@ -80,29 +79,56 @@ const Quant = () => {
   var token = localStorage.getItem("access");
   var data = localStorage.getItem("login-info");
   var loginInfo = JSON.parse(data);
+  const result = localStorage.getItem("username");
+  const navigate = useNavigate();
   const [ratingResponse, setRatingResponse] = useState();
-  const [studentId, setStudentId] = useState(loginInfo.id);
+  const studentId = loginInfo.id;
   const category = "Quant";
+  // useEffect(() => {
+  //   let Response = async () => {
+  //     console.log("student" + studentId);
+  //     if (!(studentId === undefined)) {
+  //       let ratings = await fetch(
+  //         `http://localhost:8081/api/task/task-rating?studentId=${studentId}&category=Quant`,
+  //         {
+  //           method: "GET",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             Authorization: "Bearer " + token,
+  //           },
+  //         }
+  //       );
+  //       let Rate = await ratings.json();
+  //       setRatingResponse(Rate);
+  //       console.log(Rate);
+  //     }
+  //   };
+  //   Response();
+  // }, []);
+
   useEffect(() => {
-    let Response = async () => {
-      if (!(studentId === undefined)) {
-        let ratings = await fetch(
-          `http://localhost:8081/api/task/task-rating?studentId=${studentId}&category=Quant`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
-        let Rate = await ratings.json();
-        setRatingResponse(Rate);
-        console.log(ratingResponse);
+    fetch(
+      `http://localhost:8081/api/task/task-rating?studentId=${studentId}&category=Quant`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
       }
-    };
-    Response();
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        setRatingResponse(result);
+        console.log(ratingResponse);
+      });
   }, []);
+
+  useEffect(() => {
+    if (!result) {
+      navigate("/signin");
+    }
+  });
   return (
     <div className="flex">
       <TopicBar />

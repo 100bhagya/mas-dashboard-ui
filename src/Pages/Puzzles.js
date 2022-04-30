@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TableContent from "../Components/TableContent";
 import TopicBar from "../Components/TopicBar";
 import Puzzle from "../images/puzzles.png";
+import { useNavigate } from "react-router-dom";
 
 const Puzzles = () => {
+  const result = localStorage.getItem("username");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!result) {
+      navigate("/signin");
+    }
+  });
   return (
     <div className="flex">
       <TopicBar />

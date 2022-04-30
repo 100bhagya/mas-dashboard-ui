@@ -3,6 +3,7 @@ import TopicBar from "../Components/TopicBar";
 import Calendar from "../Components/Calender";
 import Artboard from "../images/wordofday.png";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 const WordOfDay = () => {
   // todo: get latest date for which daily word is present and use it below for date
@@ -23,6 +24,15 @@ const WordOfDay = () => {
   var data = localStorage.getItem("login-info");
   var loginInfo = JSON.parse(data);
 
+  const result = localStorage.getItem("username");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!result) {
+      navigate("/signin");
+    }
+  });
+
   // todo: setStudentId to state -> studentId
 
   // useEffect = () => {
@@ -32,7 +42,7 @@ const WordOfDay = () => {
     setDate(data);
     if (!wordingsResponse) {
       setResponseOne(null);
-      setResponseOne(null);
+      setResponseTwo(null);
     }
   }
 
@@ -175,7 +185,9 @@ const WordOfDay = () => {
               )}
             </div>
           ) : (
-            <div className="">The Daily words is not present.</div>
+            <div className="text-4xl font-bold text-red-600 mt-28 mr-14">
+              The Daily words is not present.
+            </div>
           )}
           <div className="basis-1/5">
             {/* <div inline-datepicker data-date="02/25/2022"></div> */}

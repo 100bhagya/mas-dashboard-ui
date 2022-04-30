@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TopicBar from "../Components/TopicBar";
+import { useNavigate } from "react-router-dom";
 
 const DataAnalysis = () => {
+  const result = localStorage.getItem("username");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!result) {
+      navigate("/signin");
+    }
+  });
   return (
     <div className="flex">
       <TopicBar />
