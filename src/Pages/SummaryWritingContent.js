@@ -3,6 +3,8 @@ import TopicBar from "../Components/TopicBar";
 import { Link } from "react-router-dom";
 import WeekData from "../data/WeekData";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
+
 
 function WEEK({ week, index, toggleWEEK }) {
   return (
@@ -35,6 +37,14 @@ const SummaryWritingContent = () => {
   const [date, setDate] = useState(moment(new Date()).format("DD-MM-YYYY"));
   var token = localStorage.getItem("access");
 
+  const result = localStorage.getItem("username");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!result) {
+      navigate("/signin");
+    }
+  });
   useEffect(() => {
     let info = async () => {
       let dailywords = await fetch(

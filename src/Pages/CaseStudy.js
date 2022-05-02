@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TableContent from "../Components/TableContent";
 import TopicBar from "../Components/TopicBar";
 import Artboard1 from "../images/Practice 2.png";
 import Artboard2 from "../images/Test 2.png";
+import { useNavigate } from "react-router-dom";
 
 const CaseStudy = () => {
+  const result = localStorage.getItem("username");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!result) {
+      navigate("/signin");
+    }
+  });
   return (
     <div className="flex">
       <TopicBar />

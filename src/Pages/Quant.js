@@ -1,9 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TopicBar from "../Components/TopicBar";
 import Artboard1 from "../images/Practice 1.png";
 import Artboard2 from "../images/Testtttttt 1.png";
+import StarsRating from "stars-rating";
+import { useNavigate } from "react-router-dom";
 
 const RatingCard = ({ serialNo, Title }) => {
+  var token = localStorage.getItem("access");
+  var data = localStorage.getItem("login-info");
+  var loginInfo = JSON.parse(data);
+
+  const studentId = loginInfo.id;
+  const [rating, setRating] = useState();
+
+  const ratingChanged = async (newRating) => {
+    console.log(newRating, Title, token);
+    setRating(newRating);
+    let item = {
+      category: "Quant",
+      chapter: Title,
+      studentId,
+      rating: rating,
+      deleted: "false",
+    };
+
+    if (newRating === null) {
+      var response = await fetch("http://localhost:8081/api/task/task-rating", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify(item),
+      });
+
+      let result = await response.json();
+      console.log(result);
+    } else {
+      var updateresponse = await fetch(
+        "http://localhost:8081/api/task/task-rating",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify(item),
+        }
+      );
+      let result = await updateresponse.json();
+    }
+  };
+
   return (
     <>
       <div className="rounded-xl shadow-xl flex w-full items-center h-20">
@@ -13,30 +63,72 @@ const RatingCard = ({ serialNo, Title }) => {
             {serialNo}{" "}
           </div>
         </div>
-        <div className="w-2/5 pl-6 flex items-center">{Title}</div>
-
-        <fieldset className="rating userRating items-center">
-          <input type="radio" />
-          <label className="full "></label>
-
-          <input type="radio" />
-          <label className="full"></label>
-
-          <input type="radio" />
-          <label className="full"></label>
-
-          <input type="radio" checked />
-          <label className="full"></label>
-
-          <input type="radio" />
-          <label className="full"></label>
-        </fieldset>
+        <div className="w-[38%] pl-6 flex items-center">{Title}</div>
+        <StarsRating
+          count={5}
+          onChange={ratingChanged}
+          size={24}
+          color2={"#1b70c4"}
+        />
       </div>
     </>
   );
 };
 
 const Quant = () => {
+  var token = localStorage.getItem("access");
+  var data = localStorage.getItem("login-info");
+  var loginInfo = JSON.parse(data);
+  const result = localStorage.getItem("username");
+  const navigate = useNavigate();
+  const [ratingResponse, setRatingResponse] = useState();
+  const studentId = loginInfo.id;
+  const category = "Quant";
+  // useEffect(() => {
+  //   let Response = async () => {
+  //     console.log("student" + studentId);
+  //     if (!(studentId === undefined)) {
+  //       let ratings = await fetch(
+  //         `http://localhost:8081/api/task/task-rating?studentId=${studentId}&category=Quant`,
+  //         {
+  //           method: "GET",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             Authorization: "Bearer " + token,
+  //           },
+  //         }
+  //       );
+  //       let Rate = await ratings.json();
+  //       setRatingResponse(Rate);
+  //       console.log(Rate);
+  //     }
+  //   };
+  //   Response();
+  // }, []);
+
+  useEffect(() => {
+    fetch(
+      `http://localhost:8081/api/task/task-rating?studentId=${studentId}&category=Quant`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        setRatingResponse(result);
+        console.log(ratingResponse);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (!result) {
+      navigate("/signin");
+    }
+  });
   return (
     <div className="flex">
       <TopicBar />
