@@ -5,20 +5,17 @@ import Artboard from "../images/wordofday.png";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 
-
 const WordOfDay = () => {
   // todo: get latest date for which daily word is present and use it below for date
   const [date, setDate] = useState(moment(new Date()).format("DD-MM-YYYY"));
   const [wordings, setWordings] = useState({});
   const [wordingsResponse, setWordingsResponse] = useState({});
-  const [error, setError] = useState();
   // todo: dailyWordsId comes by calling dailywords get api, date is used as parameter
   const [dailyWordsId, setDailyWordsId] = useState();
   // student id comes from local storage
   const [studentId, setStudentId] = useState();
   const [responseOne, setResponseOne] = useState("");
-  const [responseTwo, setResponseTwo] = useState("");
-  const [completed, setCompleted] = useState(true);
+  const [responseTwo, setResponseTwo] = useState("");  
 
   // code to fetch student id
   var token = localStorage.getItem("access");
@@ -32,60 +29,7 @@ const WordOfDay = () => {
     if (!result) {
       navigate("/signin");
     }
-  });
-
-
-  // todo: setStudentId to state -> studentId
-
-  // useEffect = () => {
-  //   setStudentId(loginInfo.id);
-  // };
-  function props(data) {
-    setDate(data);
-    if (!wordingsResponse) {
-      setResponseOne(null);
-      setResponseTwo(null);
-    }
-  }
-
-
-  const sendResponse = async () => {
-    let item = { dailyWordsId, studentId, responseOne, responseTwo, completed };
-    var response = await fetch(
-      "http://localhost:8081/api/task/daily-words-response",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: "Bearer " + token,
-        },
-        body: JSON.stringify(item),
-      }
-    );
-
-    let result = await response.json();
-    setWordingsResponse(result);
-  };
-
-  const updateResponse = async () => {
-    let item = { dailyWordsId, studentId, responseOne, responseTwo, completed };
-
-    var response = await fetch(
-      "http://localhost:8081/api/task/daily-words-response",
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: "Bearer " + token,
-        },
-        body: JSON.stringify(item),
-      }
-    );
-
-    let result = await response.json();
-  };
+  }, [result]);  
 
   useEffect(() => {
     setStudentId(loginInfo.id);
@@ -127,6 +71,54 @@ const WordOfDay = () => {
     };
     Response();
   }, [dailyWordsId]);
+
+  function props(data) {
+    setDate(data);
+    if (!wordingsResponse) {
+      setResponseOne(null);
+      setResponseTwo(null);
+    }
+  }
+
+  const sendResponse = async () => {
+    let item = { dailyWordsId, studentId, responseOne, responseTwo };
+    var response = await fetch(
+      "http://localhost:8081/api/task/daily-words-response",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify(item),
+      }
+    );
+
+    let result = await response.json();
+    setWordingsResponse(result);
+  };
+
+  const updateResponse = async () => {
+    let item = { dailyWordsId, studentId, responseOne, responseTwo };
+
+    var response = await fetch(
+      "http://localhost:8081/api/task/daily-words-response",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify(item),
+      }
+    );
+
+    let result = await response.json();
+  };
+
+
 
   return (
     <div className="flex">

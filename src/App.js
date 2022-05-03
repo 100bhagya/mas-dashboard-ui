@@ -19,12 +19,16 @@ import MLandPython from "./Pages/MLandPython";
 import DataAnalysis from "./Pages/DataAnalysis";
 import SQL from "./Pages/SQL";
 import QuizDetail from "./Pages/QuizDetail";
+import ProtectedRoutes from "./Components/PrivateRoutes";
 
 function App() {
   return (
     <>
       <Router>
         <Routes>
+          <Route path="signin" element={<Signin />} />
+          <Route path="signup" element={<Signup />} />
+          <Route element={<ProtectedRoutes />} >
           <Route path="/" element={<LandingPage />} />
           <Route path="techarticles" element={<TechArticles />} />
           <Route path="wordofday" element={<WordOfDay />} />
@@ -38,12 +42,12 @@ function App() {
           <Route path="casestudy" element={<CaseStudy />} />
           <Route path="guessestimate" element={<GuessEstimate />} />
           <Route path="puzzles" element={<Puzzles />} />
-          <Route path="signin" element={<Signin />} />
-          <Route path="signup" element={<Signup />} />
+          
           <Route path="mlandpython" element={<MLandPython />} />
           <Route path="dataanalysis" element={<DataAnalysis />} />
           <Route path="sql" element={<SQL />} />
           <Route path="quizdetail" element={<QuizDetail />} />
+          </Route>
         </Routes>
       </Router>
     </>
