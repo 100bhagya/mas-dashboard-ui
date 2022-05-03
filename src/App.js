@@ -29,24 +29,24 @@ function App() {
           <Route path="signin" element={<Signin />} />
           <Route path="signup" element={<Signup />} />
           <Route element={<ProtectedRoutes />} >
-          <Route path="/" element={<LandingPage />} />
-          <Route path="techarticles" element={<TechArticles />} />
-          <Route path="wordofday" element={<WordOfDay />} />
-          <Route path="summarywriting" element={<SummaryWritingContent />} />
-          <Route path="videorecord" element={<Record />} />
-          <Route path="groupdiscussion" element={<GroupDiscussion />} />
-          <Route path="quizes" element={<Quizes />} />
-          <Route path="quant" element={<Quant />} />
-          <Route path="lrdi" element={<LRandDI />} />
-          <Route path="verbal" element={<Verbal />} />
-          <Route path="casestudy" element={<CaseStudy />} />
-          <Route path="guessestimate" element={<GuessEstimate />} />
-          <Route path="puzzles" element={<Puzzles />} />
-          
-          <Route path="mlandpython" element={<MLandPython />} />
-          <Route path="dataanalysis" element={<DataAnalysis />} />
-          <Route path="sql" element={<SQL />} />
-          <Route path="quizdetail" element={<QuizDetail />} />
+            <Route path="/" element={<LandingPage />} />
+            <Route path="techarticles" element={<TechArticles />} />
+            <Route path="wordofday" element={<WordOfDay />} />
+            <Route path="summarywriting" element={<SummaryWritingContent />} />
+            <Route path="videorecord" element={<Record />} />
+            <Route path="groupdiscussion" element={<GroupDiscussion />} />
+            <Route path="quizes" element={<Quizes />} />
+            <Route path="quant" element={<Quant />} />
+            <Route path="lrdi" element={<LRandDI />} />
+            <Route path="verbal" element={<Verbal />} />
+            <Route path="casestudy" element={<CaseStudy />} />
+            <Route path="guessestimate" element={<GuessEstimate />} />
+            <Route path="puzzles" element={<Puzzles />} />
+            
+            <Route path="mlandpython" element={<MLandPython />} />
+            <Route path="dataanalysis" element={<DataAnalysis />} />
+            <Route path="sql" element={<SQL />} />
+            <Route path="quizdetail" element={<QuizDetail />} />            
           </Route>
         </Routes>
       </Router>

@@ -43,11 +43,6 @@ const LandingPage = () => {
   const result = localStorage.getItem("username");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!result) {
-      navigate("/signin");
-    }
-  });
   const activateLeaderboard = () => {
     setLeaderboard(!leaderboard);
   };

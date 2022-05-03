@@ -1,10 +1,12 @@
 import { Navigate, Outlet } from "react-router-dom";
 
 const useAuth = () => {
-//   const user = { loggedIn: false };
-//   return user && user.loggedIn;
   const user = localStorage.getItem("username");
-  return user;
+  console.log(user);
+  if (user === undefined || user === null) {      
+      return false;
+  } 
+  return true;
 };
 
 const ProtectedRoutes = () => {

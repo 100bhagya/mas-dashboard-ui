@@ -41,11 +41,6 @@ const SummaryWritingContent = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!result) {
-      navigate("/signin");
-    }
-  });
-  useEffect(() => {
     let info = async () => {
       let dailywords = await fetch(
         `http://localhost:8081/api/task/weekly-summary?date=${date}`,

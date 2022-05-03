@@ -124,11 +124,6 @@ const Quant = () => {
       });
   }, []);
 
-  useEffect(() => {
-    if (!result) {
-      navigate("/signin");
-    }
-  });
   return (
     <div className="flex">
       <TopicBar />

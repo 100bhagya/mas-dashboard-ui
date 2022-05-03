@@ -26,12 +26,6 @@ const WordOfDay = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!result) {
-      navigate("/signin");
-    }
-  }, [result]);  
-
-  useEffect(() => {
     setStudentId(loginInfo.id);
     console.log(date);
     let info = async () => {

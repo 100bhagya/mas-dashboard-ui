@@ -9,11 +9,6 @@ const GroupDiscussion = () => {
   const result = localStorage.getItem("username");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!result) {
-      navigate("/signin");
-    }
-  });
   return (
     <div className="flex">
       <TopicBar />
