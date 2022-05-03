@@ -1,10 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import TopicBar from "../Components/TopicBar";
-import { useNavigate } from "react-router-dom";
 
 const MLandPython = () => {
-  const result = localStorage.getItem("username");
-  const navigate = useNavigate();
 
   return (
     <div className="flex">

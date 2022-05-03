@@ -1,13 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import TableContent from "../Components/TableContent";
 import TopicBar from "../Components/TopicBar";
 import Artboard1 from "../images/Practice 2.png";
 import Artboard2 from "../images/Test 2.png";
-import { useNavigate } from "react-router-dom";
 
 const GuessEstimate = () => {
-  const result = localStorage.getItem("username");
-  const navigate = useNavigate();
 
   return (
     <div className="flex">

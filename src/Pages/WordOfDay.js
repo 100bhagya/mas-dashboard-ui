@@ -3,7 +3,6 @@ import TopicBar from "../Components/TopicBar";
 import Calendar from "../Components/Calender";
 import Artboard from "../images/wordofday.png";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
 
 const WordOfDay = () => {
   // todo: get latest date for which daily word is present and use it below for date
@@ -21,9 +20,6 @@ const WordOfDay = () => {
   var token = localStorage.getItem("access");
   var data = localStorage.getItem("login-info");
   var loginInfo = JSON.parse(data);
-
-  const result = localStorage.getItem("username");
-  const navigate = useNavigate();
 
   useEffect(() => {
     setStudentId(loginInfo.id);

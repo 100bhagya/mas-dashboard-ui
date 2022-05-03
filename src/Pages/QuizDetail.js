@@ -1,11 +1,8 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
-import React, { useEffect } from "react";
+import React from "react";
 import TopicBar from "../Components/TopicBar";
-import { useNavigate } from "react-router-dom";
 
 const QuizDetail = () => {
-  const result = localStorage.getItem("username");
-  const navigate = useNavigate();
 
   return (
     <div className="flex">

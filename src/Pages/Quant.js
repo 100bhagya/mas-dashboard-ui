@@ -3,7 +3,6 @@ import TopicBar from "../Components/TopicBar";
 import Artboard1 from "../images/Practice 1.png";
 import Artboard2 from "../images/Testtttttt 1.png";
 import StarsRating from "stars-rating";
-import { useNavigate } from "react-router-dom";
 
 const RatingCard = ({ serialNo, Title }) => {
   var token = localStorage.getItem("access");
@@ -79,8 +78,6 @@ const Quant = () => {
   var token = localStorage.getItem("access");
   var data = localStorage.getItem("login-info");
   var loginInfo = JSON.parse(data);
-  const result = localStorage.getItem("username");
-  const navigate = useNavigate();
   const [ratingResponse, setRatingResponse] = useState();
   const studentId = loginInfo.id;
   const category = "Quant";

@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import TopicBar from "../Components/TopicBar";
-import arrow from "../images/down arrow.png";
 import Graph from "../Components/Graph";
-import { useNavigate } from "react-router-dom";
 
 const CourseCard = () => {
   return (
@@ -40,8 +38,6 @@ const NotificationBar = () => {
 
 const LandingPage = () => {
   const [leaderboard, setLeaderboard] = useState(false);
-  const result = localStorage.getItem("username");
-  const navigate = useNavigate();
 
   const activateLeaderboard = () => {
     setLeaderboard(!leaderboard);

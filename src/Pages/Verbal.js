@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import TopicBar from "../Components/TopicBar";
 import Artboard1 from "../images/Practice 1.png";
 import Artboard2 from "../images/Testtttttt 1.png";
-import { useNavigate } from "react-router-dom";
 
 const RatingCard = ({ serialNo, Title }) => {
   return (
@@ -38,8 +37,6 @@ const RatingCard = ({ serialNo, Title }) => {
 };
 
 const Verbal = () => {
-  const result = localStorage.getItem("username");
-  const navigate = useNavigate();
 
   return (
     <div className="flex">
