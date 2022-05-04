@@ -4,26 +4,31 @@ import Artboard1 from "../images/Practice 1.png";
 import Artboard2 from "../images/Testtttttt 1.png";
 import StarsRating from "stars-rating";
 
-const RatingCard = ({ serialNo, Title }) => {
+const RatingCard = ({ serialNo, Title, currentChapter }) => {
+  
   var token = localStorage.getItem("access");
   var data = localStorage.getItem("login-info");
   var loginInfo = JSON.parse(data);
-
   const studentId = loginInfo.id;
-  const [rating, setRating] = useState();
+  
+  console.log(currentChapter)
+  
+  const [rating, setRating] = useState(currentChapter.length > 0 ? currentChapter[0].rating: null);
+  console.log(rating)  
 
   const ratingChanged = async (newRating) => {
-    console.log(newRating, Title, token);
+    // console.log(newRating, Title, token);
+    
     setRating(newRating);
     let item = {
       category: "Quant",
       chapter: Title,
       studentId,
-      rating: rating,
+      rating: newRating,
       deleted: "false",
     };
-
-    if (newRating === null) {
+    
+    if (currentChapter.length === 0) {
       var response = await fetch("http://localhost:8081/api/task/task-rating", {
         method: "POST",
         headers: {
@@ -35,7 +40,7 @@ const RatingCard = ({ serialNo, Title }) => {
       });
 
       let result = await response.json();
-      console.log(result);
+      currentChapter.push(item)
     } else {
       var updateresponse = await fetch(
         "http://localhost:8081/api/task/task-rating",
@@ -63,7 +68,8 @@ const RatingCard = ({ serialNo, Title }) => {
           </div>
         </div>
         <div className="w-[38%] pl-6 flex items-center">{Title}</div>
-        <StarsRating
+        <StarsRating        
+          value={rating}
           count={5}
           onChange={ratingChanged}
           size={24}
@@ -78,31 +84,9 @@ const Quant = () => {
   var token = localStorage.getItem("access");
   var data = localStorage.getItem("login-info");
   var loginInfo = JSON.parse(data);
-  const [ratingResponse, setRatingResponse] = useState();
   const studentId = loginInfo.id;
-  const category = "Quant";
-  // useEffect(() => {
-  //   let Response = async () => {
-  //     console.log("student" + studentId);
-  //     if (!(studentId === undefined)) {
-  //       let ratings = await fetch(
-  //         `http://localhost:8081/api/task/task-rating?studentId=${studentId}&category=Quant`,
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //             Authorization: "Bearer " + token,
-  //           },
-  //         }
-  //       );
-  //       let Rate = await ratings.json();
-  //       setRatingResponse(Rate);
-  //       console.log(Rate);
-  //     }
-  //   };
-  //   Response();
-  // }, []);
-
+  const [ratingResponse, setRatingResponse] = useState([]);  
+  
   useEffect(() => {
     fetch(
       `http://localhost:8081/api/task/task-rating?studentId=${studentId}&category=Quant`,
@@ -115,11 +99,11 @@ const Quant = () => {
       }
     )
       .then((res) => res.json())
-      .then((result) => {
-        setRatingResponse(result);
-        console.log(ratingResponse);
-      });
+      .then((result) => {                
+        setRatingResponse(result);            
+      })
   }, []);
+
 
   return (
     <div className="flex">
@@ -173,16 +157,17 @@ const Quant = () => {
           Lunchdisco
         </div>
 
-        <div className="grid lg:grid-cols-3 md:grid-cols-1 gap-6 justify-between mt-12">
-          <RatingCard serialNo={1} Title="Probability" />
-          <RatingCard serialNo={2} Title="Statistics" />
-          <RatingCard serialNo={3} Title="P & C" />
-          <RatingCard serialNo={4} Title="Probability" />
-          <RatingCard serialNo={5} Title="Probability" />
-          <RatingCard serialNo={6} Title="Probability" />
-          <RatingCard serialNo={7} Title="Probability" />
-          <RatingCard serialNo={8} Title="Probability" />
-          <RatingCard serialNo={9} Title="Probability" />
+        <div className="grid lg:grid-cols-3 md:grid-cols-1 gap-6 justify-between mt-12">   
+          {ratingResponse.length > 0 &&   <>
+          <RatingCard serialNo={1} Title="Probability" currentChapter={ratingResponse.filter((el) => {return el.chapter === "Probability"})}/>          
+          <RatingCard serialNo={2} Title="Statistics" currentChapter={ratingResponse.filter((el) => {return el.chapter === "Statistics"})}/>
+          <RatingCard serialNo={3} Title="P & C" currentChapter={ratingResponse.filter((el) => {return el.chapter === "P & C"})}/>
+          <RatingCard serialNo={4} Title="Profit & Loss" currentChapter={ratingResponse.filter((el) => {return el.chapter === "Profit & Loss"})}/>
+          <RatingCard serialNo={5} Title="Simple & Compound Interest" currentChapter={ratingResponse.filter((el) => {return el.chapter === "Simple & Compound Interest"})}/>
+          <RatingCard serialNo={6} Title="Time & Work" currentChapter={ratingResponse.filter((el) => {return el.chapter === "Time & Work"})}/>
+          <RatingCard serialNo={7} Title="Average, Mixture & Allegations" currentChapter={ratingResponse.filter((el) => {return el.chapter === "Average, Mixture & Allegations"})}/>
+          <RatingCard serialNo={8} Title="Time, Speed & Distance" currentChapter={ratingResponse.filter((el) => {return el.chapter === "Time, Speed & Distance"})}/>                
+          </> }
         </div>
       </div>
     </div>
