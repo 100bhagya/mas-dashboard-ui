@@ -1,9 +1,57 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import TopicBar from "../Components/TopicBar";
 import Artboard1 from "../images/Practice 1.png";
 import Artboard2 from "../images/Testtttttt 1.png";
+import StarsRating from "stars-rating";
 
-const RatingCard = ({ serialNo, Title }) => {
+const RatingCard = ({ serialNo, Title, currentChapter }) => {
+  
+  var token = localStorage.getItem("access");
+  var data = localStorage.getItem("login-info");
+  var loginInfo = JSON.parse(data);
+  const studentId = loginInfo.id;  
+  
+  const [rating, setRating] = useState(currentChapter.length > 0 ? currentChapter[0].rating: null);  
+
+  const ratingChanged = async (newRating) => {      
+    setRating(newRating);
+    let item = {
+      category: "Verbal",
+      chapter: Title,
+      studentId,
+      rating: newRating,
+      deleted: "false",
+    };
+    
+    if (currentChapter.length === 0) {
+      var response = await fetch("http://localhost:8081/api/task/task-rating", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify(item),
+      });
+
+      let result = await response.json();
+      currentChapter.push(item)
+    } else {
+      var updateresponse = await fetch(
+        "http://localhost:8081/api/task/task-rating",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify(item),
+        }
+      );
+      let result = await updateresponse.json();
+    }
+  };
   return (
     <>
       <div className="rounded-xl shadow-xl flex w-full items-center h-20">
@@ -15,28 +63,42 @@ const RatingCard = ({ serialNo, Title }) => {
         </div>
         <div className="w-2/5 pl-6 flex items-center">{Title}</div>
 
-        <fieldset className="rating userRating items-center">
-          <input type="radio" />
-          <label className="full "></label>
-
-          <input type="radio" />
-          <label className="full"></label>
-
-          <input type="radio" />
-          <label className="full"></label>
-
-          <input type="radio" checked />
-          <label className="full"></label>
-
-          <input type="radio" />
-          <label className="full"></label>
-        </fieldset>
+        <StarsRating        
+          value={rating}
+          count={5}
+          onChange={ratingChanged}
+          size={24}
+          color2={"#1b70c4"}
+        />
       </div>
     </>
   );
 };
 
 const Verbal = () => {
+  var token = localStorage.getItem("access");
+  var data = localStorage.getItem("login-info");
+  var loginInfo = JSON.parse(data);
+  const studentId = loginInfo.id;
+  const [ratingResponse, setRatingResponse] = useState([]);  
+  
+  useEffect(() => {
+    fetch(
+      `http://localhost:8081/api/task/task-rating?studentId=${studentId}&category=Verbal`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((result) => {                
+        setRatingResponse(result);            
+      })
+  }, []);
+
 
   return (
     <div className="flex">
@@ -48,18 +110,7 @@ const Verbal = () => {
         </div>
         <div className="mt-2 flex gap-8 pt-10 lg:flex-row md:flex-col">
           <p className="pr-8 basis-1/2 ">
-            Lörem ipsum mansskatt postform, förutom genusbudgetering pretrede.
-            Lunchdisco jigusm vis Annika Lundgren i kosk. Nes belönade med
-            refaliga synmatisk. Nyssa lotesk ASMR plankning komvalens. Pälogi
-            paddeltennis jasminmöte Martin Karlsson i ojesade. Jörgen Axelsson
-            fulbryt majigen. Mjuta antijide. Dinade kusaling ons. Påsm animoji
-            keprenera. Adism osen att mjuta fast bilsurfa är fredsring.
-            Fadöktiga diatt, nomofobi yvåv. Ac-förkylning plankning renas
-            filoskop. Termovalens bev gonnabe kombucha våvarade. Antiling
-            preliga hemire tetranade med syngen. Higt pensionärskuvös och tena.
-            Religa. Gäna bin Ladin-rabatt, politet. Pyst tilig. Ar Bo Sandström
-            infodemi i blandkostare koktiga. Covid-19 vining. Bepynas yde i
-            nenar Lovisa Lundin.
+          Verbal aptitude refers to a person's ability to understand and respond to spoken information. Aptitude tests are used to assess an individual's skills or ability. These tests are intended to evaluate the person's natural abilities or talents rather than learned skills. To prepare for Verbal, stick to the rule of – concepts first and practice later. Study English grammar to understand the concepts. Then practice a number of sample questions of different kinds to gain confidence, speed and accuracy. Develop the habit of reading from early stages.
           </p>
           <div className="basis-1/2 flex gap-6">
             <div className="basis-1/2 shadow-xl rounded-xl px-4 py-2">
@@ -91,16 +142,27 @@ const Verbal = () => {
         </div>
 
         <div className="grid lg:grid-cols-3 md:grid-cols-1 gap-6 justify-between mt-12">
-          <RatingCard serialNo={1} Title="Probability" />
-          <RatingCard serialNo={2} Title="Statistics" />
-          <RatingCard serialNo={3} Title="P & C" />
-          <RatingCard serialNo={4} Title="Probability" />
-          <RatingCard serialNo={5} Title="Probability" />
-          <RatingCard serialNo={6} Title="Probability" />
-          <RatingCard serialNo={7} Title="Probability" />
-          <RatingCard serialNo={8} Title="Probability" />
-          <RatingCard serialNo={9} Title="Probability" />
+          {ratingResponse.length > 0 &&   <>
+          <RatingCard serialNo={1} Title="Reading Comprehension" currentChapter={ratingResponse.filter((el) => {return el.chapter === "Reading Comprehension"})} />
+          <RatingCard serialNo={2} Title="Sentence Correction" currentChapter={ratingResponse.filter((el) => {return el.chapter === "Sentence Correction"})} />
+          <RatingCard serialNo={3} Title="Synonyms/Antonyms" currentChapter={ratingResponse.filter((el) => {return el.chapter === "Synonyms/Antonyms"})} />
+          <RatingCard serialNo={4} Title="Parajumbles" currentChapter={ratingResponse.filter((el) => {return el.chapter === "Parajumbles"})} />
+          <RatingCard serialNo={5} Title="Summary Completion" currentChapter={ratingResponse.filter((el) => {return el.chapter === "Summary Completion"})} />
+          <RatingCard serialNo={6} Title="Sentence Formation" currentChapter={ratingResponse.filter((el) => {return el.chapter === "Sentence Formation"})} />
+          <RatingCard serialNo={7} Title="Idioms and Phrases" currentChapter={ratingResponse.filter((el) => {return el.chapter === "Idioms and Phrases"})} />
+          </> }
+
+          {ratingResponse.status === 500 && <> 
+          <RatingCard serialNo={1} Title="Reading Comprehension" currentChapter={[]} />
+          <RatingCard serialNo={2} Title="Sentence Correction" currentChapter={[]} />
+          <RatingCard serialNo={3} Title="Synonyms/Antonyms" currentChapter={[]} />
+          <RatingCard serialNo={4} Title="Parajumbles" currentChapter={[]} />
+          <RatingCard serialNo={5} Title="Summary Completion" currentChapter={[]} />
+          <RatingCard serialNo={6} Title="Sentence Formation" currentChapter={[]} />
+          <RatingCard serialNo={7} Title="Idioms and Phrases" currentChapter={[]} />
+          </> }
         </div>
+        
       </div>
     </div>
   );
