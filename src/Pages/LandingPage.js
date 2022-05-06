@@ -50,7 +50,7 @@ const LandingPage = () => {
           <div className="flex-grow">
             <div className="md:p-10 p-6">
               <div className="text-3xl text-sky-800">Hello, Lorem</div>
-              <div className="text-slate-600">22 february ,2022</div>
+
               <div
                 style={{
                   borderTop: "2px solid blue",

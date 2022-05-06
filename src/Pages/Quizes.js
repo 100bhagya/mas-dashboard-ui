@@ -4,14 +4,12 @@ import Data from "../data/QuizData";
 import { Link } from "react-router-dom";
 
 const Quizes = () => {
-
   return (
     <div className="flex">
       <TopicBar />
       <div className=" py-10 md:px-20 px-10 flex-grow">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
           <div className="text-3xl text-sky-800">Quizzes</div>
-          <div className="text-slate-600 text-md">22 february ,2022</div>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 items-center h-fit mt-8">
           {Data.map((item) => {

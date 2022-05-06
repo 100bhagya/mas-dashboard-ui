@@ -3,6 +3,7 @@ import TopicBar from "../Components/TopicBar";
 import Calendar from "../Components/Calender";
 import Artboard from "../images/wordofday.png";
 import moment from "moment";
+import NotFound from "../images/not found.jpg";
 
 const WordOfDay = () => {
   // todo: get latest date for which daily word is present and use it below for date
@@ -14,7 +15,8 @@ const WordOfDay = () => {
   // student id comes from local storage
   const [studentId, setStudentId] = useState();
   const [responseOne, setResponseOne] = useState("");
-  const [responseTwo, setResponseTwo] = useState("");  
+  const [responseTwo, setResponseTwo] = useState("");
+  const [message, setMessage] = useState();
 
   // code to fetch student id
   var token = localStorage.getItem("access");
@@ -87,6 +89,11 @@ const WordOfDay = () => {
 
     let result = await response.json();
     setWordingsResponse(result);
+    if (response.status === 200) {
+      setMessage("Your Response Has Been Submitted");
+    } else {
+      setMessage("Please Try Again After Sometime");
+    }
   };
 
   const updateResponse = async () => {
@@ -106,9 +113,12 @@ const WordOfDay = () => {
     );
 
     let result = await response.json();
+    if (response.status === 200) {
+      setMessage("Your Response Has Been Submitted!!");
+    } else {
+      setMessage("Please Try Again After Sometime");
+    }
   };
-
-
 
   return (
     <div className="flex">
@@ -168,13 +178,23 @@ const WordOfDay = () => {
                   Submit
                 </button>
               )}
+
+              <div className="relative left-[25%] text-xl mt-4 text-green-600 font-bold">
+                {message}
+              </div>
             </div>
           ) : (
-            <div className="text-4xl font-bold text-red-600 mt-28 mr-14">
-              The Daily words is not present.
+            <div className="mt-8">
+              <div className="font-bold text-4xl text-center mb-5 text-red-500 ">
+                Ooops!!
+              </div>
+              <div className="text-4xl font-bold text-red-600 mr-14">
+                No new words available for the selected date
+              </div>
+              <img src={NotFound} alt="" className="relative left-[10%]" />
             </div>
           )}
-          <div className="basis-1/5">
+          <div className="basis-1/5 ml-28 ">
             {/* <div inline-datepicker data-date="02/25/2022"></div> */}
             <Calendar alert={props} />
             {dailyWordsId ? (

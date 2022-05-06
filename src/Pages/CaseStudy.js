@@ -1,18 +1,78 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import TableContent from "../Components/TableContent";
 import TopicBar from "../Components/TopicBar";
 import Artboard1 from "../images/Practice 2.png";
 import Artboard2 from "../images/Test 2.png";
+import StarsRating from "stars-rating";
 
 const CaseStudy = () => {
+  var token = localStorage.getItem("access");
+  var data = localStorage.getItem("login-info");
+  var loginInfo = JSON.parse(data);
+  const studentId = loginInfo.id;
+  const [rating, setRating] = useState();
 
+  useEffect(() => {
+    fetch(
+      `http://localhost:8081/api/task/task-rating?studentId=${studentId}&category=CaseStudy`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        setRating(result[0].rating);
+      });
+  }, []);
+
+  const ratingChanged = async (newRating) => {
+    setRating(newRating);
+    let item = {
+      category: "CaseStudy",
+      chapter: null,
+      studentId,
+      rating: newRating,
+      deleted: "false",
+    };
+
+    if (rating === undefined) {
+      var response = await fetch("http://localhost:8081/api/task/task-rating", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify(item),
+      });
+
+      let result = await response.json();
+    } else {
+      var updateresponse = await fetch(
+        "http://localhost:8081/api/task/task-rating",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify(item),
+        }
+      );
+      let result = await updateresponse.json();
+    }
+  };
   return (
     <div className="flex">
       <TopicBar />
       <div className="flex-grow py-10 md:px-20 px-10">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
           <div className="text-3xl text-sky-800">Case Study</div>
-          <div className="text-slate-600 text-md">22 february ,2022</div>
         </div>
         <div className="mt-2 flex gap-8 pt-10 lg:flex-row md:flex-col">
           <p className="px-2 basis-1/2 ">
@@ -86,22 +146,13 @@ const CaseStudy = () => {
                 Lörem ipsum mansskatt postform, förutom genusbudgetering
                 pretrede
               </div>
-              <fieldset className="rating userRating items-center relative left-[35%] mt-3">
-                <input type="radio" />
-                <label className="full text-2xl"></label>
-
-                <input type="radio" />
-                <label className="full text-2xl"></label>
-
-                <input type="radio" />
-                <label className="full text-2xl"></label>
-
-                <input type="radio" checked />
-                <label className="full text-2xl"></label>
-
-                <input type="radio" />
-                <label className="full text-2xl"></label>
-              </fieldset>
+              <StarsRating
+                value={rating}
+                count={5}
+                onChange={ratingChanged}
+                size={50}
+                color2={"#1b70c4"}
+              />
             </div>
           </div>
         </div>

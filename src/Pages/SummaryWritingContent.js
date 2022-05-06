@@ -74,7 +74,7 @@ const SummaryWritingContent = () => {
       <div className="flex-grow py-10 md:px-20 px-10 mr-32">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
           <div className="text-3xl text-sky-800">Summary Writing</div>
-          <div className="text-slate-600 text-md">22 february ,2022</div>
+          <div className="text-slate-600 text-md">{date}</div>
         </div>
         <div>
           <div className="text-3xl text-sky-800 mt-8">
