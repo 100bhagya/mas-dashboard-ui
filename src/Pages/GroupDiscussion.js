@@ -148,6 +148,7 @@ const GroupDiscussion = () => {
             onChange={ratingChanged}
             size={50}
             color2={"#1b70c4"}
+            className="relative top-16 left-12"
           />
         </div>
       </div>

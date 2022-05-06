@@ -154,6 +154,7 @@ const GuessEstimate = () => {
                 onChange={ratingChanged}
                 size={50}
                 color2={"#1b70c4"}
+                className="relative left-[30%]"
               />
             </div>
           </div>
