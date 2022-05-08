@@ -14,11 +14,12 @@ export default function App(props) {
         onChange={(e) => {
           setDateState(e);
         }}
+        className="rounded-2xl shadow-2xl shadow-blue-100"
       />
       {props.alert(Dated)}
-      <p>
+      {/* <p>
         Current selected date is <b>{Dated}</b>
-      </p>
+      </p> */}
     </>
   );
 }

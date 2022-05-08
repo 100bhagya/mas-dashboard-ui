@@ -1,25 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import TableContent from "../Components/TableContent";
 import TopicBar from "../Components/TopicBar";
 import Puzzle from "../images/puzzles.png";
-import { useNavigate } from "react-router-dom";
 
 const Puzzles = () => {
-  const result = localStorage.getItem("username");
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!result) {
-      navigate("/signin");
-    }
-  });
   return (
     <div className="flex">
       <TopicBar />
       <div className=" py-10 md:px-20 px-10">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
           <div className="text-3xl text-sky-800">Puzzles</div>
-          <div className="text-slate-600 text-md">22 february ,2022</div>
         </div>
 
         <div className="flex items-center">

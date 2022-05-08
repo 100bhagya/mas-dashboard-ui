@@ -37,8 +37,8 @@ const Signin = () => {
     localStorage.setItem("token", result.tokenType);
     // console.log(token.access);
     var length = Object.keys(result).length;
-
-    if (length !== 0) {
+    
+    if (result.username) {
       navigate("/");
     } else {
       setError("Please Enter Correct Credentials");

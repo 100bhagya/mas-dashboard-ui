@@ -3,8 +3,6 @@ import TopicBar from "../Components/TopicBar";
 import { Link } from "react-router-dom";
 import WeekData from "../data/WeekData";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
-
 
 function WEEK({ week, index, toggleWEEK }) {
   return (
@@ -37,14 +35,6 @@ const SummaryWritingContent = () => {
   const [date, setDate] = useState(moment(new Date()).format("DD-MM-YYYY"));
   var token = localStorage.getItem("access");
 
-  const result = localStorage.getItem("username");
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!result) {
-      navigate("/signin");
-    }
-  });
   useEffect(() => {
     let info = async () => {
       let dailywords = await fetch(
@@ -84,7 +74,7 @@ const SummaryWritingContent = () => {
       <div className="flex-grow py-10 md:px-20 px-10 mr-32">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
           <div className="text-3xl text-sky-800">Summary Writing</div>
-          <div className="text-slate-600 text-md">22 february ,2022</div>
+          <div className="text-slate-600 text-md">{date}</div>
         </div>
         <div>
           <div className="text-3xl text-sky-800 mt-8">

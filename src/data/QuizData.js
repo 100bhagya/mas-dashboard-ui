@@ -1,51 +1,51 @@
 const Data = [
   {
     id: 1,
-    quiz: "A man with medical condition and two pills ",
+    quiz: "Quiz 1 ",
   },
   {
     id: 2,
-    quiz: "A man with medical condition and two pills ",
+    quiz: "Quiz 1 ",
   },
   {
     id: 3,
-    quiz: "A man with medical condition and two pills ",
+    quiz: "Quiz 1 ",
   },
   {
     id: 4,
-    quiz: "A man with medical condition and two pills ",
+    quiz: "Quiz 1 ",
   },
   {
     id: 5,
-    quiz: "A man with medical condition and two pills ",
+    quiz: "Quiz 1 ",
   },
   {
     id: 6,
-    quiz: "A man with medical condition and two pills ",
+    quiz: "Quiz 1 ",
   },
   {
     id: 7,
-    quiz: "A man with medical condition and two pills ",
+    quiz: "Quiz 1 ",
   },
   {
     id: 8,
-    quiz: "A man with medical condition and two pills ",
+    quiz: "Quiz 1 ",
   },
   {
     id: 9,
-    quiz: "A man with medical condition and two pills ",
+    quiz: "Quiz 1 ",
   },
   {
     id: 10,
-    quiz: "A man with medical condition and two pills ",
+    quiz: "Quiz 1 ",
   },
   {
     id: 11,
-    quiz: "A man with medical condition and two pills ",
+    quiz: "Quiz 1 ",
   },
   {
     id: 12,
-    quiz: "A man with medical condition and two pills ",
+    quiz: "Quiz 1 ",
   },
 ];
 export default Data;
