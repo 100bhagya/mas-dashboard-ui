@@ -7,7 +7,12 @@ import GroupDiscussion from "./Pages/GroupDiscussion";
 import CaseStudy from "./Pages/CaseStudy";
 import GuessEstimate from "./Pages/GuessEstimate";
 import Puzzles from "./Pages/Puzzles";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Quizes from "./Pages/Quizes";
 import Quant from "./Pages/Quant";
 import LRandDI from "./Pages/LRandDI";
@@ -20,19 +25,28 @@ import DataAnalysis from "./Pages/DataAnalysis";
 import SQL from "./Pages/SQL";
 import QuizDetail from "./Pages/QuizDetail";
 import ProtectedRoutes from "./Components/PrivateRoutes";
+import MainMenu from "./Pages/MainMenu";
 
 function App() {
   return (
     <>
       <Router>
         <Routes>
+          <Route exact path="/" element={<Navigate to="/mainmenu" />} />
+          <Route path="/mainmenu" element={<MainMenu />} />
+          {/* <Route path="" element={<LandingPage />} />
+          <Route path="techarticles" element={<TechArticles />} />
+          <Route path="wordofday" element={<WordOfDay />} /> */}
           <Route path="signin" element={<Signin />} />
           <Route path="signup" element={<Signup />} />
-          <Route element={<ProtectedRoutes />} >
-            <Route path="/" element={<LandingPage />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route path="" element={<LandingPage />} />
             <Route path="techarticles" element={<TechArticles />} />
             <Route path="wordofday" element={<WordOfDay />} />
-            <Route path="summarywriting" element={<SummaryWritingContent />} />
+            <Route
+              path="summarywritingcontent"
+              element={<SummaryWritingContent />}
+            />
             <Route path="videorecord" element={<Record />} />
             <Route path="groupdiscussion" element={<GroupDiscussion />} />
             <Route path="quizes" element={<Quizes />} />
@@ -42,11 +56,11 @@ function App() {
             <Route path="casestudy" element={<CaseStudy />} />
             <Route path="guessestimate" element={<GuessEstimate />} />
             <Route path="puzzles" element={<Puzzles />} />
-            
+
             <Route path="mlandpython" element={<MLandPython />} />
             <Route path="dataanalysis" element={<DataAnalysis />} />
             <Route path="sql" element={<SQL />} />
-            <Route path="quizdetail" element={<QuizDetail />} />            
+            <Route path="quizdetail" element={<QuizDetail />} />
           </Route>
         </Routes>
       </Router>

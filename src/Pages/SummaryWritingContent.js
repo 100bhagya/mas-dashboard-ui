@@ -70,7 +70,6 @@ const SummaryWritingContent = () => {
   };
   return (
     <div className="flex">
-      <TopicBar />
       <div className="flex-grow py-10 md:px-20 px-10 mr-32">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
           <div className="text-3xl text-sky-800">Summary Writing</div>
@@ -78,7 +77,7 @@ const SummaryWritingContent = () => {
         </div>
         <div>
           <div className="text-3xl text-sky-800 mt-8">
-            What is storyboarding and why you should do it?
+            {summary[0].articleTopic}
           </div>
           <div className="flex gap-4 mt-4 text-gray-400">
             <div className="flex">
@@ -133,37 +132,7 @@ const SummaryWritingContent = () => {
               Anmol agrawal
             </div>
           </div>
-          <p className="p-2 mt-8">
-            Lörem ipsum väteligt prel. Eluren dihalig. Preska oss vifons. Lovisa
-            Candia nerväxt. Fygt obelt. Jiniskade divis, transitet
-            stereopatologi inte gåtåg. Smartboard lasamma, mil, till deligt samt
-            båsosk. Reskap babybio. Ånende havudade. Bulig reates. Regon trinas
-            tehusamma haliga realig. Evis dosm luskap. Fyhar tojåck. Plaktiga
-            grönt elcertifikat.
-          </p>
-          <p className="p-2 mt-4">
-            Astronyhet romkom gågging. Annika Bergström replaher abmatisk pres
-            kostymrasist. Dedurad trevis begt. Förväntningssamhälle Åke Hedlund:
-            lar sosoheten psykocentrism. Revalens möst. Sarar dede för Robin
-            Norberg. Mansplaining abgen, beska. Antigram blinga sasyskap. Filip
-            Lundberg plånboksbröllop, dekalig. Mytometer solflygteknik köng
-            Filip Nilsson. Semilogi imaspes munhota. Spårpixel svennekoloni sera
-            Johanna Åberg oresebyrå. Tålig vus. Teväna svischa ad me fobi. Tinar
-            jasminmöte tin köttnorm inte vuvuzela. Otiv kroppsaktivism reativ en
-            ljudöra. Ören rattsurfa, kvasihuse. Rolf Lind Robert Fransson
-            dekass. Var speling, i lull homosm. Til jobbtorg i saledes i paravis
-            då Bamseteorem. Bonus malus Kristina Norberg plastbanta seminde
-            innan reg
-          </p>
-          <p className="p-2 mt-4">
-            Anarade läxrut i biovältare klimatnödläge. Homoadoption kömande.
-            Soda ira i annonsblockerare. Hexangar safariforskning. Trell
-            transperson amöning jobbtorg. Mikrotet vabes logokrati.
-            Samlarsyndrom henifiera. Morotsaktivism tiledes alltsåröm besade
-            gensax. Klimatflykting röstsamtal degisk, samt Dan Johansson
-            triggervarning. Vithetsnorm encism. Inger Lundström on och rattsurfa
-            syngen.
-          </p>
+          <p className="p-2 mt-8">{summary[0].articleText}</p>
         </div>
         <div className="text-right mt-3 ">
           <button className="py-2 px-6 text-white rounded-xl bg-[#2255B8] mx-4">
