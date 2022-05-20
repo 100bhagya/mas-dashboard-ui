@@ -6,12 +6,14 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
-    open: true,
+    open: false,
   },
   {
     id: 2,
@@ -20,9 +22,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -34,9 +38,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -48,9 +54,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -62,9 +70,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -76,9 +86,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -90,9 +102,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -104,9 +118,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -118,9 +134,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -132,9 +150,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -146,9 +166,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -160,9 +182,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -174,9 +198,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -188,9 +214,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -202,9 +230,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -216,9 +246,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -230,9 +262,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -244,9 +278,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -258,9 +294,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -272,9 +310,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -286,9 +326,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -300,9 +342,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -314,9 +358,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
@@ -328,9 +374,11 @@ const WeekData = [
     answer: [
       {
         role: "Article 1",
+        articleNumber: 1,
       },
       {
         role: "Article 2",
+        articleNumber: 2,
       },
     ],
     open: false,
