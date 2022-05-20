@@ -147,10 +147,10 @@ const TopicBar = () => {
                       Word of the day
                     </div>
                   </Link>
-                  <Link to="/summarywriting">
+                  <Link to="/summarywritingcontent">
                     <div
                       className={`text-sm  text-left md:px-2  lg:pl-8 py-2 rounded-md ${
-                        location.pathname === "/summarywriting"
+                        location.pathname === "/summarywritingcontent"
                           ? "bg-[#2255B8] text-white"
                           : "hover:bg-white text-blue-500 "
                       }`}
