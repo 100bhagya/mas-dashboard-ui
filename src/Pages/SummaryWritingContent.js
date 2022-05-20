@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import WeekData from "../data/WeekData";
 import moment from "moment";
 
-function WEEK({ week, index, toggleWEEK }) {
+function WEEK({ week, index, toggleWEEK, handleArticle }) {
   return (
     <div>
       <div key={index} onClick={() => toggleWEEK(index)}>
@@ -20,7 +20,18 @@ function WEEK({ week, index, toggleWEEK }) {
         <div className="w-1 bg-blue-500"></div>
         <div className="ml-3">
           {week.answer.map((post) => {
-            return <div className="cursor-pointer mb-2">{post.role}</div>;
+            return (
+              <div
+                className="cursor-pointer mb-2"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const articleNumber = post.articleNumber;
+                  handleArticle(index, articleNumber);
+                }}
+              >
+                {post.role}
+              </div>
+            );
           })}
         </div>
       </div>
@@ -31,29 +42,11 @@ function WEEK({ week, index, toggleWEEK }) {
 const SummaryWritingContent = () => {
   // const [isOpen, setIsOpen] = useState(false);
   const [weeks, setweeks] = useState(WeekData);
+  const [weekNumber, setWeekNumber] = useState(3);
+  const [articleNumber, setArticleNumber] = useState(2);
   const [summary, setSummary] = useState();
   const [date, setDate] = useState(moment(new Date()).format("DD-MM-YYYY"));
   var token = localStorage.getItem("access");
-
-  useEffect(() => {
-    let info = async () => {
-      let dailywords = await fetch(
-        `http://localhost:8081/api/task/weekly-summary?date=${date}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
-      let words = await dailywords.json();
-      setSummary(words);
-    };
-    info();
-  }, []);
-
-  console.log(summary);
 
   const toggleWEEK = (index) => {
     setweeks(
@@ -68,9 +61,53 @@ const SummaryWritingContent = () => {
       })
     );
   };
+
+  useEffect(() => {
+    // let info = async () => {
+
+    let dailywords;
+    fetch(
+      `http://localhost:8081/api/task/weekly-summary?weekNumber=${weekNumber}&articleNumber=${articleNumber}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    )
+      .then((data) => data.json())
+      .then((response) => setSummary(response));
+
+    // };
+  }, [articleNumber, token, weekNumber, toggleWEEK]);
+
+  const handleArticle = (index, articleNumber) => {
+    setWeekNumber(index + 1);
+    setArticleNumber(articleNumber);
+    console.log(weekNumber, articleNumber);
+    let info = async () => {
+      let dailywords = await fetch(
+        `http://localhost:8081/api/task/weekly-summary?weekNumber=${
+          index + 1
+        }&articleNumber=${articleNumber}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      let words = await dailywords.json();
+      setSummary(words);
+      console.log(words);
+    };
+    info();
+  };
+
   return (
     <div className="flex">
-      <TopicBar />
       <div className="flex-grow py-10 md:px-20 px-10 mr-32">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
           <div className="text-3xl text-sky-800">Summary Writing</div>
@@ -78,7 +115,7 @@ const SummaryWritingContent = () => {
         </div>
         <div>
           <div className="text-3xl text-sky-800 mt-8">
-            What is storyboarding and why you should do it?
+            {summary?.articleTopic}
           </div>
           <div className="flex gap-4 mt-4 text-gray-400">
             <div className="flex">
@@ -133,37 +170,8 @@ const SummaryWritingContent = () => {
               Anmol agrawal
             </div>
           </div>
-          <p className="p-2 mt-8">
-            Lörem ipsum väteligt prel. Eluren dihalig. Preska oss vifons. Lovisa
-            Candia nerväxt. Fygt obelt. Jiniskade divis, transitet
-            stereopatologi inte gåtåg. Smartboard lasamma, mil, till deligt samt
-            båsosk. Reskap babybio. Ånende havudade. Bulig reates. Regon trinas
-            tehusamma haliga realig. Evis dosm luskap. Fyhar tojåck. Plaktiga
-            grönt elcertifikat.
-          </p>
-          <p className="p-2 mt-4">
-            Astronyhet romkom gågging. Annika Bergström replaher abmatisk pres
-            kostymrasist. Dedurad trevis begt. Förväntningssamhälle Åke Hedlund:
-            lar sosoheten psykocentrism. Revalens möst. Sarar dede för Robin
-            Norberg. Mansplaining abgen, beska. Antigram blinga sasyskap. Filip
-            Lundberg plånboksbröllop, dekalig. Mytometer solflygteknik köng
-            Filip Nilsson. Semilogi imaspes munhota. Spårpixel svennekoloni sera
-            Johanna Åberg oresebyrå. Tålig vus. Teväna svischa ad me fobi. Tinar
-            jasminmöte tin köttnorm inte vuvuzela. Otiv kroppsaktivism reativ en
-            ljudöra. Ören rattsurfa, kvasihuse. Rolf Lind Robert Fransson
-            dekass. Var speling, i lull homosm. Til jobbtorg i saledes i paravis
-            då Bamseteorem. Bonus malus Kristina Norberg plastbanta seminde
-            innan reg
-          </p>
-          <p className="p-2 mt-4">
-            Anarade läxrut i biovältare klimatnödläge. Homoadoption kömande.
-            Soda ira i annonsblockerare. Hexangar safariforskning. Trell
-            transperson amöning jobbtorg. Mikrotet vabes logokrati.
-            Samlarsyndrom henifiera. Morotsaktivism tiledes alltsåröm besade
-            gensax. Klimatflykting röstsamtal degisk, samt Dan Johansson
-            triggervarning. Vithetsnorm encism. Inger Lundström on och rattsurfa
-            syngen.
-          </p>
+
+          <p className="p-2 mt-8">{summary?.articleText}</p>
         </div>
         <div className="text-right mt-3 ">
           <button className="py-2 px-6 text-white rounded-xl bg-[#2255B8] mx-4">
@@ -178,13 +186,19 @@ const SummaryWritingContent = () => {
           </Link>
         </div>
       </div>
+      {console.log(summary)}
       <div className="bg-blue-200 h-[100vh] fixed left-[89vw] w-48 pt-10 pl-10">
         <div className="cursor-pointer text-2xl text-blue-800 font-semibold">
           Weeks
         </div>
         <div className="ml-3 mt-4 overflow-y-scroll h-[87vh] overflow-x-hidden">
           {weeks.map((week, i) => (
-            <WEEK week={week} index={i} toggleWEEK={toggleWEEK} />
+            <WEEK
+              week={week}
+              index={i}
+              toggleWEEK={toggleWEEK}
+              handleArticle={handleArticle}
+            />
           ))}
         </div>
       </div>
