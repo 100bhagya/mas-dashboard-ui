@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import WeekData from "../data/WeekData";
 import moment from "moment";
 
-function WEEK({ week, index, toggleWEEK, handleArticle }) {
+function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
   return (
     <div>
       <div key={index} onClick={() => toggleWEEK(index)}>
@@ -18,13 +18,16 @@ function WEEK({ week, index, toggleWEEK, handleArticle }) {
       </div>
       <div className={`faq-answer flex ml-1 ${!week.open ? "hidden" : null}`}>
         <div className="w-1 bg-blue-500"></div>
-        <div className="ml-3">
+        <div className="ml-1">
           {week.answer.map((post) => {
             return (
               <div
-                className="cursor-pointer mb-2"
-                onClick={(e) => {
-                  e.preventDefault();
+                className={`cursor-pointer mb-2 px-2 py-1 rounded-lg ${
+                  articleNumber === post.articleNumber
+                    ? "bg-blue-500 text-white"
+                    : null
+                }`}
+                onClick={() => {
                   const articleNumber = post.articleNumber;
                   handleArticle(index, articleNumber);
                 }}
@@ -42,6 +45,7 @@ function WEEK({ week, index, toggleWEEK, handleArticle }) {
 const SummaryWritingContent = () => {
   // const [isOpen, setIsOpen] = useState(false);
   const [weeks, setweeks] = useState(WeekData);
+  const [article, setArticle] = useState(false);
   const [weekNumber, setWeekNumber] = useState(3);
   const [articleNumber, setArticleNumber] = useState(2);
   const [summary, setSummary] = useState();
@@ -49,6 +53,7 @@ const SummaryWritingContent = () => {
   var token = localStorage.getItem("access");
 
   const toggleWEEK = (index) => {
+    setArticleNumber(0);
     setweeks(
       weeks.map((week, i) => {
         if (i === index) {
@@ -56,7 +61,6 @@ const SummaryWritingContent = () => {
         } else {
           week.open = false;
         }
-
         return week;
       })
     );
@@ -64,8 +68,15 @@ const SummaryWritingContent = () => {
 
   useEffect(() => {
     // let info = async () => {
-
-    let dailywords;
+    // const newWeek = weeks.map((week, i) => {
+    //   if (i === 2) {
+    //     week.open = true;
+    //   } else {
+    //     week.open = false;
+    //   }
+    //   return week;
+    // });
+    // setweeks(newWeek);
     fetch(
       `http://localhost:8081/api/task/weekly-summary?weekNumber=${weekNumber}&articleNumber=${articleNumber}`,
       {
@@ -80,9 +91,10 @@ const SummaryWritingContent = () => {
       .then((response) => setSummary(response));
 
     // };
-  }, [articleNumber, token, weekNumber, toggleWEEK]);
+  }, [articleNumber, token, weekNumber, weeks]);
 
   const handleArticle = (index, articleNumber) => {
+    setArticle(true);
     setWeekNumber(index + 1);
     setArticleNumber(articleNumber);
     console.log(weekNumber, articleNumber);
@@ -113,6 +125,7 @@ const SummaryWritingContent = () => {
           <div className="text-3xl text-sky-800">Summary Writing</div>
           <div className="text-slate-600 text-md">{date}</div>
         </div>
+        {console.log(summary)}
         <div>
           <div className="text-3xl text-sky-800 mt-8">
             {summary?.articleTopic}
@@ -186,7 +199,7 @@ const SummaryWritingContent = () => {
           </Link>
         </div>
       </div>
-      {console.log(summary)}
+
       <div className="bg-blue-200 h-[100vh] fixed left-[89vw] w-48 pt-10 pl-10">
         <div className="cursor-pointer text-2xl text-blue-800 font-semibold">
           Weeks
@@ -198,6 +211,7 @@ const SummaryWritingContent = () => {
               index={i}
               toggleWEEK={toggleWEEK}
               handleArticle={handleArticle}
+              articleNumber={articleNumber}
             />
           ))}
         </div>

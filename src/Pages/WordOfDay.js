@@ -5,7 +5,7 @@ import Artboard from "../images/wordofday.png";
 import moment from "moment";
 import NotFound from "../images/not found.jpg";
 
-const WordOfDay = () => {
+const WordOfDay = (isOpen) => {
   // todo: get latest date for which daily word is present and use it below for date
   const [date, setDate] = useState(moment(new Date()).format("DD-MM-YYYY"));
   const [wordings, setWordings] = useState({});
@@ -122,7 +122,7 @@ const WordOfDay = () => {
 
   return (
     <div className="flex">
-      <TopicBar />
+      <TopicBar value={(isOpen = false)} />
       <div className="flex-grow py-10 md:px-20 px-10">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
           <div className="text-3xl text-sky-800">Word of the day</div>

@@ -36,7 +36,7 @@ const NotificationBar = () => {
   );
 };
 
-const LandingPage = () => {
+const LandingPage = (isOpen) => {
   const [leaderboard, setLeaderboard] = useState(false);
 
   const activateLeaderboard = () => {
@@ -45,7 +45,8 @@ const LandingPage = () => {
   return (
     <>
       <div className="flex">
-        <TopicBar />
+        <TopicBar value={(isOpen = true)} />
+
         <div className="flex flex-grow basis-3/5">
           <div className="flex-grow">
             <div className="md:p-10 p-6">

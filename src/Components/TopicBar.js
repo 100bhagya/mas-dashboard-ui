@@ -13,9 +13,9 @@ import {
 import user from "../images/user.png";
 import { Link, useLocation } from "react-router-dom";
 
-const TopicBar = () => {
+const TopicBar = (value) => {
   const [selectedimage, setSelectedimage] = useState();
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(value);
   const [aptitudeOpen, setAptitudeOpen] = useState(true);
   const [techOpen, setTechOpen] = useState(true);
   const [sidebar, setSidebar] = useState(false);
@@ -26,6 +26,7 @@ const TopicBar = () => {
     localStorage.clear();
     window.location.reload(false);
   };
+  console.log(value);
 
   const location = useLocation();
   // const check = (state) => {
