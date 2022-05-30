@@ -41,13 +41,31 @@ const Signup = () => {
       body: JSON.stringify(item),
     });
     result = await result.json();
+
     // console.log("result", result);
 
     if (
       password === confirmpassword &&
       result.message === "User registered successfully!"
     ) {
-      navigate("/signin");
+      var response = await fetch("http://localhost:8081/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(item),
+      });
+
+      let result = await response.json();
+      localStorage.setItem("login-info", JSON.stringify(result));
+      localStorage.setItem("username", result.username);
+      localStorage.setItem("email-id", result.email);
+      localStorage.setItem("access", result.accessToken);
+      localStorage.setItem("token", result.tokenType);
+      if (result.username) {
+        navigate("/");
+      }
     } else if (result.message === "Error: Username is already taken!") {
       setError("Username is already taken!");
     } else {
