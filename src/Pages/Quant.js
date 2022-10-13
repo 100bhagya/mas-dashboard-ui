@@ -23,7 +23,8 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
       rating: newRating,
       deleted: "false",
     };
-
+console.log(item);
+console.log(JSON.stringify(item))
     if (currentChapter.length === 0) {
       var response = await fetch("http://localhost:8081/api/task/task-rating", {
         method: "POST",
@@ -51,6 +52,7 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
         }
       );
       let result = await updateresponse.json();
+       console.log(result)
     }
   };
 
@@ -156,6 +158,7 @@ const Quant = () => {
                 serialNo={1}
                 Title="Probability"
                 currentChapter={ratingResponse.filter((el) => {
+
                   return el.chapter === "Probability";
                 })}
               />

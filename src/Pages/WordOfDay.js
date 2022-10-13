@@ -1,127 +1,165 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import TopicBar from "../Components/TopicBar";
 import Calendar from "../Components/Calender";
 import Artboard from "../images/wordofday.png";
 import moment from "moment";
-import NotFound from "../images/not found.jpg";
-
+import NoDailyWords from "../Components/NoDailyWords";
+import axios from "axios";
 const WordOfDay = (isOpen) => {
   // todo: get latest date for which daily word is present and use it below for date
   const [date, setDate] = useState(moment(new Date()).format("DD-MM-YYYY"));
   const [wordings, setWordings] = useState({});
   const [wordingsResponse, setWordingsResponse] = useState({});
   // todo: dailyWordsId comes by calling dailywords get api, date is used as parameter
-  const [dailyWordsId, setDailyWordsId] = useState();
+  const [dailyWordsId, setDailyWordsId] = useState(null);
   // student id comes from local storage
   const [studentId, setStudentId] = useState();
-  const [responseOne, setResponseOne] = useState("");
-  const [responseTwo, setResponseTwo] = useState("");
-  const [message, setMessage] = useState();
 
-  // code to fetch student id
+  const [message, setMessage] = useState();
+  const [loading, setLoading] = useState(true);
+
+  const responseOneRef = useRef("");
+  const responseTwoRef = useRef("");
+
   var token = localStorage.getItem("access");
   var data = localStorage.getItem("login-info");
   var loginInfo = JSON.parse(data);
 
   useEffect(() => {
+    let source = axios.CancelToken.source();
+    setWordings({});
+    // setDailyWordsId(null);
+    setLoading(true);
     setStudentId(loginInfo.id);
-    console.log(date);
-    let info = async () => {
-      let dailywords = await fetch(
-        `http://localhost:8081/api/task/daily-words?date=${date}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
-      let words = await dailywords.json();
-      setWordings(words);
-      setDailyWordsId(words.id);
+    axios
+      .get(`http://localhost:8081/api/task/daily-words?date=${date}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((dailyWordsReponse) => {
+        setLoading(true);
+        setWordings(dailyWordsReponse?.data);
+        setDailyWordsId(dailyWordsReponse?.data.id);
+        return dailyWordsReponse?.data.id;
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      })
+      .then((dailyWordsId) => {
+        setLoading(true);
+        // setWordingsResponse({});
+        axios
+          .get(
+            `http://localhost:8081/api/task/daily-words-response?studentId=${loginInfo.id}&dailyWordsId=${dailyWordsId}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + token,
+              },
+            }
+          )
+          .catch((err) => {
+            console.log(err);
+            setLoading(false);
+          })
+          .then((wordsResponseData) => {
+            setLoading(true);
+            setWordingsResponse(wordsResponseData?.data);
+          })
+          .catch((err) => {
+            console.log(err);
+            setLoading(false);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      });
+    return function () {
+      source.cancel("Cancelling in cleanup");
+
+      setDailyWordsId(null);
+      setWordingsResponse({});
+      setWordings({});
+      setLoading(true);
     };
-    info();
   }, [date]);
-
-  useEffect(() => {
-    let Response = async () => {
-      if (!(studentId === undefined || dailyWordsId === undefined)) {
-        let dailywordsresponse = await fetch(
-          `http://localhost:8081/api/task/daily-words-response?studentId=${studentId}&dailyWordsId=${dailyWordsId}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
-        let wordsResponse = await dailywordsresponse.json();
-        setWordingsResponse(wordsResponse);
-      }
-    };
-    Response();
-  }, [dailyWordsId]);
-
+  //doubt
   function props(data) {
     setDate(data);
     if (!wordingsResponse) {
-      setResponseOne(null);
-      setResponseTwo(null);
+      // setResponseOne(null);
+      // setResponseTwo(null);
     }
   }
 
   const sendResponse = async () => {
-    let item = { dailyWordsId, studentId, responseOne, responseTwo };
-    var response = await fetch(
-      "http://localhost:8081/api/task/daily-words-response",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: "Bearer " + token,
-        },
-        body: JSON.stringify(item),
-      }
-    );
+    let item = {
+      dailyWordsId,
+      studentId,
+      responseOne: responseOneRef.current.value,
+      responseTwo: responseTwoRef.current.value,
+    };
+    console.log(item);
+    if (item.responseOne !== null && item.responseTwo !== null) {
+      var response = await fetch(
+        "http://localhost:8081/api/task/daily-words-response",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify(item),
+        }
+      );
 
-    let result = await response.json();
-    setWordingsResponse(result);
-    if (response.status === 200) {
-      setMessage("Your Response Has Been Submitted");
-    } else {
-      setMessage("Please Try Again After Sometime");
+      let result = await response.json();
+      setWordingsResponse(result);
+      if (response.status === 201) {
+        setMessage("Your Response Has Been Submitted");
+      } else {
+        setMessage("Please Try Again After Sometime");
+      }
     }
   };
 
   const updateResponse = async () => {
-    let item = { dailyWordsId, studentId, responseOne, responseTwo };
+    let item = {
+      dailyWordsId,
+      studentId,
+      responseOne: responseOneRef.current.value,
+      responseTwo: responseTwoRef.current.value,
+    };
+    if (item.responseOne !== null && item.responseTwo !== null) {
+      var response = await fetch(
+        "http://localhost:8081/api/task/daily-words-response",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify(item),
+        }
+      );
 
-    var response = await fetch(
-      "http://localhost:8081/api/task/daily-words-response",
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: "Bearer " + token,
-        },
-        body: JSON.stringify(item),
+      let result = await response.json();
+      if (response.status === 200) {
+        setMessage("Your Response Has Been Updated!!");
+      } else {
+        setMessage("Please Try Again After Sometime");
       }
-    );
-
-    let result = await response.json();
-    if (response.status === 200) {
-      setMessage("Your Response Has Been Submitted!!");
-    } else {
-      setMessage("Please Try Again After Sometime");
     }
   };
 
   return (
     <div className="flex">
+      {loading}
       <TopicBar value={(isOpen = false)} />
       <div className="flex-grow py-10 md:px-20 px-10">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
@@ -140,7 +178,7 @@ const WordOfDay = (isOpen) => {
                   placeholder="Let’s make a sentence out of the word !"
                   type="text"
                   id="large-input"
-                  onChange={(e) => setResponseOne(e.target.value)}
+                  ref={responseOneRef}
                   defaultValue={wordingsResponse.responseOne}
                   className="block p-4 w-full bg-[#dee9ff] text-blue-900 rounded-lg border border-gray-300 sm:text-[16px] focus:ring-blue-500 focus:border-blue-500 "
                 />
@@ -155,7 +193,7 @@ const WordOfDay = (isOpen) => {
                   placeholder="Let’s make a sentence out of the word !"
                   type="text"
                   id="large-input"
-                  onChange={(e) => setResponseTwo(e.target.value)}
+                  ref={responseTwoRef}
                   defaultValue={wordingsResponse.responseTwo}
                   className="block p-4 w-full bg-[#dee9ff] text-blue-900 rounded-lg border border-gray-300 sm:text-[16px] focus:ring-blue-500 focus:border-blue-500 "
                 />
@@ -184,15 +222,7 @@ const WordOfDay = (isOpen) => {
               </div>
             </div>
           ) : (
-            <div className="mt-8">
-              <div className="font-bold text-4xl text-center mb-5 text-red-500 ">
-                Ooops!!
-              </div>
-              <div className="text-4xl font-bold text-red-600 mr-14">
-                No new words available for the selected date
-              </div>
-              <img src={NotFound} alt="" className="relative left-[10%]" />
-            </div>
+            <NoDailyWords loading={loading} />
           )}
           <div className="basis-1/5 ml-28 ">
             {/* <div inline-datepicker data-date="02/25/2022"></div> */}
