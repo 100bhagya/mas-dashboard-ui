@@ -23,8 +23,6 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
       rating: newRating,
       deleted: "false",
     };
-console.log(item);
-console.log(JSON.stringify(item))
     if (currentChapter.length === 0) {
       var response = await fetch("http://localhost:8081/api/task/task-rating", {
         method: "POST",
@@ -52,7 +50,6 @@ console.log(JSON.stringify(item))
         }
       );
       let result = await updateresponse.json();
-       console.log(result)
     }
   };
 
@@ -151,7 +148,6 @@ const Quant = () => {
         </div>
 
         <div className="grid lg:grid-cols-3 md:grid-cols-1 gap-6 justify-between mt-12">
-          {console.log(ratingResponse)}
           {ratingResponse.length > 0 && (
             <>
               <RatingCard
