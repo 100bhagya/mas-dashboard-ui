@@ -23,7 +23,6 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
       rating: newRating,
       deleted: "false",
     };
-
     if (currentChapter.length === 0) {
       var response = await fetch("http://localhost:8081/api/task/task-rating", {
         method: "POST",
@@ -149,13 +148,13 @@ const Quant = () => {
         </div>
 
         <div className="grid lg:grid-cols-3 md:grid-cols-1 gap-6 justify-between mt-12">
-          {console.log(ratingResponse)}
           {ratingResponse.length > 0 && (
             <>
               <RatingCard
                 serialNo={1}
                 Title="Probability"
                 currentChapter={ratingResponse.filter((el) => {
+
                   return el.chapter === "Probability";
                 })}
               />
