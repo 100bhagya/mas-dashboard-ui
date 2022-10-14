@@ -36,11 +36,11 @@ const WordOfDay = (isOpen) => {
           Authorization: "Bearer " + token,
         },
       })
-      .then((dailyWordsFetchedReponse) => {
+      .then((dailyWordsFetchedResponse) => {
         setLoading(true);
-        setWordings(dailyWordsFetchedReponse?.data);
-        setDailyWordsId(dailyWordsFetchedReponse?.data.id);
-        return dailyWordsFetchedReponse?.data.id;
+        setWordings(dailyWordsFetchedResponse?.data);
+        setDailyWordsId(dailyWordsFetchedResponse?.data.id);
+        return dailyWordsFetchedResponse?.data.id;
       })
       .catch((err) => {
         console.log(err);
@@ -107,8 +107,10 @@ const WordOfDay = (isOpen) => {
     };
 
     if (
-      bodyParameters.responseOne !== null &&
-      bodyParameters.responseTwo !== null
+      !(
+        bodyParameters.responseOne !== null &&
+        bodyParameters.responseTwo !== null
+      )
     ) {
       axios
         .post(
@@ -140,8 +142,10 @@ const WordOfDay = (isOpen) => {
     };
 
     if (
-      bodyParameters.responseOne !== null &&
-      bodyParameters.responseTwo !== null
+      !(
+        bodyParameters.responseOne !== null &&
+        bodyParameters.responseTwo !== null
+      )
     ) {
       axios
         .put(
