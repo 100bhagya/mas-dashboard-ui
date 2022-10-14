@@ -6,9 +6,7 @@ import moment from "moment";
 import NoDailyWords from "../Components/NoDailyWords";
 import axios from "axios";
 
-var token = localStorage.getItem("access");
-var data = localStorage.getItem("login-info");
-var loginInfo = JSON.parse(data);
+
 
 const WordOfDay = (isOpen) => {
   // todo: get latest date for which daily word is present and use it below for date
@@ -26,6 +24,12 @@ const WordOfDay = (isOpen) => {
   const responseOneRef = useRef("");
   const responseTwoRef = useRef("");
 
+
+  var token = localStorage.getItem("access");
+  var data = localStorage.getItem("login-info");
+  var loginInfo = JSON.parse(data);
+
+  
   useEffect(() => {
     let source = axios.CancelToken.source();
     setStudentId(loginInfo.id);
@@ -108,8 +112,8 @@ const WordOfDay = (isOpen) => {
 
     if (
       !(
-        bodyParameters.responseOne !== null &&
-        bodyParameters.responseTwo !== null
+        bodyParameters.responseOne === null &&
+        bodyParameters.responseTwo === null
       )
     ) {
       axios
@@ -143,8 +147,8 @@ const WordOfDay = (isOpen) => {
 
     if (
       !(
-        bodyParameters.responseOne !== null &&
-        bodyParameters.responseTwo !== null
+        bodyParameters.responseOne === null &&
+        bodyParameters.responseTwo === null
       )
     ) {
       axios
