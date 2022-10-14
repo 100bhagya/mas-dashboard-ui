@@ -32,17 +32,19 @@ const Signup = () => {
       deleted: "false",
     };
 
-    var result = await fetch("http://localhost:8081/api/auth/signup", {
+    if(password === confirmpassword){
+      var result = await fetch("http://localhost:8081/api/auth/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
       body: JSON.stringify(item),
-    });
-    result = await result.json();
-
-    // console.log("result", result);
+      });
+      result = await result.json();
+    }else{
+      setError("Passwords does not match");
+    }
 
     if (
       password === confirmpassword &&
