@@ -12,6 +12,8 @@ import {
 } from "@heroicons/react/outline";
 import user from "../images/user.png";
 import { Link, useLocation } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import { useContext } from "react";
 
 const TopicBar = (value) => {
   const [selectedimage, setSelectedimage] = useState();
@@ -19,14 +21,15 @@ const TopicBar = (value) => {
   const [aptitudeOpen, setAptitudeOpen] = useState(true);
   const [techOpen, setTechOpen] = useState(true);
   const [sidebar, setSidebar] = useState(false);
-  const userName = localStorage.getItem("username");
-  const email = localStorage.getItem("email-id");
+  const { loginInfo } = useContext(AuthContext);
+  const userName = loginInfo.username;
+  const email = loginInfo.email;
 
   const Logout = () => {
     localStorage.clear();
     window.location.reload(false);
   };
-  console.log(value);
+  // console.log(value);
 
   const location = useLocation();
   // const check = (state) => {

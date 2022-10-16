@@ -9,41 +9,64 @@ import { MdLockOutline } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../images/logo.png";
 import { AiOutlineUser } from "react-icons/ai";
+import { useContext, useRef } from "react";
+import { loginCall } from "../apiCalls";
+import { AuthContext } from "../context/AuthContext";
 
 const Signin = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [error, setError] = useState();
+  // const [error, setError] = useState();
+  const { loginInfo, isFetching, error, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const SignIn = async () => {
-    // console.log("data", email, password);
-    let item = { email: email, password: password };
-
-    var response = await fetch("http://localhost:8081/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(item),
-    });
-
-    let result = await response.json();
-    localStorage.setItem("login-info", JSON.stringify(result));
-    localStorage.setItem("username", result.username);
-    localStorage.setItem("email-id", result.email);
-    localStorage.setItem("access", result.accessToken);
-    localStorage.setItem("token", result.tokenType);
-    // console.log(token.access);
-    var length = Object.keys(result).length;
-    
-    if (result.username) {
-      navigate("/");
-    } else {
-      setError("Please Enter Correct Credentials");
-    }
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    console.log("data", email, password);
+    await loginCall(
+      { email: email, password: password },
+      dispatch
+    );
   };
+  console.log(loginInfo);
+  if (loginInfo) {
+    navigate("/");
+  }
+  if(error){
+    console.log("err is " + error);
+  }
+  
+  
+  
+
+  // const handleSignIn = async () => {
+  //   // console.log("data", email, password);
+  //   let item = { email: email, password: password };
+
+  //   var response = await fetch("http://localhost:8081/api/auth/login", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json",
+  //     },
+  //     body: JSON.stringify(item),
+  //   });
+
+  //   let result = await response.json();
+  //   localStorage.setItem("login-info", JSON.stringify(result));
+  //   localStorage.setItem("username", result.username);
+  //   localStorage.setItem("email-id", result.email);
+  //   localStorage.setItem("access", result.accessToken);
+  //   localStorage.setItem("token", result.tokenType);
+  //   // console.log(token.access);
+  //   var length = Object.keys(result).length;
+    
+  //   if (result.username) {
+  //     navigate("/");
+  //   } else {
+  //     setError("Please Enter Correct Credentials");
+  //   }
+  // };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
@@ -51,7 +74,7 @@ const Signin = () => {
         {error ? (
           <div className="bg-white w-[60%] mb-4 flex shadow-xl rounded-tr-xl rounded-br-xl">
             <div className="w-2 bg-red-600 rounded-tl-xl rounded-bl-xl"></div>
-            <div className="py-2 text-red-500 ml-5">{error}</div>
+            <div className="py-2 text-red-500 ml-5">Please Enter Correct Credentials</div>
           </div>
         ) : null}
 
@@ -97,7 +120,6 @@ const Signin = () => {
                     className="bg-gray-100 outline-none text-sm flex-1"
                     onChange={(e) => {
                       setEmail(e.target.value);
-                      setError("");
                     }}
                   />
                 </div>
@@ -110,7 +132,6 @@ const Signin = () => {
                     className="bg-gray-100 outline-none text-sm flex-1"
                     onChange={(e) => {
                       setPassword(e.target.value);
-                      setError("");
                     }}
                   />
                 </div>
@@ -121,7 +142,7 @@ const Signin = () => {
                   </a>
                 </div>
                 <div
-                  onClick={SignIn}
+                  onClick={handleSignIn}
                   className="border-2 cursor-pointer border-blue-600 text-blue-600 rounded-full px-12 py-2 inline-block font-semibold hover:bg-blue-600 hover:text-white"
                 >
                   Sign In

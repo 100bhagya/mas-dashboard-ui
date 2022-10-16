@@ -9,8 +9,12 @@ import { MdLockOutline } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineUser } from "react-icons/ai";
 import Logo from "../images/logo.png";
+import { useContext, useRef } from "react";
+import { loginCall } from "../apiCalls";
+import { AuthContext } from "../context/AuthContext";
 
 const Signup = () => {
+  const { loginInfo, isFetching, dispatch } = useContext(AuthContext);
   const [firstname, setFirstname] = useState();
   const [lastname, setLastname] = useState();
   const [email, setEmail] = useState();
@@ -22,6 +26,7 @@ const Signup = () => {
   const navigate = useNavigate();
 
   async function DoSignup() {
+    
     let item = {
       firstName: firstname,
       lastName: lastname,
@@ -31,6 +36,7 @@ const Signup = () => {
       password: password,
       deleted: "false",
     };
+    
 
     if(password === confirmpassword){
       var result = await fetch("http://localhost:8081/api/auth/signup", {
@@ -50,28 +56,37 @@ const Signup = () => {
       password === confirmpassword &&
       result.message === "User registered successfully!"
     ) {
-      var response = await fetch("http://localhost:8081/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(item),
-      });
+        await loginCall(
+          { email: email, password: password },
+          dispatch
+        );
+        if (loginInfo) {
+          navigate("/");
+        }
+      
+      // var response = await fetch("http://localhost:8081/api/auth/login", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Accept: "application/json",
+      //   },
+      //   body: JSON.stringify(item),
+      // });
 
-      let result = await response.json();
-      localStorage.setItem("login-info", JSON.stringify(result));
-      localStorage.setItem("username", result.username);
-      localStorage.setItem("email-id", result.email);
-      localStorage.setItem("access", result.accessToken);
-      localStorage.setItem("token", result.tokenType);
-      if (result.username) {
-        navigate("/");
-      }
+      // let result = await response.json();
+      // localStorage.setItem("login-info", JSON.stringify(result));
+      // localStorage.setItem("username", result.username);
+      // localStorage.setItem("email-id", result.email);
+      // localStorage.setItem("access", result.accessToken);
+      // localStorage.setItem("token", result.tokenType);
+      // if (result.username) {
+      //   navigate("/");
+      // }
+
     } else if (result.message === "Error: Email is already in use!") {
       setError("Email is already taken!");
     } else {
-      setError("Please Enter your Correct Credentials");
+      setError("Invalid Email Entered");
     }
   }
   return (

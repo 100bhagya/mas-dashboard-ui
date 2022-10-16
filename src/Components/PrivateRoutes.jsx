@@ -1,8 +1,10 @@
+import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 const useAuth = () => {
-  const user = localStorage.getItem("username");
-  console.log(user);
+  const { loginInfo } = useContext(AuthContext);
+  const user = loginInfo;
   if (user === undefined || user === null) {      
       return false;
   } 
