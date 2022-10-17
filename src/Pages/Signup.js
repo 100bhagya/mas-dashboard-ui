@@ -12,6 +12,7 @@ import Logo from "../images/logo.png";
 import { useContext, useRef } from "react";
 import { loginCall } from "../apiCalls";
 import { AuthContext } from "../context/AuthContext";
+import LoadingSpinner from "../Components/LoadingSpinner";
 
 const Signup = () => {
   const { loginInfo, isFetching, dispatch } = useContext(AuthContext);
@@ -109,7 +110,6 @@ const Signup = () => {
               </h2>
               <div className="bg-blue-600 h-1 w-10 inline-block mb-2"></div>
               {/* <div className="flex justify-center my-2">
-
                 <a
                   href="/"
                   className="border-2 border-gray-200 rounded-full p-3 mx-1"
@@ -214,7 +214,7 @@ const Signup = () => {
                   onClick={DoSignup}
                   className="border-2 cursor-pointer mt-10 border-blue-600 text-blue-600 rounded-full px-12 py-2 inline-block font-semibold hover:bg-blue-600 hover:text-white"
                 >
-                  Sign Up
+                  {isFetching ? <LoadingSpinner/> : ("Sign Up")}
                 </div>
               </div>
             </div>
@@ -225,7 +225,7 @@ const Signup = () => {
             <p className="mb-10">Already have an account then Sign In</p>
             <Link to="/signin">
               <div className="border-2 border-white rounded-full px-12 py-2 inline-block font-semibold hover:bg-white hover:text-blue-600">
-                Sign In
+              {isFetching ? <LoadingSpinner/> : ("Sign In")}
               </div>
             </Link>
           </div>
