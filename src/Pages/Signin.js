@@ -11,14 +11,14 @@ import Logo from "../images/logo.png";
 import { AiOutlineUser } from "react-icons/ai";
 
 const Signin = () => {
-  const [username, setUsername] = useState();
+  const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [error, setError] = useState();
   const navigate = useNavigate();
 
   const SignIn = async () => {
-    // console.log("data", username, password);
-    let item = { username: username, password: password };
+    // console.log("data", email, password);
+    let item = { email: email, password: password };
 
     var response = await fetch("http://localhost:8081/api/auth/login", {
       method: "POST",
@@ -91,12 +91,12 @@ const Signin = () => {
                 <div className="bg-gray-100 w-64 p-2 flex items-center mb-3">
                   <AiOutlineUser className="text-gray-400 m-2" />
                   <input
-                    type="username"
-                    name="username"
-                    placeholder="Username"
+                    type="email"
+                    name="email"
+                    placeholder="Email"
                     className="bg-gray-100 outline-none text-sm flex-1"
                     onChange={(e) => {
-                      setUsername(e.target.value);
+                      setEmail(e.target.value);
                       setError("");
                     }}
                   />

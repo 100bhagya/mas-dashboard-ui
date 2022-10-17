@@ -68,8 +68,8 @@ const Signup = () => {
       if (result.username) {
         navigate("/");
       }
-    } else if (result.message === "Error: Username is already taken!") {
-      setError("Username is already taken!");
+    } else if (result.message === "Error: Email is already in use!") {
+      setError("Email is already taken!");
     } else {
       setError("Please Enter your Correct Credentials");
     }
