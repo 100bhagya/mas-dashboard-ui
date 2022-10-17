@@ -6,8 +6,6 @@ import moment from "moment";
 import NoDailyWords from "../Components/NoDailyWords";
 import axios from "axios";
 
-
-
 const WordOfDay = (isOpen) => {
   // todo: get latest date for which daily word is present and use it below for date
   const [date, setDate] = useState(moment(new Date()).format("DD-MM-YYYY"));
@@ -24,12 +22,10 @@ const WordOfDay = (isOpen) => {
   const responseOneRef = useRef("");
   const responseTwoRef = useRef("");
 
-
   var token = localStorage.getItem("access");
   var data = localStorage.getItem("login-info");
   var loginInfo = JSON.parse(data);
 
-  
   useEffect(() => {
     let source = axios.CancelToken.source();
     setStudentId(loginInfo.id);
@@ -184,7 +180,11 @@ const WordOfDay = (isOpen) => {
               <div className="py-4 px-8  rounded-lg shadow-xl my-3">
                 <h3 className="text-xl text-[#2255B8] py-2">
                   {wordings.wordOne}
+                  <span className="text-xs uppercase font-semibold text-gray-400 text-center align-super">
+                    {wordings.wordOneCat}
+                  </span>
                 </h3>
+
                 <p className="py-2 text-[#898989]">{wordings.wordOneMeaning}</p>
                 <input
                   placeholder="Let’s make a sentence out of the word !"
@@ -199,6 +199,9 @@ const WordOfDay = (isOpen) => {
               <div className="py-4 px-8  rounded-lg shadow-xl my-3">
                 <h3 className="text-xl text-[#2255B8] py-2">
                   {wordings.wordTwo}
+                  <span className="text-xs uppercase font-semibold text-gray-400 text-center align-super">
+                    {wordings.wordTwoCat}
+                  </span>
                 </h3>
                 <p className="py-2 text-[#898989]">{wordings.wordTwoMeaning}</p>
                 <input
