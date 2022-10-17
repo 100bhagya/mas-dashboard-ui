@@ -77,3 +77,21 @@
   background: linear-gradient(to right, #3b82f6, #2563eb);
   color: #fff;
 }
+
+.completed-words{
+  background-color: green !important;
+  border-radius: 10%;
+  box-sizing: border-box !important;
+  border: 2px white solid !important;
+  font-size: 1em !important;
+  color: white;
+}
+
+.not-completed-words{
+  background-color: orange !important;
+  border-radius: 10%;
+  box-sizing: border-box !important;
+  border: 2px white solid !important;
+  font-size: 1em !important;
+  color: white;
+}
