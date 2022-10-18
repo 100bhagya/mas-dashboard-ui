@@ -180,6 +180,9 @@ const WordOfDay = (isOpen) => {
               <div className="py-4 px-8  rounded-lg shadow-xl my-3">
                 <h3 className="text-xl text-[#2255B8] py-2">
                   {wordings.wordOne}
+                  <span className="text-xs uppercase font-semibold text-gray-400 text-center align-super">
+                    {wordings.wordOneCat}
+                  </span>
                 </h3>
                 <p className="py-2 text-[#898989]">{wordings.wordOneMeaning}</p>
                 <input
@@ -195,6 +198,9 @@ const WordOfDay = (isOpen) => {
               <div className="py-4 px-8  rounded-lg shadow-xl my-3">
                 <h3 className="text-xl text-[#2255B8] py-2">
                   {wordings.wordTwo}
+                   <span className="text-xs uppercase font-semibold text-gray-400 text-center align-super">
+                    {wordings.wordTwoCat}
+                  </span>
                 </h3>
                 <p className="py-2 text-[#898989]">{wordings.wordTwoMeaning}</p>
                 <input
