@@ -2,7 +2,7 @@ import React from "react";
 import NotFound from "../images/not found.jpg";
 import LoadingSpinner from "./LoadingSpinner";
 const NoDailyWords = (props) => {
-  console.log(props);
+  // console.log(props);
   if (props.loading) {
     return (
       <LoadingSpinner/>

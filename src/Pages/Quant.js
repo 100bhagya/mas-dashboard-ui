@@ -3,11 +3,15 @@ import TopicBar from "../Components/TopicBar";
 import Artboard1 from "../images/Practice 1.png";
 import Artboard2 from "../images/Testtttttt 1.png";
 import StarsRating from "stars-rating";
+import { AuthContext } from "../context/AuthContext";
+import { useContext } from "react";
 
 const RatingCard = ({ serialNo, Title, currentChapter }) => {
-  var token = localStorage.getItem("access");
-  var data = localStorage.getItem("login-info");
-  var loginInfo = JSON.parse(data);
+  const { loginInfo } = useContext(AuthContext);
+  var token = loginInfo.accessToken;
+  // var token = localStorage.getItem("access");
+  // var data = localStorage.getItem("login-info");
+  // var loginInfo = JSON.parse(data);
   const studentId = loginInfo.id;
 
   const [rating, setRating] = useState(
@@ -76,9 +80,11 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
 };
 
 const Quant = () => {
-  var token = localStorage.getItem("access");
-  var data = localStorage.getItem("login-info");
-  var loginInfo = JSON.parse(data);
+  // var token = localStorage.getItem("access");
+  // var data = localStorage.getItem("login-info");
+  // var loginInfo = JSON.parse(data);
+  const { loginInfo } = useContext(AuthContext);
+  var token = loginInfo.accessToken;
   const studentId = loginInfo.id;
   const [ratingResponse, setRatingResponse] = useState([]);
 
@@ -253,46 +259,53 @@ const Quant = () => {
           )}
           {ratingResponse.status === 500 && (
             <>
-              <RatingCard serialNo={1} Title="Cubes" currentChapter={[]} />
+              <RatingCard
+                serialNo={1}
+                Title="Probability"
+                currentChapter={[]} 
+              />
               <RatingCard
                 serialNo={2}
-                Title="Venn Diagram"
+                Title="Statistics"
                 currentChapter={[]}
               />
               <RatingCard
                 serialNo={3}
-                Title="Linear & Circular Arrangement"
+                Title="P & C"
                 currentChapter={[]}
               />
               <RatingCard
                 serialNo={4}
-                Title="Line, Bar, Column, Pie Charts, Tables"
+                Title="Profit & Loss"
                 currentChapter={[]}
               />
               <RatingCard
                 serialNo={5}
-                Title="Games & Tournament"
+                Title="Simple & Compound Interest"
                 currentChapter={[]}
               />
               <RatingCard
                 serialNo={6}
-                Title="Blood Relations"
+                Title="Time & Work"
                 currentChapter={[]}
               />
               <RatingCard
                 serialNo={7}
-                Title="Calendars & Clocks"
+                Title="Average, Mixture & Allegations"
                 currentChapter={[]}
               />
-              <RatingCard serialNo={8} Title="Syllogism" currentChapter={[]} />
+              <RatingCard 
+                serialNo={8} 
+                Title="Time, Speed & Distance" 
+                currentChapter={[]} />
               <RatingCard
                 serialNo={9}
-                Title="Number and Letter Series"
+                Title="Geometry"
                 currentChapter={[]}
               />
               <RatingCard
                 serialNo={10}
-                Title="Non Verbal Reasoning"
+                Title="Coordinate Geometry"
                 currentChapter={[]}
               />
               <RatingCard
