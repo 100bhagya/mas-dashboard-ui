@@ -3,11 +3,15 @@ import TopicBar from "../Components/TopicBar";
 import Artboard1 from "../images/Practice 1.png";
 import Artboard2 from "../images/Testtttttt 1.png";
 import StarsRating from "stars-rating";
+import { AuthContext } from "../context/AuthContext";
+import { useContext } from "react";
 
 const RatingCard = ({ serialNo, Title, currentChapter }) => {
-  var token = localStorage.getItem("access");
-  var data = localStorage.getItem("login-info");
-  var loginInfo = JSON.parse(data);
+  const { loginInfo } = useContext(AuthContext);
+  var token = loginInfo.accessToken;
+  // var token = localStorage.getItem("access");
+  // var data = localStorage.getItem("login-info");
+  // var loginInfo = JSON.parse(data);
   const studentId = loginInfo.id;
 
   const [rating, setRating] = useState(
@@ -80,9 +84,13 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
 };
 
 const LRandDI = () => {
-  var token = localStorage.getItem("access");
-  var data = localStorage.getItem("login-info");
-  var loginInfo = JSON.parse(data);
+  // var token = localStorage.getItem("access");
+  // var data = localStorage.getItem("login-info");
+  // var loginInfo = JSON.parse(data);
+  const { loginInfo } = useContext(AuthContext);
+  var token = loginInfo.accessToken;
+  
+  
   const studentId = loginInfo.id;
   const [ratingResponse, setRatingResponse] = useState([]);
 

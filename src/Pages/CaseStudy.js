@@ -4,11 +4,15 @@ import TopicBar from "../Components/TopicBar";
 import Artboard1 from "../images/Practice 2.png";
 import Artboard2 from "../images/Test 2.png";
 import StarsRating from "stars-rating";
+import { AuthContext } from "../context/AuthContext";
+import { useContext } from "react";
 
 const CaseStudy = () => {
-  var token = localStorage.getItem("access");
-  var data = localStorage.getItem("login-info");
-  var loginInfo = JSON.parse(data);
+  const { loginInfo } = useContext(AuthContext);
+  var token = loginInfo.accessToken;
+  // var token = localStorage.getItem("access");
+  // var data = localStorage.getItem("login-info");
+  // var loginInfo = JSON.parse(data);
   const studentId = loginInfo.id;
   const [rating, setRating] = useState();
 
