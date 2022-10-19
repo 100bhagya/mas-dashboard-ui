@@ -5,6 +5,7 @@ import Artboard2 from "../images/Testtttttt 1.png";
 import StarsRating from "stars-rating";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
+import { API_BASE_URL } from "../data/consts";
 
 const RatingCard = ({ serialNo, Title, currentChapter }) => {
   const { loginInfo } = useContext(AuthContext);
@@ -29,7 +30,7 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
     };
 
     if (currentChapter.length === 0) {
-      var response = await fetch("http://localhost:8081/api/task/task-rating", {
+      var response = await fetch(`${API_BASE_URL}/api/task/task-rating`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,7 +44,7 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
       currentChapter.push(item);
     } else {
       var updateresponse = await fetch(
-        "http://localhost:8081/api/task/task-rating",
+        `${API_BASE_URL}/api/task/task-rating`,
         {
           method: "PUT",
           headers: {
@@ -91,7 +92,7 @@ const Verbal = () => {
 
   useEffect(() => {
     fetch(
-      `http://localhost:8081/api/task/task-rating?studentId=${studentId}&category=Verbal`,
+      `${API_BASE_URL}/api/task/task-rating?studentId=${studentId}&category=Verbal`,
       {
         method: "GET",
         headers: {

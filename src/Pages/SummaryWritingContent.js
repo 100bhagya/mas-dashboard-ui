@@ -3,6 +3,7 @@ import TopicBar from "../Components/TopicBar";
 import { Link } from "react-router-dom";
 import WeekData from "../data/WeekData";
 import moment from "moment";
+import { API_BASE_URL } from "../data/consts";
 
 function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
   return (
@@ -78,7 +79,7 @@ const SummaryWritingContent = () => {
     // });
     // setweeks(newWeek);
     fetch(
-      `http://localhost:8081/api/task/weekly-summary?weekNumber=${weekNumber}&articleNumber=${articleNumber}`,
+      `${API_BASE_URL}/api/task/weekly-summary?weekNumber=${weekNumber}&articleNumber=${articleNumber}`,
       {
         method: "GET",
         headers: {
@@ -100,7 +101,7 @@ const SummaryWritingContent = () => {
     console.log(weekNumber, articleNumber);
     let info = async () => {
       let dailywords = await fetch(
-        `http://localhost:8081/api/task/weekly-summary?weekNumber=${
+        `${API_BASE_URL}/api/task/weekly-summary?weekNumber=${
           index + 1
         }&articleNumber=${articleNumber}`,
         {
