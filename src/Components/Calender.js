@@ -4,6 +4,7 @@ import "react-calendar/dist/Calendar.css";
 import moment from "moment";
 import { useEffect } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../data/consts";
 
 var token = localStorage.getItem("access");
 export default function App(props) {
@@ -17,11 +18,12 @@ export default function App(props) {
     "13-10-2022": "not-completed",
     "14-10-2022": "completed",
   };
-
+  // http://localhost:8080/api/task/daily-words/check-status?fromDate=1-9-2022&toDate=20-10-2022&studentId=4
   useEffect(() => {
+
     axios
       .get(
-        `http://localhost:8081/api/task/monthly-words?startDate=01-${currentMonthAndYear}&endDate=31-${currentMonthAndYear}`,
+        `${API_BASE_URL}/api/task/api/task/daily-words-check-status?fromDate=1-${currentMonthAndYear}&toDate=31-${currentMonthAndYear}&studentId=1`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -30,18 +32,19 @@ export default function App(props) {
         }
       )
       .then((response) => {
-        let lastAvailableDay = 1;
-        response.data.map(({ date }) => {
-          const day = parseInt(moment(date).format("DD"));
-          if (day > lastAvailableDay) {
-            lastAvailableDay = day;
-          }
-          const lastAvailableDate = moment(
-            `${lastAvailableDay}-${currentMonthAndYear}`,
-            "DD-MM-YYYY"
-          ).toDate();
-          setDateState(lastAvailableDate);
-        });
+        console.log(response.data);
+        // let lastAvailableDay = 1;
+        // response.data.map(({ date }) => {
+        //   const day = parseInt(moment(date).format("DD"));
+        //   if (day > lastAvailableDay) {
+        //     lastAvailableDay = day;
+        //   }
+        //   const lastAvailableDate = moment(
+        //     `${lastAvailableDay}-${currentMonthAndYear}`,
+        //     "DD-MM-YYYY"
+        //   ).toDate();
+        //   setDateState(lastAvailableDate);
+        // });
       })
       .catch((error) => {
         console.error(error);

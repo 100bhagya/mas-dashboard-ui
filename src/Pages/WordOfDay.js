@@ -50,7 +50,6 @@ const WordOfDay = (isOpen) => {
       })
       .catch((err) => {
         console.log(err);
-        setMessage(err.message);
         setLoading(false);
       })
       .then((dailyWordsId) => {
@@ -67,7 +66,6 @@ const WordOfDay = (isOpen) => {
           )
           .catch((err) => {
             console.log(err);
-            setMessage(err.message);
             setLoading(false);
           })
           .then((wordsResponseData) => {
@@ -76,7 +74,6 @@ const WordOfDay = (isOpen) => {
           })
           .catch((err) => {
             console.log(err);
-            setMessage(err.message);
             setLoading(false);
           })
           .finally(() => {
