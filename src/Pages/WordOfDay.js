@@ -187,7 +187,7 @@ const WordOfDay = (isOpen) => {
                   type="text"
                   id="large-input"
                   ref={responseOneRef}
-                  defaultValue={wordingsResponse.responseOne}
+                  defaultValue={wordingsResponse?.responseOne}
                   className="block p-4 w-full bg-[#dee9ff] text-blue-900 rounded-lg border border-gray-300 sm:text-[16px] focus:ring-blue-500 focus:border-blue-500 "
                 />
                 <div className="text-right mt-3"></div>
@@ -202,12 +202,12 @@ const WordOfDay = (isOpen) => {
                   type="text"
                   id="large-input"
                   ref={responseTwoRef}
-                  defaultValue={wordingsResponse.responseTwo}
+                  defaultValue={wordingsResponse?.responseTwo}
                   className="block p-4 w-full bg-[#dee9ff] text-blue-900 rounded-lg border border-gray-300 sm:text-[16px] focus:ring-blue-500 focus:border-blue-500 "
                 />
                 <div className="text-right mt-3"></div>
               </div>
-              {!(wordingsResponse.id === undefined) ? (
+              {!(wordingsResponse?.id === undefined) ? (
                 <button
                   className="py-2 px-6 text-white rounded-xl bg-[#2255B8] w-[50%] relative  left-[27%]"
                   onClick={updateResponse}

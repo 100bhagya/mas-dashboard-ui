@@ -26,7 +26,7 @@ const TopicBar = (value) => {
     localStorage.clear();
     window.location.reload(false);
   };
-  console.log(value);
+  // console.log(value);
 
   const location = useLocation();
   // const check = (state) => {
