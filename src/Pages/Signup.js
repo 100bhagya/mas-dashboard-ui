@@ -13,6 +13,7 @@ import { useContext, useRef } from "react";
 import { loginCall } from "../apiCalls";
 import { AuthContext } from "../context/AuthContext";
 import LoadingSpinner from "../Components/LoadingSpinner";
+import { API_BASE_URL } from "../data/consts";
 
 const Signup = () => {
   const { loginInfo, isFetching, dispatch } = useContext(AuthContext);
@@ -40,7 +41,7 @@ const Signup = () => {
     
 
     if(password === confirmpassword){
-      var result = await fetch("http://localhost:8081/api/auth/signup", {
+      var result = await fetch(`${API_BASE_URL}/api/auth/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -65,7 +66,7 @@ const Signup = () => {
           navigate("/");
         }
       
-      // var response = await fetch("http://localhost:8081/api/auth/login", {
+      // var response = await fetch(`${API_BASE_URL}/api/auth/login`, {
       //   method: "POST",
       //   headers: {
       //     "Content-Type": "application/json",

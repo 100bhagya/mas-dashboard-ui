@@ -6,6 +6,7 @@ import Artboard2 from "../images/Test 2.png";
 import StarsRating from "stars-rating";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
+import { API_BASE_URL } from "../data/consts";
 
 const GuessEstimate = () => {
   const { loginInfo } = useContext(AuthContext);
@@ -18,7 +19,7 @@ const GuessEstimate = () => {
 
   useEffect(() => {
     fetch(
-      `http://localhost:8081/api/task/task-rating?studentId=${studentId}&category=GuessEstimate`,
+      `${API_BASE_URL}/api/task/task-rating?studentId=${studentId}&category=GuessEstimate`,
       {
         method: "GET",
         headers: {
@@ -44,7 +45,7 @@ const GuessEstimate = () => {
     };
 
     if (rating === undefined) {
-      var response = await fetch("http://localhost:8081/api/task/task-rating", {
+      var response = await fetch(`${API_BASE_URL}/api/task/task-rating`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,7 +58,7 @@ const GuessEstimate = () => {
       let result = await response.json();
     } else {
       var updateresponse = await fetch(
-        "http://localhost:8081/api/task/task-rating",
+        `${API_BASE_URL}/api/task/task-rating`,
         {
           method: "PUT",
           headers: {

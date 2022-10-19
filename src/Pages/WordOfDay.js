@@ -7,6 +7,7 @@ import NoDailyWords from "../Components/NoDailyWords";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
+import { API_BASE_URL } from "../data/consts";
 
 // var token = localStorage.getItem("access");
 // var data = localStorage.getItem("login-info");
@@ -35,7 +36,7 @@ const WordOfDay = (isOpen) => {
     let source = axios.CancelToken.source();
     setStudentId(loginInfo.id);
     axios
-      .get(`http://localhost:8081/api/task/daily-words?date=${date}`, {
+      .get(`${API_BASE_URL}/api/task/daily-words?date=${date}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + token,
@@ -56,7 +57,7 @@ const WordOfDay = (isOpen) => {
         setLoading(true);
         axios
           .get(
-            `http://localhost:8081/api/task/daily-words-response?studentId=${loginInfo.id}&dailyWordsId=${dailyWordsId}`,
+            `${API_BASE_URL}/api/task/daily-words-response?studentId=${loginInfo.id}&dailyWordsId=${dailyWordsId}`,
             {
               headers: {
                 "Content-Type": "application/json",
@@ -120,7 +121,7 @@ const WordOfDay = (isOpen) => {
     ) {
       axios
         .post(
-          "http://localhost:8081/api/task/daily-words-response",
+          `${API_BASE_URL}/api/task/daily-words-response`,
           bodyParameters,
           config
         )
@@ -155,7 +156,7 @@ const WordOfDay = (isOpen) => {
     ) {
       axios
         .put(
-          "http://localhost:8081/api/task/daily-words-response",
+          `${API_BASE_URL}/api/task/daily-words-response`,
           bodyParameters,
           config
         )
