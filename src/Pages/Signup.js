@@ -225,7 +225,7 @@ const Signup = () => {
             <p className="mb-10">Already have an account then Sign In</p>
             <Link to="/signin">
               <div className="border-2 border-white rounded-full px-12 py-2 inline-block font-semibold hover:bg-white hover:text-blue-600">
-              {isFetching ? <LoadingSpinner/> : ("Sign In")}
+                Sign In
               </div>
             </Link>
           </div>

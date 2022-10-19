@@ -106,7 +106,7 @@ const Signin = () => {
             </p>
             <Link to="/signup">
               <div className="border-2 border-white rounded-full px-12 py-2 inline-block font-semibold hover:bg-white hover:text-blue-600">
-              {isFetching ? <LoadingSpinner/> : ("Sign Up")}
+                Sign Up
               </div>
             </Link>
           </div>
