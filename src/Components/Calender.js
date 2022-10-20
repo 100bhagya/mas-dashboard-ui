@@ -35,7 +35,6 @@ export default function App(props) {
         }
       )
       .then((response) => {
-        console.log(response.data);
         //default date of previous months is 1
         let latestAvailableDay = 1;
         const markedDates = {};
@@ -54,8 +53,7 @@ export default function App(props) {
               "partially-completed";
           }
         }
-        console.log(latestAvailableDay);
-        console.log(markedDates);
+
         const lastAvailableDate = moment(
           `${latestAvailableDay}-${currentMonthAndYear}`,
           "DD-MM-YYYY"
