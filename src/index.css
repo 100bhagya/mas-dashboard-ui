@@ -78,7 +78,9 @@
   color: #fff;
 }
 
-.completed-words{
+
+/* Tiles colors for Dailywords Status on Calendar */
+.completed-words {
   background-color: green !important;
   border-radius: 10%;
   box-sizing: border-box !important;
@@ -87,8 +89,17 @@
   color: white;
 }
 
-.not-completed-words{
+.partially-completed-words {
   background-color: orange !important;
+  border-radius: 10%;
+  box-sizing: border-box !important;
+  border: 2px white solid !important;
+  font-size: 1em !important;
+  color: white;
+}
+
+.not-attempted-words {
+  background-color: red !important;
   border-radius: 10%;
   box-sizing: border-box !important;
   border: 2px white solid !important;

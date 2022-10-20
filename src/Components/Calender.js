@@ -5,25 +5,28 @@ import moment from "moment";
 import { useEffect } from "react";
 import axios from "axios";
 import { API_BASE_URL } from "../data/consts";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
-var token = localStorage.getItem("access");
 export default function App(props) {
+  const { loginInfo } = useContext(AuthContext);
+  const token = loginInfo.accessToken;
+  const studentId = loginInfo.id;
   const [dateState, setDateState] = useState(new Date());
+  // array contains information about completion status of available daily words
+  const [markedDates, setmarkedDates] = useState({});
+
   const [currentMonthAndYear, setCurrentMonthAndYear] = useState(
     moment(new Date()).format("MM-YYYY")
   );
-  const mark = ["12-10-2022", "13-10-2022", "14-10-2022"];
-  const markTwo = {
-    "12-10-2022": "completed",
-    "13-10-2022": "not-completed",
-    "14-10-2022": "completed",
-  };
-  // http://localhost:8080/api/task/daily-words/check-status?fromDate=1-9-2022&toDate=20-10-2022&studentId=4
-  useEffect(() => {
 
+  useEffect(() => {
     axios
       .get(
-        `${API_BASE_URL}/api/task/api/task/daily-words-check-status?fromDate=1-${currentMonthAndYear}&toDate=31-${currentMonthAndYear}&studentId=1`,
+        `${API_BASE_URL}/api/task/daily-words/check-status?fromDate=1-${currentMonthAndYear}&toDate=${moment(
+          currentMonthAndYear,
+          "MM-YYYY"
+        ).daysInMonth()}-${currentMonthAndYear}&studentId=${studentId}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -33,18 +36,32 @@ export default function App(props) {
       )
       .then((response) => {
         console.log(response.data);
-        // let lastAvailableDay = 1;
-        // response.data.map(({ date }) => {
-        //   const day = parseInt(moment(date).format("DD"));
-        //   if (day > lastAvailableDay) {
-        //     lastAvailableDay = day;
-        //   }
-        //   const lastAvailableDate = moment(
-        //     `${lastAvailableDay}-${currentMonthAndYear}`,
-        //     "DD-MM-YYYY"
-        //   ).toDate();
-        //   setDateState(lastAvailableDate);
-        // });
+        //default date of previous months is 1
+        let latestAvailableDay = 1;
+        const markedDates = {};
+        for (const [key, value] of Object.entries(response.data)) {
+          let curDay = parseInt(moment(key).format("DD"));
+          if (curDay > latestAvailableDay) {
+            latestAvailableDay = curDay;
+          }
+
+          if (value[0] === true && value[1] === true) {
+            markedDates[moment(key).format("DD-MM-YYYY")] = "completed";
+          } else if (value[0] === false && value[1] === false) {
+            markedDates[moment(key).format("DD-MM-YYYY")] = "not-attempted";
+          } else {
+            markedDates[moment(key).format("DD-MM-YYYY")] =
+              "partially-completed";
+          }
+        }
+        console.log(latestAvailableDay);
+        console.log(markedDates);
+        const lastAvailableDate = moment(
+          `${latestAvailableDay}-${currentMonthAndYear}`,
+          "DD-MM-YYYY"
+        ).toDate();
+        setDateState(lastAvailableDate);
+        setmarkedDates(markedDates);
       })
       .catch((error) => {
         console.error(error);
@@ -60,14 +77,27 @@ export default function App(props) {
           setDateState(e);
         }}
         tileClassName={({ date }) => {
-          if (markTwo[moment(date).format("DD-MM-YYYY")] === "completed") {
+          // returning className that will be applied on calendar tiles
+          if (markedDates[moment(date).format("DD-MM-YYYY")] === "completed") {
+            //green tile
             return "completed-words";
           }
-          if (markTwo[moment(date).format("DD-MM-YYYY")] === "not-completed") {
-            return "not-completed-words";
+          if (
+            markedDates[moment(date).format("DD-MM-YYYY")] === "not-attempted"
+          ) {
+            //red tile
+            return "not-attempted-words";
+          }
+          if (
+            markedDates[moment(date).format("DD-MM-YYYY")] ===
+            "partially-completed"
+          ) {
+            //orange tile
+            return "partially-completed-words";
           }
         }}
         onActiveStartDateChange={({ activeStartDate }) => {
+          //updating "currentMonthAndYear" state when calendar view is changed
           setCurrentMonthAndYear(moment(activeStartDate).format("MM-YYYY"));
         }}
         className="rounded-2xl shadow-2xl shadow-blue-100"

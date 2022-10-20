@@ -16,7 +16,7 @@ import { API_BASE_URL } from "../data/consts";
 const WordOfDay = (isOpen) => {
   const { loginInfo } = useContext(AuthContext);
   var token = loginInfo.accessToken;
-  
+
   // todo: get latest date for which daily word is present and use it below for date
   const [date, setDate] = useState(moment(new Date()).format("DD-MM-YYYY"));
   const [wordings, setWordings] = useState({});
@@ -99,7 +99,14 @@ const WordOfDay = (isOpen) => {
   }
 
   const sendResponse = async () => {
-    console.log("Sending response with student id and dailywords id as : " + dailyWordsId + " " +  studentId + " " + token );
+    console.log(
+      "Sending response with student id and dailywords id as : " +
+        dailyWordsId +
+        " " +
+        studentId +
+        " " +
+        token
+    );
     let bodyParameters = {
       dailyWordsId,
       studentId,
@@ -112,8 +119,7 @@ const WordOfDay = (isOpen) => {
 
     if (
       !(
-        bodyParameters.responseOne == null &&
-        bodyParameters.responseTwo == null
+        bodyParameters.responseOne == null && bodyParameters.responseTwo == null
       )
     ) {
       axios
@@ -147,8 +153,7 @@ const WordOfDay = (isOpen) => {
 
     if (
       !(
-        bodyParameters.responseOne == null &&
-        bodyParameters.responseTwo == null
+        bodyParameters.responseOne == null && bodyParameters.responseTwo == null
       )
     ) {
       axios
@@ -202,7 +207,7 @@ const WordOfDay = (isOpen) => {
               <div className="py-4 px-8  rounded-lg shadow-xl my-3">
                 <h3 className="text-xl text-[#2255B8] py-2">
                   {wordings.wordTwo}
-                   <span className="text-xs uppercase font-semibold text-gray-400 text-center align-super">
+                  <span className="text-xs uppercase font-semibold text-gray-400 text-center align-super">
                     {wordings.wordTwoCat}
                   </span>
                 </h3>
