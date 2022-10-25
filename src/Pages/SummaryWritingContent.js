@@ -1,5 +1,3 @@
-//Todo handle Week Bar And Number Correctly.
-//Todo Send Response Implement
 import React, { useState, useEffect, useRef } from "react";
 import parse from "html-react-parser";
 import TopicBar from "../Components/TopicBar";
@@ -13,6 +11,11 @@ import axios from "axios";
 import NotFound from "../images/not found.jpg";
 import LoadingSpinner from "../Components/LoadingSpinner";
 function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
+  useEffect(() => {
+    return () => {
+      week.open = false;
+    };
+  }, [week]);
   return (
     <div>
       <div key={index} onClick={() => toggleWEEK(index)}>
@@ -51,7 +54,6 @@ function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
 }
 
 const SummaryWritingContent = () => {
-  // const [isOpen, setIsOpen] = useState(false);
   const summaryTextRef = useRef();
   const [weeklySummaryResponse, setWeeklySummaryResponse] = useState(null);
   const [isSendSummaryBoxOpen, setIsSendSummaryBoxOpen] = useState(false);
@@ -90,12 +92,10 @@ const SummaryWritingContent = () => {
         }
       )
       .then((response) => {
-        setIsLoading(true);
         setSummary(response.data);
         return response?.data?.id;
       })
       .then((weeklySummaryId) => {
-        setIsLoading(true);
         axios
           .get(
             `${API_BASE_URL}/api/task/weekly-summary-response?studentId=${loginInfo.id}&weeklySummaryId=${weeklySummaryId}`,
@@ -110,28 +110,28 @@ const SummaryWritingContent = () => {
             setWeeklySummaryResponse(response.data);
             if (response.data.response)
               summaryTextRef.current.value = response.data.response;
+            setIsLoading(false);
           })
-          .finally(setIsLoading(false));
+          .catch((err) => {
+            setIsLoading(false);
+            console.log(err);
+          });
       })
-      .catch((err) => console.log(err))
-      .finally(setIsLoading(false));
+      .catch((err) => {
+        setIsLoading(false);
+        console.log(err);
+      });
 
     return () => {
       setIsSendSummaryBoxOpen(false);
       setSummary(null);
-      summaryTextRef.current.value = "";
       setIsLoading(true);
-      console.log("clean up running");
     };
-
-    // };
   }, [articleNumber, weekNumber, weeks]);
-  // [articleNumber, token, weekNumber, weeks]
+
   const handleArticle = (index, articleNumber) => {
     setWeekNumber(index + 1);
     setArticleNumber(articleNumber);
-    setIsLoading(true);
-    console.log(weekNumber, articleNumber);
   };
 
   const handleSubmitSummary = (weeklySummaryId) => {
@@ -155,7 +155,10 @@ const SummaryWritingContent = () => {
         setWeeklySummaryResponse(response.data);
         setIsLoading(false);
       })
-      .catch((err) => setIsLoading(false));
+      .catch((err) => {
+        setIsLoading(false);
+        console.log(err);
+      });
   };
   const handleUpdateSummary = (weeklySummaryId) => {
     setIsLoading(true);
@@ -175,10 +178,13 @@ const SummaryWritingContent = () => {
         config
       )
       .then((response) => {
-        setIsLoading(false);
         setWeeklySummaryResponse(response.data);
+        setIsLoading(false);
       })
-      .catch((err) => setIsLoading(false));
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
   };
 
   const handleNext = () => {
@@ -282,6 +288,7 @@ const SummaryWritingContent = () => {
                 className="py-2 px-6 text-white rounded-xl bg-[#2255B8] mx-4 shadow-2xl"
               >
                 {" "}
+                {isLoading && <LoadingSpinner />}
                 {weeklySummaryResponse && !isLoading
                   ? "Update Summary"
                   : "Submit Summary"}
@@ -296,7 +303,9 @@ const SummaryWritingContent = () => {
               <div className="text-right">
                 <button
                   onClick={handleNext}
-                  className="py-2 px-6 text-white rounded-xl bg-[#2255B8] mx-4 shadow-2xl"
+                  className={`py-2 px-6 text-white rounded-xl bg-[#2255B8] mx-4 shadow-2xl ${
+                    articleNumber === 2 && "opacity-20 cursor-not-allowed"
+                  }`}
                 >
                   {" "}
                   Next
