@@ -1,4 +1,7 @@
+//Todo handle Week Bar And Number Correctly.
+//Todo Send Response Implement
 import React, { useState, useEffect, useRef } from "react";
+import parse from "html-react-parser";
 import TopicBar from "../Components/TopicBar";
 import WeekData from "../data/WeekData";
 import { API_BASE_URL } from "../data/consts";
@@ -7,6 +10,8 @@ import { BsFillPersonFill } from "react-icons/bs";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 import axios from "axios";
+import NotFound from "../images/not found.jpg";
+import LoadingSpinner from "../Components/LoadingSpinner";
 function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
   return (
     <div>
@@ -48,13 +53,14 @@ function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
 const SummaryWritingContent = () => {
   // const [isOpen, setIsOpen] = useState(false);
   const summaryTextRef = useRef();
+  const [weeklySummaryResponse, setWeeklySummaryResponse] = useState(null);
   const [isSendSummaryBoxOpen, setIsSendSummaryBoxOpen] = useState(false);
   const [weeks, setweeks] = useState(WeekData);
-  const [article, setArticle] = useState(false);
-  const [weekNumber, setWeekNumber] = useState(1);
-  const [articleNumber, setArticleNumber] = useState(1);
-  const [summary, setSummary] = useState("kasfks salfjla fajf lalfj af");
+  const [weekNumber, setWeekNumber] = useState(0);
+  const [articleNumber, setArticleNumber] = useState(0);
+  const [summary, setSummary] = useState(null);
   const { loginInfo } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(true);
   var token = loginInfo.accessToken;
 
   const toggleWEEK = (index) => {
@@ -83,12 +89,38 @@ const SummaryWritingContent = () => {
           },
         }
       )
-      .then((response) => setSummary(response.data))
-      .catch((err) => console.error(err));
+      .then((response) => {
+        setIsLoading(true);
+        setSummary(response.data);
+        return response?.data?.id;
+      })
+      .then((weeklySummaryId) => {
+        setIsLoading(true);
+        axios
+          .get(
+            `${API_BASE_URL}/api/task/weekly-summary-response?studentId=${loginInfo.id}&weeklySummaryId=${weeklySummaryId}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + token,
+              },
+            }
+          )
+          .then((response) => {
+            setWeeklySummaryResponse(response.data);
+            if (response.data.response)
+              summaryTextRef.current.value = response.data.response;
+          })
+          .finally(setIsLoading(false));
+      })
+      .catch((err) => console.log(err))
+      .finally(setIsLoading(false));
 
     return () => {
       setIsSendSummaryBoxOpen(false);
       setSummary(null);
+      summaryTextRef.current.value = "";
+      setIsLoading(true);
       console.log("clean up running");
     };
 
@@ -96,11 +128,59 @@ const SummaryWritingContent = () => {
   }, [articleNumber, weekNumber, weeks]);
   // [articleNumber, token, weekNumber, weeks]
   const handleArticle = (index, articleNumber) => {
-    setArticle(true);
     setWeekNumber(index + 1);
     setArticleNumber(articleNumber);
+    setIsLoading(true);
     console.log(weekNumber, articleNumber);
   };
+
+  const handleSubmitSummary = (weeklySummaryId) => {
+    setIsLoading(true);
+    let bodyParameters = {
+      weeklySummaryId: weeklySummaryId,
+      response: summaryTextRef.current.value,
+      studentId: loginInfo?.id,
+      completed: true,
+    };
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    axios
+      .post(
+        `${API_BASE_URL}/api/task/weekly-summary-response`,
+        bodyParameters,
+        config
+      )
+      .then((response) => {
+        setWeeklySummaryResponse(response.data);
+        setIsLoading(false);
+      })
+      .catch((err) => setIsLoading(false));
+  };
+  const handleUpdateSummary = (weeklySummaryId) => {
+    setIsLoading(true);
+    let bodyParameters = {
+      weeklySummaryId: weeklySummaryId,
+      response: summaryTextRef.current.value,
+      studentId: loginInfo?.id,
+      completed: true,
+    };
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    axios
+      .put(
+        `${API_BASE_URL}/api/task/weekly-summary-response`,
+        bodyParameters,
+        config
+      )
+      .then((response) => {
+        setIsLoading(false);
+        setWeeklySummaryResponse(response.data);
+      })
+      .catch((err) => setIsLoading(false));
+  };
+
   const handleNext = () => {
     if (articleNumber < 2) {
       setArticleNumber((prev) => prev + 1);
@@ -113,19 +193,52 @@ const SummaryWritingContent = () => {
       <div className="flex-grow py-10 md:px-20 px-10 mr-32">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
           <div className="text-3xl text-sky-800">Summary Writing</div>
-          <div className="text-slate-600 text-md">WEEK {weekNumber}</div>
+          <div className="text-slate-600 text-md">
+            {weekNumber === 0 ? "No Week is Selected" : `WEEK ${weekNumber}`}
+          </div>
         </div>
-        <div>
-          <div className="text-3xl font-normal text-sky-800 mt-8">{`Why The Future Of Data Analytics Is Prescriptive Analytics`}</div>
+        <div
+          className={`${
+            !isLoading && "hidden"
+          } flex justify-center items-center h-full`}
+        >
+          <LoadingSpinner />
+        </div>
+        <div
+          className={`${
+            (summary !== null || isLoading) && "hidden"
+          } flex flex-col justify-center items-center mt-8`}
+        >
+          {weekNumber === 0 && <p>No Week Is Selected.</p>}
+          {weekNumber !== 0 && articleNumber === 0 && (
+            <p>No Article Is Selected.</p>
+          )}
+          {weekNumber !== 0 && articleNumber !== 0 && (
+            <>
+              <div className="font-bold text-4xl text-center mb-5 text-red-500 ">
+                Ooops!!
+              </div>
+              <div className="text-4xl font-bold text-red-600 mr-14">
+                {`Article ${articleNumber} of Week ${weekNumber} not available.`}
+              </div>
+              <img className="flex items-center" src={NotFound} alt="" />
+            </>
+          )}
+        </div>
+
+        <div className={`${summary === null && "hidden"}`}>
+          <div className="text-3xl font-normal text-sky-800 mt-8">
+            {summary?.articleTopic}
+          </div>
           <div className="flex gap-4 mt-4 text-gray-400">
             <div className="flex items-center">
               <BsFillPersonFill size={20} className="mr-1" />
-              {summary?.createdBy}
+              {summary?.author}
             </div>
 
             <div className="flex items-center">
               <BiCategory size={20} className="mr-1" />
-              {"Category"}
+              {summary?.category}
             </div>
 
             <div className="flex items-center">
@@ -158,16 +271,27 @@ const SummaryWritingContent = () => {
                 Clear
               </button>
 
-              <button className="py-2 px-6 text-white rounded-xl bg-[#2255B8] mx-4 shadow-2xl">
+              <button
+                onClick={() => {
+                  if (weeklySummaryResponse) {
+                    handleUpdateSummary(summary?.id);
+                  } else {
+                    handleSubmitSummary(summary?.id);
+                  }
+                }}
+                className="py-2 px-6 text-white rounded-xl bg-[#2255B8] mx-4 shadow-2xl"
+              >
                 {" "}
-                Submit Summary{" "}
+                {weeklySummaryResponse && !isLoading
+                  ? "Update Summary"
+                  : "Submit Summary"}
               </button>
             </div>
           </div>
           {/* Article Box */}
           <div className={`mt-8 ${isSendSummaryBoxOpen && "hidden"}`}>
             <>
-              <p className="mb-8">{summary?.articleText}</p>
+              <p className="mb-8">{parse(String(summary?.articleText))}</p>
 
               <div className="text-right">
                 <button
@@ -213,6 +337,3 @@ const SummaryWritingContent = () => {
 };
 
 export default SummaryWritingContent;
-
-//Todo handle Week Bar And Number Correctly.
-//Todo Send Response Implement
