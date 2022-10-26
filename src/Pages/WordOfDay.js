@@ -88,7 +88,7 @@ const WordOfDay = (isOpen) => {
       setLoading(true);
       setMessage("");
     };
-  }, [date]);
+  }, [date, loginInfo.id, token]);
   //doubt
   function props(data) {
     setDate(data);
@@ -99,14 +99,6 @@ const WordOfDay = (isOpen) => {
   }
 
   const sendResponse = async () => {
-    console.log(
-      "Sending response with student id and dailywords id as : " +
-        dailyWordsId +
-        " " +
-        studentId +
-        " " +
-        token
-    );
     let bodyParameters = {
       dailyWordsId,
       studentId,
@@ -204,13 +196,16 @@ const WordOfDay = (isOpen) => {
                 />
                 <div className="text-right mt-3"></div>
               </div>
-              <div className="py-4 px-8  rounded-lg shadow-xl my-3">
-                <h3 className="text-xl text-[#2255B8] py-2">
-                  {wordings.wordTwo}
-                  <span className="text-[10px] uppercase font-semibold text-gray-400 text-center align-super">
-                    ({wordings.wordTwoCat})
-                  </span>
-                </h3>
+              <div className="py-4 px-8  rounded-lg shadow-xl my-3 flex flex-col">
+                <div className="flex items-center">
+                  <h3 className="text-xl text-[#2255B8] py-2">
+                    {wordings.wordTwo}
+                  </h3>
+                  <span className="text-xs uppercase font-semibold text-gray-400 text-center">
+                      ({wordings.wordTwoCat})
+                    </span>
+                </div>
+
                 <p className="py-2 text-[#898989]">{wordings.wordTwoMeaning}</p>
                 <input
                   placeholder="Let’s make a sentence out of the word !"

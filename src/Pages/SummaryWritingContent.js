@@ -10,14 +10,17 @@ import { useContext } from "react";
 import axios from "axios";
 import NotFound from "../images/not found.jpg";
 import LoadingSpinner from "../Components/LoadingSpinner";
-import { Checkmark } from 'react-checkmark'
+import { Checkmark } from "react-checkmark";
+import moment from "moment";
+
 function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
-
   const { loginInfo } = useContext(AuthContext);
-  var token = loginInfo.accessToken; 
+  var token = loginInfo.accessToken;
   const [statusResponse, setStatusResponse] = useState({});
-
   useEffect(() => {
+    const startDateMomentObject = moment("13-09-2022", "DD-MM-YYYY");
+    const weekIndex = moment().diff(startDateMomentObject, "weeks") - 1;
+    if (index === weekIndex) toggleWEEK(weekIndex);
     axios
       .get(
         `${API_BASE_URL}/api/task/weekly-summary-response-status?studentId=${loginInfo.id}`,
@@ -29,13 +32,11 @@ function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
         }
       )
       .then((response) => {
-        // console.log(response.data);
         const res = {};
-        for (const [key, value] of Object.entries(response.data)){
+        for (const [key, value] of Object.entries(response.data)) {
           res[key] = value;
         }
         setStatusResponse(res);
-        
       })
       .catch((error) => {
         console.error(error);
@@ -44,10 +45,7 @@ function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
     return () => {
       week.open = false;
     };
-  }, [week, loginInfo.id]);
-
-
-
+  }, []);
   return (
     <div>
       <div key={index} onClick={() => toggleWEEK(index)}>
@@ -56,9 +54,14 @@ function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
             week.open ? "text-blue-800 font-semibold" : null
           }`}
         >
-          
-          {statusResponse[week.id]?.[0] && statusResponse[week.id]?.[1] ? <Checkmark size='16px' /> : <></> }
-          {week.question}
+          <div className="flex gap-x-4 items-center">
+            {week.question}
+            <div>
+              {statusResponse[week.id]?.[0] && statusResponse[week.id]?.[1] && (
+                <Checkmark size="16px" />
+              )}
+            </div>
+          </div>
         </div>
       </div>
       <div className={`faq-answer flex ml-1 ${!week.open ? "hidden" : null}`}>
@@ -77,7 +80,6 @@ function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
                   handleArticle(index, articleNumber);
                 }}
               >
-                
                 {/* <Checkmark size='16px' /> */}
                 {post.role}
               </div>
@@ -95,14 +97,14 @@ const SummaryWritingContent = () => {
   const [isSendSummaryBoxOpen, setIsSendSummaryBoxOpen] = useState(false);
   const [weeks, setweeks] = useState(WeekData);
   const [weekNumber, setWeekNumber] = useState(0);
-  const [articleNumber, setArticleNumber] = useState(0);
+  const [articleNumber, setArticleNumber] = useState(1);
   const [summary, setSummary] = useState(null);
   const { loginInfo } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   var token = loginInfo.accessToken;
 
   const toggleWEEK = (index) => {
-    setArticleNumber(0);
+    setArticleNumber(1);
     setweeks(
       weeks.map((week, i) => {
         if (i === index) {
@@ -159,12 +161,12 @@ const SummaryWritingContent = () => {
       });
 
     return () => {
-      summaryTextRef.current.value = ""; 
+      summaryTextRef.current.value = "";
       setIsSendSummaryBoxOpen(false);
       setSummary(null);
       setIsLoading(true);
     };
-  }, [articleNumber, weekNumber, weeks]);
+  }, [articleNumber, weekNumber, weeks, loginInfo.id, token]);
 
   const handleArticle = (index, articleNumber) => {
     setWeekNumber(index + 1);
@@ -238,6 +240,10 @@ const SummaryWritingContent = () => {
           <div className="text-3xl text-sky-800">Summary Writing</div>
           <div className="text-slate-600 text-md">
             {weekNumber === 0 ? "No Week is Selected" : `WEEK ${weekNumber}`}
+            {" - "}
+            {articleNumber === 0
+              ? "No Article is Selected"
+              : `ARTICLE ${articleNumber}`}
           </div>
         </div>
         <div
@@ -363,10 +369,10 @@ const SummaryWritingContent = () => {
       </div>
 
       <div className="bg-blue-200 h-[100vh] fixed left-[89vw] w-48 pt-10 pl-10">
-        <div className="cursor-pointer text-2xl text-blue-800 font-semibold">
+        <div className="cursor-pointer text-2xl text-blue-800 font-semibold ">
           Weeks
         </div>
-        <div className="ml-3 mt-4 overflow-y-scroll h-[87vh] overflow-x-hidden">
+        <div className="ml-auto mt-4 overflow-y-scroll h-[87vh] overflow-x-hidden">
           {weeks.map((week, i) => (
             <WEEK
               week={week}
