@@ -10,12 +10,46 @@ import { useContext } from "react";
 import axios from "axios";
 import NotFound from "../images/not found.jpg";
 import LoadingSpinner from "../Components/LoadingSpinner";
+import { Checkmark } from 'react-checkmark'
 function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
+
+  const { loginInfo } = useContext(AuthContext);
+  var token = loginInfo.accessToken; 
+  const [statusResponse, setStatusResponse] = useState({});
+
   useEffect(() => {
+    axios
+      .get(
+        `${API_BASE_URL}/api/task/weekly-summary-response-status?studentId=${loginInfo.id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        }
+      )
+      .then((response) => {
+        // console.log(response.data);
+        const res = {};
+        for (const [key, value] of Object.entries(response.data)){
+          // console.log("key is = " + key);
+          // console.log("value is = " + value);
+          res[key] = value;
+        }
+        setStatusResponse(res);
+        
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
     return () => {
       week.open = false;
     };
-  }, [week]);
+  }, [week, loginInfo.id]);
+
+
+
   return (
     <div>
       <div key={index} onClick={() => toggleWEEK(index)}>
@@ -43,6 +77,8 @@ function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
                   handleArticle(index, articleNumber);
                 }}
               >
+                
+                <Checkmark size='16px' />
                 {post.role}
               </div>
             );
@@ -123,6 +159,7 @@ const SummaryWritingContent = () => {
       });
 
     return () => {
+      summaryTextRef.current.value = ""; 
       setIsSendSummaryBoxOpen(false);
       setSummary(null);
       setIsLoading(true);
