@@ -32,8 +32,6 @@ function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
         // console.log(response.data);
         const res = {};
         for (const [key, value] of Object.entries(response.data)){
-          // console.log("key is = " + key);
-          // console.log("value is = " + value);
           res[key] = value;
         }
         setStatusResponse(res);
@@ -58,6 +56,8 @@ function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
             week.open ? "text-blue-800 font-semibold" : null
           }`}
         >
+          
+          {statusResponse[week.id]?.[0] && statusResponse[week.id]?.[1] ? <Checkmark size='16px' /> : <></> }
           {week.question}
         </div>
       </div>
@@ -78,7 +78,7 @@ function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
                 }}
               >
                 
-                <Checkmark size='16px' />
+                {/* <Checkmark size='16px' /> */}
                 {post.role}
               </div>
             );
