@@ -36,8 +36,6 @@ function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
         for (const [key, value] of Object.entries(response.data)) {
           res[key] = value;
         }
-        console.log(response);
-        console.log(res);
         setStatusResponse(res);
       })
       .catch((error) => {
