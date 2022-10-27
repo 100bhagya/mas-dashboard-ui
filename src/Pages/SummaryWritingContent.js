@@ -227,7 +227,6 @@ const SummaryWritingContent = () => {
         config
       )
       .then((response) => {
-        console.log(response.data);
         setWeeklySummaryResponse(response.data);
         setIsLoading(false);
       })
