@@ -14,6 +14,7 @@ import user from "../images/user.png";
 import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
+import { useEffect } from "react";
 
 
 const TopicBar = (value) => {
@@ -25,6 +26,14 @@ const TopicBar = (value) => {
   const { loginInfo } = useContext(AuthContext);
   const userName = loginInfo.username;
   const email = loginInfo.email;
+
+  useEffect(() => {
+    setIsOpen(JSON.parse(window.localStorage.getItem('isOpen')));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem('isOpen', isOpen);
+  }, [isOpen]);
 
   const Logout = () => {
     localStorage.clear();
