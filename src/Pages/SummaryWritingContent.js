@@ -33,9 +33,11 @@ function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
       )
       .then((response) => {
         const res = {};
+
         for (const [key, value] of Object.entries(response.data)) {
           res[key] = value;
         }
+        console.log(res);
         setStatusResponse(res);
       })
       .catch((error) => {
@@ -322,7 +324,7 @@ const SummaryWritingContent = () => {
 
               <button
                 onClick={() => {
-                  if (weeklySummaryResponse?.completed) {
+                  if (weeklySummaryResponse) {
                     handleUpdateSummary(summary?.id);
                   } else {
                     handleSubmitSummary(summary?.id);
@@ -332,7 +334,7 @@ const SummaryWritingContent = () => {
               >
                 {" "}
                 {isLoading && <LoadingSpinner />}
-                {!weeklySummaryResponse?.completed
+                {!weeklySummaryResponse
                   ? "Submit Summary"
                   : "Update Summary"}
               </button>
