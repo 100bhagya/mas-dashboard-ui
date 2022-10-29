@@ -29,11 +29,15 @@ const TopicBar = (value) => {
 
   useEffect(() => {
     setIsOpen(JSON.parse(window.localStorage.getItem('isOpen')));
+    setAptitudeOpen(JSON.parse(window.localStorage.getItem('aptitudeOpen')));
+    setTechOpen(JSON.parse(window.localStorage.getItem('techOpen')));
   }, []);
 
   useEffect(() => {
     window.localStorage.setItem('isOpen', isOpen);
-  }, [isOpen]);
+    window.localStorage.setItem('aptitudeOpen', aptitudeOpen);
+    window.localStorage.setItem('techOpen', techOpen);
+  }, [isOpen, aptitudeOpen, techOpen]);
 
   const Logout = () => {
     localStorage.clear();
@@ -257,17 +261,30 @@ const TopicBar = (value) => {
                     )}
                   </div>
                   <Link to="/mlandpython">
-                    <div className="text-sm text-blue-500 text-left md:px-2 lg:pl-8 py-2 rounded-md hover:bg-white">
+                    <div className={`text-sm text-blue-500 text-left md:px-2 lg:pl-8 py-2 rounded-md ${
+                                location.pathname === "/mlandpython"
+                                  ? "bg-[#2255B8] text-white"
+                                  : "hover:bg-white text-blue-500" }`}>
                       ML and Python
                     </div>
                   </Link>
                   <Link to="/dataanalysis">
-                    <div className="text-sm text-blue-500 text-left md:px-2 lg:pl-8 py-2 rounded-md hover:bg-white">
+                    <div className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                                location.pathname === "/dataanalysis"
+                                  ? "bg-[#2255B8] text-white"
+                                  : "hover:bg-white text-blue-500 "
+                              }`}
+                            >
                       Data Analysis
                     </div>
                   </Link>
                   <Link to="/sql">
-                    <div className="text-sm text-blue-500 text-left md:px-2 lg:pl-8 py-2 rounded-md hover:bg-white">
+                    <div className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                                location.pathname === "/sql"
+                                  ? "bg-[#2255B8] text-white"
+                                  : "hover:bg-white text-blue-500 "
+                              }`}
+                            >
                       SQL
                     </div>
                   </Link>
