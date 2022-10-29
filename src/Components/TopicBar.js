@@ -351,6 +351,7 @@ const TopicBar = (value) => {
               </div>
             )}
           </div>
+          <Link to="/settings">
           <div className=" py-2 ">
             <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
               <CogIcon className="w-6 text-blue-500" />
@@ -363,6 +364,7 @@ const TopicBar = (value) => {
               </div>
             </div>
           </div>
+          </Link>
           <div className=" py-2 ">
             <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
               <DocumentTextIcon className="w-6 text-blue-500" />
