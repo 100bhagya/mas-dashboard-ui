@@ -31,6 +31,7 @@ const TopicBar = (value) => {
     setIsOpen(JSON.parse(window.localStorage.getItem('isOpen')));
     setAptitudeOpen(JSON.parse(window.localStorage.getItem('aptitudeOpen')));
     setTechOpen(JSON.parse(window.localStorage.getItem('techOpen')));
+
   }, []);
 
   useEffect(() => {
@@ -38,6 +39,8 @@ const TopicBar = (value) => {
     window.localStorage.setItem('aptitudeOpen', aptitudeOpen);
     window.localStorage.setItem('techOpen', techOpen);
   }, [isOpen, aptitudeOpen, techOpen]);
+  }, [isOpen]);
+
 
   const Logout = () => {
     localStorage.clear();

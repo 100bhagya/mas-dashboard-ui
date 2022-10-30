@@ -33,9 +33,11 @@ function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
       )
       .then((response) => {
         const res = {};
+
         for (const [key, value] of Object.entries(response.data)) {
           res[key] = value;
         }
+        console.log(res);
         setStatusResponse(res);
       })
       .catch((error) => {
@@ -54,12 +56,18 @@ function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
             week.open ? "text-blue-800 font-semibold" : null
           }`}
         >
-          <div className="flex gap-x-4 items-center">
+          <div className="flex gap-x-2 items-center">
             {week.question}
             <div>
-              {statusResponse[week.id]?.[0] && statusResponse[week.id]?.[1] && (
+              {statusResponse[week.id]?.[0] && statusResponse[week.id]?.[1] ? (
                 <Checkmark size="16px" />
-              )}
+              ) : null}
+              {(statusResponse[week.id]?.[0] &&
+                !statusResponse[week.id]?.[1]) ||
+              (!statusResponse[week.id]?.[0] &&
+                statusResponse[week.id]?.[1]) ? (
+                <Checkmark color="#F6BE00" size="16px" />
+              ) : null}
             </div>
           </div>
         </div>
@@ -71,17 +79,21 @@ function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
             return (
               <div
                 className={`cursor-pointer mb-2 px-2 py-1 rounded-lg ${
-                  articleNumber === post.articleNumber
+                  articleNumber === post?.articleNumber
                     ? "bg-blue-500 text-white"
                     : null
                 }`}
                 onClick={() => {
-                  const articleNumber = post.articleNumber;
+                  const articleNumber = post?.articleNumber;
                   handleArticle(index, articleNumber);
                 }}
               >
-                {/* <Checkmark size='16px' /> */}
-                {post.role}
+                <div className="flex gap-2 justify-start items-center">
+                  <div>{post?.role}</div>
+                  {statusResponse[week?.id]?.[post?.articleNumber - 1] ? (
+                    <Checkmark size="14px" />
+                  ) : null}
+                </div>
               </div>
             );
           })}
@@ -239,11 +251,9 @@ const SummaryWritingContent = () => {
         <div className=" pb-4 border-b-2 border-[#2255B8]">
           <div className="text-3xl text-sky-800">Summary Writing</div>
           <div className="text-slate-600 text-md">
-            {weekNumber === 0 ? "No Week is Selected" : `WEEK ${weekNumber}`}
+            {`WEEK ${weekNumber}`}
             {" - "}
-            {articleNumber === 0
-              ? "No Article is Selected"
-              : `ARTICLE ${articleNumber}`}
+            {`ARTICLE ${articleNumber}`}
           </div>
         </div>
         <div
@@ -258,21 +268,13 @@ const SummaryWritingContent = () => {
             (summary !== null || isLoading) && "hidden"
           } flex flex-col justify-center items-center mt-8`}
         >
-          {weekNumber === 0 && <p>No Week Is Selected.</p>}
-          {weekNumber !== 0 && articleNumber === 0 && (
-            <p>No Article Is Selected.</p>
-          )}
-          {weekNumber !== 0 && articleNumber !== 0 && (
-            <>
-              <div className="font-bold text-4xl text-center mb-5 text-red-500 ">
-                Ooops!!
-              </div>
-              <div className="text-4xl font-bold text-red-600 mr-14">
-                {`Article ${articleNumber} of Week ${weekNumber} not available.`}
-              </div>
-              <img className="flex items-center" src={NotFound} alt="" />
-            </>
-          )}
+          <div className="font-bold text-4xl text-center mb-5 text-red-500 ">
+            Ooops!!
+          </div>
+          <div className="text-4xl font-bold text-red-600 mr-14">
+            {`Article ${articleNumber} of Week ${weekNumber} not available.`}
+          </div>
+          <img className="flex items-center" src={NotFound} alt="" />
         </div>
 
         <div className={`${summary === null && "hidden"}`}>
@@ -332,9 +334,9 @@ const SummaryWritingContent = () => {
               >
                 {" "}
                 {isLoading && <LoadingSpinner />}
-                {weeklySummaryResponse && !isLoading
-                  ? "Update Summary"
-                  : "Submit Summary"}
+                {!weeklySummaryResponse
+                  ? "Submit Summary"
+                  : "Update Summary"}
               </button>
             </div>
           </div>
@@ -368,7 +370,7 @@ const SummaryWritingContent = () => {
         </div>
       </div>
 
-      <div className="bg-blue-200 h-[100vh] fixed left-[89vw] w-48 pt-10 pl-10">
+      <div className="bg-blue-200 h-[100vh] fixed left-[89vw] w-52 pt-10 pl-10">
         <div className="cursor-pointer text-2xl text-blue-800 font-semibold ">
           Weeks
         </div>
@@ -377,6 +379,7 @@ const SummaryWritingContent = () => {
             <WEEK
               week={week}
               index={i}
+              key={i}
               toggleWEEK={toggleWEEK}
               handleArticle={handleArticle}
               articleNumber={articleNumber}
