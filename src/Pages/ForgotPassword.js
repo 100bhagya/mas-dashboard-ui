@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import {
-  // FaFacebookF,
-  // FaGoogle,
-  // FaLinkedinIn,
   FaRegEnvelope,
 } from "react-icons/fa";
 import { MdLockOutline } from "react-icons/md";
@@ -13,38 +10,49 @@ import { useContext, useRef } from "react";
 import { loginCall } from "../apiCalls";
 import { AuthContext } from "../context/AuthContext";
 import LoadingSpinner from "../Components/LoadingSpinner";
+import axios from "axios";
+import { API_BASE_URL } from "../data/consts";
 
 const Signin = () => {
-  // const [email, setEmail] = useState();
-  // const [password, setPassword] = useState();
-  // const [error, setError] = useState();
-
   const email = useRef();
-  const password = useRef();
-  const { loginInfo, isFetching, error, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [err, setErr] = useState();
+  const [message, setMessage] = useState();
+  const [fetching, setFetching] = useState(false);
 
-  const handleSignIn = async (e) => {
+  const handleSubmit = (e) => {
+    setFetching(true);
+    let bodyParameters = {
+        email: email.current.value
+      };
+      const config = {
+        "Content-Type": "application/json",
+        headers: { Authorization: `` }
+      };
     e.preventDefault();
-    console.log("data", email.current.value, password.current.value);
-    await loginCall(
-      { email: email.current.value, password: password.current.value },
-      dispatch
-    );
+    // console.log("data = ", email.current.value);
+    axios.post(`${API_BASE_URL}/api/auth/forgot_password`, bodyParameters)
+      .then((response) => {
+        setFetching(false);
+        console.log("Response from api is = " + response.data);
+        setMessage(response.data);
+      })
+      .catch((err) => {
+        setFetching(false);
+        console.log(err);
+        setErr("User with given email does not exist!");
+      });
   };
-  // console.log(loginInfo);
-  if (loginInfo) {
-    navigate("/");
-  }
+  
   
   
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
       <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        {error ? (
+        {err ? (
           <div className="bg-white w-[60%] mb-4 flex shadow-xl rounded-tr-xl rounded-br-xl">
             <div className="w-2 bg-red-600 rounded-tl-xl rounded-bl-xl"></div>
-            <div className="py-2 text-red-500 ml-5">Please Enter Correct Credentials</div>
+            <div className="py-2 text-red-500 ml-5"> {err} </div>
           </div>
         ) : null}
 
@@ -53,13 +61,13 @@ const Signin = () => {
             <div className="text-left font-bold">
               <img src={Logo} alt="logo" className="h-10" />
             </div>
-            <div className="py-10">
+            {message ? (<div className="py-2 text-red-500 ml-5"> {message} </div>) : (<div className="py-10">
               <h2 className="text-3xl font-bold text-blue-600 mb-2">
-                Sign in to Account
+                Enter your Email
               </h2>
               <div className="bg-blue-600 h-1 w-10 inline-block mb-2"></div>
               
-              <form className="flex flex-col items-center" onSubmit={handleSignIn}>
+              <form className="flex flex-col items-center" onSubmit={handleSubmit}>
                 <div className="bg-gray-100 w-64 p-2 flex items-center mb-3">
                   <AiOutlineUser className="text-gray-400 m-2" />
                   <input
@@ -71,32 +79,18 @@ const Signin = () => {
                     className="bg-gray-100 outline-none text-sm flex-1"
                   />
                 </div>
-                <div className="bg-gray-100 w-64 p-2 flex items-center">
-                  <MdLockOutline className="text-gray-400 m-2" />
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    required
-                    ref={password}
-                    className="bg-gray-100 outline-none text-sm flex-1"
-                  />
-                </div>
-
-                <div className="flex justify-between w-64 mb-5 mt-2">
-                  <a href="/forgotPassword" className="text-xs">
-                    Forget Password?
-                  </a>
-                </div>
+              
                 <button
                   className="border-2 cursor-pointer border-blue-600 text-blue-600 rounded-full px-12 py-2 inline-block font-semibold hover:bg-blue-600 hover:text-white"
-                  disabled={isFetching}
+                  
                   type="submit"
                 >
-                  {isFetching ? <LoadingSpinner/> : ("Sign In")}
+                    {fetching ? <LoadingSpinner/> : ("Submit")}
                 </button>
               </form>
-            </div>
+            </div>)}
+            
+
           </div>
           <div className="w-2/5 bg-blue-600 text-white rounded-tr-2xl rounded-br-2xl py-36 px-12">
             <h2 className="text-3xl  font-bold mb-2">Hello, Friend!</h2>
