@@ -1,14 +1,8 @@
 import React, { useState } from "react";
-import {
-  FaRegEnvelope,
-} from "react-icons/fa";
-import { MdLockOutline } from "react-icons/md";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Logo from "../images/logo.png";
 import { AiOutlineUser } from "react-icons/ai";
-import { useContext, useRef } from "react";
-import { loginCall } from "../apiCalls";
-import { AuthContext } from "../context/AuthContext";
+import { useRef } from "react";
 import LoadingSpinner from "../Components/LoadingSpinner";
 import axios from "axios";
 import { API_BASE_URL } from "../data/consts";
@@ -17,9 +11,7 @@ import { useEffect } from "react";
 const Signin = () => {
   const password = useRef();
   const confirmPassword = useRef();
-  const navigate = useNavigate();
   const [err, setErr] = useState();
-  const [err2, setErr2] = useState();
   const [message, setMessage] = useState();
   const [heading, setHeading] = useState();
   const [fetching, setFetching] = useState(false);
@@ -44,9 +36,6 @@ useEffect(()=>{
     let bodyParameters = {
         password: password.current.value,
         token: token
-      };
-      const config = {
-        "Content-Type": "application/json"
       };
     e.preventDefault();
     if(password.current.value === confirmPassword.current.value){

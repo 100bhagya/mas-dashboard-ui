@@ -39,7 +39,7 @@ const TopicBar = (value) => {
     window.localStorage.setItem('aptitudeOpen', aptitudeOpen);
     window.localStorage.setItem('techOpen', techOpen);
   }, [isOpen, aptitudeOpen, techOpen]);
-  }, [isOpen]);
+
 
 
   const Logout = () => {

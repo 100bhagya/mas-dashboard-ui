@@ -1,21 +1,14 @@
 import React, { useState } from "react";
-import {
-  FaRegEnvelope,
-} from "react-icons/fa";
-import { MdLockOutline } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Logo from "../images/logo.png";
 import { AiOutlineUser } from "react-icons/ai";
-import { useContext, useRef } from "react";
-import { loginCall } from "../apiCalls";
-import { AuthContext } from "../context/AuthContext";
+import { useRef } from "react";
 import LoadingSpinner from "../Components/LoadingSpinner";
 import axios from "axios";
 import { API_BASE_URL } from "../data/consts";
 
 const Signin = () => {
   const email = useRef();
-  const navigate = useNavigate();
   const [err, setErr] = useState();
   const [message, setMessage] = useState();
   const [fetching, setFetching] = useState(false);
@@ -24,10 +17,6 @@ const Signin = () => {
     setFetching(true);
     let bodyParameters = {
         email: email.current.value
-      };
-      const config = {
-        "Content-Type": "application/json",
-        headers: { Authorization: `` }
       };
     e.preventDefault();
     // console.log("data = ", email.current.value);
