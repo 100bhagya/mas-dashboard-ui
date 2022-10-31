@@ -28,9 +28,9 @@ const TopicBar = (value) => {
   const email = loginInfo.email;
 
   useEffect(() => {
-    setIsOpen(JSON.parse(window.localStorage.getItem('isOpen')));
-    setAptitudeOpen(JSON.parse(window.localStorage.getItem('aptitudeOpen')));
-    setTechOpen(JSON.parse(window.localStorage.getItem('techOpen')));
+    setIsOpen(JSON.parse(window.localStorage.getItem('isOpen')) != null ? JSON.parse(window.localStorage.getItem('isOpen')) : true);
+    setAptitudeOpen(JSON.parse(window.localStorage.getItem('aptitudeOpen')) != null ? JSON.parse(window.localStorage.getItem('aptitudeOpen')) : true);
+    setTechOpen(JSON.parse(window.localStorage.getItem('techOpen')) != null ? JSON.parse(window.localStorage.getItem('techOpen')) : true);
 
   }, []);
 
