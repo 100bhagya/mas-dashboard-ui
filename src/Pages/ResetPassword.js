@@ -32,13 +32,13 @@ useEffect(()=>{
 }, [token]);
 
   const handleSubmit = (e) => {
-    setFetching(true);
     let bodyParameters = {
         password: password.current.value,
         token: token
       };
     e.preventDefault();
     if(password.current.value === confirmPassword.current.value){
+        setFetching(true);
         axios.post(`${API_BASE_URL}/api/auth/reset_password`, bodyParameters)
         .then((response) => {
           setFetching(false);
