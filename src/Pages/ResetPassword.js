@@ -73,7 +73,7 @@ useEffect(()=>{
             <div className="text-left font-bold">
               <img src={Logo} alt="logo" className="h-10" />
             </div>
-            {message ? (<div className="py-2 text-red-500 ml-5"> {message} </div>) : (<div className="py-10">
+            {message ? (<div className="text-2xl py-2 text-red-500 ml-5 pt-10"> {message} </div>) : (<div className="py-10">
               <h2 className="text-2xl text-blue-500 mb-4">
                 {heading}
               </h2>

@@ -23,7 +23,7 @@ const Signin = () => {
     axios.post(`${API_BASE_URL}/api/auth/forgot_password`, bodyParameters)
       .then((response) => {
         setFetching(false);
-        console.log("Response from api is = " + response.data);
+        // console.log("Response from api is = " + response.data);
         setMessage(response.data);
       })
       .catch((err) => {
@@ -50,7 +50,9 @@ const Signin = () => {
             <div className="text-left font-bold">
               <img src={Logo} alt="logo" className="h-10" />
             </div>
-            {message ? (<div className="py-2 text-red-500 ml-5"> {message} </div>) : (<div className="py-10">
+            {message ? (<div className="flex h-[50vh]"><div className="py-2 text-xl text-red-500 ml-5 m-auto"> {message} </div></div>) : 
+            (<div className="flex h-[50vh]">
+            <div className="py-10 m-auto">
               <h2 className="text-3xl font-bold text-blue-600 mb-2">
                 Enter your Email
               </h2>
@@ -77,6 +79,7 @@ const Signin = () => {
                     {fetching ? <LoadingSpinner/> : ("Submit")}
                 </button>
               </form>
+            </div>
             </div>)}
             
 
