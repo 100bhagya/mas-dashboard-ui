@@ -14,6 +14,7 @@ const Signin = () => {
   const [fetching, setFetching] = useState(false);
 
   const handleSubmit = (e) => {
+    setErr();
     setFetching(true);
     let bodyParameters = {
         email: email.current.value

@@ -32,6 +32,7 @@ useEffect(()=>{
 }, [token]);
 
   const handleSubmit = (e) => {
+    setErr();
     let bodyParameters = {
         password: password.current.value,
         token: token
