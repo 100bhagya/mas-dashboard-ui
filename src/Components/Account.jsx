@@ -5,6 +5,14 @@ import { useContext } from "react";
 import { API_BASE_URL } from "../data/consts";
 import axios from "axios";
 import LoadingSpinner from "./LoadingSpinner";
+import { useEffect } from "react";
+import toast, { Toaster } from "react-hot-toast";
+
+const profileUpdatedNotification = () => toast("Profile Updated Successfully.");
+const errorNotification = () =>
+  toast("Something went wrong. Please try again.");
+const changesRevertedNotification = () =>
+  toast("Changes Reverted Successfully.");
 
 const Account = () => {
   const { loginInfo } = useContext(AuthContext);
@@ -19,7 +27,35 @@ const Account = () => {
   const userNameRef = useRef();
   const phoneNumberRef = useRef();
   const [isLoading, setIsLoading] = useState(false);
-  const handleFetchProfile = () => {};
+  const handleFetchProfile = (cancel = false) => {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    setIsLoading(true);
+    axios
+      .get(`${API_BASE_URL}/api/getUserProfile`, config)
+      .then((response) => {
+        console.log(response.data);
+        firstNameRef.current.value = response.data.firstName || "";
+        lastNameRef.current.value = response.data.lastName || "";
+        userNameRef.current.value = response.data.username || "";
+        phoneNumberRef.current.value = response.data.phoneNo || "";
+        addressRef.current.value = response.data.address || "";
+        cityRef.current.value = response.data.city || "";
+        stateRef.current.value = response.data.state || "";
+        postalCodeRef.current.value = response.data.postalCode || "";
+        emailRef.current.value = response.data.email || "";
+        setIsLoading(false);
+        {
+          cancel && changesRevertedNotification();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        errorNotification();
+        setIsLoading(false);
+      });
+  };
   const handleUpdateProfile = () => {
     let bodyParameters = {
       firstName: firstNameRef.current.value.trim(),
@@ -51,24 +87,36 @@ const Account = () => {
       axios
         .put(`${API_BASE_URL}/api/updateProfile`, bodyParameters, config)
         .then((response) => {
-          console.log(bodyParameters);
-          console.log(response.data);
-          firstNameRef.current.value = response.data.firstName;
-          lastNameRef.current.value = response.data.lastName;
-          userNameRef.current.value = response.data.username;
-          phoneNumberRef.current.value = response.data.phoneNo;
-          addressRef.current.value = response.data.address;
-          cityRef.current.value = response.data.city;
-          stateRef.current.value = response.data.state;
-          postalCodeRef.current.value = response.data.postalCode;
-          emailRef.current.value = response.data.email;
+          handleFetchProfile();
+          profileUpdatedNotification();
           setIsLoading(false);
         })
         .catch((error) => {
           console.log(error);
+          handleFetchProfile();
+          errorNotification();
           setIsLoading(false);
         });
     }
+  };
+
+  useEffect(() => {
+    handleFetchProfile();
+  }, []);
+
+  const handleDataFromPostalCode = () => {
+    axios
+      .get(
+        `https://api.postalpincode.in/pincode/${postalCodeRef.current.value}`
+      )
+      .then((response) => {
+        console.log(response);
+        stateRef.current.value = response.data[0]?.PostOffice[0].State || "";
+        cityRef.current.value = response.data[0]?.PostOffice[0].Block || "";
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <div className="flex justify-center py-12">
@@ -173,6 +221,7 @@ const Account = () => {
                 Postal Code
               </div>
               <input
+                onChange={handleDataFromPostalCode}
                 ref={postalCodeRef}
                 type="text"
                 className="min-w-[100px] p-1 rounded-md border border-gray-300"
@@ -209,26 +258,32 @@ const Account = () => {
         <hr class="my-8 h-px bg-gray-200 border-0 dark:bg-gray-200"></hr>
 
         <div className="flex justify-end gap-6">
-          <button
-            onClick={handleFetchProfile}
-            className="py-1 px-2 rounded-md border border-gray-300 bg-white"
-          >
-            Cancel
-          </button>
           {isLoading ? (
-            <div className="px-2">
+            <div className="mx-auto">
               <LoadingSpinner />
             </div>
           ) : (
-            <button
-              onClick={handleUpdateProfile}
-              className="py-1 px-2 rounded-md border border-gray-300 bg-blue-500 text-white"
-            >
-              Update
-            </button>
+            <>
+              <button
+                onClick={() => {
+                  handleFetchProfile(true);
+                }}
+                className="py-1 px-2 rounded-md border border-gray-300 bg-white"
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={handleUpdateProfile}
+                className="py-1 px-2 rounded-md border border-gray-300 bg-blue-500 text-white"
+              >
+                Update
+              </button>
+            </>
           )}
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };
