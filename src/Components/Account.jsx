@@ -7,12 +7,13 @@ import axios from "axios";
 import LoadingSpinner from "./LoadingSpinner";
 import { useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
-
+import { useDebounce } from "use-lodash-debounce";
 const profileUpdatedNotification = () => toast("Profile Updated Successfully.");
 const errorNotification = () =>
   toast("Something went wrong. Please try again.");
 const changesRevertedNotification = () =>
   toast("Changes Reverted Successfully.");
+const pleaseFillAllFieldsNotification = () => toast("Please fill all fields.");
 
 const Account = () => {
   const { loginInfo } = useContext(AuthContext);
@@ -26,6 +27,9 @@ const Account = () => {
   const addressRef = useRef();
   const userNameRef = useRef();
   const phoneNumberRef = useRef();
+  const [value, setValue] = useState("");
+  const debouncedValue = useDebounce(value, 1000);
+
   const [isLoading, setIsLoading] = useState(false);
   const handleFetchProfile = (cancel = false) => {
     const config = {
@@ -35,7 +39,6 @@ const Account = () => {
     axios
       .get(`${API_BASE_URL}/api/getUserProfile`, config)
       .then((response) => {
-        console.log(response.data);
         firstNameRef.current.value = response.data.firstName || "";
         lastNameRef.current.value = response.data.lastName || "";
         userNameRef.current.value = response.data.username || "";
@@ -97,6 +100,8 @@ const Account = () => {
           errorNotification();
           setIsLoading(false);
         });
+    } else {
+      pleaseFillAllFieldsNotification();
     }
   };
 
@@ -104,20 +109,27 @@ const Account = () => {
     handleFetchProfile();
   }, []);
 
-  const handleDataFromPostalCode = () => {
+  useEffect(() => {
+    if (value !== "") {
+      fetchDataFromPostalCode(postalCodeRef.current.value);
+    }
+  }, [debouncedValue]);
+
+  const fetchDataFromPostalCode = (postalCode) => {
+    stateRef.current.value = "";
     axios
-      .get(
-        `https://api.postalpincode.in/pincode/${postalCodeRef.current.value}`
-      )
+      .get(`https://api.postalpincode.in/pincode/${postalCode}`)
       .then((response) => {
         console.log(response);
-        stateRef.current.value = response.data[0]?.PostOffice[0].State || "";
-        cityRef.current.value = response.data[0]?.PostOffice[0].Block || "";
+        if (response.data[0]?.PostOffice) {
+          stateRef.current.value = response.data[0]?.PostOffice[0].State || "";
+        }
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
   return (
     <div className="flex justify-center py-12">
       <div className="flex flex-col gap-6">
@@ -221,7 +233,7 @@ const Account = () => {
                 Postal Code
               </div>
               <input
-                onChange={handleDataFromPostalCode}
+                onChange={(e) => setValue(e.target.value)}
                 ref={postalCodeRef}
                 type="text"
                 className="min-w-[100px] p-1 rounded-md border border-gray-300"
