@@ -8,6 +8,10 @@ import LoadingSpinner from "./LoadingSpinner";
 import { useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useDebounce } from "use-lodash-debounce";
+import user from "../images/user.png";
+import { UserContext } from "../context/user/UserContext";
+
+//Toast Notifications
 const profileUpdatedNotification = () => toast("Profile Updated Successfully.");
 const errorNotification = () =>
   toast("Something went wrong. Please try again.");
@@ -15,8 +19,10 @@ const changesRevertedNotification = () =>
   toast("Changes Reverted Successfully.");
 const pleaseFillAllFieldsNotification = () => toast("Please fill all fields.");
 
+
 const Account = () => {
   const { loginInfo } = useContext(AuthContext);
+  const { profileImgURL, dispatch } = useContext(UserContext);
   var token = loginInfo.accessToken;
   const firstNameRef = useRef();
   const lastNameRef = useRef();
@@ -27,8 +33,9 @@ const Account = () => {
   const addressRef = useRef();
   const userNameRef = useRef();
   const phoneNumberRef = useRef();
-  const [value, setValue] = useState("");
-  const debouncedValue = useDebounce(value, 1000);
+  const [postalCodeValue, setPostalCodeValue] = useState("");
+  const postalCodeDebouncedValue = useDebounce(postalCodeValue, 1000);
+  const fileSelect = useRef(null);
 
   const [isLoading, setIsLoading] = useState(false);
   const handleFetchProfile = (cancel = false) => {
@@ -48,6 +55,10 @@ const Account = () => {
         stateRef.current.value = response.data.state || "";
         postalCodeRef.current.value = response.data.postalCode || "";
         emailRef.current.value = response.data.email || "";
+        dispatch({
+          type: "SET_PROFILE_IMAGE",
+          payload: response.data.profilePic,
+        });
         setIsLoading(false);
         {
           cancel && changesRevertedNotification();
@@ -64,8 +75,8 @@ const Account = () => {
       firstName: firstNameRef.current.value.trim(),
       lastName: lastNameRef.current.value.trim(),
       username: userNameRef.current.value.trim(),
-      // profilePic: "No IMG URL provided",
-      phoneNo: parseInt(phoneNumberRef.current.value.trim()), //TODO
+      profilePic: profileImgURL || "",
+      phoneNo: phoneNumberRef.current.value.trim(), //TODO
       address: addressRef.current.value.trim(),
       postalCode: postalCodeRef.current.value.trim(),
       state: stateRef.current.value.trim(),
@@ -110,15 +121,17 @@ const Account = () => {
   }, []);
 
   useEffect(() => {
-    if (value !== "") {
-      fetchDataFromPostalCode(postalCodeRef.current.value);
+    if (postalCodeDebouncedValue !== "") {
+      fetchDataFromPostalCode();
     }
-  }, [debouncedValue]);
+  }, [postalCodeDebouncedValue]);
 
-  const fetchDataFromPostalCode = (postalCode) => {
+  const fetchDataFromPostalCode = () => {
     stateRef.current.value = "";
     axios
-      .get(`https://api.postalpincode.in/pincode/${postalCode}`)
+      .get(
+        `https://api.postalpincode.in/pincode/${postalCodeRef.current.value}`
+      )
       .then((response) => {
         console.log(response);
         if (response.data[0]?.PostOffice) {
@@ -129,6 +142,33 @@ const Account = () => {
         console.log(error);
       });
   };
+
+  function uploadFile(file) {
+    const url = `https://api.cloudinary.com/v1_1/hackon-technophiles/upload`;
+    const xhr = new XMLHttpRequest();
+    const fd = new FormData();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+
+    xhr.onreadystatechange = (e) => {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        dispatch({ type: "SET_PROFILE_IMAGE", payload: response.secure_url });
+      }
+    };
+
+    fd.append("upload_preset", "udzvlomh");
+    fd.append("tags", "browser_upload");
+    fd.append("file", file);
+    xhr.send(fd);
+  }
+
+  function handleFiles(files) {
+    for (let i = 0; i < files.length; i++) {
+      console.log(files[i]);
+      uploadFile(files[i]);
+    }
+  }
 
   return (
     <div className="flex justify-center py-12">
@@ -177,17 +217,39 @@ const Account = () => {
         </div>
         <div className="flex flex-col gap-2">
           <div className="font-medium">Photo</div>
-          <div className="flex gap-6 items-center">
+          <div className="flex items-center gap-6">
             <img
               alt="User Profile"
-              className="w-10 h-10 rounded-full"
-              src="https://media-exp1.licdn.com/dms/image/C4D03AQHj-Uul_quJmA/profile-displayphoto-shrink_400_400/0/1663409602983?e=1672272000&v=beta&t=-3uvoSvXfJpSjjZ5ruXq3JsLt8eM82ciNYOYoMWkLc4"
+              className="w-10 h-10 rounded-full object-cover"
+              src={profileImgURL || user}
             />
-
-            <button className="py-1 px-2 rounded-md border border-gray-300 bg-white">
-              Change
-            </button>
-            <div className="text-sm font-medium">Remove</div>
+            <div
+              className={`text-sm font-medium ${!profileImgURL && "hidden"}`}
+              onClick={() =>
+                dispatch({
+                  type: "RESET_PROFILE_IMAGE",
+                })
+              }
+            >
+              Remove
+            </div>
+            <div className="flex">
+              <label
+                for="file-upload"
+                className="py-1 px-2 rounded-md border border-gray-300 bg-white"
+              >
+                {profileImgURL ? "Change" : "Upload"}
+              </label>
+              <input
+                className="invisible"
+                id="file-upload"
+                ref={fileSelect}
+                type="file"
+                accept="image/*"
+                style={{ display: "block" }}
+                onChange={(e) => handleFiles(e.target.files)}
+              />
+            </div>
           </div>
         </div>
 
@@ -233,7 +295,7 @@ const Account = () => {
                 Postal Code
               </div>
               <input
-                onChange={(e) => setValue(e.target.value)}
+                onChange={(e) => setPostalCodeValue(e.target.value)}
                 ref={postalCodeRef}
                 type="text"
                 className="min-w-[100px] p-1 rounded-md border border-gray-300"

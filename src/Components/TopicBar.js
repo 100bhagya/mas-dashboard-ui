@@ -15,7 +15,9 @@ import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 import { useEffect } from "react";
-
+import { UserContext } from "../context/user/UserContext";
+import axios from "axios";
+import { API_BASE_URL } from "../data/consts";
 
 const TopicBar = (value) => {
   const [selectedimage, setSelectedimage] = useState();
@@ -26,13 +28,29 @@ const TopicBar = (value) => {
   const { loginInfo } = useContext(AuthContext);
   const userName = loginInfo.username;
   const email = loginInfo.email;
-
+  var token = loginInfo.accessToken;
+  const { profileImgURL, dispatch } = useContext(UserContext);
   useEffect(() => {
-    setIsOpen(JSON.parse(window.localStorage.getItem('isOpen')));
+    setIsOpen(JSON.parse(window.localStorage.getItem("isOpen")));
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    // Fetching User Profile Image
+    axios
+      .get(`${API_BASE_URL}/api/getUserProfile`, config)
+      .then((response) => {
+        dispatch({
+          type: "SET_PROFILE_IMAGE",
+          payload: response.data.profilePic,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem('isOpen', isOpen);
+    window.localStorage.setItem("isOpen", isOpen);
   }, [isOpen]);
 
   const Logout = () => {
@@ -85,10 +103,12 @@ const TopicBar = (value) => {
                 }}
               />
               <img
-                src={user}
+                src={profileImgURL || user}
                 alt=""
                 className={`relative rounded-full ${
-                  sidebar ? "w-16 h-16 left-[8%]" : "w-32 h-32 m-auto "
+                  sidebar
+                    ? "w-16 h-16 left-[8%]"
+                    : "w-32 h-32 m-auto object-cover"
                 }`}
               />
             </label>
@@ -352,18 +372,18 @@ const TopicBar = (value) => {
             )}
           </div>
           <Link to="/settings">
-          <div className=" py-2 ">
-            <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
-              <CogIcon className="w-6 text-blue-500" />
-              <div
-                className={`ml-5 text-blue-500 md:text-md ${
-                  sidebar ? "hidden" : ""
-                }`}
-              >
-                Settings
+            <div className=" py-2 ">
+              <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
+                <CogIcon className="w-6 text-blue-500" />
+                <div
+                  className={`ml-5 text-blue-500 md:text-md ${
+                    sidebar ? "hidden" : ""
+                  }`}
+                >
+                  Settings
+                </div>
               </div>
             </div>
-          </div>
           </Link>
           <div className=" py-2 ">
             <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
