@@ -63,7 +63,7 @@ const Account = () => {
       })
       .catch((error) => {
         console.log(error);
-        toastMessage("Something went wrong. Please try again, later.");
+        toastMessage("Something went wrong.");
         setIsLoading(false);
       });
   };
@@ -105,7 +105,7 @@ const Account = () => {
         .catch((error) => {
           console.log(error);
           handleFetchProfile();
-          toastMessage("Something went wrong. Please try again, later.");
+          toastMessage("Something went wrong.");
           setIsLoading(false);
         });
     } else {
