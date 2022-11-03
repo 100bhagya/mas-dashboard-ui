@@ -21,19 +21,26 @@ const TopicBar = (value) => {
   const [selectedimage, setSelectedimage] = useState();
   const [isOpen, setIsOpen] = useState(value);
   const [aptitudeOpen, setAptitudeOpen] = useState(true);
-  const [techOpen, setTechOpen] = useState(true);
+  const [nonTechOpen, setNonTechOpen] = useState(true);
   const [sidebar, setSidebar] = useState(false);
   const { loginInfo } = useContext(AuthContext);
   const userName = loginInfo.username;
   const email = loginInfo.email;
 
   useEffect(() => {
-    setIsOpen(JSON.parse(window.localStorage.getItem('isOpen')));
+    setIsOpen(JSON.parse(window.localStorage.getItem('isOpen')) != null ? JSON.parse(window.localStorage.getItem('isOpen')) : true);
+    setAptitudeOpen(JSON.parse(window.localStorage.getItem('aptitudeOpen')) != null ? JSON.parse(window.localStorage.getItem('aptitudeOpen')) : true);
+    setNonTechOpen(JSON.parse(window.localStorage.getItem('nonTechOpen')) != null ? JSON.parse(window.localStorage.getItem('nonTechOpen')) : true);
+
   }, []);
 
   useEffect(() => {
     window.localStorage.setItem('isOpen', isOpen);
-  }, [isOpen]);
+    window.localStorage.setItem('aptitudeOpen', aptitudeOpen);
+    window.localStorage.setItem('nonTechOpen', nonTechOpen);
+  }, [isOpen, aptitudeOpen, nonTechOpen]);
+
+
 
   const Logout = () => {
     localStorage.clear();
@@ -257,17 +264,30 @@ const TopicBar = (value) => {
                     )}
                   </div>
                   <Link to="/mlandpython">
-                    <div className="text-sm text-blue-500 text-left md:px-2 lg:pl-8 py-2 rounded-md hover:bg-white">
+                    <div className={`text-sm text-blue-500 text-left md:px-2 lg:pl-8 py-2 rounded-md ${
+                                location.pathname === "/mlandpython"
+                                  ? "bg-[#2255B8] text-white"
+                                  : "hover:bg-white text-blue-500" }`}>
                       ML and Python
                     </div>
                   </Link>
                   <Link to="/dataanalysis">
-                    <div className="text-sm text-blue-500 text-left md:px-2 lg:pl-8 py-2 rounded-md hover:bg-white">
+                    <div className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                                location.pathname === "/dataanalysis"
+                                  ? "bg-[#2255B8] text-white"
+                                  : "hover:bg-white text-blue-500 "
+                              }`}
+                            >
                       Data Analysis
                     </div>
                   </Link>
                   <Link to="/sql">
-                    <div className="text-sm text-blue-500 text-left md:px-2 lg:pl-8 py-2 rounded-md hover:bg-white">
+                    <div className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                                location.pathname === "/sql"
+                                  ? "bg-[#2255B8] text-white"
+                                  : "hover:bg-white text-blue-500 "
+                              }`}
+                            >
                       SQL
                     </div>
                   </Link>
@@ -275,7 +295,7 @@ const TopicBar = (value) => {
                     <div
                       className="flex px-2 py-2 lg:pl-8 rounded-md hover:bg-white"
                       onClick={() => {
-                        setTechOpen(!techOpen);
+                        setNonTechOpen(!nonTechOpen);
                       }}
                     >
                       <div className="text-sm text-blue-500 text-left ">
@@ -286,14 +306,14 @@ const TopicBar = (value) => {
                         alt=""
                         className="w-3 h-2 relative left-[10%] top-2 cursor-pointer"
                         style={{
-                          transform: !techOpen ? "rotate(180deg)" : null,
+                          transform: !nonTechOpen ? "rotate(180deg)" : null,
                         }}
                         onClick={() => {
-                          setTechOpen(!techOpen);
+                          setNonTechOpen(!nonTechOpen);
                         }}
                       />
                     </div>
-                    {techOpen ? (
+                    {nonTechOpen ? (
                       <div></div>
                     ) : (
                       <div className="flex ml-2  lg:pl-8">

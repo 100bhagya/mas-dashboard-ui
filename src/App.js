@@ -16,8 +16,10 @@ import Verbal from "./Pages/Verbal";
 import Signin from "./Pages/Signin";
 import Signup from "./Pages/Signup";
 import Record from "./Pages/Record";
+import ForgotPassword from "./Pages/ForgotPassword";
 import MLandPython from "./Pages/MLandPython";
 import DataAnalysis from "./Pages/DataAnalysis";
+import ResetPassword from "./Pages/ResetPassword";
 import SQL from "./Pages/SQL";
 import QuizDetail from "./Pages/QuizDetail";
 import ProtectedRoutes from "./Components/PrivateRoutes";
@@ -31,6 +33,8 @@ function App() {
         <Routes>
           <Route path="signin" element={loginInfo ? <Navigate to="/" /> : <Signin />} />
           <Route path="signup" element={loginInfo ? <Navigate to="/" /> : <Signup />} />
+          <Route path="forgotPassword" element={loginInfo ? <Navigate to="/" /> : <ForgotPassword />} />
+          <Route path="resetPassword/:token" element={<ResetPassword />} />
           <Route element={<ProtectedRoutes />} >
             <Route path="/" element={<LandingPage />} />
             <Route path="techarticles" element={<TechArticles />} />
