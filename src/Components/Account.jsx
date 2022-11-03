@@ -12,13 +12,7 @@ import user from "../images/user.png";
 import { UserContext } from "../context/user/UserContext";
 
 //Toast Notifications
-const profileUpdatedNotification = () => toast("Profile Updated Successfully.");
-const errorNotification = () =>
-  toast("Something went wrong. Please try again.");
-const changesRevertedNotification = () =>
-  toast("Changes Reverted Successfully.");
-const pleaseFillAllFieldsNotification = () => toast("Please fill all fields.");
-
+const toastMessage = (message) => toast(message);
 
 const Account = () => {
   const { loginInfo } = useContext(AuthContext);
@@ -61,12 +55,12 @@ const Account = () => {
         });
         setIsLoading(false);
         {
-          cancel && changesRevertedNotification();
+          cancel && toastMessage("Changes reverted successfully.");
         }
       })
       .catch((error) => {
         console.log(error);
-        errorNotification();
+        toastMessage("Something went wrong. Please try again, later.");
         setIsLoading(false);
       });
   };
@@ -102,17 +96,17 @@ const Account = () => {
         .put(`${API_BASE_URL}/api/updateProfile`, bodyParameters, config)
         .then((response) => {
           handleFetchProfile();
-          profileUpdatedNotification();
+          toastMessage("Profile updated successfully.");
           setIsLoading(false);
         })
         .catch((error) => {
           console.log(error);
           handleFetchProfile();
-          errorNotification();
+          toastMessage("Something went wrong. Please try again, later.");
           setIsLoading(false);
         });
     } else {
-      pleaseFillAllFieldsNotification();
+      toastMessage("Please fill in all fields.");
     }
   };
 
@@ -149,6 +143,11 @@ const Account = () => {
     const fd = new FormData();
     xhr.open("POST", url, true);
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.upload.addEventListener("progress", (e) => {
+      if (Math.round((e.loaded * 100.0) / e.total) >= 100) {
+        toastMessage("Image upload complete.");
+      }
+    });
 
     xhr.onreadystatechange = (e) => {
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -224,7 +223,7 @@ const Account = () => {
               src={profileImgURL || user}
             />
             <div
-              className={`text-sm font-medium ${!profileImgURL && "hidden"}`}
+              className={`text-sm font-medium ${!profileImgURL && "hidden"} cursor-pointer`}
               onClick={() =>
                 dispatch({
                   type: "RESET_PROFILE_IMAGE",
@@ -235,8 +234,8 @@ const Account = () => {
             </div>
             <div className="flex">
               <label
-                for="file-upload"
-                className="py-1 px-2 rounded-md border border-gray-300 bg-white"
+                htmlFor="file-upload"
+                className="py-1 px-2 rounded-md border border-gray-300 bg-white cursor-pointer"
               >
                 {profileImgURL ? "Change" : "Upload"}
               </label>
@@ -253,7 +252,7 @@ const Account = () => {
           </div>
         </div>
 
-        <hr class="my-8 h-px bg-gray-200 border-0 dark:bg-gray-200"></hr>
+        <hr className="my-8 h-px bg-gray-200 border-0 dark:bg-gray-200"></hr>
 
         <div>
           <div className="text-lg font-medium">Personal Information</div>
@@ -329,7 +328,7 @@ const Account = () => {
           />
         </div>
 
-        <hr class="my-8 h-px bg-gray-200 border-0 dark:bg-gray-200"></hr>
+        <hr className="my-8 h-px bg-gray-200 border-0 dark:bg-gray-200"></hr>
 
         <div className="flex justify-end gap-6">
           {isLoading ? (
