@@ -18,6 +18,8 @@ const Account = () => {
   const { loginInfo } = useContext(AuthContext);
   const { profileImgURL, dispatch } = useContext(UserContext);
   var token = loginInfo.accessToken;
+
+  //Refs and States
   const firstNameRef = useRef();
   const lastNameRef = useRef();
   const emailRef = useRef();
@@ -30,8 +32,9 @@ const Account = () => {
   const [postalCodeValue, setPostalCodeValue] = useState("");
   const postalCodeDebouncedValue = useDebounce(postalCodeValue, 1000);
   const fileSelect = useRef(null);
-
   const [isLoading, setIsLoading] = useState(false);
+
+  //handlers
   const handleFetchProfile = (cancel = false) => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
@@ -70,7 +73,7 @@ const Account = () => {
       lastName: lastNameRef.current.value.trim(),
       username: userNameRef.current.value.trim(),
       profilePic: profileImgURL || "",
-      phoneNo: phoneNumberRef.current.value.trim(), //TODO
+      phoneNo: phoneNumberRef.current.value.trim(),
       address: addressRef.current.value.trim(),
       postalCode: postalCodeRef.current.value.trim(),
       state: stateRef.current.value.trim(),
@@ -94,7 +97,7 @@ const Account = () => {
       setIsLoading(true);
       axios
         .put(`${API_BASE_URL}/api/updateProfile`, bodyParameters, config)
-        .then((response) => {
+        .then(() => {
           handleFetchProfile();
           toastMessage("Profile updated successfully.");
           setIsLoading(false);
@@ -109,16 +112,6 @@ const Account = () => {
       toastMessage("Please fill in all fields.");
     }
   };
-
-  useEffect(() => {
-    handleFetchProfile();
-  }, []);
-
-  useEffect(() => {
-    if (postalCodeDebouncedValue !== "") {
-      fetchDataFromPostalCode();
-    }
-  }, [postalCodeDebouncedValue]);
 
   const fetchDataFromPostalCode = () => {
     stateRef.current.value = "";
@@ -168,6 +161,16 @@ const Account = () => {
       uploadFile(files[i]);
     }
   }
+
+  useEffect(() => {
+    handleFetchProfile();
+  }, []);
+
+  useEffect(() => {
+    if (postalCodeDebouncedValue !== "") {
+      fetchDataFromPostalCode();
+    }
+  }, [postalCodeDebouncedValue]);
 
   return (
     <div className="flex justify-center py-12">
@@ -223,7 +226,9 @@ const Account = () => {
               src={profileImgURL || user}
             />
             <div
-              className={`text-sm font-medium ${!profileImgURL && "hidden"} cursor-pointer`}
+              className={`text-sm font-medium ${
+                !profileImgURL && "hidden"
+              } cursor-pointer`}
               onClick={() =>
                 dispatch({
                   type: "RESET_PROFILE_IMAGE",
