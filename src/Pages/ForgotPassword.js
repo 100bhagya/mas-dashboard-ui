@@ -91,9 +91,9 @@ const ForgotPassword = () => {
             <p className="mb-10">
               Fill up personal information and start journey with us.
             </p>
-            <Link to="/signup">
+            <Link to="/signin">
               <div className="border-2 border-white rounded-full px-12 py-2 inline-block font-semibold hover:bg-white hover:text-blue-600">
-                Sign Up
+                Sign In
               </div>
             </Link>
           </div>
