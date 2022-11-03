@@ -8,7 +8,7 @@ import axios from "axios";
 import { API_BASE_URL } from "../data/consts";
 import { useEffect } from "react";
 
-const Signin = () => {
+const ResetPassword = () => {
   const password = useRef();
   const confirmPassword = useRef();
   const [err, setErr] = useState();
@@ -134,4 +134,4 @@ useEffect(()=>{
   );
 };
 
-export default Signin;
+export default ResetPassword;

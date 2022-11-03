@@ -7,7 +7,7 @@ import LoadingSpinner from "../Components/LoadingSpinner";
 import axios from "axios";
 import { API_BASE_URL } from "../data/consts";
 
-const Signin = () => {
+const ForgotPassword = () => {
   const email = useRef();
   const [err, setErr] = useState();
   const [message, setMessage] = useState();
@@ -103,4 +103,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default ForgotPassword;

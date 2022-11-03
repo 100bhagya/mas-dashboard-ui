@@ -85,7 +85,7 @@ const Signin = () => {
 
                 <div className="flex justify-between w-64 mb-5 mt-2">
                   <a href="/forgotPassword" className="text-xs">
-                    Forget Password?
+                    Forgot Password?
                   </a>
                 </div>
                 <button
