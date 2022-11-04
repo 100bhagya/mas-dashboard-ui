@@ -126,7 +126,7 @@ const TopicBar = (value) => {
                 alt=""
                 className={`relative rounded-full ${
                   sidebar
-                    ? "w-16 h-16 left-[8%]"
+                    ? "w-16 h-16 left-[8%] object-cover"
                     : "w-32 h-32 m-auto object-cover"
                 }`}
               />
