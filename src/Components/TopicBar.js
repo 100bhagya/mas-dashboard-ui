@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import arrow from "../images/down arrow.png";
 import {
   HomeIcon,
@@ -14,8 +14,9 @@ import user from "../images/user.png";
 import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
-import { useEffect } from "react";
-
+import { UserContext } from "../context/user/UserContext";
+import axios from "axios";
+import { API_BASE_URL } from "../data/consts";
 
 const TopicBar = (value) => {
   const [selectedimage, setSelectedimage] = useState();
@@ -26,21 +27,50 @@ const TopicBar = (value) => {
   const { loginInfo } = useContext(AuthContext);
   const userName = loginInfo.username;
   const email = loginInfo.email;
-
+  var token = loginInfo.accessToken;
+  const { profileImgURL, dispatch } = useContext(UserContext);
   useEffect(() => {
-    setIsOpen(JSON.parse(window.localStorage.getItem('isOpen')) != null ? JSON.parse(window.localStorage.getItem('isOpen')) : true);
-    setAptitudeOpen(JSON.parse(window.localStorage.getItem('aptitudeOpen')) != null ? JSON.parse(window.localStorage.getItem('aptitudeOpen')) : true);
-    setNonTechOpen(JSON.parse(window.localStorage.getItem('nonTechOpen')) != null ? JSON.parse(window.localStorage.getItem('nonTechOpen')) : true);
-
+    setIsOpen(JSON.parse(window.localStorage.getItem("isOpen")));
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    // Fetching User Profile Image
+    axios
+      .get(`${API_BASE_URL}/api/getUserProfile`, config)
+      .then((response) => {
+        dispatch({
+          type: "SET_PROFILE_IMAGE",
+          payload: response.data.profilePic,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem('isOpen', isOpen);
-    window.localStorage.setItem('aptitudeOpen', aptitudeOpen);
-    window.localStorage.setItem('nonTechOpen', nonTechOpen);
+    setIsOpen(
+      JSON.parse(window.localStorage.getItem("isOpen")) != null
+        ? JSON.parse(window.localStorage.getItem("isOpen"))
+        : true
+    );
+    setAptitudeOpen(
+      JSON.parse(window.localStorage.getItem("aptitudeOpen")) != null
+        ? JSON.parse(window.localStorage.getItem("aptitudeOpen"))
+        : true
+    );
+    setNonTechOpen(
+      JSON.parse(window.localStorage.getItem("nonTechOpen")) != null
+        ? JSON.parse(window.localStorage.getItem("nonTechOpen"))
+        : true
+    );
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("isOpen", isOpen);
+    window.localStorage.setItem("aptitudeOpen", aptitudeOpen);
+    window.localStorage.setItem("nonTechOpen", nonTechOpen);
   }, [isOpen, aptitudeOpen, nonTechOpen]);
-
-
 
   const Logout = () => {
     localStorage.clear();
@@ -92,10 +122,12 @@ const TopicBar = (value) => {
                 }}
               />
               <img
-                src={user}
+                src={profileImgURL || user}
                 alt=""
                 className={`relative rounded-full ${
-                  sidebar ? "w-16 h-16 left-[8%]" : "w-32 h-32 m-auto "
+                  sidebar
+                    ? "w-16 h-16 left-[8%] object-cover"
+                    : "w-32 h-32 m-auto object-cover"
                 }`}
               />
             </label>
@@ -264,30 +296,35 @@ const TopicBar = (value) => {
                     )}
                   </div>
                   <Link to="/mlandpython">
-                    <div className={`text-sm text-blue-500 text-left md:px-2 lg:pl-8 py-2 rounded-md ${
-                                location.pathname === "/mlandpython"
-                                  ? "bg-[#2255B8] text-white"
-                                  : "hover:bg-white text-blue-500" }`}>
+                    <div
+                      className={`text-sm text-blue-500 text-left md:px-2 lg:pl-8 py-2 rounded-md ${
+                        location.pathname === "/mlandpython"
+                          ? "bg-[#2255B8] text-white"
+                          : "hover:bg-white text-blue-500"
+                      }`}
+                    >
                       ML and Python
                     </div>
                   </Link>
                   <Link to="/dataanalysis">
-                    <div className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
-                                location.pathname === "/dataanalysis"
-                                  ? "bg-[#2255B8] text-white"
-                                  : "hover:bg-white text-blue-500 "
-                              }`}
-                            >
+                    <div
+                      className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                        location.pathname === "/dataanalysis"
+                          ? "bg-[#2255B8] text-white"
+                          : "hover:bg-white text-blue-500 "
+                      }`}
+                    >
                       Data Analysis
                     </div>
                   </Link>
                   <Link to="/sql">
-                    <div className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
-                                location.pathname === "/sql"
-                                  ? "bg-[#2255B8] text-white"
-                                  : "hover:bg-white text-blue-500 "
-                              }`}
-                            >
+                    <div
+                      className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                        location.pathname === "/sql"
+                          ? "bg-[#2255B8] text-white"
+                          : "hover:bg-white text-blue-500 "
+                      }`}
+                    >
                       SQL
                     </div>
                   </Link>
@@ -371,18 +408,20 @@ const TopicBar = (value) => {
               </div>
             )}
           </div>
-          <div className=" py-2 ">
-            <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
-              <CogIcon className="w-6 text-blue-500" />
-              <div
-                className={`ml-5 text-blue-500 md:text-md ${
-                  sidebar ? "hidden" : ""
-                }`}
-              >
-                Settings
+          <Link to="/settings">
+            <div className=" py-2 ">
+              <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
+                <CogIcon className="w-6 text-blue-500" />
+                <div
+                  className={`ml-5 text-blue-500 md:text-md ${
+                    sidebar ? "hidden" : ""
+                  }`}
+                >
+                  Settings
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
           <div className=" py-2 ">
             <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
               <DocumentTextIcon className="w-6 text-blue-500" />

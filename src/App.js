@@ -7,7 +7,12 @@ import GroupDiscussion from "./Pages/GroupDiscussion";
 import CaseStudy from "./Pages/CaseStudy";
 import GuessEstimate from "./Pages/GuessEstimate";
 import Puzzles from "./Pages/Puzzles";
-import { BrowserRouter as Router, Routes, Route,  Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { useContext } from "react";
 import Quizes from "./Pages/Quizes";
 import Quant from "./Pages/Quant";
@@ -24,18 +29,27 @@ import SQL from "./Pages/SQL";
 import QuizDetail from "./Pages/QuizDetail";
 import ProtectedRoutes from "./Components/PrivateRoutes";
 import { AuthContext } from "./context/AuthContext";
-
+import Settings from "./Pages/Settings";
 function App() {
   const { loginInfo } = useContext(AuthContext);
   return (
     <>
       <Router>
         <Routes>
-          <Route path="signin" element={loginInfo ? <Navigate to="/" /> : <Signin />} />
-          <Route path="signup" element={loginInfo ? <Navigate to="/" /> : <Signup />} />
-          <Route path="forgotPassword" element={loginInfo ? <Navigate to="/" /> : <ForgotPassword />} />
+          <Route
+            path="signin"
+            element={loginInfo ? <Navigate to="/" /> : <Signin />}
+          />
+          <Route
+            path="signup"
+            element={loginInfo ? <Navigate to="/" /> : <Signup />}
+          />
+          <Route
+            path="forgotPassword"
+            element={loginInfo ? <Navigate to="/" /> : <ForgotPassword />}
+          />
           <Route path="resetPassword/:token" element={<ResetPassword />} />
-          <Route element={<ProtectedRoutes />} >
+          <Route element={<ProtectedRoutes />}>
             <Route path="/" element={<LandingPage />} />
             <Route path="techarticles" element={<TechArticles />} />
             <Route path="wordofday" element={<WordOfDay />} />
@@ -49,11 +63,11 @@ function App() {
             <Route path="casestudy" element={<CaseStudy />} />
             <Route path="guessestimate" element={<GuessEstimate />} />
             <Route path="puzzles" element={<Puzzles />} />
-            
+            <Route path="settings" element={<Settings />} />
             <Route path="mlandpython" element={<MLandPython />} />
             <Route path="dataanalysis" element={<DataAnalysis />} />
             <Route path="sql" element={<SQL />} />
-            <Route path="quizdetail" element={<QuizDetail />} />            
+            <Route path="quizdetail" element={<QuizDetail />} />
           </Route>
         </Routes>
       </Router>
