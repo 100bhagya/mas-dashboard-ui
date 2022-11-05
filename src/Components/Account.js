@@ -12,7 +12,7 @@ import user from "../images/user.png";
 import { UserContext } from "../context/user/UserContext";
 import isMobilePhone from "validator/lib/isMobilePhone";
 import isPostalCode from "validator/lib/isPostalCode";
-
+import isAlpha from "validator/lib/isAlpha";
 //Toast Notifications
 const toastMessage = (message) => toast(message);
 
@@ -31,12 +31,15 @@ const Account = () => {
   const addressRef = useRef();
   const userNameRef = useRef();
   const phoneNumberRef = useRef();
-  const [postalCodeValue, setPostalCodeValue] = useState("");
-  const postalCodeDebouncedValue = useDebounce(postalCodeValue, 1000);
+  const postalCodeDebouncedValue = useDebounce(
+    postalCodeRef.current?.value,
+    1000
+  );
   const fileSelect = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
 
   //handlers
+
   const handleFetchProfile = (cancel = false) => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
@@ -69,6 +72,7 @@ const Account = () => {
         setIsLoading(false);
       });
   };
+
   const handleUpdateProfile = () => {
     if (!isPostalCode(postalCodeRef.current.value, ["IN"])) {
       toastMessage("Please enter a valid postal code.");
@@ -80,6 +84,14 @@ const Account = () => {
       phoneNumberRef.current.value.toString()[0] === "+"
     ) {
       toastMessage("Please enter a valid phone number.");
+      return;
+    }
+    if (!isAlpha(firstNameRef.current.value)) {
+      toastMessage("Please enter a valid first name.");
+      return;
+    }
+    if (!isAlpha(lastNameRef.current.value)) {
+      toastMessage("Please enter a valid last name.");
       return;
     }
     let bodyParameters = {
@@ -319,7 +331,6 @@ const Account = () => {
                 Postal Code
               </div>
               <input
-                onChange={(e) => setPostalCodeValue(e.target.value)}
                 ref={postalCodeRef}
                 type="text"
                 className="min-w-[100px] p-1 rounded-md border border-gray-300"
