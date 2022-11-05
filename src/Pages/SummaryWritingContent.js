@@ -13,6 +13,9 @@ import LoadingSpinner from "../Components/LoadingSpinner";
 import { Checkmark } from "react-checkmark";
 import moment from "moment";
 
+import toast, { Toaster } from "react-hot-toast";
+const toastMessage = (message) => toast(message);
+
 function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
   const { loginInfo } = useContext(AuthContext);
   var token = loginInfo.accessToken;
@@ -205,9 +208,11 @@ const SummaryWritingContent = () => {
       .then((response) => {
         setWeeklySummaryResponse(response.data);
         setIsLoading(false);
+        toastMessage("Summary has been submitted.");
       })
       .catch((err) => {
         setIsLoading(false);
+        toastMessage("Something went wrong. Please try again later.");
         console.log(err);
       });
   };
@@ -231,10 +236,12 @@ const SummaryWritingContent = () => {
       .then((response) => {
         setWeeklySummaryResponse(response.data);
         setIsLoading(false);
+        toastMessage("Summary has been updated.");
       })
       .catch((err) => {
         console.log(err);
         setIsLoading(false);
+        toastMessage("Something went wrong. Please try again later.");
       });
   };
 
@@ -315,7 +322,10 @@ const SummaryWritingContent = () => {
                 Back
               </button>
               <button
-                onClick={() => (summaryTextRef.current.value = "")}
+                onClick={() => {
+                  summaryTextRef.current.value = "";
+                  toastMessage("Summary has been cleared.");
+                }}
                 className="py-2 px-6 text-white rounded-xl bg-[#2255B8] mx-4 shadow-2xl"
               >
                 {" "}
@@ -334,9 +344,7 @@ const SummaryWritingContent = () => {
               >
                 {" "}
                 {isLoading && <LoadingSpinner />}
-                {!weeklySummaryResponse
-                  ? "Submit Summary"
-                  : "Update Summary"}
+                {!weeklySummaryResponse ? "Submit Summary" : "Update Summary"}
               </button>
             </div>
           </div>
@@ -387,6 +395,7 @@ const SummaryWritingContent = () => {
           ))}
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };

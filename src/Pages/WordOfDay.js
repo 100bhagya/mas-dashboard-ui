@@ -8,10 +8,14 @@ import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 import { API_BASE_URL } from "../data/consts";
+import toast, { Toaster } from "react-hot-toast";
 
 // var token = localStorage.getItem("access");
 // var data = localStorage.getItem("login-info");
 // var loginInfo = JSON.parse(data);
+
+//Toast Notifications
+const toastMessage = (message) => toast(message);
 
 const WordOfDay = (isOpen) => {
   const { loginInfo } = useContext(AuthContext);
@@ -122,12 +126,12 @@ const WordOfDay = (isOpen) => {
         )
         .then((response) => {
           console.log(response);
-          setMessage("Your Response Has Been Submitted");
+          toastMessage("Your Response Has Been Submitted");
           setWordingsResponse(response?.data);
         })
         .catch((err) => {
           console.log(err);
-          setMessage("Please Try Again After Sometime");
+          toastMessage("Please Try Again After Sometime");
         });
     }
   };
@@ -156,12 +160,12 @@ const WordOfDay = (isOpen) => {
         )
         .then((response) => {
           console.log(response);
-          setMessage("Your Response Has Been Updated");
+          toastMessage("Your Response Has Been Updated");
           setWordingsResponse(response?.data);
         })
         .catch((err) => {
           console.log(err);
-          setMessage("Please Try Again After Sometime");
+          toastMessage("Please Try Again After Sometime");
         });
     }
   };
@@ -202,8 +206,8 @@ const WordOfDay = (isOpen) => {
                     {wordings.wordTwo}
                   </h3>
                   <span className="text-xs uppercase font-semibold text-gray-400 text-center">
-                      ({wordings.wordTwoCat})
-                    </span>
+                    ({wordings.wordTwoCat})
+                  </span>
                 </div>
 
                 <p className="py-2 text-[#898989]">{wordings.wordTwoMeaning}</p>
@@ -251,6 +255,7 @@ const WordOfDay = (isOpen) => {
           </div>
         </div>
       </div>
+      <Toaster/>
     </div>
   );
 };

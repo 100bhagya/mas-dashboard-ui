@@ -10,6 +10,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { useDebounce } from "use-lodash-debounce";
 import user from "../images/user.png";
 import { UserContext } from "../context/user/UserContext";
+import isMobilePhone from "validator/lib/isMobilePhone";
+import isPostalCode from "validator/lib/isPostalCode";
 
 //Toast Notifications
 const toastMessage = (message) => toast(message);
@@ -68,6 +70,18 @@ const Account = () => {
       });
   };
   const handleUpdateProfile = () => {
+    if (!isPostalCode(postalCodeRef.current.value, ["IN"])) {
+      toastMessage("Please enter a valid postal code.");
+      return;
+    }
+    if (
+      !isMobilePhone(phoneNumberRef.current.value, ["en-IN"]) ||
+      phoneNumberRef.current.value.toString().length > 10 ||
+      phoneNumberRef.current.value.toString()[0] === "+"
+    ) {
+      toastMessage("Please enter a valid phone number.");
+      return;
+    }
     let bodyParameters = {
       firstName: firstNameRef.current.value.trim(),
       lastName: lastNameRef.current.value.trim(),
@@ -275,18 +289,24 @@ const Account = () => {
                 ref={emailRef}
                 disabled
                 type="text"
-                className="min-w-[250px] p-1 rounded-md border border-gray-300 cursor-not-allowed"
+                className="min-w-[250px] p-1 rounded-md border border-gray-300 cursor-not-allowed text-gray-400"
               />
             </div>
             <div className="flex flex-col gap-1">
               <div className="text-sm text-slate-600 font-medium">
                 Phone Number
               </div>
-              <input
-                ref={phoneNumberRef}
-                type="text"
-                className="min-w-[250px] p-1 rounded-md border border-gray-300"
-              />
+              <div className="flex">
+                {/* <span className="absolute flex items-center ">+91</span> */}
+                <span className="flex justify-center items-center w-[40px] p-1 rounded-l-md border border-gray-300 border-r-0">
+                  +91
+                </span>
+                <input
+                  ref={phoneNumberRef}
+                  type="text"
+                  className="min-w-[210px] p-1 rounded-r-md border border-gray-300"
+                />
+              </div>
             </div>
           </div>
         </div>
