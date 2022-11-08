@@ -35,7 +35,10 @@ const WordOfDay = (isOpen) => {
 
   const responseOneRef = useRef("");
   const responseTwoRef = useRef("");
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [lastAvailableDateState, setLastAvailableDateState] = useState(
+    new Date()
+  );
   useEffect(() => {
     let source = axios.CancelToken.source();
     setStudentId(loginInfo.id);
@@ -58,6 +61,15 @@ const WordOfDay = (isOpen) => {
       })
       .then((dailyWordsId) => {
         setLoading(true);
+        if (
+          dailyWordsId === "" ||
+          dailyWordsId === null ||
+          dailyWordsId === undefined
+        ) {
+          setIsModalOpen(true);
+        } else {
+          setIsModalOpen(false);
+        }
         axios
           .get(
             `${API_BASE_URL}/api/task/daily-words-response?studentId=${loginInfo.id}&dailyWordsId=${dailyWordsId}`,
@@ -172,7 +184,54 @@ const WordOfDay = (isOpen) => {
 
   return (
     <div className="flex">
-      {loading}
+      {/* Modal */}
+
+      <div
+        class={`fixed z-10 overflow-y-auto top-0 w-full left-0 ${
+          !isModalOpen && "hidden"
+        }`}
+        id="modal"
+      >
+        <div class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+          <div class="fixed inset-0 transition-opacity">
+            <div class="absolute inset-0 bg-gray-900 opacity-75" />
+          </div>
+          <span class="hidden sm:inline-block sm:align-middle sm:h-screen">
+            &#8203;
+          </span>
+          <div
+            class="inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-headline"
+          >
+            <div className="p-4">
+              <img
+                src="./not_found_undraw.svg"
+                alt=""
+                className="object-cover"
+              />
+              <p>No Daily Words For Selected Word.</p>
+              <p>
+                Last Date with Available Daily Word:{" "}
+                {moment(lastAvailableDateState).format("DD-MM-YYYY")}
+              </p>
+            </div>
+            <div class="bg-gray-200 px-4 py-3 text-right">
+              <button
+                type="button"
+                class="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2"
+                onClick={() => {
+                  setIsModalOpen((prev) => !prev);
+                }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Modal End */}
       <TopicBar value={(isOpen = false)} />
       <div className="flex-grow py-10 md:px-20 px-10">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
@@ -248,14 +307,17 @@ const WordOfDay = (isOpen) => {
           )}
           <div className="basis-1/5 ml-28 ">
             {/* <div inline-datepicker data-date="02/25/2022"></div> */}
-            <Calendar alert={props} />
+            <Calendar
+              alert={props}
+              setLastAvailableDateState={setLastAvailableDateState}
+            />
             {dailyWordsId ? (
               <img src={Artboard} alt="" className="mt-24" />
             ) : null}
           </div>
         </div>
       </div>
-      <Toaster/>
+      <Toaster />
     </div>
   );
 };

@@ -40,7 +40,6 @@ function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
         for (const [key, value] of Object.entries(response.data)) {
           res[key] = value;
         }
-        console.log(res);
         setStatusResponse(res);
       })
       .catch((error) => {
@@ -189,6 +188,10 @@ const SummaryWritingContent = () => {
   };
 
   const handleSubmitSummary = (weeklySummaryId) => {
+    if (summaryTextRef.current.value === "") {
+      toastMessage("Summary Response is empty.");
+      return;
+    }
     setIsLoading(true);
     let bodyParameters = {
       weeklySummaryId: weeklySummaryId,
