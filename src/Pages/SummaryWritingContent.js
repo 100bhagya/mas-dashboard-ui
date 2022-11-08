@@ -310,7 +310,7 @@ const SummaryWritingContent = () => {
               ref={summaryTextRef}
               placeholder="Write summary here..."
               className="w-full h-[50vh] my-6 p-4 rounded-md text-black placeholder-black"
-            ></textarea>
+            autoFocus/>
             <div className="text-right ">
               <button
                 onClick={() => {

@@ -3,7 +3,7 @@ import CalendarRow from "./CalendarRow";
 
 // export interface CalendarProps {}
 
-const Calendar = () => {
+const Calendar = (props) => {
   const [activeMonth, setActiveMonth] = useState(new Date().getMonth());
   const [activeMonthString, setActiveMonthString] = useState(
     new Date().toDateString().split(" ")[1]

@@ -59,6 +59,7 @@ export default function App(props) {
           "DD-MM-YYYY"
         ).toDate();
         setDateState(lastAvailableDate);
+        props.setLastAvailableDateState(lastAvailableDate);
         setmarkedDates(markedDates);
       })
       .catch((error) => {
