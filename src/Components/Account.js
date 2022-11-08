@@ -10,7 +10,9 @@ import toast, { Toaster } from "react-hot-toast";
 import { useDebounce } from "use-lodash-debounce";
 import user from "../images/user.png";
 import { UserContext } from "../context/user/UserContext";
-
+import isMobilePhone from "validator/lib/isMobilePhone";
+import isPostalCode from "validator/lib/isPostalCode";
+import isAlpha from "validator/lib/isAlpha";
 //Toast Notifications
 const toastMessage = (message) => toast(message);
 
@@ -29,12 +31,15 @@ const Account = () => {
   const addressRef = useRef();
   const userNameRef = useRef();
   const phoneNumberRef = useRef();
-  const [postalCodeValue, setPostalCodeValue] = useState("");
-  const postalCodeDebouncedValue = useDebounce(postalCodeValue, 1000);
+  const postalCodeDebouncedValue = useDebounce(
+    postalCodeRef.current?.value,
+    1000
+  );
   const fileSelect = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
 
   //handlers
+
   const handleFetchProfile = (cancel = false) => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
@@ -67,7 +72,28 @@ const Account = () => {
         setIsLoading(false);
       });
   };
+
   const handleUpdateProfile = () => {
+    if (!isPostalCode(postalCodeRef.current.value, ["IN"])) {
+      toastMessage("Please enter a valid postal code.");
+      return;
+    }
+    if (
+      !isMobilePhone(phoneNumberRef.current.value, ["en-IN"]) ||
+      phoneNumberRef.current.value.toString().length > 10 ||
+      phoneNumberRef.current.value.toString()[0] === "+"
+    ) {
+      toastMessage("Please enter a valid phone number.");
+      return;
+    }
+    if (!isAlpha(firstNameRef.current.value)) {
+      toastMessage("Please enter a valid first name.");
+      return;
+    }
+    if (!isAlpha(lastNameRef.current.value)) {
+      toastMessage("Please enter a valid last name.");
+      return;
+    }
     let bodyParameters = {
       firstName: firstNameRef.current.value.trim(),
       lastName: lastNameRef.current.value.trim(),
@@ -275,18 +301,24 @@ const Account = () => {
                 ref={emailRef}
                 disabled
                 type="text"
-                className="min-w-[250px] p-1 rounded-md border border-gray-300 cursor-not-allowed"
+                className="min-w-[250px] p-1 rounded-md border border-gray-300 cursor-not-allowed text-gray-400"
               />
             </div>
             <div className="flex flex-col gap-1">
               <div className="text-sm text-slate-600 font-medium">
                 Phone Number
               </div>
-              <input
-                ref={phoneNumberRef}
-                type="text"
-                className="min-w-[250px] p-1 rounded-md border border-gray-300"
-              />
+              <div className="flex">
+                {/* <span className="absolute flex items-center ">+91</span> */}
+                <span className="flex justify-center items-center w-[40px] p-1 rounded-l-md border border-gray-300 border-r-0">
+                  +91
+                </span>
+                <input
+                  ref={phoneNumberRef}
+                  type="text"
+                  className="min-w-[210px] p-1 rounded-r-md border border-gray-300"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -299,7 +331,6 @@ const Account = () => {
                 Postal Code
               </div>
               <input
-                onChange={(e) => setPostalCodeValue(e.target.value)}
                 ref={postalCodeRef}
                 type="text"
                 className="min-w-[100px] p-1 rounded-md border border-gray-300"
