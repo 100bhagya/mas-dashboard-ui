@@ -242,12 +242,15 @@ const WordOfDay = (isOpen) => {
           {dailyWordsId ? (
             <div className="basis-4/5 flex flex-col">
               <div className="py-4 px-8  rounded-lg shadow-xl my-3">
-                <h3 className="text-xl text-[#2255B8] py-2">
-                  {wordings.wordOne}
-                  <span className="text-[10px] uppercase font-semibold text-gray-400 text-center align-super">
+                <div className="flex items-center">
+                  <h3 className="text-xl text-[#2255B8] py-2">
+                    {wordings.wordOne}
+                  </h3>
+                  <span className="flex justify-center text-[10px] px-2 uppercase font-semibold text-gray-400 text-center">
                     ({wordings.wordOneCat})
                   </span>
-                </h3>
+                </div>
+
                 <p className="py-2 text-[#898989]">{wordings.wordOneMeaning}</p>
                 <input
                   placeholder="Let’s make a sentence out of the word !"
@@ -264,7 +267,7 @@ const WordOfDay = (isOpen) => {
                   <h3 className="text-xl text-[#2255B8] py-2">
                     {wordings.wordTwo}
                   </h3>
-                  <span className="text-xs uppercase font-semibold text-gray-400 text-center">
+                  <span className="flex justify-center text-[10px] px-2 uppercase font-semibold text-gray-400 text-center">
                     ({wordings.wordTwoCat})
                   </span>
                 </div>
