@@ -4,15 +4,19 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthContextProvider } from "./context/AuthContext";
-import { UserContextProvider } from "./context/user/UserContext";
+import { PersistGate } from "redux-persist/integration/react";
+import { Provider } from "react-redux";
+import { store, persistor } from "./app/store";
 
 ReactDOM.render(
   <React.StrictMode>
-    <AuthContextProvider>
-      <UserContextProvider>
-        <App />
-      </UserContextProvider>
-    </AuthContextProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <AuthContextProvider>
+          <App />
+        </AuthContextProvider>
+      </PersistGate>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

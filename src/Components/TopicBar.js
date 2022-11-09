@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import arrow from "../images/down arrow.png";
 import {
   HomeIcon,
@@ -10,15 +10,18 @@ import {
   ChatAlt2Icon,
   LogoutIcon,
 } from "@heroicons/react/outline";
-import user from "../images/user.png";
+import userDefaultImage from "../images/user.png";
 import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { useContext } from "react";
-import { UserContext } from "../context/user/UserContext";
 import axios from "axios";
 import { API_BASE_URL } from "../data/consts";
+import { useDispatch, useSelector } from "react-redux";
+import { setProfilePic, setUser } from "../app/features/user/userSlice";
 
 const TopicBar = (value) => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
   const [selectedimage, setSelectedimage] = useState();
   const [isOpen, setIsOpen] = useState(value);
   const [aptitudeOpen, setAptitudeOpen] = useState(true);
@@ -28,7 +31,6 @@ const TopicBar = (value) => {
   const userName = loginInfo.username;
   const email = loginInfo.email;
   var token = loginInfo.accessToken;
-  const { profileImgURL, dispatch } = useContext(UserContext);
   useEffect(() => {
     setIsOpen(JSON.parse(window.localStorage.getItem("isOpen")));
     const config = {
@@ -38,10 +40,7 @@ const TopicBar = (value) => {
     axios
       .get(`${API_BASE_URL}/api/getUserProfile`, config)
       .then((response) => {
-        dispatch({
-          type: "SET_PROFILE_IMAGE",
-          payload: response.data.profilePic,
-        });
+        dispatch(setProfilePic(response.data.profilePic));
       })
       .catch((error) => {
         console.log(error);
@@ -122,7 +121,7 @@ const TopicBar = (value) => {
                 }}
               />
               <img
-                src={profileImgURL || user}
+                src={user.profilePic || userDefaultImage}
                 alt=""
                 className={`relative rounded-full ${
                   sidebar
@@ -260,7 +259,7 @@ const TopicBar = (value) => {
                         <div className="border-blue-700 border-l-2 pl-2  mt-2">
                           <Link to="/quant">
                             <div
-                              className={`text-sm text-left md:px-2 lg:pl-6 py-2 rounded-md ${
+                              className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
                                 location.pathname === "/quant"
                                   ? "bg-[#2255B8] text-white"
                                   : "hover:bg-white text-blue-500 "
@@ -271,7 +270,7 @@ const TopicBar = (value) => {
                           </Link>
                           <Link to="/lrdi">
                             <div
-                              className={`text-sm text-left md:px-2 lg:pl-6 py-2 rounded-md ${
+                              className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
                                 location.pathname === "/lrdi"
                                   ? "bg-[#2255B8] text-white"
                                   : "hover:bg-white text-blue-500 "
@@ -308,7 +307,7 @@ const TopicBar = (value) => {
                   </Link>
                   <Link to="/dataanalysis">
                     <div
-                      className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                      className={`text-sm text-left md:px-2 lg:pl-8 py-2 rounded-md ${
                         location.pathname === "/dataanalysis"
                           ? "bg-[#2255B8] text-white"
                           : "hover:bg-white text-blue-500 "
@@ -319,7 +318,7 @@ const TopicBar = (value) => {
                   </Link>
                   <Link to="/sql">
                     <div
-                      className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                      className={`text-sm text-left md:px-2 lg:pl-8 py-2 rounded-md ${
                         location.pathname === "/sql"
                           ? "bg-[#2255B8] text-white"
                           : "hover:bg-white text-blue-500 "

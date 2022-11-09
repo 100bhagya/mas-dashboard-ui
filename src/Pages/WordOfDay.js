@@ -126,9 +126,7 @@ const WordOfDay = (isOpen) => {
     };
 
     if (
-      !(
-        bodyParameters.responseOne === null && bodyParameters.responseTwo === null
-      )
+      !(bodyParameters.responseOne === "" && bodyParameters.responseTwo === "")
     ) {
       axios
         .post(
@@ -159,27 +157,21 @@ const WordOfDay = (isOpen) => {
       headers: { Authorization: `Bearer ${token}` },
     };
 
-    if (
-      !(
-        bodyParameters.responseOne === null && bodyParameters.responseTwo === null
+    axios
+      .put(
+        `${API_BASE_URL}/api/task/daily-words-response`,
+        bodyParameters,
+        config
       )
-    ) {
-      axios
-        .put(
-          `${API_BASE_URL}/api/task/daily-words-response`,
-          bodyParameters,
-          config
-        )
-        .then((response) => {
-          console.log(response);
-          toastMessage("Your Response Has Been Updated");
-          setWordingsResponse(response?.data);
-        })
-        .catch((err) => {
-          console.log(err);
-          toastMessage("Please Try Again After Sometime");
-        });
-    }
+      .then((response) => {
+        console.log(response);
+        toastMessage("Your Response Has Been Updated");
+        setWordingsResponse(response?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        toastMessage("Please Try Again After Sometime");
+      });
   };
 
   return (

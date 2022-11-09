@@ -8,19 +8,20 @@ import LoadingSpinner from "./LoadingSpinner";
 import { useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useDebounce } from "use-lodash-debounce";
-import user from "../images/user.png";
-import { UserContext } from "../context/user/UserContext";
+import userDefaultImage from "../images/user.png";
 import isMobilePhone from "validator/lib/isMobilePhone";
 import isPostalCode from "validator/lib/isPostalCode";
 import isAlpha from "validator/lib/isAlpha";
+import { useDispatch, useSelector } from "react-redux";
+import { resetProfilePic, setProfilePic } from "../app/features/user/userSlice";
 //Toast Notifications
 const toastMessage = (message) => toast(message);
 
 const Account = () => {
   const { loginInfo } = useContext(AuthContext);
-  const { profileImgURL, dispatch } = useContext(UserContext);
   var token = loginInfo.accessToken;
-
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   //Refs and States
   const firstNameRef = useRef();
   const lastNameRef = useRef();
@@ -57,10 +58,7 @@ const Account = () => {
         stateRef.current.value = response.data.state || "";
         postalCodeRef.current.value = response.data.postalCode || "";
         emailRef.current.value = response.data.email || "";
-        dispatch({
-          type: "SET_PROFILE_IMAGE",
-          payload: response.data.profilePic,
-        });
+        dispatch(setProfilePic(response.data.profilePic));
         setIsLoading(false);
         {
           cancel && toastMessage("Changes reverted successfully.");
@@ -122,7 +120,7 @@ const Account = () => {
       firstName: firstNameRef.current.value.trim() || "",
       lastName: lastNameRef.current.value.trim() || "",
       username: userNameRef.current.value.trim() || "",
-      profilePic: profileImgURL || "",
+      profilePic: user.profilePic || "",
       phoneNo: phoneNumberRef.current.value.trim() || "",
       address: addressRef.current.value.trim(),
       postalCode: postalCodeRef.current.value.trim() || "",
@@ -181,7 +179,7 @@ const Account = () => {
     xhr.onreadystatechange = (e) => {
       if (xhr.readyState === 4 && xhr.status === 200) {
         const response = JSON.parse(xhr.responseText);
-        dispatch({ type: "SET_PROFILE_IMAGE", payload: response.secure_url });
+        dispatch(setProfilePic(response.secure_url));
       }
     };
 
@@ -259,17 +257,13 @@ const Account = () => {
             <img
               alt="User Profile"
               className="w-10 h-10 rounded-full object-cover"
-              src={profileImgURL || user}
+              src={user.profilePic || userDefaultImage}
             />
             <div
               className={`text-sm font-medium ${
-                !profileImgURL && "hidden"
+                !user.profilePic && "hidden"
               } cursor-pointer`}
-              onClick={() =>
-                dispatch({
-                  type: "RESET_PROFILE_IMAGE",
-                })
-              }
+              onClick={() => dispatch(resetProfilePic())}
             >
               Remove
             </div>
@@ -278,7 +272,7 @@ const Account = () => {
                 htmlFor="file-upload"
                 className="py-1 px-2 rounded-md border border-gray-300 bg-white cursor-pointer"
               >
-                {profileImgURL ? "Change" : "Upload"}
+                {user.profilePic ? "Change" : "Upload"}
               </label>
               <input
                 className="invisible"
