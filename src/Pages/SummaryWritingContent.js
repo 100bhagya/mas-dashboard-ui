@@ -16,14 +16,9 @@ import moment from "moment";
 import toast, { Toaster } from "react-hot-toast";
 const toastMessage = (message) => toast(message);
 
-function WEEK({
-  week,
-  index,
-  toggleWEEK,
-  handleArticle,
-  articleNumber,
-  statusResponse,
-}) {
+function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber, statusResponse }) {
+  const { loginInfo } = useContext(AuthContext);
+  var token = loginInfo.accessToken;
   useEffect(() => {
     const startDateMomentObject = moment("13-09-2022", "DD-MM-YYYY");
     const weekIndex = moment().diff(startDateMomentObject, "weeks") - 1;
@@ -168,6 +163,7 @@ const SummaryWritingContent = () => {
             }
           )
           .then((response) => {
+            console.log(response)
             setWeeklySummaryResponse(response.data);
             if (response.data.response)
               summaryTextRef.current.value = response.data.response;
@@ -247,6 +243,7 @@ const SummaryWritingContent = () => {
         config
       )
       .then((response) => {
+        console.log(response.data);
         setWeeklySummaryResponse(response.data);
         setIsLoading(false);
         setLastUpdated(new Date());
