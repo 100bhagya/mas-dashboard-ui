@@ -74,69 +74,79 @@ const Account = () => {
   };
 
   const handleUpdateProfile = () => {
-    if (!isPostalCode(postalCodeRef.current.value, ["IN"])) {
+    if (firstNameRef.current.value === "") {
+      toastMessage("First name is required");
+      return;
+    }
+    if (lastNameRef.current.value === "") {
+      toastMessage("Last name is required");
+      return;
+    }
+
+    if (userNameRef.current.value === "") {
+      toastMessage("Username is required");
+      return;
+    }
+
+    if (
+      postalCodeRef.current.value !== "" &&
+      !isPostalCode(postalCodeRef.current.value, ["IN"])
+    ) {
       toastMessage("Please enter a valid postal code.");
       return;
     }
     if (
-      !isMobilePhone(phoneNumberRef.current.value, ["en-IN"]) ||
+      (phoneNumberRef.current.value !== "" &&
+        !isMobilePhone(phoneNumberRef.current.value, ["en-IN"])) ||
       phoneNumberRef.current.value.toString().length > 10 ||
       phoneNumberRef.current.value.toString()[0] === "+"
     ) {
       toastMessage("Please enter a valid phone number.");
       return;
     }
-    if (!isAlpha(firstNameRef.current.value)) {
+    if (
+      firstNameRef.current.value !== "" &&
+      !isAlpha(firstNameRef.current.value)
+    ) {
       toastMessage("Please enter a valid first name.");
       return;
     }
-    if (!isAlpha(lastNameRef.current.value)) {
+    if (
+      lastNameRef.current.value !== "" &&
+      !isAlpha(lastNameRef.current.value)
+    ) {
       toastMessage("Please enter a valid last name.");
       return;
     }
     let bodyParameters = {
-      firstName: firstNameRef.current.value.trim(),
-      lastName: lastNameRef.current.value.trim(),
-      username: userNameRef.current.value.trim(),
+      firstName: firstNameRef.current.value.trim() || "",
+      lastName: lastNameRef.current.value.trim() || "",
+      username: userNameRef.current.value.trim() || "",
       profilePic: profileImgURL || "",
-      phoneNo: phoneNumberRef.current.value.trim(),
+      phoneNo: phoneNumberRef.current.value.trim() || "",
       address: addressRef.current.value.trim(),
-      postalCode: postalCodeRef.current.value.trim(),
-      state: stateRef.current.value.trim(),
-      city: cityRef.current.value.trim(),
+      postalCode: postalCodeRef.current.value.trim() || "",
+      state: stateRef.current.value.trim() || "",
+      city: cityRef.current.value.trim() || "",
     };
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    if (
-      !(
-        firstNameRef.current.value === "" ||
-        lastNameRef.current.value === "" ||
-        postalCodeRef.current.value === "" ||
-        stateRef.current.value === "" ||
-        cityRef.current.value === "" ||
-        addressRef.current.value === "" ||
-        userNameRef.current.value === "" ||
-        phoneNumberRef.current.value === ""
-      )
-    ) {
-      setIsLoading(true);
-      axios
-        .put(`${API_BASE_URL}/api/updateProfile`, bodyParameters, config)
-        .then(() => {
-          handleFetchProfile();
-          toastMessage("Profile updated successfully.");
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-          handleFetchProfile();
-          toastMessage("Something went wrong. Please try again later.");
-          setIsLoading(false);
-        });
-    } else {
-      toastMessage("Please fill in all fields.");
-    }
+
+    setIsLoading(true);
+    axios
+      .put(`${API_BASE_URL}/api/updateProfile`, bodyParameters, config)
+      .then(() => {
+        handleFetchProfile();
+        toastMessage("Profile updated successfully.");
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        handleFetchProfile();
+        toastMessage("1Something went wrong. Please try again later.");
+        setIsLoading(false);
+      });
   };
 
   const fetchDataFromPostalCode = () => {
