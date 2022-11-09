@@ -127,7 +127,7 @@ const WordOfDay = (isOpen) => {
 
     if (
       !(
-        bodyParameters.responseOne == null && bodyParameters.responseTwo == null
+        bodyParameters.responseOne === null && bodyParameters.responseTwo === null
       )
     ) {
       axios
@@ -161,7 +161,7 @@ const WordOfDay = (isOpen) => {
 
     if (
       !(
-        bodyParameters.responseOne == null && bodyParameters.responseTwo == null
+        bodyParameters.responseOne === null && bodyParameters.responseTwo === null
       )
     ) {
       axios

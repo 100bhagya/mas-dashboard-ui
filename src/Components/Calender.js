@@ -24,10 +24,9 @@ export default function App(props) {
     axios
       .get(
         `${API_BASE_URL}/api/task/daily-words/check-status?fromDate=1-${currentMonthAndYear}&toDate=${
-          moment().format("MM-YYYY") !==
-          moment(currentMonthAndYear).format("MM-YYYY")
-            ? moment(currentMonthAndYear, "MM-YYYY").daysInMonth()
-            : moment().format("DD")
+          moment().format("MM-YYYY") === currentMonthAndYear
+            ? moment().format("DD")
+            : moment(currentMonthAndYear, "MM-YYYY").daysInMonth()
         }-${currentMonthAndYear}&studentId=${studentId}`,
         {
           headers: {

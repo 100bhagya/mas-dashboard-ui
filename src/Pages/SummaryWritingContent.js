@@ -16,35 +16,18 @@ import moment from "moment";
 import toast, { Toaster } from "react-hot-toast";
 const toastMessage = (message) => toast(message);
 
-function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
-  const { loginInfo } = useContext(AuthContext);
-  var token = loginInfo.accessToken;
-  const [statusResponse, setStatusResponse] = useState({});
+function WEEK({
+  week,
+  index,
+  toggleWEEK,
+  handleArticle,
+  articleNumber,
+  statusResponse,
+}) {
   useEffect(() => {
     const startDateMomentObject = moment("13-09-2022", "DD-MM-YYYY");
     const weekIndex = moment().diff(startDateMomentObject, "weeks") - 1;
     if (index === weekIndex) toggleWEEK(weekIndex);
-    axios
-      .get(
-        `${API_BASE_URL}/api/task/weekly-summary-response-status?studentId=${loginInfo.id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
-          },
-        }
-      )
-      .then((response) => {
-        const res = {};
-
-        for (const [key, value] of Object.entries(response.data)) {
-          res[key] = value;
-        }
-        setStatusResponse(res);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
 
     return () => {
       week.open = false;
@@ -107,6 +90,7 @@ function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
 
 const SummaryWritingContent = () => {
   const summaryTextRef = useRef();
+  const [lastUpdated, setLastUpdated] = useState(new Date());
   const [weeklySummaryResponse, setWeeklySummaryResponse] = useState(null);
   const [isSendSummaryBoxOpen, setIsSendSummaryBoxOpen] = useState(false);
   const [weeks, setweeks] = useState(WeekData);
@@ -115,6 +99,7 @@ const SummaryWritingContent = () => {
   const [summary, setSummary] = useState(null);
   const { loginInfo } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
+  const [statusResponse, setStatusResponse] = useState({});
   var token = loginInfo.accessToken;
 
   const toggleWEEK = (index) => {
@@ -131,6 +116,30 @@ const SummaryWritingContent = () => {
       })
     );
   };
+
+  useEffect(() => {
+    axios
+      .get(
+        `${API_BASE_URL}/api/task/weekly-summary-response-status?studentId=${loginInfo.id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        }
+      )
+      .then((response) => {
+        const res = {};
+
+        for (const [key, value] of Object.entries(response.data)) {
+          res[key] = value;
+        }
+        setStatusResponse(res);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [lastUpdated]);
 
   useEffect(() => {
     axios
@@ -211,6 +220,7 @@ const SummaryWritingContent = () => {
       .then((response) => {
         setWeeklySummaryResponse(response.data);
         setIsLoading(false);
+        setLastUpdated(new Date());
         toastMessage("Summary has been submitted.");
       })
       .catch((err) => {
@@ -239,6 +249,7 @@ const SummaryWritingContent = () => {
       .then((response) => {
         setWeeklySummaryResponse(response.data);
         setIsLoading(false);
+        setLastUpdated(new Date());
         toastMessage("Summary has been updated.");
       })
       .catch((err) => {
@@ -381,7 +392,7 @@ const SummaryWritingContent = () => {
         </div>
       </div>
 
-      <div className="bg-blue-200 h-[100vh] fixed left-[89vw] w-52 pt-10 pl-10">
+      <div className="bg-blue-200 h-[100vh] fixed left-[87vw] w-52 pt-10 pl-10">
         <div className="cursor-pointer text-2xl text-blue-800 font-semibold ">
           Weeks
         </div>
@@ -394,6 +405,7 @@ const SummaryWritingContent = () => {
               toggleWEEK={toggleWEEK}
               handleArticle={handleArticle}
               articleNumber={articleNumber}
+              statusResponse={statusResponse}
             />
           ))}
         </div>
