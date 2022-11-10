@@ -11,12 +11,11 @@ import {
   LogoutIcon,
 } from "@heroicons/react/outline";
 import userDefaultImage from "../images/user.png";
-import { Link, useLocation } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { Link, useLocation, } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../data/consts";
 import { useDispatch, useSelector } from "react-redux";
-import { setProfilePic, setUser } from "../app/features/user/userSlice";
+import { logout, setProfilePic } from "../app/features/user/userSlice";
 
 const TopicBar = (value) => {
   const dispatch = useDispatch();
@@ -27,14 +26,10 @@ const TopicBar = (value) => {
   const [aptitudeOpen, setAptitudeOpen] = useState(true);
   const [nonTechOpen, setNonTechOpen] = useState(true);
   const [sidebar, setSidebar] = useState(false);
-  const { loginInfo } = useContext(AuthContext);
-  const userName = loginInfo.username;
-  const email = loginInfo.email;
-  var token = loginInfo.accessToken;
   useEffect(() => {
     setIsOpen(JSON.parse(window.localStorage.getItem("isOpen")));
     const config = {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
     };
     // Fetching User Profile Image
     axios
@@ -72,8 +67,8 @@ const TopicBar = (value) => {
   }, [isOpen, aptitudeOpen, nonTechOpen]);
 
   const Logout = () => {
-    localStorage.clear();
     window.location.reload(false);
+    dispatch(logout());
   };
   // console.log(value);
 
@@ -137,10 +132,10 @@ const TopicBar = (value) => {
               sidebar ? "hidden" : ""
             }`}
           >
-            {userName}
+            {user.loginInfo ? user.loginInfo?.username : ""}
           </div>
           <div className={`text-[12px] mt-1 ${sidebar ? "hidden" : ""}`}>
-            {email}
+            {user.loginInfo ? user.loginInfo?.email : ""}
           </div>
           <Link to="/">
             <div className=" py-2 ">
@@ -469,7 +464,7 @@ const TopicBar = (value) => {
               </div>
             </div>
           </div>
-          {userName ? (
+          {user.loginInfo.username ? (
             <div className=" py-2 cursor-pointer" onClick={Logout}>
               <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
                 <LogoutIcon className="w-6 text-blue-500" />

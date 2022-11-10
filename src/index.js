@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { AuthContextProvider } from "./context/AuthContext";
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import { store, persistor } from "./app/store";
@@ -12,9 +11,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <AuthContextProvider>
-          <App />
-        </AuthContextProvider>
+        <App />
       </PersistGate>
     </Provider>
   </React.StrictMode>,

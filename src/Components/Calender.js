@@ -5,14 +5,16 @@ import moment from "moment";
 import { useEffect } from "react";
 import axios from "axios";
 import { API_BASE_URL } from "../data/consts";
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setCurrentCalendarDate,
+  setLastAvailableDailyWordDate,
+} from "../app/features/app/appSlice";
 export default function App(props) {
-  const { loginInfo } = useContext(AuthContext);
-  const token = loginInfo.accessToken;
-  const studentId = loginInfo.id;
-  const [dateState, setDateState] = useState(new Date());
+  const app = useSelector((state) => state.app);
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
   // array contains information about completion status of available daily words
   const [markedDates, setmarkedDates] = useState({});
 
@@ -27,11 +29,11 @@ export default function App(props) {
           moment().format("MM-YYYY") === currentMonthAndYear
             ? moment().format("DD")
             : moment(currentMonthAndYear, "MM-YYYY").daysInMonth()
-        }-${currentMonthAndYear}&studentId=${studentId}`,
+        }-${currentMonthAndYear}`,
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
+            Authorization: "Bearer " + user.loginInfo.accessToken,
           },
         }
       )
@@ -59,8 +61,8 @@ export default function App(props) {
           `${latestAvailableDay}-${currentMonthAndYear}`,
           "DD-MM-YYYY"
         ).toDate();
-        setDateState(lastAvailableDate);
-        props.setLastAvailableDateState(lastAvailableDate);
+        dispatch(setCurrentCalendarDate(lastAvailableDate));
+        dispatch(setLastAvailableDailyWordDate(lastAvailableDate));
         setmarkedDates(markedDates);
       })
       .catch((error) => {
@@ -68,13 +70,13 @@ export default function App(props) {
       });
   }, [currentMonthAndYear]);
 
-  const Dated = moment(dateState).format("DD-MM-YYYY");
+  const Dated = moment(app.currentCalendarDate).format("DD-MM-YYYY");
   return (
     <>
       <Calendar
-        value={dateState}
+        value={moment(app.currentCalendarDate).toDate()}
         onChange={(e) => {
-          setDateState(e);
+          dispatch(setCurrentCalendarDate(e));
         }}
         tileClassName={({ date }) => {
           // returning className that will be applied on calendar tiles

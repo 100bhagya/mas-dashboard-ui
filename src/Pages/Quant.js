@@ -3,18 +3,10 @@ import TopicBar from "../Components/TopicBar";
 import Artboard1 from "../images/Practice 1.png";
 import Artboard2 from "../images/Testtttttt 1.png";
 import StarsRating from "stars-rating";
-import { AuthContext } from "../context/AuthContext";
-import { useContext } from "react";
 import { API_BASE_URL } from "../data/consts";
-
+import { useSelector } from "react-redux";
 const RatingCard = ({ serialNo, Title, currentChapter }) => {
-  const { loginInfo } = useContext(AuthContext);
-  var token = loginInfo.accessToken;
-  // var token = localStorage.getItem("access");
-  // var data = localStorage.getItem("login-info");
-  // var loginInfo = JSON.parse(data);
-  const studentId = loginInfo.id;
-
+  const user = useSelector((state) => state.user);
   const [rating, setRating] = useState(
     currentChapter.length > 0 ? currentChapter[0].rating : null
   );
@@ -24,7 +16,7 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
     let item = {
       category: "Quant",
       chapter: Title,
-      studentId,
+      studentId: user.loginInfo.id,
       rating: newRating,
       deleted: "false",
     };
@@ -34,7 +26,7 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          Authorization: "Bearer " + token,
+          Authorization: "Bearer " + user.loginInfo.accessToken,
         },
         body: JSON.stringify(item),
       });
@@ -42,18 +34,15 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
       let result = await response.json();
       currentChapter.push(item);
     } else {
-      var updateresponse = await fetch(
-        `${API_BASE_URL}/api/task/task-rating`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: "Bearer " + token,
-          },
-          body: JSON.stringify(item),
-        }
-      );
+      var updateresponse = await fetch(`${API_BASE_URL}/api/task/task-rating`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + user.loginInfo.accessToken,
+        },
+        body: JSON.stringify(item),
+      });
       let result = await updateresponse.json();
     }
   };
@@ -81,22 +70,17 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
 };
 
 const Quant = () => {
-  // var token = localStorage.getItem("access");
-  // var data = localStorage.getItem("login-info");
-  // var loginInfo = JSON.parse(data);
-  const { loginInfo } = useContext(AuthContext);
-  var token = loginInfo.accessToken;
-  const studentId = loginInfo.id;
-  const [ratingResponse, setRatingResponse] = useState([]);
 
+  const [ratingResponse, setRatingResponse] = useState([]);
+  const user = useSelector((state) => state.user);
   useEffect(() => {
     fetch(
-      `${API_BASE_URL}/api/task/task-rating?studentId=${studentId}&category=Quant`,
+      `${API_BASE_URL}/api/task/task-rating?category=Quant`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
+          Authorization: "Bearer " + user.loginInfo.accessToken,
         },
       }
     )
@@ -161,7 +145,6 @@ const Quant = () => {
                 serialNo={1}
                 Title="Probability"
                 currentChapter={ratingResponse.filter((el) => {
-
                   return el.chapter === "Probability";
                 })}
               />
@@ -263,18 +246,10 @@ const Quant = () => {
               <RatingCard
                 serialNo={1}
                 Title="Probability"
-                currentChapter={[]} 
-              />
-              <RatingCard
-                serialNo={2}
-                Title="Statistics"
                 currentChapter={[]}
               />
-              <RatingCard
-                serialNo={3}
-                Title="P & C"
-                currentChapter={[]}
-              />
+              <RatingCard serialNo={2} Title="Statistics" currentChapter={[]} />
+              <RatingCard serialNo={3} Title="P & C" currentChapter={[]} />
               <RatingCard
                 serialNo={4}
                 Title="Profit & Loss"
@@ -295,15 +270,12 @@ const Quant = () => {
                 Title="Average, Mixture & Allegations"
                 currentChapter={[]}
               />
-              <RatingCard 
-                serialNo={8} 
-                Title="Time, Speed & Distance" 
-                currentChapter={[]} />
               <RatingCard
-                serialNo={9}
-                Title="Geometry"
+                serialNo={8}
+                Title="Time, Speed & Distance"
                 currentChapter={[]}
               />
+              <RatingCard serialNo={9} Title="Geometry" currentChapter={[]} />
               <RatingCard
                 serialNo={10}
                 Title="Coordinate Geometry"

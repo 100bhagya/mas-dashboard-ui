@@ -4,27 +4,20 @@ import TopicBar from "../Components/TopicBar";
 import Artboard1 from "../images/Practice 2.png";
 import Artboard2 from "../images/Test 2.png";
 import StarsRating from "stars-rating";
-import { AuthContext } from "../context/AuthContext";
-import { useContext } from "react";
 import { API_BASE_URL } from "../data/consts";
-
+import { useSelector } from "react-redux";
 const GuessEstimate = () => {
-  const { loginInfo } = useContext(AuthContext);
-  var token = loginInfo.accessToken;
-  // var token = localStorage.getItem("access");
-  // var data = localStorage.getItem("login-info");
-  // var loginInfo = JSON.parse(data);
-  const studentId = loginInfo.id;
+  const user = useSelector((state) => state.user);
   const [rating, setRating] = useState();
 
   useEffect(() => {
     fetch(
-      `${API_BASE_URL}/api/task/task-rating?studentId=${studentId}&category=GuessEstimate`,
+      `${API_BASE_URL}/api/task/task-rating?category=GuessEstimate`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
+          Authorization: "Bearer " + user.loginInfo.accessTokenken,
         },
       }
     )
@@ -39,7 +32,7 @@ const GuessEstimate = () => {
     let item = {
       category: "GuessEstimate",
       chapter: null,
-      studentId,
+      studentId: user.loginInfo.id,
       rating: newRating,
       deleted: "false",
     };
@@ -50,7 +43,7 @@ const GuessEstimate = () => {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          Authorization: "Bearer " + token,
+          Authorization: "Bearer " + user.loginInfo.accessToken,
         },
         body: JSON.stringify(item),
       });
@@ -64,7 +57,7 @@ const GuessEstimate = () => {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
-            Authorization: "Bearer " + token,
+            Authorization: "Bearer " + user.loginInfo.accessToken,
           },
           body: JSON.stringify(item),
         }

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { useRef } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { useContext } from "react";
 import { API_BASE_URL } from "../data/consts";
 import axios from "axios";
 import LoadingSpinner from "./LoadingSpinner";
@@ -18,8 +16,6 @@ import { resetProfilePic, setProfilePic } from "../app/features/user/userSlice";
 const toastMessage = (message) => toast(message);
 
 const Account = () => {
-  const { loginInfo } = useContext(AuthContext);
-  var token = loginInfo.accessToken;
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   //Refs and States
@@ -43,7 +39,7 @@ const Account = () => {
 
   const handleFetchProfile = (cancel = false) => {
     const config = {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
     };
     setIsLoading(true);
     axios
@@ -128,7 +124,7 @@ const Account = () => {
       city: cityRef.current.value.trim() || "",
     };
     const config = {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
     };
 
     setIsLoading(true);

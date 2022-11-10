@@ -5,30 +5,21 @@ import Artboard from "../images/wordofday.png";
 import moment from "moment";
 import NoDailyWords from "../Components/NoDailyWords";
 import axios from "axios";
-import { AuthContext } from "../context/AuthContext";
-import { useContext } from "react";
 import { API_BASE_URL } from "../data/consts";
 import toast, { Toaster } from "react-hot-toast";
-
-// var token = localStorage.getItem("access");
-// var data = localStorage.getItem("login-info");
-// var loginInfo = JSON.parse(data);
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentCalendarDate } from "../app/features/app/appSlice";
 
 //Toast Notifications
 const toastMessage = (message) => toast(message);
 
 const WordOfDay = (isOpen) => {
-  const { loginInfo } = useContext(AuthContext);
-  var token = loginInfo.accessToken;
-
   // todo: get latest date for which daily word is present and use it below for date
   const [date, setDate] = useState(moment(new Date()).format("DD-MM-YYYY"));
   const [wordings, setWordings] = useState({});
   const [wordingsResponse, setWordingsResponse] = useState({});
   // todo: dailyWordsId comes by calling dailywords get api, date is used as parameter
   const [dailyWordsId, setDailyWordsId] = useState(null);
-  // student id comes from local storage
-  const [studentId, setStudentId] = useState();
 
   const [message, setMessage] = useState();
   const [loading, setLoading] = useState(true);
@@ -36,17 +27,16 @@ const WordOfDay = (isOpen) => {
   const responseOneRef = useRef("");
   const responseTwoRef = useRef("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [lastAvailableDateState, setLastAvailableDateState] = useState(
-    new Date()
-  );
+  const app = useSelector((state) => state.app);
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   useEffect(() => {
     let source = axios.CancelToken.source();
-    setStudentId(loginInfo.id);
     axios
       .get(`${API_BASE_URL}/api/task/daily-words?date=${date}`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
+          Authorization: "Bearer " + user.loginInfo.accessToken,
         },
       })
       .then((dailyWordsFetchedResponse) => {
@@ -72,11 +62,11 @@ const WordOfDay = (isOpen) => {
         }
         axios
           .get(
-            `${API_BASE_URL}/api/task/daily-words-response?studentId=${loginInfo.id}&dailyWordsId=${dailyWordsId}`,
+            `${API_BASE_URL}/api/task/daily-words-response?dailyWordsId=${dailyWordsId}`,
             {
               headers: {
                 "Content-Type": "application/json",
-                Authorization: "Bearer " + token,
+                Authorization: "Bearer " + user.loginInfo.accessToken,
               },
             }
           )
@@ -104,7 +94,7 @@ const WordOfDay = (isOpen) => {
       setLoading(true);
       setMessage("");
     };
-  }, [date, loginInfo.id, token]);
+  }, [date, user]);
   //doubt
   function props(data) {
     setDate(data);
@@ -115,14 +105,20 @@ const WordOfDay = (isOpen) => {
   }
 
   const sendResponse = async () => {
+    if (
+      responseOneRef.current.value === "" &&
+      responseTwoRef.current.value === ""
+    ) {
+      toastMessage("Atleast One Response is required.");
+    }
     let bodyParameters = {
       dailyWordsId,
-      studentId,
+      studentId: user.loginInfo.id,
       responseOne: responseOneRef.current.value,
       responseTwo: responseTwoRef.current.value,
     };
     const config = {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
     };
 
     if (
@@ -135,7 +131,6 @@ const WordOfDay = (isOpen) => {
           config
         )
         .then((response) => {
-          console.log(response);
           toastMessage("Your Response Has Been Submitted");
           setWordingsResponse(response?.data);
         })
@@ -149,12 +144,12 @@ const WordOfDay = (isOpen) => {
   const updateResponse = async () => {
     let bodyParameters = {
       dailyWordsId,
-      studentId,
+      studentId: user.loginInfo.id,
       responseOne: responseOneRef.current.value,
       responseTwo: responseTwoRef.current.value,
     };
     const config = {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
     };
 
     axios
@@ -206,10 +201,24 @@ const WordOfDay = (isOpen) => {
               <p>No Daily Words For Selected Word.</p>
               <p>
                 Last Date with Available Daily Word:{" "}
-                {moment(lastAvailableDateState).format("DD-MM-YYYY")}
+                {moment(app.lastAvailableDailyWordDate).format("DD-MM-YYYY")}
               </p>
             </div>
             <div class="bg-gray-200 px-4 py-3 text-right">
+              <button
+                type="button"
+                class="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2"
+                onClick={() => {
+                  dispatch(
+                    setCurrentCalendarDate(
+                      moment(app.lastAvailableDailyWordDate).toDate()
+                    )
+                  );
+                  setIsModalOpen((prev) => !prev);
+                }}
+              >
+                Go to Last Available Date
+              </button>
               <button
                 type="button"
                 class="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2"
@@ -302,10 +311,7 @@ const WordOfDay = (isOpen) => {
           )}
           <div className="basis-1/5 ml-28 ">
             {/* <div inline-datepicker data-date="02/25/2022"></div> */}
-            <Calendar
-              alert={props}
-              setLastAvailableDateState={setLastAvailableDateState}
-            />
+            <Calendar alert={props} />
             {dailyWordsId ? (
               <img src={Artboard} alt="" className="mt-24" />
             ) : null}
