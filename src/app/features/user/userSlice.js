@@ -32,11 +32,20 @@ export const userSlice = createSlice({
     resetUser: (state) => {
       state.profilePic = null;
     },
+    setUsername: (state, username) => {
+      state.loginInfo.username = username.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setProfilePic, resetProfilePic, resetUser, login, logout } =
-  userSlice.actions;
+export const {
+  setProfilePic,
+  resetProfilePic,
+  resetUser,
+  login,
+  logout,
+  setUsername,
+} = userSlice.actions;
 
 export default userSlice.reducer;
