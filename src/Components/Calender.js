@@ -68,7 +68,7 @@ export default function App(props) {
       .catch((error) => {
         console.error(error);
       });
-  }, [currentMonthAndYear]);
+  }, [currentMonthAndYear, app.lastUpdated]);
 
   const Dated = moment(app.currentCalendarDate).format("DD-MM-YYYY");
   return (

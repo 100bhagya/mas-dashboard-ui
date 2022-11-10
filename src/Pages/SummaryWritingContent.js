@@ -10,8 +10,9 @@ import NotFound from "../images/not found.jpg";
 import LoadingSpinner from "../Components/LoadingSpinner";
 import { Checkmark } from "react-checkmark";
 import moment from "moment";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
+import { setLastUpdated } from "../app/features/app/appSlice";
 const toastMessage = (message) => toast(message);
 
 function WEEK({
@@ -85,10 +86,8 @@ function WEEK({
     </div>
   );
 }
-
 const SummaryWritingContent = () => {
   const summaryTextRef = useRef();
-  const [lastUpdated, setLastUpdated] = useState(new Date());
   const [weeklySummaryResponse, setWeeklySummaryResponse] = useState(null);
   const [isSendSummaryBoxOpen, setIsSendSummaryBoxOpen] = useState(false);
   const [weeks, setweeks] = useState(WeekData);
@@ -97,7 +96,9 @@ const SummaryWritingContent = () => {
   const [summary, setSummary] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [statusResponse, setStatusResponse] = useState({});
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const app = useSelector((state) => state.app);
   const toggleWEEK = (index) => {
     setArticleNumber(1);
     setweeks(
@@ -132,7 +133,7 @@ const SummaryWritingContent = () => {
       .catch((error) => {
         console.error(error);
       });
-  }, [lastUpdated]);
+  }, [app.lastUpdated]);
 
   useEffect(() => {
     axios
@@ -214,7 +215,7 @@ const SummaryWritingContent = () => {
       .then((response) => {
         setWeeklySummaryResponse(response.data);
         setIsLoading(false);
-        setLastUpdated(new Date());
+        dispatch(setLastUpdated(new Date()));
         toastMessage("Summary has been submitted.");
       })
       .catch((err) => {
@@ -244,7 +245,7 @@ const SummaryWritingContent = () => {
         console.log(response.data);
         setWeeklySummaryResponse(response.data);
         setIsLoading(false);
-        setLastUpdated(new Date());
+        dispatch(setLastUpdated(new Date()));
         toastMessage("Summary has been updated.");
       })
       .catch((err) => {

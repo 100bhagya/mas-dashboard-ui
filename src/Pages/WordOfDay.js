@@ -8,7 +8,7 @@ import axios from "axios";
 import { API_BASE_URL } from "../data/consts";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentCalendarDate } from "../app/features/app/appSlice";
+import { setCurrentCalendarDate, setLastUpdated } from "../app/features/app/appSlice";
 
 //Toast Notifications
 const toastMessage = (message) => toast(message);
@@ -133,6 +133,7 @@ const WordOfDay = (isOpen) => {
         .then((response) => {
           toastMessage("Your Response Has Been Submitted");
           setWordingsResponse(response?.data);
+          dispatch(setLastUpdated(new Date()));
         })
         .catch((err) => {
           console.log(err);
@@ -162,6 +163,7 @@ const WordOfDay = (isOpen) => {
         console.log(response);
         toastMessage("Your Response Has Been Updated");
         setWordingsResponse(response?.data);
+        dispatch(setLastUpdated(new Date()));
       })
       .catch((err) => {
         console.log(err);
