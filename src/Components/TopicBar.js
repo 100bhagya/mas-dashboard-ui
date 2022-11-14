@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import arrow from "../images/down arrow.png";
 import {
   HomeIcon,
@@ -10,38 +10,32 @@ import {
   ChatAlt2Icon,
   LogoutIcon,
 } from "@heroicons/react/outline";
-import user from "../images/user.png";
-import { Link, useLocation } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
-import { useContext } from "react";
-import { UserContext } from "../context/user/UserContext";
+import userDefaultImage from "../images/user.png";
+import { Link, useLocation, } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../data/consts";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, setProfilePic } from "../app/features/user/userSlice";
 
 const TopicBar = (value) => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
   const [selectedimage, setSelectedimage] = useState();
   const [isOpen, setIsOpen] = useState(value);
   const [aptitudeOpen, setAptitudeOpen] = useState(true);
   const [nonTechOpen, setNonTechOpen] = useState(true);
   const [sidebar, setSidebar] = useState(false);
-  const { loginInfo } = useContext(AuthContext);
-  const userName = loginInfo.username;
-  const email = loginInfo.email;
-  var token = loginInfo.accessToken;
-  const { profileImgURL, dispatch } = useContext(UserContext);
   useEffect(() => {
     setIsOpen(JSON.parse(window.localStorage.getItem("isOpen")));
     const config = {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
     };
     // Fetching User Profile Image
     axios
       .get(`${API_BASE_URL}/api/getUserProfile`, config)
       .then((response) => {
-        dispatch({
-          type: "SET_PROFILE_IMAGE",
-          payload: response.data.profilePic,
-        });
+        dispatch(setProfilePic(response.data.profilePic));
       })
       .catch((error) => {
         console.log(error);
@@ -73,8 +67,8 @@ const TopicBar = (value) => {
   }, [isOpen, aptitudeOpen, nonTechOpen]);
 
   const Logout = () => {
-    localStorage.clear();
     window.location.reload(false);
+    dispatch(logout());
   };
   // console.log(value);
 
@@ -122,7 +116,7 @@ const TopicBar = (value) => {
                 }}
               />
               <img
-                src={profileImgURL || user}
+                src={user.profilePic || userDefaultImage}
                 alt=""
                 className={`relative rounded-full ${
                   sidebar
@@ -138,10 +132,10 @@ const TopicBar = (value) => {
               sidebar ? "hidden" : ""
             }`}
           >
-            {userName}
+            {user.loginInfo ? user.loginInfo?.username : ""}
           </div>
           <div className={`text-[12px] mt-1 ${sidebar ? "hidden" : ""}`}>
-            {email}
+            {user.loginInfo ? user.loginInfo?.email : ""}
           </div>
           <Link to="/">
             <div className=" py-2 ">
@@ -308,7 +302,7 @@ const TopicBar = (value) => {
                   </Link>
                   <Link to="/dataanalysis">
                     <div
-                      className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                      className={`text-sm text-left md:px-2 lg:pl-8 py-2 rounded-md ${
                         location.pathname === "/dataanalysis"
                           ? "bg-[#2255B8] text-white"
                           : "hover:bg-white text-blue-500 "
@@ -319,7 +313,7 @@ const TopicBar = (value) => {
                   </Link>
                   <Link to="/sql">
                     <div
-                      className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                      className={`text-sm text-left md:px-2 lg:pl-8 py-2 rounded-md ${
                         location.pathname === "/sql"
                           ? "bg-[#2255B8] text-white"
                           : "hover:bg-white text-blue-500 "
@@ -470,7 +464,7 @@ const TopicBar = (value) => {
               </div>
             </div>
           </div>
-          {userName ? (
+          {user.loginInfo.username ? (
             <div className=" py-2 cursor-pointer" onClick={Logout}>
               <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
                 <LogoutIcon className="w-6 text-blue-500" />

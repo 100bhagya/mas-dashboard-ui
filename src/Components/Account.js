@@ -1,26 +1,23 @@
 import React, { useState } from "react";
 import { useRef } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { useContext } from "react";
 import { API_BASE_URL } from "../data/consts";
 import axios from "axios";
 import LoadingSpinner from "./LoadingSpinner";
 import { useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useDebounce } from "use-lodash-debounce";
-import user from "../images/user.png";
-import { UserContext } from "../context/user/UserContext";
+import userDefaultImage from "../images/user.png";
 import isMobilePhone from "validator/lib/isMobilePhone";
 import isPostalCode from "validator/lib/isPostalCode";
 import isAlpha from "validator/lib/isAlpha";
+import { useDispatch, useSelector } from "react-redux";
+import { resetProfilePic, setProfilePic, setUsername } from "../app/features/user/userSlice";
 //Toast Notifications
 const toastMessage = (message) => toast(message);
 
 const Account = () => {
-  const { loginInfo } = useContext(AuthContext);
-  const { profileImgURL, dispatch } = useContext(UserContext);
-  var token = loginInfo.accessToken;
-
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   //Refs and States
   const firstNameRef = useRef();
   const lastNameRef = useRef();
@@ -42,7 +39,7 @@ const Account = () => {
 
   const handleFetchProfile = (cancel = false) => {
     const config = {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
     };
     setIsLoading(true);
     axios
@@ -57,10 +54,8 @@ const Account = () => {
         stateRef.current.value = response.data.state || "";
         postalCodeRef.current.value = response.data.postalCode || "";
         emailRef.current.value = response.data.email || "";
-        dispatch({
-          type: "SET_PROFILE_IMAGE",
-          payload: response.data.profilePic,
-        });
+        dispatch(setProfilePic(response.data.profilePic));
+        dispatch(setUsername(response.data.username))
         setIsLoading(false);
         {
           cancel && toastMessage("Changes reverted successfully.");
@@ -74,69 +69,79 @@ const Account = () => {
   };
 
   const handleUpdateProfile = () => {
-    if (!isPostalCode(postalCodeRef.current.value, ["IN"])) {
+    if (firstNameRef.current.value === "") {
+      toastMessage("First name is required");
+      return;
+    }
+    if (lastNameRef.current.value === "") {
+      toastMessage("Last name is required");
+      return;
+    }
+
+    if (userNameRef.current.value === "") {
+      toastMessage("Username is required");
+      return;
+    }
+
+    if (
+      postalCodeRef.current.value !== "" &&
+      !isPostalCode(postalCodeRef.current.value, ["IN"])
+    ) {
       toastMessage("Please enter a valid postal code.");
       return;
     }
     if (
-      !isMobilePhone(phoneNumberRef.current.value, ["en-IN"]) ||
+      (phoneNumberRef.current.value !== "" &&
+        !isMobilePhone(phoneNumberRef.current.value, ["en-IN"])) ||
       phoneNumberRef.current.value.toString().length > 10 ||
       phoneNumberRef.current.value.toString()[0] === "+"
     ) {
       toastMessage("Please enter a valid phone number.");
       return;
     }
-    if (!isAlpha(firstNameRef.current.value)) {
+    if (
+      firstNameRef.current.value !== "" &&
+      !isAlpha(firstNameRef.current.value)
+    ) {
       toastMessage("Please enter a valid first name.");
       return;
     }
-    if (!isAlpha(lastNameRef.current.value)) {
+    if (
+      lastNameRef.current.value !== "" &&
+      !isAlpha(lastNameRef.current.value)
+    ) {
       toastMessage("Please enter a valid last name.");
       return;
     }
     let bodyParameters = {
-      firstName: firstNameRef.current.value.trim(),
-      lastName: lastNameRef.current.value.trim(),
-      username: userNameRef.current.value.trim(),
-      profilePic: profileImgURL || "",
-      phoneNo: phoneNumberRef.current.value.trim(),
+      firstName: firstNameRef.current.value.trim() || "",
+      lastName: lastNameRef.current.value.trim() || "",
+      username: userNameRef.current.value.trim() || "",
+      profilePic: user.profilePic || "",
+      phoneNo: phoneNumberRef.current.value.trim() || "",
       address: addressRef.current.value.trim(),
-      postalCode: postalCodeRef.current.value.trim(),
-      state: stateRef.current.value.trim(),
-      city: cityRef.current.value.trim(),
+      postalCode: postalCodeRef.current.value.trim() || "",
+      state: stateRef.current.value.trim() || "",
+      city: cityRef.current.value.trim() || "",
     };
     const config = {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
     };
-    if (
-      !(
-        firstNameRef.current.value === "" ||
-        lastNameRef.current.value === "" ||
-        postalCodeRef.current.value === "" ||
-        stateRef.current.value === "" ||
-        cityRef.current.value === "" ||
-        addressRef.current.value === "" ||
-        userNameRef.current.value === "" ||
-        phoneNumberRef.current.value === ""
-      )
-    ) {
-      setIsLoading(true);
-      axios
-        .put(`${API_BASE_URL}/api/updateProfile`, bodyParameters, config)
-        .then(() => {
-          handleFetchProfile();
-          toastMessage("Profile updated successfully.");
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-          handleFetchProfile();
-          toastMessage("Something went wrong. Please try again later.");
-          setIsLoading(false);
-        });
-    } else {
-      toastMessage("Please fill in all fields.");
-    }
+
+    setIsLoading(true);
+    axios
+      .put(`${API_BASE_URL}/api/updateProfile`, bodyParameters, config)
+      .then(() => {
+        handleFetchProfile();
+        toastMessage("Profile updated successfully.");
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        handleFetchProfile();
+        toastMessage("1Something went wrong. Please try again later.");
+        setIsLoading(false);
+      });
   };
 
   const fetchDataFromPostalCode = () => {
@@ -171,7 +176,7 @@ const Account = () => {
     xhr.onreadystatechange = (e) => {
       if (xhr.readyState === 4 && xhr.status === 200) {
         const response = JSON.parse(xhr.responseText);
-        dispatch({ type: "SET_PROFILE_IMAGE", payload: response.secure_url });
+        dispatch(setProfilePic(response.secure_url));
       }
     };
 
@@ -249,17 +254,13 @@ const Account = () => {
             <img
               alt="User Profile"
               className="w-10 h-10 rounded-full object-cover"
-              src={profileImgURL || user}
+              src={user.profilePic || userDefaultImage}
             />
             <div
               className={`text-sm font-medium ${
-                !profileImgURL && "hidden"
+                !user.profilePic && "hidden"
               } cursor-pointer`}
-              onClick={() =>
-                dispatch({
-                  type: "RESET_PROFILE_IMAGE",
-                })
-              }
+              onClick={() => dispatch(resetProfilePic())}
             >
               Remove
             </div>
@@ -268,7 +269,7 @@ const Account = () => {
                 htmlFor="file-upload"
                 className="py-1 px-2 rounded-md border border-gray-300 bg-white cursor-pointer"
               >
-                {profileImgURL ? "Change" : "Upload"}
+                {user.profilePic ? "Change" : "Upload"}
               </label>
               <input
                 className="invisible"

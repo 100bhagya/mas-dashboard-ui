@@ -1,13 +1,13 @@
-import { useContext } from "react";
+
 import { Navigate, Outlet } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { useSelector } from "react-redux";
 
 const useAuth = () => {
-  const { loginInfo } = useContext(AuthContext);
-  const user = loginInfo;
-  if (user === undefined || user === null) {      
-      return false;
-  } 
+  const user = useSelector((state) => state.user);
+
+  if (!user.isAuthenticated) {
+    return false;
+  }
   return true;
 };
 

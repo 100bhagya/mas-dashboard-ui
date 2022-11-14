@@ -3,18 +3,11 @@ import TopicBar from "../Components/TopicBar";
 import Artboard1 from "../images/Practice 1.png";
 import Artboard2 from "../images/Testtttttt 1.png";
 import StarsRating from "stars-rating";
-import { AuthContext } from "../context/AuthContext";
-import { useContext } from "react";
 import { API_BASE_URL } from "../data/consts";
-
+import { useSelector } from "react-redux";
 const RatingCard = ({ serialNo, Title, currentChapter }) => {
-  const { loginInfo } = useContext(AuthContext);
-  var token = loginInfo.accessToken;
-  // var token = localStorage.getItem("access");
-  // var data = localStorage.getItem("login-info");
-  // var loginInfo = JSON.parse(data);
-  const studentId = loginInfo.id;
 
+  const user = useSelector((state) => state.user);
   const [rating, setRating] = useState(
     currentChapter.length > 0 ? currentChapter[0].rating : null
   );
@@ -24,7 +17,7 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
     let item = {
       category: "Verbal",
       chapter: Title,
-      studentId,
+      studentId: user.loginInfo.id,
       rating: newRating,
       deleted: "false",
     };
@@ -35,7 +28,7 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          Authorization: "Bearer " + token,
+          Authorization: "Bearer " + user.loginInfo.accessToken,
         },
         body: JSON.stringify(item),
       });
@@ -43,18 +36,15 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
       let result = await response.json();
       currentChapter.push(item);
     } else {
-      var updateresponse = await fetch(
-        `${API_BASE_URL}/api/task/task-rating`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: "Bearer " + token,
-          },
-          body: JSON.stringify(item),
-        }
-      );
+      var updateresponse = await fetch(`${API_BASE_URL}/api/task/task-rating`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + user.loginInfo.accessToken,
+        },
+        body: JSON.stringify(item),
+      });
       let result = await updateresponse.json();
     }
   };
@@ -82,25 +72,16 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
 };
 
 const Verbal = () => {
-  const { loginInfo } = useContext(AuthContext);
-  var token = loginInfo.accessToken;
-  // var token = localStorage.getItem("access");
-  // var data = localStorage.getItem("login-info");
-  // var loginInfo = JSON.parse(data);
-  const studentId = loginInfo.id;
   const [ratingResponse, setRatingResponse] = useState([]);
-
+  const user = useSelector((state) => state.user);
   useEffect(() => {
-    fetch(
-      `${API_BASE_URL}/api/task/task-rating?studentId=${studentId}&category=Verbal`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-      }
-    )
+    fetch(`${API_BASE_URL}/api/task/task-rating?category=Verbal`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + user.loginInfo.accessToken,
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         setRatingResponse(result);

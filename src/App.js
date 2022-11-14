@@ -13,7 +13,6 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { useContext } from "react";
 import Quizes from "./Pages/Quizes";
 import Quant from "./Pages/Quant";
 import LRandDI from "./Pages/LRandDI";
@@ -28,25 +27,25 @@ import ResetPassword from "./Pages/ResetPassword";
 import SQL from "./Pages/SQL";
 import QuizDetail from "./Pages/QuizDetail";
 import ProtectedRoutes from "./Components/PrivateRoutes";
-import { AuthContext } from "./context/AuthContext";
 import Settings from "./Pages/Settings";
+import { useSelector } from "react-redux";
 function App() {
-  const { loginInfo } = useContext(AuthContext);
+  const user = useSelector((state) => state.user);
   return (
     <>
       <Router>
         <Routes>
           <Route
             path="signin"
-            element={loginInfo ? <Navigate to="/" /> : <Signin />}
+            element={user.isAuthenticated ? <Navigate to="/" /> : <Signin />}
           />
           <Route
             path="signup"
-            element={loginInfo ? <Navigate to="/" /> : <Signup />}
+            element={user.isAuthenticated ? <Navigate to="/" /> : <Signup />}
           />
           <Route
             path="forgotPassword"
-            element={loginInfo ? <Navigate to="/" /> : <ForgotPassword />}
+            element={user.isAuthenticated ? <Navigate to="/" /> : <ForgotPassword />}
           />
           <Route path="resetPassword/:token" element={<ResetPassword />} />
           <Route element={<ProtectedRoutes />}>

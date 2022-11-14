@@ -9,14 +9,13 @@ import { MdLockOutline } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineUser } from "react-icons/ai";
 import Logo from "../images/logo.png";
-import { useContext, useRef } from "react";
-import { loginCall } from "../apiCalls";
-import { AuthContext } from "../context/AuthContext";
+import { useSelector, useDispatch } from "react-redux";
+import { login } from "../app/features/user/userSlice";
 import LoadingSpinner from "../Components/LoadingSpinner";
 import { API_BASE_URL } from "../data/consts";
-
+import axios from "axios";
 const Signup = () => {
-  const { loginInfo, isFetching, dispatch } = useContext(AuthContext);
+  const dispatch = useDispatch();
   const [firstname, setFirstname] = useState();
   const [lastname, setLastname] = useState();
   const [email, setEmail] = useState();
@@ -24,11 +23,11 @@ const Signup = () => {
   const [username, setUsername] = useState();
   const [confirmpassword, setConfirmpassword] = useState();
   const [error, setError] = useState();
-
+  const [isLoading, setIsLoading] = useState(false);
+  const user = useSelector((state) => state.user);
   const navigate = useNavigate();
 
   async function DoSignup() {
-    
     let item = {
       firstName: firstname,
       lastName: lastname,
@@ -38,19 +37,18 @@ const Signup = () => {
       password: password,
       deleted: "false",
     };
-    
 
-    if(password === confirmpassword){
+    if (password === confirmpassword) {
       var result = await fetch(`${API_BASE_URL}/api/auth/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(item),
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(item),
       });
       result = await result.json();
-    }else{
+    } else {
       setError("Passwords does not match");
     }
 
@@ -58,33 +56,25 @@ const Signup = () => {
       password === confirmpassword &&
       result.message === "User registered successfully!"
     ) {
-        await loginCall(
-          { email: email, password: password },
-          dispatch
-        );
-        if (loginInfo) {
-          navigate("/");
-        }
-      
-      // var response = await fetch(`${API_BASE_URL}/api/auth/login`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Accept: "application/json",
-      //   },
-      //   body: JSON.stringify(item),
-      // });
-
-      // let result = await response.json();
-      // localStorage.setItem("login-info", JSON.stringify(result));
-      // localStorage.setItem("username", result.username);
-      // localStorage.setItem("email-id", result.email);
-      // localStorage.setItem("access", result.accessToken);
-      // localStorage.setItem("token", result.tokenType);
-      // if (result.username) {
-      //   navigate("/");
-      // }
-
+      const bodyParameters = {
+        email: email,
+        password: password,
+      };
+      setIsLoading(true);
+      axios
+        .post(`${API_BASE_URL}/api/auth/login`, bodyParameters)
+        .then((res) => {
+          dispatch(login(res.data));
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          setError(err);
+          console.log(err);
+          setIsLoading(false);
+        });
+      if (user.isAuthenticated) {
+        navigate("/");
+      }
     } else if (result.message === "Error: Email is already in use!") {
       setError("Email is already taken!");
     } else {
@@ -215,7 +205,7 @@ const Signup = () => {
                   onClick={DoSignup}
                   className="border-2 cursor-pointer mt-10 border-blue-600 text-blue-600 rounded-full px-12 py-2 inline-block font-semibold hover:bg-blue-600 hover:text-white"
                 >
-                  {isFetching ? <LoadingSpinner/> : ("Sign Up")}
+                  {isLoading ? <LoadingSpinner /> : "Sign Up"}
                 </div>
               </div>
             </div>

@@ -9,42 +9,56 @@ import { MdLockOutline } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../images/logo.png";
 import { AiOutlineUser } from "react-icons/ai";
-import { useContext, useRef } from "react";
-import { loginCall } from "../apiCalls";
-import { AuthContext } from "../context/AuthContext";
+import { useRef } from "react";
 import LoadingSpinner from "../Components/LoadingSpinner";
-
+import { login } from "../app/features/user/userSlice";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import { API_BASE_URL } from "../data/consts";
 const Signin = () => {
   // const [email, setEmail] = useState();
   // const [password, setPassword] = useState();
   // const [error, setError] = useState();
 
-  const email = useRef();
-  const password = useRef();
-  const { loginInfo, isFetching, error, dispatch } = useContext(AuthContext);
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const dispatch = useDispatch();
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const user = useSelector((state) => state.user);
   const navigate = useNavigate();
-
   const handleSignIn = async (e) => {
     e.preventDefault();
-    console.log("data", email.current.value, password.current.value);
-    await loginCall(
-      { email: email.current.value, password: password.current.value },
-      dispatch
-    );
+    const bodyParameters = {
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+    };
+    setIsLoading(true);
+    axios
+      .post(`${API_BASE_URL}/api/auth/login`, bodyParameters)
+      .then((res) => {
+        dispatch(login(res.data));
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError(err);
+        console.log(err);
+        setIsLoading(false);
+      });
   };
-  // console.log(loginInfo);
-  if (loginInfo) {
+  if (user.isAuthenticated) {
     navigate("/");
   }
-  
-  
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
       <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
         {error ? (
           <div className="bg-white w-[60%] mb-4 flex shadow-xl rounded-tr-xl rounded-br-xl">
             <div className="w-2 bg-red-600 rounded-tl-xl rounded-bl-xl"></div>
-            <div className="py-2 text-red-500 ml-5">Please Enter Correct Credentials</div>
+            <div className="py-2 text-red-500 ml-5">
+              Please Enter Correct Credentials
+            </div>
           </div>
         ) : null}
 
@@ -58,8 +72,11 @@ const Signin = () => {
                 Sign in to Account
               </h2>
               <div className="bg-blue-600 h-1 w-10 inline-block mb-2"></div>
-              
-              <form className="flex flex-col items-center" onSubmit={handleSignIn}>
+
+              <form
+                className="flex flex-col items-center"
+                onSubmit={handleSignIn}
+              >
                 <div className="bg-gray-100 w-64 p-2 flex items-center mb-3">
                   <AiOutlineUser className="text-gray-400 m-2" />
                   <input
@@ -67,7 +84,7 @@ const Signin = () => {
                     name="email"
                     placeholder="Email"
                     required
-                    ref={email}
+                    ref={emailRef}
                     className="bg-gray-100 outline-none text-sm flex-1"
                   />
                 </div>
@@ -78,7 +95,7 @@ const Signin = () => {
                     name="password"
                     placeholder="Password"
                     required
-                    ref={password}
+                    ref={passwordRef}
                     className="bg-gray-100 outline-none text-sm flex-1"
                   />
                 </div>
@@ -90,10 +107,10 @@ const Signin = () => {
                 </div>
                 <button
                   className="border-2 cursor-pointer border-blue-600 text-blue-600 rounded-full px-12 py-2 inline-block font-semibold hover:bg-blue-600 hover:text-white"
-                  disabled={isFetching}
+                  disabled={isLoading}
                   type="submit"
                 >
-                  {isFetching ? <LoadingSpinner/> : ("Sign In")}
+                  {isLoading ? <LoadingSpinner /> : "Sign In"}
                 </button>
               </form>
             </div>

@@ -3,18 +3,12 @@ import TopicBar from "../Components/TopicBar";
 import Artboard1 from "../images/Practice 1.png";
 import Artboard2 from "../images/Testtttttt 1.png";
 import StarsRating from "stars-rating";
-import { AuthContext } from "../context/AuthContext";
-import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { API_BASE_URL } from "../data/consts";
 
 const RatingCard = ({ serialNo, Title, currentChapter }) => {
-  const { loginInfo } = useContext(AuthContext);
-  var token = loginInfo.accessToken;
-  // var token = localStorage.getItem("access");
-  // var data = localStorage.getItem("login-info");
-  // var loginInfo = JSON.parse(data);
-  const studentId = loginInfo.id;
 
+  const user = useSelector((state) => state.user);
   const [rating, setRating] = useState(
     currentChapter && currentChapter.length > 0
       ? currentChapter[0].rating
@@ -26,7 +20,7 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
     let item = {
       category: "LRDI",
       chapter: Title,
-      studentId,
+      studentId: user.loginInfo.id,
       rating: newRating,
       deleted: "false",
     };
@@ -37,7 +31,7 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          Authorization: "Bearer " + token,
+          Authorization: "Bearer " + user.loginInfo.accessToken,
         },
         body: JSON.stringify(item),
       });
@@ -52,7 +46,7 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
-            Authorization: "Bearer " + token,
+            Authorization: "Bearer " + user.loginInfo.accessToken,
           },
           body: JSON.stringify(item),
         }
@@ -85,24 +79,18 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
 };
 
 const LRandDI = () => {
-  // var token = localStorage.getItem("access");
-  // var data = localStorage.getItem("login-info");
-  // var loginInfo = JSON.parse(data);
-  const { loginInfo } = useContext(AuthContext);
-  var token = loginInfo.accessToken;
-  
-  
-  const studentId = loginInfo.id;
+
+  const user = useSelector((state) => state.user);
   const [ratingResponse, setRatingResponse] = useState([]);
 
   useEffect(() => {
     fetch(
-      `${API_BASE_URL}/api/task/task-rating?studentId=${studentId}&category=LRDI`,
+      `${API_BASE_URL}/api/task/task-rating?category=LRDI`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
+          Authorization: "Bearer " + user.loginInfo.accessTokenoken,
         },
       }
     )

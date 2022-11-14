@@ -5,47 +5,28 @@ import WeekData from "../data/WeekData";
 import { API_BASE_URL } from "../data/consts";
 import { BiTime, BiCategory } from "react-icons/bi";
 import { BsFillPersonFill } from "react-icons/bs";
-import { AuthContext } from "../context/AuthContext";
-import { useContext } from "react";
 import axios from "axios";
 import NotFound from "../images/not found.jpg";
 import LoadingSpinner from "../Components/LoadingSpinner";
 import { Checkmark } from "react-checkmark";
 import moment from "moment";
-
+import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
+import { setLastUpdated } from "../app/features/app/appSlice";
 const toastMessage = (message) => toast(message);
 
-function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
-  const { loginInfo } = useContext(AuthContext);
-  var token = loginInfo.accessToken;
-  const [statusResponse, setStatusResponse] = useState({});
+function WEEK({
+  week,
+  index,
+  toggleWEEK,
+  handleArticle,
+  articleNumber,
+  statusResponse,
+}) {
   useEffect(() => {
     const startDateMomentObject = moment("13-09-2022", "DD-MM-YYYY");
     const weekIndex = moment().diff(startDateMomentObject, "weeks") - 1;
     if (index === weekIndex) toggleWEEK(weekIndex);
-    axios
-      .get(
-        `${API_BASE_URL}/api/task/weekly-summary-response-status?studentId=${loginInfo.id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
-          },
-        }
-      )
-      .then((response) => {
-        const res = {};
-
-        for (const [key, value] of Object.entries(response.data)) {
-          res[key] = value;
-        }
-        console.log(res);
-        setStatusResponse(res);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
 
     return () => {
       week.open = false;
@@ -105,7 +86,6 @@ function WEEK({ week, index, toggleWEEK, handleArticle, articleNumber }) {
     </div>
   );
 }
-
 const SummaryWritingContent = () => {
   const summaryTextRef = useRef();
   const [weeklySummaryResponse, setWeeklySummaryResponse] = useState(null);
@@ -114,10 +94,11 @@ const SummaryWritingContent = () => {
   const [weekNumber, setWeekNumber] = useState(0);
   const [articleNumber, setArticleNumber] = useState(1);
   const [summary, setSummary] = useState(null);
-  const { loginInfo } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
-  var token = loginInfo.accessToken;
-
+  const [statusResponse, setStatusResponse] = useState({});
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const app = useSelector((state) => state.app);
   const toggleWEEK = (index) => {
     setArticleNumber(1);
     setweeks(
@@ -135,12 +116,33 @@ const SummaryWritingContent = () => {
 
   useEffect(() => {
     axios
+      .get(`${API_BASE_URL}/api/task/weekly-summary-response-status`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + user.loginInfo.accessToken,
+        },
+      })
+      .then((response) => {
+        const res = {};
+
+        for (const [key, value] of Object.entries(response.data)) {
+          res[key] = value;
+        }
+        setStatusResponse(res);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [app.lastUpdated]);
+
+  useEffect(() => {
+    axios
       .get(
         `${API_BASE_URL}/api/task/weekly-summary?weekNumber=${weekNumber}&articleNumber=${articleNumber}`,
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
+            Authorization: "Bearer " + user.loginInfo.accessToken,
           },
         }
       )
@@ -151,15 +153,16 @@ const SummaryWritingContent = () => {
       .then((weeklySummaryId) => {
         axios
           .get(
-            `${API_BASE_URL}/api/task/weekly-summary-response?studentId=${loginInfo.id}&weeklySummaryId=${weeklySummaryId}`,
+            `${API_BASE_URL}/api/task/weekly-summary-response?weeklySummaryId=${weeklySummaryId}`,
             {
               headers: {
                 "Content-Type": "application/json",
-                Authorization: "Bearer " + token,
+                Authorization: "Bearer " + user.loginInfo.accessToken,
               },
             }
           )
           .then((response) => {
+            console.log(response);
             setWeeklySummaryResponse(response.data);
             if (response.data.response)
               summaryTextRef.current.value = response.data.response;
@@ -181,7 +184,7 @@ const SummaryWritingContent = () => {
       setSummary(null);
       setIsLoading(true);
     };
-  }, [articleNumber, weekNumber, weeks, loginInfo.id, token]);
+  }, [articleNumber, weekNumber, weeks, user]);
 
   const handleArticle = (index, articleNumber) => {
     setWeekNumber(index + 1);
@@ -189,15 +192,19 @@ const SummaryWritingContent = () => {
   };
 
   const handleSubmitSummary = (weeklySummaryId) => {
+    if (summaryTextRef.current.value === "") {
+      toastMessage("Summary Response is empty.");
+      return;
+    }
     setIsLoading(true);
     let bodyParameters = {
       weeklySummaryId: weeklySummaryId,
       response: summaryTextRef.current.value,
-      studentId: loginInfo?.id,
+      studentId: user.loginInfo.id,
       completed: true,
     };
     const config = {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
     };
     axios
       .post(
@@ -208,6 +215,7 @@ const SummaryWritingContent = () => {
       .then((response) => {
         setWeeklySummaryResponse(response.data);
         setIsLoading(false);
+        dispatch(setLastUpdated(new Date()));
         toastMessage("Summary has been submitted.");
       })
       .catch((err) => {
@@ -221,11 +229,11 @@ const SummaryWritingContent = () => {
     let bodyParameters = {
       weeklySummaryId: weeklySummaryId,
       response: summaryTextRef.current.value,
-      studentId: loginInfo?.id,
+      studentId: user.loginInfo.id,
       completed: true,
     };
     const config = {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
     };
     axios
       .put(
@@ -234,8 +242,10 @@ const SummaryWritingContent = () => {
         config
       )
       .then((response) => {
+        console.log(response.data);
         setWeeklySummaryResponse(response.data);
         setIsLoading(false);
+        dispatch(setLastUpdated(new Date()));
         toastMessage("Summary has been updated.");
       })
       .catch((err) => {
@@ -307,6 +317,7 @@ const SummaryWritingContent = () => {
           {/* Write Summary Box */}
           <div className={`${!isSendSummaryBoxOpen && "hidden"}`}>
             <textarea
+              autoFocus={true}
               ref={summaryTextRef}
               placeholder="Write summary here..."
               className="w-full h-[50vh] my-6 p-4 rounded-md text-black placeholder-black"
@@ -378,7 +389,7 @@ const SummaryWritingContent = () => {
         </div>
       </div>
 
-      <div className="bg-blue-200 h-[100vh] fixed left-[89vw] w-52 pt-10 pl-10">
+      <div className="bg-blue-200 h-[100vh] fixed left-[87vw] w-52 pt-10 pl-10">
         <div className="cursor-pointer text-2xl text-blue-800 font-semibold ">
           Weeks
         </div>
@@ -391,6 +402,7 @@ const SummaryWritingContent = () => {
               toggleWEEK={toggleWEEK}
               handleArticle={handleArticle}
               articleNumber={articleNumber}
+              statusResponse={statusResponse}
             />
           ))}
         </div>

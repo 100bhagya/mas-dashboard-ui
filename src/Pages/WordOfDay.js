@@ -5,45 +5,38 @@ import Artboard from "../images/wordofday.png";
 import moment from "moment";
 import NoDailyWords from "../Components/NoDailyWords";
 import axios from "axios";
-import { AuthContext } from "../context/AuthContext";
-import { useContext } from "react";
 import { API_BASE_URL } from "../data/consts";
 import toast, { Toaster } from "react-hot-toast";
-
-// var token = localStorage.getItem("access");
-// var data = localStorage.getItem("login-info");
-// var loginInfo = JSON.parse(data);
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentCalendarDate, setLastUpdated } from "../app/features/app/appSlice";
 
 //Toast Notifications
 const toastMessage = (message) => toast(message);
 
 const WordOfDay = (isOpen) => {
-  const { loginInfo } = useContext(AuthContext);
-  var token = loginInfo.accessToken;
-
   // todo: get latest date for which daily word is present and use it below for date
   const [date, setDate] = useState(moment(new Date()).format("DD-MM-YYYY"));
   const [wordings, setWordings] = useState({});
   const [wordingsResponse, setWordingsResponse] = useState({});
   // todo: dailyWordsId comes by calling dailywords get api, date is used as parameter
   const [dailyWordsId, setDailyWordsId] = useState(null);
-  // student id comes from local storage
-  const [studentId, setStudentId] = useState();
 
   const [message, setMessage] = useState();
   const [loading, setLoading] = useState(true);
 
   const responseOneRef = useRef("");
   const responseTwoRef = useRef("");
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const app = useSelector((state) => state.app);
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   useEffect(() => {
     let source = axios.CancelToken.source();
-    setStudentId(loginInfo.id);
     axios
       .get(`${API_BASE_URL}/api/task/daily-words?date=${date}`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
+          Authorization: "Bearer " + user.loginInfo.accessToken,
         },
       })
       .then((dailyWordsFetchedResponse) => {
@@ -58,13 +51,22 @@ const WordOfDay = (isOpen) => {
       })
       .then((dailyWordsId) => {
         setLoading(true);
+        if (
+          dailyWordsId === "" ||
+          dailyWordsId === null ||
+          dailyWordsId === undefined
+        ) {
+          setIsModalOpen(true);
+        } else {
+          setIsModalOpen(false);
+        }
         axios
           .get(
-            `${API_BASE_URL}/api/task/daily-words-response?studentId=${loginInfo.id}&dailyWordsId=${dailyWordsId}`,
+            `${API_BASE_URL}/api/task/daily-words-response?dailyWordsId=${dailyWordsId}`,
             {
               headers: {
                 "Content-Type": "application/json",
-                Authorization: "Bearer " + token,
+                Authorization: "Bearer " + user.loginInfo.accessToken,
               },
             }
           )
@@ -92,7 +94,7 @@ const WordOfDay = (isOpen) => {
       setLoading(true);
       setMessage("");
     };
-  }, [date, loginInfo.id, token]);
+  }, [date, user]);
   //doubt
   function props(data) {
     setDate(data);
@@ -103,20 +105,24 @@ const WordOfDay = (isOpen) => {
   }
 
   const sendResponse = async () => {
+    if (
+      responseOneRef.current.value === "" &&
+      responseTwoRef.current.value === ""
+    ) {
+      toastMessage("Atleast One Response is required.");
+    }
     let bodyParameters = {
       dailyWordsId,
-      studentId,
+      studentId: user.loginInfo.id,
       responseOne: responseOneRef.current.value,
       responseTwo: responseTwoRef.current.value,
     };
     const config = {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
     };
 
     if (
-      !(
-        bodyParameters.responseOne == null && bodyParameters.responseTwo == null
-      )
+      !(bodyParameters.responseOne === "" && bodyParameters.responseTwo === "")
     ) {
       axios
         .post(
@@ -125,9 +131,9 @@ const WordOfDay = (isOpen) => {
           config
         )
         .then((response) => {
-          console.log(response);
           toastMessage("Your Response Has Been Submitted");
           setWordingsResponse(response?.data);
+          dispatch(setLastUpdated(new Date()));
         })
         .catch((err) => {
           console.log(err);
@@ -139,40 +145,96 @@ const WordOfDay = (isOpen) => {
   const updateResponse = async () => {
     let bodyParameters = {
       dailyWordsId,
-      studentId,
+      studentId: user.loginInfo.id,
       responseOne: responseOneRef.current.value,
       responseTwo: responseTwoRef.current.value,
     };
     const config = {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
     };
 
-    if (
-      !(
-        bodyParameters.responseOne == null && bodyParameters.responseTwo == null
+    axios
+      .put(
+        `${API_BASE_URL}/api/task/daily-words-response`,
+        bodyParameters,
+        config
       )
-    ) {
-      axios
-        .put(
-          `${API_BASE_URL}/api/task/daily-words-response`,
-          bodyParameters,
-          config
-        )
-        .then((response) => {
-          console.log(response);
-          toastMessage("Your Response Has Been Updated");
-          setWordingsResponse(response?.data);
-        })
-        .catch((err) => {
-          console.log(err);
-          toastMessage("Please Try Again After Sometime");
-        });
-    }
+      .then((response) => {
+        console.log(response);
+        toastMessage("Your Response Has Been Updated");
+        setWordingsResponse(response?.data);
+        dispatch(setLastUpdated(new Date()));
+      })
+      .catch((err) => {
+        console.log(err);
+        toastMessage("Please Try Again After Sometime");
+      });
   };
 
   return (
     <div className="flex">
-      {loading}
+      {/* Modal */}
+
+      <div
+        class={`fixed z-10 overflow-y-auto top-0 w-full left-0 ${
+          !isModalOpen && "hidden"
+        }`}
+        id="modal"
+      >
+        <div class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+          <div class="fixed inset-0 transition-opacity">
+            <div class="absolute inset-0 bg-gray-900 opacity-75" />
+          </div>
+          <span class="hidden sm:inline-block sm:align-middle sm:h-screen">
+            &#8203;
+          </span>
+          <div
+            class="inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-headline"
+          >
+            <div className="p-4">
+              <img
+                src="./not_found_undraw.svg"
+                alt=""
+                className="object-cover"
+              />
+              <p>No Daily Words For Selected Word.</p>
+              <p>
+                Last Date with Available Daily Word:{" "}
+                {moment(app.lastAvailableDailyWordDate).format("DD-MM-YYYY")}
+              </p>
+            </div>
+            <div class="bg-gray-200 px-4 py-3 text-right">
+              <button
+                type="button"
+                class="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2"
+                onClick={() => {
+                  dispatch(
+                    setCurrentCalendarDate(
+                      moment(app.lastAvailableDailyWordDate).toDate()
+                    )
+                  );
+                  setIsModalOpen((prev) => !prev);
+                }}
+              >
+                Go to Last Available Date
+              </button>
+              <button
+                type="button"
+                class="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2"
+                onClick={() => {
+                  setIsModalOpen((prev) => !prev);
+                }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Modal End */}
       <TopicBar value={(isOpen = false)} />
       <div className="flex-grow py-10 md:px-20 px-10">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
@@ -183,12 +245,15 @@ const WordOfDay = (isOpen) => {
           {dailyWordsId ? (
             <div className="basis-4/5 flex flex-col">
               <div className="py-4 px-8  rounded-lg shadow-xl my-3">
-                <h3 className="text-xl text-[#2255B8] py-2">
-                  {wordings.wordOne}
-                  <span className="text-[10px] uppercase font-semibold text-gray-400 text-center align-super">
+                <div className="flex items-center">
+                  <h3 className="text-xl text-[#2255B8] py-2">
+                    {wordings.wordOne}
+                  </h3>
+                  <span className="flex justify-center text-[10px] px-2 uppercase font-semibold text-gray-400 text-center">
                     ({wordings.wordOneCat})
                   </span>
-                </h3>
+                </div>
+
                 <p className="py-2 text-[#898989]">{wordings.wordOneMeaning}</p>
                 <input
                   placeholder="Let’s make a sentence out of the word !"
@@ -205,7 +270,7 @@ const WordOfDay = (isOpen) => {
                   <h3 className="text-xl text-[#2255B8] py-2">
                     {wordings.wordTwo}
                   </h3>
-                  <span className="text-xs uppercase font-semibold text-gray-400 text-center">
+                  <span className="flex justify-center text-[10px] px-2 uppercase font-semibold text-gray-400 text-center">
                     ({wordings.wordTwoCat})
                   </span>
                 </div>
@@ -255,7 +320,7 @@ const WordOfDay = (isOpen) => {
           </div>
         </div>
       </div>
-      <Toaster/>
+      <Toaster />
     </div>
   );
 };
