@@ -26,6 +26,7 @@
     "react-scripts": "^5.0.0",
     "react-video-recorder": "^3.19.1",
     "react-voice-recorder": "^2.1.2",
+    "read-excel-file": "^5.5.3",
     "recharts": "^2.1.9",
     "stars-rating": "^1.1.0",
     "styled-components": "^5.3.3",

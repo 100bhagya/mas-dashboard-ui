@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import TopicBar from "../Components/TopicBar";
 import Graph from "../Components/Graph";
-
+import readXlsxFile from "read-excel-file";
+import axios from "axios";
 const CourseCard = () => {
   return (
     <div>
@@ -37,6 +38,22 @@ const NotificationBar = () => {
 };
 
 const LandingPage = (isOpen) => {
+ fetch(
+      "https://github.com/100bhagya/mas-dashboard-ui/blob/homepage/public/report-MAS1012022001.xlsx",
+      // { responseType: "blob" }
+    )
+    .then((response) => {
+      response.blob();
+    })
+    .then((blob) => {
+      readXlsxFile(blob);
+    })
+    .then((rows) => {
+      console.log(rows);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   const [leaderboard, setLeaderboard] = useState(false);
 
   const activateLeaderboard = () => {
