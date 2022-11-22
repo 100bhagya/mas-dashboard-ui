@@ -3,6 +3,7 @@ import TopicBar from "../Components/TopicBar";
 import Graph from "../Components/Graph";
 import readXlsxFile from "read-excel-file";
 import axios from "axios";
+import { read, utils } from "xlsx";
 const CourseCard = () => {
   return (
     <div>
@@ -36,29 +37,23 @@ const NotificationBar = () => {
     </div>
   );
 };
-
+// https://www.myanalyticsschool.com/report-MAS1012022001.xlsx
 const LandingPage = (isOpen) => {
- fetch(
-      "https://github.com/100bhagya/mas-dashboard-ui/blob/homepage/public/report-MAS1012022001.xlsx",
-      // { responseType: "blob" }
-    )
-    .then((response) => {
-      response.blob();
+  fetch("https://sheetjs.com/pres.xlsx")
+    .then((res) => res.arrayBuffer())
+    .then((f) => {
+      const wb = read(f);
+      const data = utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+      console.log(data);
     })
-    .then((blob) => {
-      readXlsxFile(blob);
-    })
-    .then((rows) => {
-      console.log(rows);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    .catch((err) => console.log(err));
+
   const [leaderboard, setLeaderboard] = useState(false);
 
   const activateLeaderboard = () => {
     setLeaderboard(!leaderboard);
   };
+  
   return (
     <>
       <div className="flex">

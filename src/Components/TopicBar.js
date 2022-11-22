@@ -293,7 +293,7 @@ const TopicBar = (value) => {
                   </Link>
                   <div className="">
                     <div
-                      className="flex px-2 py-2 lg:pl-6 rounded-md hover:bg-white"
+                      className="flex px-2 py-2 lg:pl-6 rounded-md hover:bg-white cursor-pointer"
                       onClick={() => {
                         setNonTechOpen(!nonTechOpen);
                       }}
