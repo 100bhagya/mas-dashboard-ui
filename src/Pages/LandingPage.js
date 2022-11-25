@@ -1,6 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TopicBar from "../Components/TopicBar";
 import Graph from "../Components/Graph";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { API_BASE_URL } from "../data/consts";
+// import { google } from "googleapis";
+const processCSV = (str, delim = ",") => {
+  const headers = str.slice(0, str.indexOf("\n")).split(delim);
+  const rows = str.slice(str.indexOf("\n") + 1).split("\n");
+
+  const newArray = rows.map((row) => {
+    const values = row.split(delim);
+    const eachObject = headers.reduce((obj, header, i) => {
+      obj[header] = values[i];
+      return obj;
+    }, {});
+    return eachObject;
+  });
+
+  return newArray;
+};
 
 const CourseCard = () => {
   return (
@@ -37,11 +56,68 @@ const NotificationBar = () => {
 };
 
 const LandingPage = (isOpen) => {
+  const user = useSelector((state) => state.user);
+  const [testData, setTestData] = useState([]);
+  const [csvArray, setCsvArray] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [leaderboard, setLeaderboard] = useState(false);
-
   const activateLeaderboard = () => {
     setLeaderboard(!leaderboard);
   };
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    // google.auth
+    //   .getClient({
+    //     scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
+    //   })
+    //   .then((auth) => {
+    //     const sheets = google.sheets({ version: "v4", auth });
+    //     //query
+
+    //     const range = `sheet1!A${5}:C${6}`;
+    //     sheets.spreadsheets.values
+    //       .get({
+    //         spreadsheetId: process.env.SHEET_ID,
+    //         range,
+    //       })
+    //       .then((res) => {
+    //         console.log(res);
+    //       })
+    //       .catch((err) => {
+    //         console.log(err);
+    //       });
+    //   });
+    const config = {
+      headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
+    };
+    const bodyParameters = {
+      sheetId: "18uAAqhxcVyGiYKmbg6uhtILlw2Ayec0L73CE05AOtro",
+      dataRange: "A22:BM",
+    };
+    axios
+      .get(`${API_BASE_URL}/api/getStudentReport`, config, bodyParameters)
+      .then((res) => {
+        console.log(res);
+        const processedCSVArray = processCSV(res.data.toString());
+        setCsvArray(processedCSVArray);
+        let testArray = [];
+        for (let i = 0; i < res.data.length && i < 5; i++) {
+          testArray.push({
+            examDate: res.data[i][0],
+            examName: res.data[i][1],
+            rank: `#${parseInt(Math.random() * (150 - 1) + 1)}`,
+          });
+        }
+        setTestData(testArray);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setIsLoading(false);
+      });
+  }, [user]);
   return (
     <>
       <div className="flex">
@@ -66,51 +142,23 @@ const LandingPage = (isOpen) => {
                 id="performanceCard"
                 className="grid grid-cols-5 gap-4 md:p-10 p-6 shadow-xl  rounded-2xl"
               >
-                <div>
-                  <div className="md:text-2xl  text-xl border-b-2 w-fit pb-2 border-gray-500">
-                    Tech
-                  </div>
-                  <div className="md:text-2xl text-lg text-sky-800 mt-4">
-                    #18
-                  </div>
-                  <div className="md:text-md text-sm">10 Nov</div>
-                </div>
-                <div>
-                  <div className="md:text-2xl  text-xl border-b-2 w-fit pb-2 border-gray-500">
-                    Tech
-                  </div>
-                  <div className="md:text-2xl text-lg text-sky-800 mt-4">
-                    #18
-                  </div>
-                  <div className="md:text-md text-sm">10 Nov</div>
-                </div>
-                <div>
-                  <div className="md:text-2xl  text-xl border-b-2 w-fit pb-2 border-gray-500">
-                    Tech
-                  </div>
-                  <div className="md:text-2xl text-lg text-sky-800 mt-4">
-                    #18
-                  </div>
-                  <div className="md:text-md text-sm">10 Nov</div>
-                </div>
-                <div>
-                  <div className="md:text-2xl  text-xl border-b-2 w-fit pb-2 border-gray-500">
-                    Tech
-                  </div>
-                  <div className="md:text-2xl text-lg text-sky-800 mt-4">
-                    #18
-                  </div>
-                  <div className="md:text-md text-sm">10 Nov</div>
-                </div>
-                <div>
-                  <div className="md:text-2xl  text-xl border-b-2 w-fit pb-2 border-gray-500">
-                    Tech
-                  </div>
-                  <div className="md:text-2xl text-lg text-sky-800 mt-4">
-                    #18
-                  </div>
-                  <div className="md:text-md text-sm">10 Nov</div>
-                </div>
+                {testData.map((test) => {
+                  return (
+                    <>
+                      <div>
+                        <div className="md:text-2xl  text-xl border-b-2 w-fit pb-2 border-gray-500">
+                          {test.examName}
+                        </div>
+                        <div className="md:text-2xl text-lg text-sky-800 mt-4">
+                          {test.rank}
+                        </div>
+                        <div className="md:text-md text-sm">
+                          {test.examDate}
+                        </div>
+                      </div>
+                    </>
+                  );
+                })}
               </div>
               <div>
                 <div className="text-xl text-sky-800 my-10">
