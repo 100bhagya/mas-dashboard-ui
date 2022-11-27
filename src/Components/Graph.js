@@ -68,14 +68,19 @@ const Graph = () => {
       }}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" angle={305} dy={20} dx={-15} interval={0} />
+      <XAxis dataKey="date" angle={305} dy={20} dx={-15} interval={0} />
       <YAxis
         tickCount={24}
         interval={1}
         domain={[0, 100]}
         label={{ value: "Percentile", angle: -90, position: "insideLeft" }}
       />
-      <Tooltip />
+      <Tooltip
+        label={""}
+        formatter={(value, name, props) => {
+          return [`${value.toFixed(2)} (${props.payload?.name})`, "Percentile"];
+        }}
+      />
       <Area
         type="monotone"
         dataKey="percentile"

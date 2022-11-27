@@ -4,6 +4,7 @@ import Graph from "../Components/Graph";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { API_BASE_URL } from "../data/consts";
+import Tooltip from "../Components/Tooltip";
 // import { google } from "googleapis";
 const processCSV = (str, delim = ",") => {
   const headers = str.slice(0, str.indexOf("\n")).split(delim);
@@ -67,28 +68,6 @@ const LandingPage = (isOpen) => {
 
   useEffect(() => {
     setIsLoading(true);
-
-    // google.auth
-    //   .getClient({
-    //     scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
-    //   })
-    //   .then((auth) => {
-    //     const sheets = google.sheets({ version: "v4", auth });
-    //     //query
-
-    //     const range = `sheet1!A${5}:C${6}`;
-    //     sheets.spreadsheets.values
-    //       .get({
-    //         spreadsheetId: process.env.SHEET_ID,
-    //         range,
-    //       })
-    //       .then((res) => {
-    //         console.log(res);
-    //       })
-    //       .catch((err) => {
-    //         console.log(err);
-    //       });
-    //   });
     const config = {
       headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
     };
@@ -145,17 +124,19 @@ const LandingPage = (isOpen) => {
                 {testData.map((test) => {
                   return (
                     <>
-                      <div>
-                        <div className="md:text-2xl  text-xl border-b-2 w-fit pb-2 border-gray-500">
-                          {test.examName}
+                      <Tooltip text={test.examName}>
+                        <div className="flex flex-col justify-center items-center">
+                          {/* <div className="md:text-2xl  text-xl border-b-2 w-fit pb-2 border-gray-500">
+                            {test.examName}
+                          </div> */}
+                          <div className="md:text-2xl !text-4xl text-sky-800 mt-4">
+                            {test.rank}
+                          </div>
+                          <div className="md:text-md text-md">
+                            {test.examDate}
+                          </div>
                         </div>
-                        <div className="md:text-2xl text-lg text-sky-800 mt-4">
-                          {test.rank}
-                        </div>
-                        <div className="md:text-md text-sm">
-                          {test.examDate}
-                        </div>
-                      </div>
+                      </Tooltip>
                     </>
                   );
                 })}
