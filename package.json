@@ -13,7 +13,6 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.1.2",
-    "fusioncharts": "^3.19.0",
     "googleapis": "^109.0.1",
     "heroicons": "^1.0.5",
     "html-react-parser": "^3.0.4",

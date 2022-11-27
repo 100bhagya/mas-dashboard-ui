@@ -76,7 +76,6 @@ const Graph = () => {
         label={{ value: "Percentile", angle: -90, position: "insideLeft" }}
       />
       <Tooltip
-        label={""}
         formatter={(value, name, props) => {
           return [`${value.toFixed(2)} (${props.payload?.name})`, "Percentile"];
         }}
