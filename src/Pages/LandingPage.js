@@ -59,9 +59,9 @@ const NotificationBar = () => {
 const LandingPage = (isOpen) => {
   const user = useSelector((state) => state.user);
   const [testData, setTestData] = useState([]);
-  const [csvArray, setCsvArray] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [leaderboard, setLeaderboard] = useState(false);
+  const [leaderboardData, setLeaderboardData] = useState([]);
   const activateLeaderboard = () => {
     setLeaderboard(!leaderboard);
   };
@@ -71,16 +71,9 @@ const LandingPage = (isOpen) => {
     const config = {
       headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
     };
-    const bodyParameters = {
-      sheetId: "18uAAqhxcVyGiYKmbg6uhtILlw2Ayec0L73CE05AOtro",
-      dataRange: "A22:BM",
-    };
     axios
-      .get(`${API_BASE_URL}/api/getStudentReport`, config, bodyParameters)
+      .get(`${API_BASE_URL}/api/getStudentReport`, config)
       .then((res) => {
-        console.log(res);
-        const processedCSVArray = processCSV(res.data.toString());
-        setCsvArray(processedCSVArray);
         let testArray = [];
         for (let i = 0; i < res.data.length && i < 5; i++) {
           testArray.push({
@@ -90,6 +83,28 @@ const LandingPage = (isOpen) => {
           });
         }
         setTestData(testArray);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setIsLoading(false);
+      });
+    setIsLoading(true);
+    axios
+      .get(`${API_BASE_URL}/api/getLeaderboard`, config)
+      .then((res) => {
+        let leaderboardData = [];
+        for (let i = 0; i < res.data.length && i < 5; i++) {
+          leaderboardData.push({
+            studentName: res.data[i][0],
+            totalScore: res.data[i][2],
+          });
+        }
+        leaderboardData.sort((a, b) => {
+          return a.totalScore > b.totalScore;
+        });
+        console.log(leaderboardData);
+        setLeaderboardData(leaderboardData);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -202,66 +217,25 @@ const LandingPage = (isOpen) => {
           </div>
           <div className="p-2  ">
             <div className="flex p-4 justify-between border-b-2 border-b-blue-800 text-blue-600 text-lg">
-              <div className="w-12"></div>
-              <div> Name </div>
-              <div> Score </div>
-              <div> Rank </div>
+              <div className="flex gap-2 w-28">
+                <div> Name </div>
+                <div> Score </div>
+                <div> Rank </div>
+              </div>
             </div>
-            <div className="flex p-4 justify-between">
-              <img
-                className="w-12 h-12 rounded-full shadow-sm"
-                alt=""
-                src="https://randomuser.me/api/portraits/women/81.jpg"
-              />
-              <div> Lorem </div>
-              <div> 24/7 </div>
-              <div> 1 </div>
-            </div>
-            <div className="flex p-4 justify-between">
-              <img
-                className="w-12 h-12 rounded-full shadow-sm"
-                alt=""
-                src="https://randomuser.me/api/portraits/women/81.jpg"
-              />
-              <div> Lorem </div>
-              <div> 24/7 </div>
-              <div> 1 </div>
-            </div>
-            <div className="flex p-4 justify-between">
-              <img
-                className="w-12 h-12 rounded-full shadow-sm"
-                alt=""
-                src="https://randomuser.me/api/portraits/women/81.jpg"
-              />
-              <div> Lorem </div>
-              <div> 24/7 </div>
-              <div> 1 </div>
-            </div>
-            <div className="flex justify-center gap-1 my-3">
-              <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
-              <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
-              <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
-            </div>
-            <div className="flex p-4 justify-between bg-[#86ACF5] rounded-md">
-              <img
-                className="w-12 h-12 rounded-full shadow-sm"
-                alt=""
-                src="https://randomuser.me/api/portraits/women/81.jpg"
-              />
-              <div> Lorem </div>
-              <div> 24/7 </div>
-              <div> 1 </div>
-            </div>
-            <div className="flex p-4 justify-between">
-              <img
-                className="w-12 h-12 rounded-full shadow-sm"
-                alt=""
-                src="https://randomuser.me/api/portraits/women/81.jpg"
-              />
-              <div> Lorem </div>
-              <div> 24/7 </div>
-              <div> 1 </div>
-            </div>
+            {leaderboardData.map((student, i) => (
+              <div className="flex gap-2 p-4 justify-between">
+                <img
+                  className="w-12 h-12 rounded-full shadow-sm"
+                  alt=""
+                  src="https://randomuser.me/api/portraits/women/81.jpg"
+                />
+
+                <div> {student.studentName} </div>
+                <div> {student.totalScore} </div>
+                <div> {i + 1} </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
