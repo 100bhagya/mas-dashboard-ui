@@ -11,9 +11,15 @@ import isMobilePhone from "validator/lib/isMobilePhone";
 import isPostalCode from "validator/lib/isPostalCode";
 import isAlpha from "validator/lib/isAlpha";
 import { useDispatch, useSelector } from "react-redux";
-import { resetProfilePic, setProfilePic, setUsername } from "../app/features/user/userSlice";
+
+import {
+  resetProfilePic,
+  setProfilePic,
+  setUsername,
+} from "../app/features/user/userSlice";
 //Toast Notifications
 const toastMessage = (message) => toast(message);
+
 
 const Account = () => {
   const dispatch = useDispatch();
@@ -55,7 +61,7 @@ const Account = () => {
         postalCodeRef.current.value = response.data.postalCode || "";
         emailRef.current.value = response.data.email || "";
         dispatch(setProfilePic(response.data.profilePic));
-        dispatch(setUsername(response.data.username))
+        dispatch(setUsername(response.data.username));
         setIsLoading(false);
         {
           cancel && toastMessage("Changes reverted successfully.");

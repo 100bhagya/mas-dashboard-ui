@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   AreaChart,
   Area,
@@ -7,14 +7,42 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import Data from "../data/graphData";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { API_BASE_URL } from "../data/consts";
 
 const Graph = () => {
+  const [data, setData] = useState([]);
+  const user = useSelector((state) => state.user);
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    setIsLoading(true);
+    const config = {
+      headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
+    };
+    axios
+      .get(`${API_BASE_URL}/api/getStudentReport`, config)
+      .then((res) => {
+        let dataArray = [];
+        for (let i = 0; i < res.data.length && i < 20; i++) {
+          dataArray.push({
+            examDate: res.data[i][0],
+            examName: res.data[i][1],
+            percentile: Math.random() * (100 - 70) + 70,
+          });
+        }
+        setData(dataArray);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [user]);
   return (
     <AreaChart
-      width={940}
+      width={800}
       height={370}
-      data={Data}
+      data={data}
       margin={{
         top: 10,
         right: 30,
@@ -23,14 +51,18 @@ const Graph = () => {
       }}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" angle={305} dy={20} dx={-15} interval={0} />
+      <XAxis dataKey="examDate" angle={305} dy={20} dx={-15} interval={0} />
       <YAxis
         tickCount={24}
         interval={1}
         domain={[0, 100]}
         label={{ value: "Percentile", angle: -90, position: "insideLeft" }}
       />
-      <Tooltip />
+      <Tooltip
+        formatter={(value, name, props) => {
+          return [`${value.toFixed(2)} (${props.payload?.examName})`, "Percentile"];
+        }}
+      />
       <Area
         type="monotone"
         dataKey="percentile"
