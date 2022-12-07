@@ -11,7 +11,7 @@ import {
   LogoutIcon,
 } from "@heroicons/react/outline";
 import userDefaultImage from "../images/user.png";
-import { Link, useLocation, } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../data/consts";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,45 +26,45 @@ const TopicBar = (value) => {
   const [aptitudeOpen, setAptitudeOpen] = useState(true);
   const [nonTechOpen, setNonTechOpen] = useState(true);
   const [sidebar, setSidebar] = useState(false);
-  useEffect(() => {
-    setIsOpen(JSON.parse(window.localStorage.getItem("isOpen")));
-    const config = {
-      headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
-    };
-    // Fetching User Profile Image
-    axios
-      .get(`${API_BASE_URL}/api/getUserProfile`, config)
-      .then((response) => {
-        dispatch(setProfilePic(response.data.profilePic));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   setIsOpen(JSON.parse(window.localStorage.getItem("isOpen")));
+  //   const config = {
+  //     headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
+  //   };
+  //   // Fetching User Profile Image
+  //   axios
+  //     .get(`${API_BASE_URL}/api/getUserProfile`, config)
+  //     .then((response) => {
+  //       dispatch(setProfilePic(response.data.profilePic));
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
 
-  useEffect(() => {
-    setIsOpen(
-      JSON.parse(window.localStorage.getItem("isOpen")) != null
-        ? JSON.parse(window.localStorage.getItem("isOpen"))
-        : true
-    );
-    setAptitudeOpen(
-      JSON.parse(window.localStorage.getItem("aptitudeOpen")) != null
-        ? JSON.parse(window.localStorage.getItem("aptitudeOpen"))
-        : true
-    );
-    setNonTechOpen(
-      JSON.parse(window.localStorage.getItem("nonTechOpen")) != null
-        ? JSON.parse(window.localStorage.getItem("nonTechOpen"))
-        : true
-    );
-  }, []);
+  // useEffect(() => {
+  //   setIsOpen(
+  //     JSON.parse(window.localStorage.getItem("isOpen")) != null
+  //       ? JSON.parse(window.localStorage.getItem("isOpen"))
+  //       : true
+  //   );
+  //   setAptitudeOpen(
+  //     JSON.parse(window.localStorage.getItem("aptitudeOpen")) != null
+  //       ? JSON.parse(window.localStorage.getItem("aptitudeOpen"))
+  //       : true
+  //   );
+  //   setNonTechOpen(
+  //     JSON.parse(window.localStorage.getItem("nonTechOpen")) != null
+  //       ? JSON.parse(window.localStorage.getItem("nonTechOpen"))
+  //       : true
+  //   );
+  // }, []);
 
-  useEffect(() => {
-    window.localStorage.setItem("isOpen", isOpen);
-    window.localStorage.setItem("aptitudeOpen", aptitudeOpen);
-    window.localStorage.setItem("nonTechOpen", nonTechOpen);
-  }, [isOpen, aptitudeOpen, nonTechOpen]);
+  // useEffect(() => {
+  //   window.localStorage.setItem("isOpen", isOpen);
+  //   window.localStorage.setItem("aptitudeOpen", aptitudeOpen);
+  //   window.localStorage.setItem("nonTechOpen", nonTechOpen);
+  // }, [isOpen, aptitudeOpen, nonTechOpen]);
 
   const Logout = () => {
     window.location.reload(false);
@@ -84,8 +84,8 @@ const TopicBar = (value) => {
     setSidebar(!sidebar);
   };
   return (
-    <div className={`flex shrink-0 ${sidebar ? "basis-1/10" : "basis-1/5"}`}>
-      <div className="bg-blue-100 w-full min-h-[100vh]">
+    <div className={`shrink-0 ${sidebar ? "basis-1/10" : "basis-1/5"}`}>
+      <div className="p-2 md:p-0 bg-blue-100 w-full min-h-[100vh]">
         <div className="text-center mt-12">
           {selectedimage ? (
             <label>
@@ -495,7 +495,7 @@ const TopicBar = (value) => {
           )}
         </div>
       </div>
-      <div className="w-6 h-10 bg-blue-100 relative top-[50vh]">
+      <div className="hidden md:block w-6 h-10 bg-blue-100 relative top-[50vh]">
         <img
           src={arrow}
           alt=""
