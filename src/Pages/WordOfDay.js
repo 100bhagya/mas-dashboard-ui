@@ -235,13 +235,13 @@ const WordOfDay = (isOpen) => {
         </div>
       </div>
       {/* Modal End */}
-      <TopicBar value={(isOpen = false)} />
-      <div className="flex-grow py-10 md:px-20 px-10">
+      <div className="hidden lg:block"> <TopicBar value={(isOpen = false)}  /> </div>
+      <div className="flex-grow py-5 px-5 lg:py-10 md:px-20 lg:px-10 overflow-x-hidden">
         <div className=" pb-4 border-b-2 border-[#2255B8]">
           <div className="text-3xl text-sky-800">Word of the day</div>
           <div className="text-slate-600 text-md">{date}</div>
         </div>
-        <div className="md:flex mt-8 gap-4 md:flex-col lg:flex-row">
+        <div className="flex mt-8 gap-4 flex-col-reverse lg:flex-row">
           {dailyWordsId ? (
             <div className="basis-4/5 flex flex-col">
               <div className="py-4 px-8  rounded-lg shadow-xl my-3">
@@ -311,11 +311,11 @@ const WordOfDay = (isOpen) => {
           ) : (
             <NoDailyWords loading={loading} />
           )}
-          <div className="basis-1/5 ml-28 ">
+          <div className=" ml-auto mr-0 basis-1/5 lg:ml-28 ">
             {/* <div inline-datepicker data-date="02/25/2022"></div> */}
             <Calendar alert={props} />
             {dailyWordsId ? (
-              <img src={Artboard} alt="" className="mt-24" />
+              <img src={Artboard} alt="" className="mt-24 hidden lg:block" />
             ) : null}
           </div>
         </div>

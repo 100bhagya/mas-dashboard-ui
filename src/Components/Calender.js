@@ -10,6 +10,9 @@ import {
   setCurrentCalendarDate,
   setLastAvailableDailyWordDate,
 } from "../app/features/app/appSlice";
+import {
+  CalendarIcon
+} from "@heroicons/react/outline";
 export default function App(props) {
   const app = useSelector((state) => state.app);
   const user = useSelector((state) => state.user);
@@ -17,6 +20,7 @@ export default function App(props) {
 
   // array contains information about completion status of available daily words
   const [markedDates, setmarkedDates] = useState({});
+  const [calOpen, setCalOpen] = useState(false);
 
   const [currentMonthAndYear, setCurrentMonthAndYear] = useState(
     moment(new Date()).format("MM-YYYY")
@@ -73,10 +77,14 @@ export default function App(props) {
   const Dated = moment(app.currentCalendarDate).format("DD-MM-YYYY");
   return (
     <>
+      <div class="lg:hidden cursor-pointer my-6">
+        <CalendarIcon className="w-10  ml-auto mr-0" onClick={() => {setCalOpen(!calOpen);}}/>
+      </div> 
       <Calendar
         value={moment(app.currentCalendarDate).toDate()}
         onChange={(e) => {
           dispatch(setCurrentCalendarDate(e));
+          setCalOpen(!calOpen);
         }}
         tileClassName={({ date }) => {
           // returning className that will be applied on calendar tiles
@@ -102,7 +110,7 @@ export default function App(props) {
           //updating "currentMonthAndYear" state when calendar view is changed
           setCurrentMonthAndYear(moment(activeStartDate).format("MM-YYYY"));
         }}
-        className="rounded-2xl shadow-2xl shadow-blue-100"
+        className={"-z-1 rounded-2xl shadow-2xl shadow-blue-100 " + (calOpen ? null : " hidden lg:block z--1 ")}
       />
       {props.alert(Dated)}
       {/* <p>
