@@ -60,11 +60,11 @@ const TopicBar = (value) => {
   //   );
   // }, []);
 
-  // useEffect(() => {
-  //   window.localStorage.setItem("isOpen", isOpen);
-  //   window.localStorage.setItem("aptitudeOpen", aptitudeOpen);
-  //   window.localStorage.setItem("nonTechOpen", nonTechOpen);
-  // }, [isOpen, aptitudeOpen, nonTechOpen]);
+  useEffect(() => {
+    window.localStorage.setItem("isOpen", isOpen);
+    window.localStorage.setItem("aptitudeOpen", aptitudeOpen);
+    window.localStorage.setItem("nonTechOpen", nonTechOpen);
+  }, [isOpen, aptitudeOpen, nonTechOpen]);
 
   const Logout = () => {
     window.location.reload(false);
@@ -84,9 +84,9 @@ const TopicBar = (value) => {
     setSidebar(!sidebar);
   };
   return (
-    <div className={`shrink-0 ${sidebar ? "basis-1/10" : "basis-1/5"}`}>
-      <div className="p-2 md:p-0 bg-blue-100 w-full min-h-[100vh]">
-        <div className="text-center mt-12">
+    <div className={`flex shrink-0 ${sidebar ? "basis-1/10" : "basis-1/5"}`}>
+      <div className="bg-blue-100 w-full min-h-[100vh] px-2">
+        <div className="text-center mt-12 ">
           {selectedimage ? (
             <label>
               <input
@@ -151,16 +151,16 @@ const TopicBar = (value) => {
               </div>
             </div>
           </Link>
-          <div className="  py-2 ">
+          <div className="py-2">
             <div
-              className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white cursor-pointer"
+              className=" flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white cursor-pointer"
               onClick={() => {
                 setIsOpen(!isOpen);
               }}
             >
-              <ClipboardCheckIcon className="w-6 text-blue-500" />
+              <ClipboardCheckIcon className="w-6   text-blue-500" />
               <div
-                className={`ml-5 text-blue-500 md:text-md ${
+                className={`ml-5 text-blue-500  md:text-md ${
                   sidebar ? "hidden" : ""
                 }`}
               >
@@ -176,13 +176,13 @@ const TopicBar = (value) => {
               />
             </div>
             {isOpen ? (
-              <div></div>
+              <div className="bg-blue-100 md:bg-white h-full"></div>
             ) : (
               <div
                 className={`flex md:pl-5 lg:pl-10 ${sidebar ? "hidden" : ""}`}
               >
                 {/* <div className="bg-blue-700 w-[1.5px]"></div> */}
-                <div className="mt-2 border-blue-700 border-l-2 md:pl-4 ">
+                <div className="mt-2 border-blue-700 border-l-2 md:pl-4 px-2">
                   <Link to="/wordofday">
                     <div
                       className={`text-sm  text-left md:px-2 lg:pl-8 py-2 rounded-md ${
@@ -495,7 +495,7 @@ const TopicBar = (value) => {
           )}
         </div>
       </div>
-      <div className="hidden md:block w-6 h-10 bg-blue-100 relative top-[50vh]">
+      <div className="w-6 h-10 bg-blue-100 relative top-[50vh] hidden md:block">
         <img
           src={arrow}
           alt=""

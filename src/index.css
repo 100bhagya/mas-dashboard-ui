@@ -5,6 +5,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Cookie&display=swap");
 @import url("//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css");
 
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
 .triangle-right {
   width: 0;
   height: 0;
@@ -77,7 +81,6 @@
   background: linear-gradient(to right, #3b82f6, #2563eb);
   color: #fff;
 }
-
 
 /* Tiles colors for Dailywords Status on Calendar */
 .completed-words {

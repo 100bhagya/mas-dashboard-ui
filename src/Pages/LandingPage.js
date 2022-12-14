@@ -9,6 +9,10 @@ import moment from "moment";
 import CourseCard from "../Components/CourseCard";
 import NotificationBar from "../Components/NotificationBar";
 import Navbar from "../Components/Navbar";
+
+import { AiFillTrophy } from "react-icons/ai";
+import LeaderboardDrawer from "../Components/LeaderboardDrawer";
+import Drawer from "../Components/Drawer";
 const LandingPage = (isOpen) => {
   const user = useSelector((state) => state.user);
   const [testData, setTestData] = useState([]);
@@ -18,7 +22,7 @@ const LandingPage = (isOpen) => {
   const activateLeaderboard = () => {
     setLeaderboard(!leaderboard);
   };
-
+  const [isLeaderboardOpen, setIsLeaderboardOpen] = useState(false);
   useEffect(() => {
     setIsLoading(true);
     const config = {
@@ -67,7 +71,60 @@ const LandingPage = (isOpen) => {
 
   return (
     <div className="flex flex-col">
-      <Navbar />
+      <Navbar rightControl={setIsLeaderboardOpen}>
+        <AiFillTrophy size={35} />
+      </Navbar>
+      <Drawer>
+        <TopicBar />
+      </Drawer>
+      <LeaderboardDrawer
+        isOpen={isLeaderboardOpen}
+        setIsOpen={setIsLeaderboardOpen}
+      >
+        <div className="w-full h-full bg-white">
+          <div
+            className={`bg-[#EDF3FF] h-full
+          `}
+          >
+            <div className="py-6 text-3xl text-[#2255B8] text-center">
+              Leaderboard
+            </div>
+            <div className="p-2">
+              <div class="overflow-x-auto relative">
+                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" class="py-3 px-6">
+                        Rank
+                      </th>
+                      <th scope="col" class="py-3 px-6">
+                        Name
+                      </th>
+                      <th scope="col" class="py-3 px-6">
+                        Score
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {leaderboardData.map((student, i) => (
+                      <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th
+                          scope="row"
+                          class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
+                          {i + 1}
+                        </th>
+                        <td class="py-4 px-6">{student.studentName}</td>
+                        <td class="py-4 px-6">{student.totalScore}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </LeaderboardDrawer>
       <div className="flex">
         <div className="hidden md:block">
           <TopicBar value={(isOpen = true)} />
