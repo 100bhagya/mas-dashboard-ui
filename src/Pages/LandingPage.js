@@ -9,10 +9,10 @@ import moment from "moment";
 import CourseCard from "../Components/CourseCard";
 import NotificationBar from "../Components/NotificationBar";
 import Navbar from "../Components/Navbar";
-
 import { AiFillTrophy } from "react-icons/ai";
-import LeaderboardDrawer from "../Components/LeaderboardDrawer";
-import Drawer from "../Components/Drawer";
+
+import RightDrawer from "../Components/RightDrawer";
+import LeftDrawer from "../Components/LeftDrawer";
 const LandingPage = (isOpen) => {
   const user = useSelector((state) => state.user);
   const [testData, setTestData] = useState([]);
@@ -74,13 +74,10 @@ const LandingPage = (isOpen) => {
       <Navbar rightControl={setIsLeaderboardOpen}>
         <AiFillTrophy size={35} />
       </Navbar>
-      <Drawer>
+      <LeftDrawer>
         <TopicBar />
-      </Drawer>
-      <LeaderboardDrawer
-        isOpen={isLeaderboardOpen}
-        setIsOpen={setIsLeaderboardOpen}
-      >
+      </LeftDrawer>
+      <RightDrawer isOpen={isLeaderboardOpen} setIsOpen={setIsLeaderboardOpen}>
         <div className="w-full h-full bg-white">
           <div
             className={`bg-[#EDF3FF] h-full
@@ -124,7 +121,7 @@ const LandingPage = (isOpen) => {
             </div>
           </div>
         </div>
-      </LeaderboardDrawer>
+      </RightDrawer>
       <div className="flex">
         <div className="hidden md:block">
           <TopicBar value={(isOpen = true)} />

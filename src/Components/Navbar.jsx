@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
-import Drawer from "./Drawer";
 import TopicBar from "./TopicBar";
 import { GiHamburgerMenu } from "react-icons/gi";
+import LeftDrawer from "./LeftDrawer";
 const Navbar = ({ children, rightControl }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -23,11 +23,11 @@ const Navbar = ({ children, rightControl }) => {
           {children}
         </div>
       </div>
-      <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>
+      <LeftDrawer isOpen={isOpen} setIsOpen={setIsOpen}>
         <div className="w-full h-full bg-white">
           <TopicBar />
         </div>
-      </Drawer>
+      </LeftDrawer>
     </div>
   );
 };

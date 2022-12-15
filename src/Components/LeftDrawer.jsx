@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Drawer({ children, isOpen, setIsOpen }) {
+export default function LeftDrawer({ children, isOpen, setIsOpen }) {
   return (
     <div
       className={

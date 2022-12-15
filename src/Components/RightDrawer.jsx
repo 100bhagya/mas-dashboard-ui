@@ -1,6 +1,11 @@
 import React from "react";
 
-export default function LeaderBoardDrawer({ children, isOpen, setIsOpen }) {
+export default function RightDrawer({
+  children,
+  isOpen,
+  setIsOpen,
+  width = "80vw",
+}) {
   return (
     <div
       className={
@@ -12,7 +17,7 @@ export default function LeaderBoardDrawer({ children, isOpen, setIsOpen }) {
     >
       <div
         className={
-          "h-full w-[80vw] right-0 absolute bg-white shadow-xl delay-400 duration-500 ease-in-out transition-all transform  " +
+          `h-full ${width} right-0 absolute bg-white shadow-xl delay-400 duration-500 ease-in-out transition-all transform ` +
           (isOpen ? " translate-x-0 " : " translate-x-full ")
         }
       >

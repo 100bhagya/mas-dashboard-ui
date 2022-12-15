@@ -176,7 +176,7 @@ const TopicBar = (value) => {
               />
             </div>
             {isOpen ? (
-              <div className="bg-blue-100 md:bg-white h-full"></div>
+              <div className=""></div>
             ) : (
               <div
                 className={`flex md:pl-5 lg:pl-10 ${sidebar ? "hidden" : ""}`}
