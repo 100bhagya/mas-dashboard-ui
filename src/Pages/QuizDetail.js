@@ -11,8 +11,8 @@ const QuizDetail = (isOpen) => {
         <div className="hidden md:block">
           <TopicBar value={(isOpen = true)} />
         </div>
-        <div className="flex flex-col gap-2">
-          <div className="flex gap-4 justify-center items-center">
+        <div className="w-full flex flex-col gap-2 p-4 items-center justify-center">
+          <div className="flex gap-4 items-center">
             <div className="rounded-lg bg-blue-100 py-auto">
               <div className="flex justify-center items-center text-2xl font-semibold text-blue-700 p-2">
                 7
@@ -20,13 +20,9 @@ const QuizDetail = (isOpen) => {
             </div>
             <div className="text-blue-700 text-2xl">Quiz 1</div>
           </div>
-
           <iframe
             src="https://docs.google.com/forms/d/e/1FAIpQLScIJkYA-HurDPA4Hf2Zc9wnJt21KoxE8hfVuxn9n3KpiPVT3Q/viewform?embedded=true"
-            frameborder="0"
-            marginheight="15"
-            marginwidth="0"
-            className="w-screen h-screen"
+            className="w-[330px] md:w-[600px] h-screen"
           >
             Loading…
           </iframe>
