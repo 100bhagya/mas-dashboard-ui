@@ -363,7 +363,7 @@ const SummaryWritingContent = ({ isOpen }) => {
                   placeholder="Write summary here..."
                   className="w-full h-[50vh] my-6 p-4 rounded-md text-black placeholder-black"
                 ></textarea>
-                <div className="text-right ">
+                <div className="flex justify-end">
                   <button
                     onClick={() => {
                       setIsSendSummaryBoxOpen(false);
