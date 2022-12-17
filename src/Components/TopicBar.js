@@ -11,7 +11,7 @@ import {
   LogoutIcon,
 } from "@heroicons/react/outline";
 import userDefaultImage from "../images/user.png";
-import { Link, useLocation, } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../data/consts";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,39 +26,39 @@ const TopicBar = (value) => {
   const [aptitudeOpen, setAptitudeOpen] = useState(true);
   const [nonTechOpen, setNonTechOpen] = useState(true);
   const [sidebar, setSidebar] = useState(false);
-  useEffect(() => {
-    setIsOpen(JSON.parse(window.localStorage.getItem("isOpen")));
-    const config = {
-      headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
-    };
-    // Fetching User Profile Image
-    axios
-      .get(`${API_BASE_URL}/api/getUserProfile`, config)
-      .then((response) => {
-        dispatch(setProfilePic(response.data.profilePic));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   setIsOpen(JSON.parse(window.localStorage.getItem("isOpen")));
+  //   const config = {
+  //     headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
+  //   };
+  //   // Fetching User Profile Image
+  //   axios
+  //     .get(`${API_BASE_URL}/api/getUserProfile`, config)
+  //     .then((response) => {
+  //       dispatch(setProfilePic(response.data.profilePic));
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
 
-  useEffect(() => {
-    setIsOpen(
-      JSON.parse(window.localStorage.getItem("isOpen")) != null
-        ? JSON.parse(window.localStorage.getItem("isOpen"))
-        : true
-    );
-    setAptitudeOpen(
-      JSON.parse(window.localStorage.getItem("aptitudeOpen")) != null
-        ? JSON.parse(window.localStorage.getItem("aptitudeOpen"))
-        : true
-    );
-    setNonTechOpen(
-      JSON.parse(window.localStorage.getItem("nonTechOpen")) != null
-        ? JSON.parse(window.localStorage.getItem("nonTechOpen"))
-        : true
-    );
-  }, []);
+  // useEffect(() => {
+  //   setIsOpen(
+  //     JSON.parse(window.localStorage.getItem("isOpen")) != null
+  //       ? JSON.parse(window.localStorage.getItem("isOpen"))
+  //       : true
+  //   );
+  //   setAptitudeOpen(
+  //     JSON.parse(window.localStorage.getItem("aptitudeOpen")) != null
+  //       ? JSON.parse(window.localStorage.getItem("aptitudeOpen"))
+  //       : true
+  //   );
+  //   setNonTechOpen(
+  //     JSON.parse(window.localStorage.getItem("nonTechOpen")) != null
+  //       ? JSON.parse(window.localStorage.getItem("nonTechOpen"))
+  //       : true
+  //   );
+  // }, []);
 
   useEffect(() => {
     window.localStorage.setItem("isOpen", isOpen);
@@ -85,8 +85,8 @@ const TopicBar = (value) => {
   };
   return (
     <div className={`flex shrink-0 ${sidebar ? "basis-1/10" : "basis-1/5"}`}>
-      <div className="bg-blue-100 w-full min-h-[100vh]">
-        <div className="text-center mt-12">
+      <div className="bg-blue-100 w-full min-h-[100vh] px-2">
+        <div className="text-center mt-12 ">
           {selectedimage ? (
             <label>
               <input
@@ -151,16 +151,16 @@ const TopicBar = (value) => {
               </div>
             </div>
           </Link>
-          <div className="  py-2 ">
+          <div className="py-2">
             <div
-              className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white cursor-pointer"
+              className=" flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white cursor-pointer"
               onClick={() => {
                 setIsOpen(!isOpen);
               }}
             >
-              <ClipboardCheckIcon className="w-6 text-blue-500" />
+              <ClipboardCheckIcon className="w-6   text-blue-500" />
               <div
-                className={`ml-5 text-blue-500 md:text-md ${
+                className={`ml-5 text-blue-500  md:text-md ${
                   sidebar ? "hidden" : ""
                 }`}
               >
@@ -176,13 +176,13 @@ const TopicBar = (value) => {
               />
             </div>
             {isOpen ? (
-              <div></div>
+              <div className=""></div>
             ) : (
               <div
                 className={`flex md:pl-5 lg:pl-10 ${sidebar ? "hidden" : ""}`}
               >
                 {/* <div className="bg-blue-700 w-[1.5px]"></div> */}
-                <div className="mt-2 border-blue-700 border-l-2 md:pl-4 ">
+                <div className="mt-2 border-blue-700 border-l-2 md:pl-4 px-2">
                   <Link to="/wordofday">
                     <div
                       className={`text-sm  text-left md:px-2 lg:pl-8 py-2 rounded-md ${
@@ -495,7 +495,7 @@ const TopicBar = (value) => {
           )}
         </div>
       </div>
-      <div className="w-6 h-10 bg-blue-100 relative top-[50vh]">
+      <div className="w-6 h-10 bg-blue-100 relative top-[50vh] hidden md:block">
         <img
           src={arrow}
           alt=""

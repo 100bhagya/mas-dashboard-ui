@@ -8,7 +8,10 @@ import axios from "axios";
 import { API_BASE_URL } from "../data/consts";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentCalendarDate, setLastUpdated } from "../app/features/app/appSlice";
+import {
+  setCurrentCalendarDate,
+  setLastUpdated,
+} from "../app/features/app/appSlice";
 
 //Toast Notifications
 const toastMessage = (message) => toast(message);

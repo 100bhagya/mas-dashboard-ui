@@ -20,7 +20,6 @@ import {
 //Toast Notifications
 const toastMessage = (message) => toast(message);
 
-
 const Account = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -210,51 +209,47 @@ const Account = () => {
   }, [postalCodeDebouncedValue]);
 
   return (
-    <div className="flex justify-center py-12">
-      <div className="flex flex-col gap-6">
+    <div className="px-2 md:px-8 py-4">
+      <div className="flex flex-col gap-4 md:max-w-[800px] mx-auto">
         <div className="text-3xl font-bold">Account</div>
-        <div>
+        <section className="flex flex-col gap-2 my-2">
           <div className="text-lg font-medium">Profile</div>
           <div className="text-sm text-slate-500">
             This Information will be displayed publicly so be careful what you
             share.
           </div>
-        </div>
-        <div>
-          <div className="flex justify-between gap-6">
-            <div className="flex flex-col gap-1">
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="flex flex-col gap-1 w-full">
               <div className="text-sm text-slate-600 font-medium">
                 First Name
               </div>
               <input
                 ref={firstNameRef}
                 type="text"
-                className="min-w-[250px] p-1 rounded-md border border-gray-300"
+                className="w-full p-1 rounded-md border border-gray-300"
               />
             </div>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 w-full">
               <div className="text-sm text-slate-600 font-medium">
                 Last Name
               </div>
               <input
                 ref={lastNameRef}
                 type="text"
-                className="min-w-[250px] p-1 rounded-md border border-gray-300"
+                className="w-full p-1 rounded-md border border-gray-300"
+              />
+            </div>
+            <div className="flex flex-col gap-1 w-full">
+              <div className="text-sm text-slate-600 font-medium">Username</div>
+              <input
+                ref={userNameRef}
+                type="text"
+                className="w-full p-1 rounded-md border border-gray-300"
               />
             </div>
           </div>
-        </div>
-        <div>
-          <div className="flex flex-col gap-1">
-            <div className="text-sm text-slate-600 font-medium">Username</div>
-            <input
-              ref={userNameRef}
-              type="text"
-              className="max-w-[350px] p-1 rounded-md border border-gray-300"
-            />
-          </div>
-        </div>
-        <div className="flex flex-col gap-2">
+        </section>
+        <section className="flex flex-col gap-2 w-full my-2">
           <div className="font-medium">Photo</div>
           <div className="flex items-center gap-6">
             <img
@@ -278,7 +273,7 @@ const Account = () => {
                 {user.profilePic ? "Change" : "Upload"}
               </label>
               <input
-                className="invisible"
+                className="invisible w-0"
                 id="file-upload"
                 ref={fileSelect}
                 type="file"
@@ -288,116 +283,107 @@ const Account = () => {
               />
             </div>
           </div>
-        </div>
+        </section>
 
-        <hr className="my-8 h-px bg-gray-200 border-0 dark:bg-gray-200"></hr>
-
-        <div>
+        <section className="flex flex-col gap-2 my-2">
           <div className="text-lg font-medium">Personal Information</div>
           <div className="text-sm text-slate-500">
             This Information will be displayed publicly so be careful what you
             share.
           </div>
-        </div>
-
-        <div>
-          <div className="flex justify-between gap-6">
-            <div className="flex flex-col gap-1">
-              <div className="text-sm text-slate-600 font-medium">Email</div>
-              <input
-                ref={emailRef}
-                disabled
-                type="text"
-                className="min-w-[250px] p-1 rounded-md border border-gray-300 cursor-not-allowed text-gray-400"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <div className="text-sm text-slate-600 font-medium">
-                Phone Number
-              </div>
-              <div className="flex">
-                {/* <span className="absolute flex items-center ">+91</span> */}
-                <span className="flex justify-center items-center w-[40px] p-1 rounded-l-md border border-gray-300 border-r-0">
-                  +91
-                </span>
+          <div className="flex flex-col gap-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col gap-1">
+                <div className="text-sm text-slate-600 font-medium">Email</div>
                 <input
-                  ref={phoneNumberRef}
+                  ref={emailRef}
+                  disabled
                   type="text"
-                  className="min-w-[210px] p-1 rounded-r-md border border-gray-300"
+                  className="p-1 rounded-md border border-gray-300 cursor-not-allowed text-gray-400"
+                />
+              </div>
+              <div className="flex flex-col gap-1 w-full">
+                <div className="text-sm text-slate-600 font-medium">
+                  Phone Number
+                </div>
+                <div className="flex">
+                  {/* <span className="absolute flex items-center ">+91</span> */}
+                  <span className="flex justify-center items-center w-[40px] p-1 rounded-l-md border border-gray-300 border-r-0">
+                    +91
+                  </span>
+                  <input
+                    ref={phoneNumberRef}
+                    type="text"
+                    className="w-full p-1 rounded-r-md border border-gray-300"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-1">
+                <div className="text-sm text-slate-600 font-medium">
+                  {" "}
+                  Postal Code
+                </div>
+                <input
+                  ref={postalCodeRef}
+                  type="text"
+                  className="min-w-[100px] p-1 rounded-md border border-gray-300"
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <div className="text-sm text-slate-600 font-medium">State</div>
+                <input
+                  ref={stateRef}
+                  type="text"
+                  className="min-w-[100px] p-1 rounded-md border border-gray-300"
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <div className="text-sm text-slate-600 font-medium">City</div>
+                <input
+                  ref={cityRef}
+                  type="text"
+                  className="min-w-[100px] p-1 rounded-md border border-gray-300"
                 />
               </div>
             </div>
-          </div>
-        </div>
 
-        <div>
-          <div className="flex justify-between gap-6">
             <div className="flex flex-col gap-1">
-              <div className="text-sm text-slate-600 font-medium">
-                {" "}
-                Postal Code
+              <div className="text-sm text-slate-600 font-medium">Address</div>
+              <input
+                ref={addressRef}
+                type="text"
+                className="w-full p-1 rounded-md border border-gray-300"
+              />
+            </div>
+          </div>
+        </section>
+        <section className="flex flex-col gap-2 my-2">
+          <div className="flex justify-end gap-6">
+            {isLoading ? (
+              <div className="mx-auto">
+                <LoadingSpinner />
               </div>
-              <input
-                ref={postalCodeRef}
-                type="text"
-                className="min-w-[100px] p-1 rounded-md border border-gray-300"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <div className="text-sm text-slate-600 font-medium">State</div>
-              <input
-                ref={stateRef}
-                type="text"
-                className="min-w-[100px] p-1 rounded-md border border-gray-300"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <div className="text-sm text-slate-600 font-medium">City</div>
-              <input
-                ref={cityRef}
-                type="text"
-                className="min-w-[100px] p-1 rounded-md border border-gray-300"
-              />
-            </div>
+            ) : (
+              <>
+                <button
+                  onClick={() => {
+                    handleFetchProfile(true);
+                  }}
+                  className="py-1 px-2 rounded-md border border-gray-300 bg-white"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  onClick={handleUpdateProfile}
+                  className="py-1 px-2 rounded-md border border-gray-300 bg-blue-500 text-white"
+                >
+                  Update
+                </button>
+              </>
+            )}
           </div>
-        </div>
-
-        <div className="flex flex-col gap-1">
-          <div className="text-sm text-slate-600 font-medium">Address</div>
-          <input
-            ref={addressRef}
-            type="text"
-            className="w-full p-1 rounded-md border border-gray-300"
-          />
-        </div>
-
-        <hr className="my-8 h-px bg-gray-200 border-0 dark:bg-gray-200"></hr>
-
-        <div className="flex justify-end gap-6">
-          {isLoading ? (
-            <div className="mx-auto">
-              <LoadingSpinner />
-            </div>
-          ) : (
-            <>
-              <button
-                onClick={() => {
-                  handleFetchProfile(true);
-                }}
-                className="py-1 px-2 rounded-md border border-gray-300 bg-white"
-              >
-                Cancel
-              </button>
-
-              <button
-                onClick={handleUpdateProfile}
-                className="py-1 px-2 rounded-md border border-gray-300 bg-blue-500 text-white"
-              >
-                Update
-              </button>
-            </>
-          )}
-        </div>
+        </section>
       </div>
       <Toaster />
     </div>
