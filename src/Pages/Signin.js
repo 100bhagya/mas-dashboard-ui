@@ -1,10 +1,4 @@
 import React, { useState } from "react";
-import {
-  // FaFacebookF,
-  // FaGoogle,
-  // FaLinkedinIn,
-  FaRegEnvelope,
-} from "react-icons/fa";
 import { MdLockOutline } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../images/logo.png";
@@ -51,62 +45,62 @@ const Signin = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
-      <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
+    <div className="flex items-center justify-center bg-gray-100 w-screen h-screen">
+      <div className="flex flex-col items-center justify-center text-center gap-4">
         {error ? (
-          <div className="bg-white w-[60%] mb-4 flex shadow-xl rounded-tr-xl rounded-br-xl">
+          <div className="bg-white w-full flex shadow-xl rounded-tr-xl rounded-br-xl">
             <div className="w-2 bg-red-600 rounded-tl-xl rounded-bl-xl"></div>
-            <div className="py-2 text-red-500 ml-5">
+            <div className="ml-2 py-2 text-red-500">
               Please Enter Correct Credentials
             </div>
           </div>
         ) : null}
 
-        <div className="bg-white rounded-2xl shadow-2xl flex w-2/3 max-w-4xl">
-          <div className="w-3/5 p-5">
+        <div className="bg-white rounded-2xl shadow-2xl flex">
+          <div className="flex flex-col gap-4 p-4 md:w-1/2">
             <div className="text-left font-bold">
               <img src={Logo} alt="logo" className="h-10" />
             </div>
-            <div className="py-10">
-              <h2 className="text-3xl font-bold text-blue-600 mb-2">
+            <div className="flex flex-col gap-4 items-center justify-center">
+              <h2 className="text-3xl font-bold text-blue-600">
                 Sign in to Account
               </h2>
-              <div className="bg-blue-600 h-1 w-10 inline-block mb-2"></div>
+              <div className="bg-blue-600 h-1 w-10 inline-block"></div>
 
               <form
-                className="flex flex-col items-center"
+                className="flex flex-col items-center gap-4"
                 onSubmit={handleSignIn}
               >
-                <div className="bg-gray-100 w-64 p-2 flex items-center mb-3">
-                  <AiOutlineUser className="text-gray-400 m-2" />
+                <div className="bg-gray-100 p-2 flex items-center">
+                  <AiOutlineUser className="text-gray-400" />
                   <input
                     type="email"
                     name="email"
                     placeholder="Email"
                     required
                     ref={emailRef}
-                    className="bg-gray-100 outline-none text-sm flex-1"
+                    className="bg-gray-100 outline-none text-sm w-full"
                   />
                 </div>
-                <div className="bg-gray-100 w-64 p-2 flex items-center">
-                  <MdLockOutline className="text-gray-400 m-2" />
+                <div className="bg-gray-100 p-2 flex items-center">
+                  <MdLockOutline className="text-gray-400" />
                   <input
                     type="password"
                     name="password"
                     placeholder="Password"
                     required
                     ref={passwordRef}
-                    className="bg-gray-100 outline-none text-sm flex-1"
+                    className="bg-gray-100 outline-none text-sm w-full"
                   />
                 </div>
 
-                <div className="flex justify-between w-64 mb-5 mt-2">
+                <div className="flex justify-betwee">
                   <a href="/forgotPassword" className="text-xs">
                     Forgot Password?
                   </a>
                 </div>
                 <button
-                  className="border-2 cursor-pointer border-blue-600 text-blue-600 rounded-full px-12 py-2 inline-block font-semibold hover:bg-blue-600 hover:text-white"
+                  className="border-2 cursor-pointer border-blue-600 text-blue-600 rounded-full inline-block font-semibold hover:bg-blue-600 hover:text-white px-4 py-2"
                   disabled={isLoading}
                   type="submit"
                 >
@@ -115,14 +109,14 @@ const Signin = () => {
               </form>
             </div>
           </div>
-          <div className="w-2/5 bg-blue-600 text-white rounded-tr-2xl rounded-br-2xl py-36 px-12">
-            <h2 className="text-3xl  font-bold mb-2">Hello, Friend!</h2>
-            <div className="bg-white h-1 w-10 inline-block mb-2"></div>
-            <p className="mb-10">
+          <div className="md:flex flex-col gap-4 justify-center items-center hidden bg-blue-600 text-white rounded-tr-2xl rounded-br-2xl ml-4 p-4">
+            <h2 className="text-3xl  font-bold">Hello, Friend!</h2>
+            <div className="bg-white h-1 w-10 inline-block"></div>
+            <p className="">
               Fill up personal information and start journey with us.
             </p>
             <Link to="/signup">
-              <div className="border-2 border-white rounded-full px-12 py-2 inline-block font-semibold hover:bg-white hover:text-blue-600">
+              <div className="border-2 border-white rounded-full inline-block font-semibold hover:bg-white hover:text-blue-600 px-4 py-2">
                 Sign Up
               </div>
             </Link>
