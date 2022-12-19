@@ -82,45 +82,24 @@ const Signup = () => {
     }
   }
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
-      <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
+    <div className="flex flex-col items-center justify-center bg-gray-100 w-screen h-screen overflow-auto ">
+      <div className="flex flex-col items-center justify-center text-center gap-4 mx-2 my-10">
         {error ? (
-          <div className="bg-white w-[60%] mb-4 flex shadow-xl rounded-tr-xl rounded-br-xl">
+          <div className="bg-white w-full flex shadow-xl rounded-tr-xl rounded-br-xl">
             <div className="w-2 bg-red-600 rounded-tl-xl rounded-bl-xl"></div>
-            <div className="py-2 text-red-500 ml-5">{error}</div>
+            <div className="ml-2 py-2 text-red-500">{error}</div>
           </div>
         ) : null}
-        <div className="bg-white rounded-2xl shadow-2xl flex w-2/3 max-w-4xl">
-          <div className="w-3/5 p-5">
+        <div className="bg-white rounded-2xl shadow-2xl flex">
+          <div className="flex flex-col gap-4 p-4  md:w-[300px]">
             <div className="text-left font-bold">
               <img src={Logo} alt="logo" className="h-10" />
             </div>
             <div className="py-10">
-              <h2 className="text-3xl font-bold text-blue-600 mb-2">
+              <h2 className="flex flex-col gap-4 items-center justify-center">
                 Create your Account
               </h2>
               <div className="bg-blue-600 h-1 w-10 inline-block mb-2"></div>
-              {/* <div className="flex justify-center my-2">
-                <a
-                  href="/"
-                  className="border-2 border-gray-200 rounded-full p-3 mx-1"
-                >
-                  <FaFacebookF className="text-sm" />
-                </a>
-                <a
-                  href="/"
-                  className="border-2 border-gray-200 rounded-full p-3 mx-1"
-                >
-                  <FaLinkedinIn className="text-sm" />
-                </a>
-                <a
-                  href="/"
-                  className="border-2 border-gray-200 rounded-full p-3 mx-1"
-                >
-                  <FaGoogle className="text-sm" />
-                </a>
-              </div>
-              <p className="text-gray-400 my-3">or use your email account</p> */}
 
               <div className="flex flex-col items-center">
                 <div className="bg-gray-100 w-64 p-2 flex items-center mb-3">
@@ -203,19 +182,26 @@ const Signup = () => {
 
                 <div
                   onClick={DoSignup}
-                  className="border-2 cursor-pointer mt-10 border-blue-600 text-blue-600 rounded-full px-12 py-2 inline-block font-semibold hover:bg-blue-600 hover:text-white"
+                  className="border-2 cursor-pointer mt-8 border-blue-600 text-blue-600 rounded-full px-12 py-2 inline-block font-semibold hover:bg-blue-600 hover:text-white"
                 >
                   {isLoading ? <LoadingSpinner /> : "Sign Up"}
+                </div>
+                <div className="text-black text-sm mt-4 md:hidden">
+                  Already have an account? Sign In{" "}
+                  <a className="text-blue-500" href="/signin">
+                    Here
+                  </a>
+                  !
                 </div>
               </div>
             </div>
           </div>
-          <div className="w-2/5 bg-blue-600 text-white rounded-tr-2xl rounded-br-2xl py-36 px-12">
+          <div className="md:flex flex-col gap-4 justify-center items-center hidden bg-blue-600 text-white rounded-tr-2xl rounded-br-2xl p-4 md:w-[300px]">
             <h2 className="text-3xl  font-bold mb-2">Hello, Friend!</h2>
             <div className="bg-white h-1 w-10 inline-block mb-2"></div>
             <p className="mb-10">Already have an account then Sign In</p>
             <Link to="/signin">
-              <div className="border-2 border-white rounded-full px-12 py-2 inline-block font-semibold hover:bg-white hover:text-blue-600">
+              <div className="border-2 border-white rounded-full inline-block font-semibold hover:bg-white hover:text-blue-600 px-4 py-2">
                 Sign In
               </div>
             </Link>

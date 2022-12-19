@@ -107,6 +107,13 @@ const Signin = () => {
                   {isLoading ? <LoadingSpinner /> : "Sign In"}
                 </button>
               </form>
+              <div className="text-black text-sm md:hidden">
+                Don't have an account? Sign Up{" "}
+                <a className="text-blue-500" href="/signup">
+                  Here
+                </a>
+                !
+              </div>
             </div>
           </div>
           <div className="md:flex flex-col gap-4 justify-center items-center hidden bg-blue-600 text-white rounded-tr-2xl rounded-br-2xl ml-4 p-4">
