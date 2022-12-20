@@ -116,7 +116,7 @@ const Signin = () => {
               </div>
             </div>
           </div>
-          <div className="md:flex flex-col gap-4 justify-center items-center hidden bg-blue-600 text-white rounded-tr-2xl rounded-br-2xl ml-4 p-4">
+          <div className="md:flex flex-col gap-4 justify-center items-center hidden bg-blue-600 text-white rounded-tr-2xl rounded-br-2xl p-4 md:w-1/2">
             <h2 className="text-3xl  font-bold">Hello, Friend!</h2>
             <div className="bg-white h-1 w-10 inline-block"></div>
             <p className="">
