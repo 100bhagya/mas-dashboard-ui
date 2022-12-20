@@ -82,7 +82,7 @@ const Signup = () => {
     }
   }
   return (
-    <div className="flex flex-col items-center justify-center bg-gray-100 w-screen h-screen overflow-auto ">
+    <div className="flex flex-col items-center justify-center bg-gray-100 w-screen overflow-auto h-screen">
       <div className="flex flex-col items-center justify-center text-center gap-4 mx-2 my-10">
         {error ? (
           <div className="bg-white w-full flex shadow-xl rounded-tr-xl rounded-br-xl">

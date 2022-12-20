@@ -293,7 +293,7 @@ const TopicBar = (value) => {
                     <div
                       className={`text-sm text-blue-500 text-left md:px-2 lg:pl-8 py-2 rounded-md ${
                         location.pathname === "/mlandpython"
-                          ? "bg-[#2255B8] text-white"
+                          ? "bg-[#2255B8] !text-white"
                           : "hover:bg-white text-blue-500"
                       }`}
                     >

@@ -45,7 +45,7 @@ const Signin = () => {
   }
 
   return (
-    <div className="flex items-center justify-center bg-gray-100 w-screen h-screen">
+    <div className="flex items-center justify-center bg-gray-100 w-screen overflow-auto h-screen">
       <div className="flex flex-col items-center justify-center text-center gap-4">
         {error ? (
           <div className="bg-white w-full flex shadow-xl rounded-tr-xl rounded-br-xl">

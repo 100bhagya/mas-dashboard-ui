@@ -31,6 +31,7 @@ import Settings from "./Pages/Settings";
 import { useSelector } from "react-redux";
 function App() {
   const user = useSelector((state) => state.user);
+
   return (
     <>
       <Router>
@@ -45,7 +46,9 @@ function App() {
           />
           <Route
             path="forgotPassword"
-            element={user.isAuthenticated ? <Navigate to="/" /> : <ForgotPassword />}
+            element={
+              user.isAuthenticated ? <Navigate to="/" /> : <ForgotPassword />
+            }
           />
           <Route path="resetPassword/:token" element={<ResetPassword />} />
           <Route element={<ProtectedRoutes />}>
