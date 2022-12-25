@@ -6,6 +6,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
+  ResponsiveContainer,
 } from "recharts";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -39,37 +40,40 @@ const Graph = () => {
       });
   }, [user]);
   return (
-    <AreaChart
-      width={800}
-      height={370}
-      data={data}
-      margin={{
-        top: 10,
-        right: 30,
-        left: 20,
-        bottom: 40,
-      }}
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="examDate" angle={305} dy={20} dx={-15} interval={0} />
-      <YAxis
-        tickCount={24}
-        interval={1}
-        domain={[0, 100]}
-        label={{ value: "Percentile", angle: -90, position: "insideLeft" }}
-      />
-      <Tooltip
-        formatter={(value, name, props) => {
-          return [`${value.toFixed(2)} (${props.payload?.examName})`, "Percentile"];
+    <ResponsiveContainer width="100%" height="100%">
+      <AreaChart
+        data={data}
+        margin={{
+          top: 10,
+          right: 30,
+          left: 20,
+          bottom: 40,
         }}
-      />
-      <Area
-        type="monotone"
-        dataKey="percentile"
-        stroke="#8884d8"
-        fill="#8884d8"
-      />
-    </AreaChart>
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="examDate" angle={305} dy={20} dx={-15} interval={0} />
+        <YAxis
+          tickCount={24}
+          interval={1}
+          domain={[0, 100]}
+          label={{ value: "Percentile", angle: -90, position: "insideLeft" }}
+        />
+        <Tooltip
+          formatter={(value, name, props) => {
+            return [
+              `${value.toFixed(2)} (${props.payload?.examName})`,
+              "Percentile",
+            ];
+          }}
+        />
+        <Area
+          type="monotone"
+          dataKey="percentile"
+          stroke="#8884d8"
+          fill="#8884d8"
+        />
+      </AreaChart>
+    </ResponsiveContainer>
   );
 };
 
