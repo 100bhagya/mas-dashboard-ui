@@ -84,7 +84,11 @@ const TopicBar = (value) => {
     setSidebar(!sidebar);
   };
   return (
-    <div className={`flex shrink-0 ${sidebar ? "basis-1/10" : "basis-1/5"}`}>
+    <div
+      className={`flex shrink-0 ${
+        sidebar ? "basis-1/10" : "basis-1/5"
+      } min-w-[300px] h-full`}
+    >
       <div className="bg-blue-100 w-full min-h-[100vh] px-2">
         <div className="text-center mt-12 ">
           {selectedimage ? (
