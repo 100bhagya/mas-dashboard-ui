@@ -119,7 +119,9 @@ const WordOfDay = (isOpen) => {
       studentId: user.loginInfo.id,
       responseOne: responseOneRef.current.value,
       responseTwo: responseTwoRef.current.value,
+      completed: false,
     };
+    console.log(bodyParameters);
     const config = {
       headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
     };
@@ -295,7 +297,7 @@ const WordOfDay = (isOpen) => {
                   onClick={updateResponse}
                 >
                   {" "}
-                  Submit
+                  Update Response
                 </button>
               ) : (
                 <button
@@ -303,7 +305,7 @@ const WordOfDay = (isOpen) => {
                   onClick={sendResponse}
                 >
                   {" "}
-                  Submit
+                  Submit Response
                 </button>
               )}
 

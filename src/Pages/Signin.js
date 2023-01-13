@@ -90,7 +90,7 @@ const Signin = () => {
                     placeholder="Password"
                     required
                     ref={passwordRef}
-                    className="bg-gray-100 outline-none text-sm w-full"
+                    className="bg-gray-100 outline-none text-sm w-full px-2"
                   />
                 </div>
 
