@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  // FaFacebookF,
-  // FaGoogle,
-  // FaLinkedinIn,
-  FaRegEnvelope,
-} from "react-icons/fa";
+import { FaRegEnvelope } from "react-icons/fa";
 import { MdLockOutline } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineUser } from "react-icons/ai";
@@ -91,11 +86,11 @@ const Signup = () => {
           </div>
         ) : null}
         <div className="bg-white rounded-2xl shadow-2xl flex">
-          <div className="flex flex-col gap-4 p-4  md:w-[300px]">
+          <div className="flex flex-col gap-4 p-4  md:w-[300px] md:h-[550px]">
             <div className="text-left font-bold">
               <img src={Logo} alt="logo" className="h-10" />
             </div>
-            <div className="py-10">
+            <div className="py-2">
               <h2 className="flex flex-col gap-4 items-center justify-center">
                 Create your Account
               </h2>
@@ -182,7 +177,7 @@ const Signup = () => {
 
                 <div
                   onClick={DoSignup}
-                  className="border-2 cursor-pointer mt-8 border-blue-600 text-blue-600 rounded-full px-12 py-2 inline-block font-semibold hover:bg-blue-600 hover:text-white"
+                  className="border-2 cursor-pointer mt-4 border-blue-600 text-blue-600 rounded-full px-12 py-2 inline-block font-semibold hover:bg-blue-600 hover:text-white"
                 >
                   {isLoading ? <LoadingSpinner /> : "Sign Up"}
                 </div>
