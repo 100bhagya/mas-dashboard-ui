@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import arrow from "../images/down arrow.png";
 import {
   HomeIcon,
@@ -12,10 +12,8 @@ import {
 } from "@heroicons/react/outline";
 import userDefaultImage from "../images/user.png";
 import { Link, useLocation } from "react-router-dom";
-import axios from "axios";
-import { API_BASE_URL } from "../data/consts";
 import { useDispatch, useSelector } from "react-redux";
-import { logout, setProfilePic } from "../app/features/user/userSlice";
+import { logout } from "../app/features/user/userSlice";
 
 const TopicBar = (value) => {
   const dispatch = useDispatch();
@@ -84,7 +82,11 @@ const TopicBar = (value) => {
     setSidebar(!sidebar);
   };
   return (
-    <div className={`flex shrink-0 ${sidebar ? "basis-1/10" : "basis-1/5"}`}>
+    <div
+      className={`flex shrink-0 ${
+        sidebar ? "basis-1/10" : "basis-1/5"
+      } min-w-[300px] h-full`}
+    >
       <div className="bg-blue-100 w-full min-h-[100vh] px-2">
         <div className="text-center mt-12 ">
           {selectedimage ? (
