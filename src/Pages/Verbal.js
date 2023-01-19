@@ -6,6 +6,7 @@ import StarsRating from "stars-rating";
 import { useSelector } from "react-redux";
 import { API_BASE_URL } from "../data/consts";
 import Navbar from "../Components/Navbar";
+import axios from "axios";
 
 const RatingCard = ({ serialNo, Title, currentChapter }) => {
   const user = useSelector((state) => state.user);
@@ -18,7 +19,7 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
   const ratingChanged = async (newRating) => {
     setRating(newRating);
     let item = {
-      category: "LRDI",
+      category: "Verbal",
       chapter: Title,
       studentId: user.loginInfo.id,
       rating: newRating,
@@ -77,21 +78,19 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
 const Verbal = (isOpen) => {
   const user = useSelector((state) => state.user);
   const [ratingResponse, setRatingResponse] = useState([]);
-
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/task/task-rating?category=LRDI`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + user.loginInfo.accessTokenoken,
-      },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        setRatingResponse(result);
-      });
+    axios
+      .get(`${API_BASE_URL}/api/task/task-rating?category=Verbal`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + user.loginInfo.accessToken,
+        },
+      })
+      .then((res) => {
+        setRatingResponse(res.data);
+      })
+      .catch((err) => console.log(err));
   }, []);
-
   return (
     <div className="flex flex-col">
       <Navbar />
@@ -149,124 +148,90 @@ const Verbal = (isOpen) => {
               <>
                 <RatingCard
                   serialNo={1}
-                  Title="Cubes"
+                  Title="Reading Comprehension"
                   currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Cubes";
+                    return el.chapter === "Reading Comprehension";
                   })}
                 />
                 <RatingCard
                   serialNo={2}
-                  Title="Venn Diagram"
+                  Title="Sentence Correction"
                   currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Venn Diagram";
+                    return el.chapter === "Sentence Correction";
                   })}
                 />
                 <RatingCard
                   serialNo={3}
-                  Title="Linear & Circular Arrangement"
+                  Title="Synonyms/Antonyms"
                   currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Linear & Circular Arrangement";
+                    return el.chapter === "Synonyms/Antonyms";
                   })}
                 />
                 <RatingCard
                   serialNo={4}
-                  Title="Line, Bar, Column, Pie Charts, Tables"
+                  Title="Parajumbles"
                   currentChapter={ratingResponse.filter((el) => {
-                    return (
-                      el.chapter === "Line, Bar, Column, Pie Charts, Tables"
-                    );
+                    return el.chapter === "Parajumbles";
                   })}
                 />
                 <RatingCard
                   serialNo={5}
-                  Title="Games & Tournament"
+                  Title="Summary Completion"
                   currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Games & Tournament";
+                    return el.chapter === "Summary Completion";
                   })}
                 />
                 <RatingCard
                   serialNo={6}
-                  Title="Blood Relations"
+                  Title="Sentence Formation"
                   currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Blood Relations";
+                    return el.chapter === "Sentence Formation";
                   })}
                 />
                 <RatingCard
                   serialNo={7}
-                  Title="Calendars & Clocks"
+                  Title="Idioms and Phrases"
                   currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Calendars & Clocks";
-                  })}
-                />
-                <RatingCard
-                  serialNo={8}
-                  Title="Syllogism"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Syllogism";
-                  })}
-                />
-                <RatingCard
-                  serialNo={9}
-                  Title="Number and Letter Series"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Number and Letter Series";
-                  })}
-                />
-                <RatingCard
-                  serialNo={10}
-                  Title="Non Verbal Reasoning"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Non Verbal Reasoning";
+                    return el.chapter === "Idioms and Phrases";
                   })}
                 />
               </>
             )}
-            {ratingResponse.status === 500 && (
+            {ratingResponse.length === 0 && (
               <>
-                <RatingCard serialNo={1} Title="Cubes" currentChapter={[]} />
+                <RatingCard
+                  serialNo={1}
+                  Title="Reading Comprehension"
+                  currentChapter={[]}
+                />
                 <RatingCard
                   serialNo={2}
-                  Title="Venn Diagram"
+                  Title="Sentence Correction"
                   currentChapter={[]}
                 />
                 <RatingCard
                   serialNo={3}
-                  Title="Linear & Circular Arrangement"
+                  Title="Synonyms/Antonyms"
                   currentChapter={[]}
                 />
                 <RatingCard
                   serialNo={4}
-                  Title="Line, Bar, Column, Pie Charts, Tables"
+                  Title="Parajumbles"
                   currentChapter={[]}
                 />
                 <RatingCard
                   serialNo={5}
-                  Title="Games & Tournament"
+                  Title="Summary Completion"
                   currentChapter={[]}
                 />
                 <RatingCard
                   serialNo={6}
-                  Title="Blood Relations"
+                  Title="Sentence Formation"
                   currentChapter={[]}
                 />
                 <RatingCard
                   serialNo={7}
-                  Title="Calendars & Clocks"
-                  currentChapter={[]}
-                />
-                <RatingCard
-                  serialNo={8}
-                  Title="Syllogism"
-                  currentChapter={[]}
-                />
-                <RatingCard
-                  serialNo={9}
-                  Title="Number and Letter Series"
-                  currentChapter={[]}
-                />
-                <RatingCard
-                  serialNo={10}
-                  Title="Non Verbal Reasoning"
+                  Title="Idioms and Phrases"
                   currentChapter={[]}
                 />
               </>

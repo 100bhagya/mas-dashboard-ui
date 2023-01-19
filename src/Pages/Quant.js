@@ -6,6 +6,7 @@ import StarsRating from "stars-rating";
 import { useSelector } from "react-redux";
 import { API_BASE_URL } from "../data/consts";
 import Navbar from "../Components/Navbar";
+import axios from "axios";
 
 const RatingCard = ({ serialNo, Title, currentChapter }) => {
   const user = useSelector((state) => state.user);
@@ -18,7 +19,7 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
   const ratingChanged = async (newRating) => {
     setRating(newRating);
     let item = {
-      category: "LRDI",
+      category: "Quant",
       chapter: Title,
       studentId: user.loginInfo.id,
       rating: newRating,
@@ -79,17 +80,17 @@ const Quant = (isOpen) => {
   const [ratingResponse, setRatingResponse] = useState([]);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/task/task-rating?category=LRDI`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + user.loginInfo.accessTokenoken,
-      },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        setRatingResponse(result);
-      });
+    axios
+      .get(`${API_BASE_URL}/api/task/task-rating?category=Quant`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + user.loginInfo.accessToken,
+        },
+      })
+      .then((res) => {
+        setRatingResponse(res.data);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   return (
@@ -149,124 +150,162 @@ const Quant = (isOpen) => {
               <>
                 <RatingCard
                   serialNo={1}
-                  Title="Cubes"
+                  Title="Probability"
                   currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Cubes";
+                    return el.chapter === "Probability";
                   })}
                 />
                 <RatingCard
                   serialNo={2}
-                  Title="Venn Diagram"
+                  Title="Statistics"
                   currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Venn Diagram";
+                    return el.chapter === "Statistics";
                   })}
                 />
                 <RatingCard
                   serialNo={3}
-                  Title="Linear & Circular Arrangement"
+                  Title="P & C"
                   currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Linear & Circular Arrangement";
+                    return el.chapter === "P & C";
                   })}
                 />
                 <RatingCard
                   serialNo={4}
-                  Title="Line, Bar, Column, Pie Charts, Tables"
+                  Title="Profit & Loss"
                   currentChapter={ratingResponse.filter((el) => {
-                    return (
-                      el.chapter === "Line, Bar, Column, Pie Charts, Tables"
-                    );
+                    return el.chapter === "Profit & Loss";
                   })}
                 />
                 <RatingCard
                   serialNo={5}
-                  Title="Games & Tournament"
+                  Title="Simple & Compound Interest"
                   currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Games & Tournament";
+                    return el.chapter === "Simple & Compound Interest";
                   })}
                 />
                 <RatingCard
                   serialNo={6}
-                  Title="Blood Relations"
+                  Title="Time & Work"
                   currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Blood Relations";
+                    return el.chapter === "Time & Work";
                   })}
                 />
                 <RatingCard
                   serialNo={7}
-                  Title="Calendars & Clocks"
+                  Title="Average, Mixture & Allegations"
                   currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Calendars & Clocks";
+                    return el.chapter === "Average, Mixture & Allegations";
                   })}
                 />
                 <RatingCard
                   serialNo={8}
-                  Title="Syllogism"
+                  Title="Time, Speed & Distance"
                   currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Syllogism";
+                    return el.chapter === "Time, Speed & Distance";
                   })}
                 />
                 <RatingCard
                   serialNo={9}
-                  Title="Number and Letter Series"
+                  Title="Geometry"
                   currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Number and Letter Series";
+                    return el.chapter === "Time, Speed & Distance";
                   })}
                 />
                 <RatingCard
                   serialNo={10}
-                  Title="Non Verbal Reasoning"
+                  Title="Coordinate Geometry"
                   currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Non Verbal Reasoning";
+                    return el.chapter === "Time, Speed & Distance";
+                  })}
+                />
+                <RatingCard
+                  serialNo={11}
+                  Title="Trigonometry"
+                  currentChapter={ratingResponse.filter((el) => {
+                    return el.chapter === "Time, Speed & Distance";
+                  })}
+                />
+                <RatingCard
+                  serialNo={12}
+                  Title="Numbers"
+                  currentChapter={ratingResponse.filter((el) => {
+                    return el.chapter === "Time, Speed & Distance";
+                  })}
+                />
+                <RatingCard
+                  serialNo={13}
+                  Title="Simple, Special & Quadratic Equation"
+                  currentChapter={ratingResponse.filter((el) => {
+                    return el.chapter === "Time, Speed & Distance";
+                  })}
+                />
+                <RatingCard
+                  serialNo={14}
+                  Title="Sequence & Series"
+                  currentChapter={ratingResponse.filter((el) => {
+                    return el.chapter === "Time, Speed & Distance";
                   })}
                 />
               </>
             )}
-            {ratingResponse.status === 500 && (
+            {ratingResponse.length === 0 && (
               <>
-                <RatingCard serialNo={1} Title="Cubes" currentChapter={[]} />
+                <RatingCard
+                  serialNo={1}
+                  Title="Probability"
+                  currentChapter={[]}
+                />
                 <RatingCard
                   serialNo={2}
-                  Title="Venn Diagram"
+                  Title="Statistics"
                   currentChapter={[]}
                 />
-                <RatingCard
-                  serialNo={3}
-                  Title="Linear & Circular Arrangement"
-                  currentChapter={[]}
-                />
+                <RatingCard serialNo={3} Title="P & C" currentChapter={[]} />
                 <RatingCard
                   serialNo={4}
-                  Title="Line, Bar, Column, Pie Charts, Tables"
+                  Title="Profit & Loss"
                   currentChapter={[]}
                 />
                 <RatingCard
                   serialNo={5}
-                  Title="Games & Tournament"
+                  Title="Simple & Compound Interest"
                   currentChapter={[]}
                 />
                 <RatingCard
                   serialNo={6}
-                  Title="Blood Relations"
+                  Title="Time & Work"
                   currentChapter={[]}
                 />
                 <RatingCard
                   serialNo={7}
-                  Title="Calendars & Clocks"
+                  Title="Average, Mixture & Allegations"
                   currentChapter={[]}
                 />
                 <RatingCard
                   serialNo={8}
-                  Title="Syllogism"
+                  Title="Time, Speed & Distance"
                   currentChapter={[]}
                 />
-                <RatingCard
-                  serialNo={9}
-                  Title="Number and Letter Series"
-                  currentChapter={[]}
-                />
+                <RatingCard serialNo={9} Title="Geometry" currentChapter={[]} />
                 <RatingCard
                   serialNo={10}
-                  Title="Non Verbal Reasoning"
+                  Title="Coordinate Geometry"
+                  currentChapter={[]}
+                />
+                <RatingCard
+                  serialNo={11}
+                  Title="Trigonometry"
+                  currentChapter={[]}
+                />
+                <RatingCard serialNo={12} Title="Numbers" currentChapter={[]} />
+                <RatingCard
+                  serialNo={13}
+                  Title="Simple, Special & Quadratic Equation"
+                  currentChapter={[]}
+                />
+                <RatingCard
+                  serialNo={14}
+                  Title="Sequence & Series"
                   currentChapter={[]}
                 />
               </>

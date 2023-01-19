@@ -6,6 +6,7 @@ import StarsRating from "stars-rating";
 import { useSelector } from "react-redux";
 import { API_BASE_URL } from "../data/consts";
 import Navbar from "../Components/Navbar";
+import axios from "axios";
 
 const RatingCard = ({ serialNo, Title, currentChapter }) => {
   const user = useSelector((state) => state.user);
@@ -77,19 +78,18 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
 const LRandDI = (isOpen) => {
   const user = useSelector((state) => state.user);
   const [ratingResponse, setRatingResponse] = useState([]);
-
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/task/task-rating?category=LRDI`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + user.loginInfo.accessTokenoken,
-      },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        setRatingResponse(result);
-      });
+    axios
+      .get(`${API_BASE_URL}/api/task/task-rating?category=LRDI`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + user.loginInfo.accessToken,
+        },
+      })
+      .then((res) => {
+        setRatingResponse(res.data);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   return (
@@ -221,7 +221,7 @@ const LRandDI = (isOpen) => {
                 />
               </>
             )}
-            {ratingResponse.status === 500 && (
+            {ratingResponse.length === 0 && (
               <>
                 <RatingCard serialNo={1} Title="Cubes" currentChapter={[]} />
                 <RatingCard
