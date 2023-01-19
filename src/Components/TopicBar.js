@@ -13,56 +13,35 @@ import {
 import userDefaultImage from "../images/user.png";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../app/features/user/userSlice";
+import { logout, setProfilePic } from "../app/features/user/userSlice";
+import axios from "axios";
+import { API_BASE_URL } from "../data/consts";
+import {
+  setAptitudeOpen,
+  setTasksOpen,
+  setNonTechOpen,
+} from "../app/features/app/appSlice";
 
-const TopicBar = (value) => {
+const TopicBar = ({ value }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-
+  const app = useSelector((state) => state.app);
   const [selectedimage, setSelectedimage] = useState();
-  const [isOpen, setIsOpen] = useState(value);
-  const [aptitudeOpen, setAptitudeOpen] = useState(true);
-  const [nonTechOpen, setNonTechOpen] = useState(true);
   const [sidebar, setSidebar] = useState(false);
-  // useEffect(() => {
-  //   setIsOpen(JSON.parse(window.localStorage.getItem("isOpen")));
-  //   const config = {
-  //     headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
-  //   };
-  //   // Fetching User Profile Image
-  //   axios
-  //     .get(`${API_BASE_URL}/api/getUserProfile`, config)
-  //     .then((response) => {
-  //       dispatch(setProfilePic(response.data.profilePic));
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
-
-  // useEffect(() => {
-  //   setIsOpen(
-  //     JSON.parse(window.localStorage.getItem("isOpen")) != null
-  //       ? JSON.parse(window.localStorage.getItem("isOpen"))
-  //       : true
-  //   );
-  //   setAptitudeOpen(
-  //     JSON.parse(window.localStorage.getItem("aptitudeOpen")) != null
-  //       ? JSON.parse(window.localStorage.getItem("aptitudeOpen"))
-  //       : true
-  //   );
-  //   setNonTechOpen(
-  //     JSON.parse(window.localStorage.getItem("nonTechOpen")) != null
-  //       ? JSON.parse(window.localStorage.getItem("nonTechOpen"))
-  //       : true
-  //   );
-  // }, []);
-
   useEffect(() => {
-    window.localStorage.setItem("isOpen", isOpen);
-    window.localStorage.setItem("aptitudeOpen", aptitudeOpen);
-    window.localStorage.setItem("nonTechOpen", nonTechOpen);
-  }, [isOpen, aptitudeOpen, nonTechOpen]);
+    const config = {
+      headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
+    };
+    // Fetching User Profile Image
+    axios
+      .get(`${API_BASE_URL}/api/getUserProfile`, config)
+      .then((response) => {
+        dispatch(setProfilePic(response.data.profilePic));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [user.loginInfo.accessToken, dispatch]);
 
   const Logout = () => {
     window.location.reload(false);
@@ -83,9 +62,9 @@ const TopicBar = (value) => {
   };
   return (
     <div
-      className={`flex shrink-0 ${
-        sidebar ? "basis-1/10" : "basis-1/5"
-      } min-w-[300px] h-full`}
+      className={`flex shrink-0 ${sidebar ? "basis-1/10" : "basis-1/5"} ${
+        !sidebar && "min-w-[300px]"
+      }  h-full`}
     >
       <div className="bg-blue-100 w-full min-h-[100vh] px-2">
         <div className="text-center mt-12 ">
@@ -136,7 +115,7 @@ const TopicBar = (value) => {
           >
             {user.loginInfo ? user.loginInfo?.username : ""}
           </div>
-          <div className={`text-[12px] mt-1 ${sidebar ? "hidden" : ""}`}>
+          <div className={`text-sm mt-1 ${sidebar ? "hidden" : ""}`}>
             {user.loginInfo ? user.loginInfo?.email : ""}
           </div>
           <Link to="/">
@@ -157,7 +136,7 @@ const TopicBar = (value) => {
             <div
               className=" flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white cursor-pointer"
               onClick={() => {
-                setIsOpen(!isOpen);
+                dispatch(setTasksOpen(!app.tasksOpen));
               }}
             >
               <ClipboardCheckIcon className="w-6   text-blue-500" />
@@ -174,10 +153,10 @@ const TopicBar = (value) => {
                 className={`w-3 h-2 relative left-[15%] top-2 cursor-pointer ${
                   sidebar ? "hidden" : ""
                 }`}
-                style={{ transform: !isOpen ? "rotate(180deg)" : null }}
+                style={{ transform: !app.tasksOpen ? "rotate(180deg)" : null }}
               />
             </div>
-            {isOpen ? (
+            {app.tasksOpen ? (
               <div className=""></div>
             ) : (
               <div
@@ -233,7 +212,7 @@ const TopicBar = (value) => {
                     <div
                       className="flex md:px-2 lg:pl-8 pr-4 gap-2 py-2 rounded-md hover:bg-white  cursor-pointer"
                       onClick={() => {
-                        setAptitudeOpen(!aptitudeOpen);
+                        dispatch(setAptitudeOpen(!app.aptitudeOpen));
                       }}
                     >
                       <div className="text-sm   text-blue-500 text-left ">
@@ -244,11 +223,13 @@ const TopicBar = (value) => {
                         alt=""
                         className="w-3 h-2 relative top-2 cursor-pointer"
                         style={{
-                          transform: !aptitudeOpen ? "rotate(180deg)" : null,
+                          transform: !app.aptitudeOpen
+                            ? "rotate(180deg)"
+                            : null,
                         }}
                       />
                     </div>
-                    {aptitudeOpen ? (
+                    {app.aptitudeOpen ? (
                       <div></div>
                     ) : (
                       <div className="flex ml-4 lg:pl-8">
@@ -328,7 +309,7 @@ const TopicBar = (value) => {
                     <div
                       className="flex px-2 py-2 lg:pl-8 rounded-md hover:bg-white"
                       onClick={() => {
-                        setNonTechOpen(!nonTechOpen);
+                        dispatch(setNonTechOpen(!app.nonTechOpen));
                       }}
                     >
                       <div className="text-sm text-blue-500 text-left ">
@@ -339,14 +320,14 @@ const TopicBar = (value) => {
                         alt=""
                         className="w-3 h-2 relative left-[10%] top-2 cursor-pointer"
                         style={{
-                          transform: !nonTechOpen ? "rotate(180deg)" : null,
+                          transform: !app.nonTechOpen ? "rotate(180deg)" : null,
                         }}
                         onClick={() => {
-                          setNonTechOpen(!nonTechOpen);
+                          setNonTechOpen(!app.nonTechOpen);
                         }}
                       />
                     </div>
-                    {nonTechOpen ? (
+                    {app.nonTechOpen ? (
                       <div></div>
                     ) : (
                       <div className="flex ml-2  lg:pl-8">

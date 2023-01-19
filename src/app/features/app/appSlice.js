@@ -3,6 +3,10 @@ const initialState = {
   currentCalendarDate: new Date(),
   lastAvailableDailyWordDate: new Date(),
   lastUpdated: new Date(),
+
+  tasksOpen: true,
+  aptitudeOpen: true,
+  nonTechOpen: true,
 };
 
 export const appSlice = createSlice({
@@ -23,11 +27,28 @@ export const appSlice = createSlice({
     setLastUpdated: (state, date) => {
       state.lastUpdated = date.payload;
     },
+
+    setTasksOpen: (state, value) => {
+      state.tasksOpen = value.payload;
+    },
+    setAptitudeOpen: (state, value) => {
+      state.aptitudeOpen = value.payload;
+    },
+    setNonTechOpen: (state, value) => {
+      state.nonTechOpen = value.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setCurrentCalendarDate, setLastAvailableDailyWordDate, setLastUpdated } =
-  appSlice.actions;
+export const {
+  setCurrentCalendarDate,
+  setLastAvailableDailyWordDate,
+  setLastUpdated,
+  setIsTopicBarCollapsed,
+  setTasksOpen,
+  setAptitudeOpen,
+  setNonTechOpen,
+} = appSlice.actions;
 
 export default appSlice.reducer;
