@@ -14,11 +14,17 @@ import userDefaultImage from "../images/user.png";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../app/features/user/userSlice";
+import {
+  getThemeBackgroundColor,
+  getThemeHoverPrimaryBgColor,
+  getThemeTextColor,
+  getThemeTextPrimaryColor,
+} from "../data/themesData";
 
 const TopicBar = (value) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-
+  const app = useSelector((state) => state.app);
   const [selectedimage, setSelectedimage] = useState();
   const [isOpen, setIsOpen] = useState(value);
   const [aptitudeOpen, setAptitudeOpen] = useState(true);
@@ -81,13 +87,22 @@ const TopicBar = (value) => {
   const activatesidebar = () => {
     setSidebar(!sidebar);
   };
+  useEffect(() => {
+    console.log(
+      `${getThemeBackgroundColor(app.themeMode)} w-full min-h-[100vh] px-2`
+    );
+  }, [app.themeMode]);
   return (
     <div
       className={`flex shrink-0 ${
         sidebar ? "basis-1/10" : "basis-1/5"
       } min-w-[300px] h-full`}
     >
-      <div className="bg-blue-100 w-full min-h-[100vh] px-2">
+      <div
+        className={`${getThemeBackgroundColor(
+          app.themeMode
+        )} w-full min-h-[100vh] px-2`}
+      >
         <div className="text-center mt-12 ">
           {selectedimage ? (
             <label>
@@ -130,23 +145,33 @@ const TopicBar = (value) => {
           )}
 
           <div
-            className={`mt-5 max-w-[100%] text-xl font-medium ${
-              sidebar ? "hidden" : ""
-            }`}
+            className={`mt-5 ${getThemeTextColor(
+              app.themeMode
+            )} max-w-[100%] text-xl font-medium ${sidebar ? "hidden" : ""}`}
           >
             {user.loginInfo ? user.loginInfo?.username : ""}
           </div>
-          <div className={`text-[12px] mt-1 ${sidebar ? "hidden" : ""}`}>
+          <div
+            className={`text-[12px] ${getThemeTextColor(app.themeMode)} mt-1 ${
+              sidebar ? "hidden" : ""
+            }`}
+          >
             {user.loginInfo ? user.loginInfo?.email : ""}
           </div>
           <Link to="/">
             <div className=" py-2 ">
-              <div className="flex py-2  md:px-2 lg:px-8 rounded-lg hover:bg-white">
-                <HomeIcon className="w-6 text-blue-500" />
+              <div
+                className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
+                  app.themeMode
+                )}`}
+              >
+                <HomeIcon
+                  className={`w-6 ${getThemeTextPrimaryColor(app.themeMode)}`}
+                />
                 <div
-                  className={`ml-5 text-blue-500 md:text-md ${
-                    sidebar ? "hidden" : ""
-                  }`}
+                  className={`ml-5 ${getThemeTextPrimaryColor(
+                    app.themeMode
+                  )} md:text-md ${sidebar ? "hidden" : ""}`}
                 >
                   Home
                 </div>
@@ -155,16 +180,20 @@ const TopicBar = (value) => {
           </Link>
           <div className="py-2">
             <div
-              className=" flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white cursor-pointer"
+              className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
+                app.themeMode
+              )}`}
               onClick={() => {
                 setIsOpen(!isOpen);
               }}
             >
-              <ClipboardCheckIcon className="w-6   text-blue-500" />
+              <ClipboardCheckIcon
+                className={`w-6 ${getThemeTextPrimaryColor(app.themeMode)}`}
+              />
               <div
-                className={`ml-5 text-blue-500  md:text-md ${
-                  sidebar ? "hidden" : ""
-                }`}
+                className={`ml-5 ${getThemeTextPrimaryColor(
+                  app.themeMode
+                )} md:text-md ${sidebar ? "hidden" : ""}`}
               >
                 Tasks
               </div>
@@ -184,13 +213,19 @@ const TopicBar = (value) => {
                 className={`flex md:pl-5 lg:pl-10 ${sidebar ? "hidden" : ""}`}
               >
                 {/* <div className="bg-blue-700 w-[1.5px]"></div> */}
-                <div className="mt-2 border-blue-700 border-l-2 md:pl-4 px-2">
+                <div
+                  className={`mt-2 ${getThemeTextPrimaryColor(
+                    app.themeMode
+                  )} border-l-2 md:pl-4 px-2`}
+                >
                   <Link to="/wordofday">
                     <div
                       className={`text-sm  text-left md:px-2 lg:pl-8 py-2 rounded-md ${
                         location.pathname === "/wordofday"
                           ? "bg-[#2255B8] text-white"
-                          : "hover:bg-white text-blue-500 "
+                          : `${getThemeTextPrimaryColor(
+                              app.themeMode
+                            )} ${getThemeHoverPrimaryBgColor(app.themeMode)}`
                       }`}
                     >
                       Word of the day
@@ -201,7 +236,9 @@ const TopicBar = (value) => {
                       className={`text-sm  text-left md:px-2  lg:pl-8 py-2 rounded-md ${
                         location.pathname === "/summarywriting"
                           ? "bg-[#2255B8] text-white"
-                          : "hover:bg-white text-blue-500 "
+                          : `${getThemeTextPrimaryColor(
+                              app.themeMode
+                            )} ${getThemeHoverPrimaryBgColor(app.themeMode)}`
                       }`}
                     >
                       Summary Writing
@@ -212,7 +249,9 @@ const TopicBar = (value) => {
                       className={`text-sm  text-left md:px-2 lg:pl-8  py-2 rounded-md ${
                         location.pathname === "/techarticles"
                           ? "bg-[#2255B8] text-white"
-                          : "hover:bg-white text-blue-500 "
+                          : `${getThemeTextPrimaryColor(
+                              app.themeMode
+                            )} ${getThemeHoverPrimaryBgColor(app.themeMode)}`
                       }`}
                     >
                       Tech Articles
@@ -223,7 +262,9 @@ const TopicBar = (value) => {
                       className={`text-sm  text-left md:px-2  lg:pl-8 py-2 rounded-md ${
                         location.pathname === "/quizes"
                           ? "bg-[#2255B8] text-white"
-                          : "hover:bg-white text-blue-500 "
+                          : `${getThemeTextPrimaryColor(
+                              app.themeMode
+                            )} ${getThemeHoverPrimaryBgColor(app.themeMode)}`
                       }`}
                     >
                       Untimed Quizzes
@@ -231,12 +272,16 @@ const TopicBar = (value) => {
                   </Link>
                   <div className="">
                     <div
-                      className="flex md:px-2 lg:pl-8 pr-4 gap-2 py-2 rounded-md hover:bg-white  cursor-pointer"
+                      className="flex md:px-2 lg:pl-8 pr-4 gap-2 py-2 rounded-md  cursor-pointer"
                       onClick={() => {
                         setAptitudeOpen(!aptitudeOpen);
                       }}
                     >
-                      <div className="text-sm   text-blue-500 text-left ">
+                      <div
+                        className={`text-sm  text-left md:px-2  lg:pl-8 py-2 rounded-md ${`${getThemeTextPrimaryColor(
+                          app.themeMode
+                        )} ${getThemeHoverPrimaryBgColor(app.themeMode)}`}`}
+                      >
                         Aptitude Preparation
                       </div>
                       <img
@@ -253,13 +298,17 @@ const TopicBar = (value) => {
                     ) : (
                       <div className="flex ml-4 lg:pl-8">
                         {/* <div className="bg-blue-700 w-[1px]"></div> */}
-                        <div className="border-blue-700 border-l-2 pl-2  mt-2">
+                        <div className={`border-l-2 pl-2  mt-2`}>
                           <Link to="/quant">
                             <div
-                              className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                              className={`text-sm  text-left md:px-2 lg:pl-8 py-2 rounded-md ${
                                 location.pathname === "/quant"
                                   ? "bg-[#2255B8] text-white"
-                                  : "hover:bg-white text-blue-500 "
+                                  : `${getThemeTextPrimaryColor(
+                                      app.themeMode
+                                    )} ${getThemeHoverPrimaryBgColor(
+                                      app.themeMode
+                                    )}`
                               }`}
                             >
                               Quant
@@ -267,10 +316,14 @@ const TopicBar = (value) => {
                           </Link>
                           <Link to="/lrdi">
                             <div
-                              className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                              className={`text-sm  text-left md:px-2 lg:pl-8 py-2 rounded-md ${
                                 location.pathname === "/lrdi"
                                   ? "bg-[#2255B8] text-white"
-                                  : "hover:bg-white text-blue-500 "
+                                  : `${getThemeTextPrimaryColor(
+                                      app.themeMode
+                                    )} ${getThemeHoverPrimaryBgColor(
+                                      app.themeMode
+                                    )}`
                               }`}
                             >
                               LR and DI
@@ -278,10 +331,14 @@ const TopicBar = (value) => {
                           </Link>
                           <Link to="/verbal">
                             <div
-                              className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                              className={`text-sm  text-left md:px-2 lg:pl-8 py-2 rounded-md ${
                                 location.pathname === "/verbal"
                                   ? "bg-[#2255B8] text-white"
-                                  : "hover:bg-white text-blue-500 "
+                                  : `${getThemeTextPrimaryColor(
+                                      app.themeMode
+                                    )} ${getThemeHoverPrimaryBgColor(
+                                      app.themeMode
+                                    )}`
                               }`}
                             >
                               Verbal
@@ -293,10 +350,12 @@ const TopicBar = (value) => {
                   </div>
                   <Link to="/mlandpython">
                     <div
-                      className={`text-sm text-blue-500 text-left md:px-2 lg:pl-8 py-2 rounded-md ${
-                        location.pathname === "/mlandpython"
-                          ? "bg-[#2255B8] !text-white"
-                          : "hover:bg-white text-blue-500"
+                      className={`text-sm  text-left md:px-2 lg:pl-8  py-2 rounded-md ${
+                        location.pathname === "/techarticles"
+                          ? "bg-[#2255B8] text-white"
+                          : `${getThemeTextPrimaryColor(
+                              app.themeMode
+                            )} ${getThemeHoverPrimaryBgColor(app.themeMode)}`
                       }`}
                     >
                       ML and Python
@@ -304,10 +363,12 @@ const TopicBar = (value) => {
                   </Link>
                   <Link to="/dataanalysis">
                     <div
-                      className={`text-sm text-left md:px-2 lg:pl-8 py-2 rounded-md ${
-                        location.pathname === "/dataanalysis"
+                      className={`text-sm  text-left md:px-2 lg:pl-8  py-2 rounded-md ${
+                        location.pathname === "/techarticles"
                           ? "bg-[#2255B8] text-white"
-                          : "hover:bg-white text-blue-500 "
+                          : `${getThemeTextPrimaryColor(
+                              app.themeMode
+                            )} ${getThemeHoverPrimaryBgColor(app.themeMode)}`
                       }`}
                     >
                       Data Analysis
@@ -315,10 +376,12 @@ const TopicBar = (value) => {
                   </Link>
                   <Link to="/sql">
                     <div
-                      className={`text-sm text-left md:px-2 lg:pl-8 py-2 rounded-md ${
-                        location.pathname === "/sql"
+                      className={`text-sm  text-left md:px-2 lg:pl-8  py-2 rounded-md ${
+                        location.pathname === "/techarticles"
                           ? "bg-[#2255B8] text-white"
-                          : "hover:bg-white text-blue-500 "
+                          : `${getThemeTextPrimaryColor(
+                              app.themeMode
+                            )} ${getThemeHoverPrimaryBgColor(app.themeMode)}`
                       }`}
                     >
                       SQL
@@ -326,12 +389,16 @@ const TopicBar = (value) => {
                   </Link>
                   <div className="">
                     <div
-                      className="flex px-2 py-2 lg:pl-8 rounded-md hover:bg-white"
+                      className="flex md:px-2 lg:pl-8 pr-4 gap-2 py-2 rounded-md  cursor-pointer"
                       onClick={() => {
                         setNonTechOpen(!nonTechOpen);
                       }}
                     >
-                      <div className="text-sm text-blue-500 text-left ">
+                      <div
+                        className={`text-sm text-left md:px-2 lg:pl-8 py-2 rounded-md ${`${getThemeTextPrimaryColor(
+                          app.themeMode
+                        )} ${getThemeHoverPrimaryBgColor(app.themeMode)}`}`}
+                      >
                         Non-Tech Prep
                       </div>
                       <img
@@ -351,13 +418,17 @@ const TopicBar = (value) => {
                     ) : (
                       <div className="flex ml-2  lg:pl-8">
                         {/* <div className="bg-blue-700 w-[1px]"></div> */}
-                        <div className="pl-4 border-l-2 border-blue-700 mt-2">
+                        <div className={`border-l-2 pl-2  mt-2`}>
                           <Link to="/groupdiscussion">
                             <div
-                              className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                              className={`text-sm  text-left md:px-2 lg:pl-8 py-2 rounded-md ${
                                 location.pathname === "/groupdiscussion"
                                   ? "bg-[#2255B8] text-white"
-                                  : "hover:bg-white text-blue-500 "
+                                  : `${getThemeTextPrimaryColor(
+                                      app.themeMode
+                                    )} ${getThemeHoverPrimaryBgColor(
+                                      app.themeMode
+                                    )}`
                               }`}
                             >
                               GD
@@ -365,10 +436,14 @@ const TopicBar = (value) => {
                           </Link>
                           <Link to="/casestudy">
                             <div
-                              className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                              className={`text-sm  text-left md:px-2 lg:pl-8 py-2 rounded-md ${
                                 location.pathname === "/casestudy"
                                   ? "bg-[#2255B8] text-white"
-                                  : "hover:bg-white text-blue-500 "
+                                  : `${getThemeTextPrimaryColor(
+                                      app.themeMode
+                                    )} ${getThemeHoverPrimaryBgColor(
+                                      app.themeMode
+                                    )}`
                               }`}
                             >
                               Case Study
@@ -376,10 +451,14 @@ const TopicBar = (value) => {
                           </Link>
                           <Link to="/guessestimate">
                             <div
-                              className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                              className={`text-sm  text-left md:px-2 lg:pl-8 py-2 rounded-md ${
                                 location.pathname === "/guessestimate"
                                   ? "bg-[#2255B8] text-white"
-                                  : "hover:bg-white text-blue-500 "
+                                  : `${getThemeTextPrimaryColor(
+                                      app.themeMode
+                                    )} ${getThemeHoverPrimaryBgColor(
+                                      app.themeMode
+                                    )}`
                               }`}
                             >
                               Guess Estimate
@@ -387,10 +466,14 @@ const TopicBar = (value) => {
                           </Link>
                           <Link to="/puzzles">
                             <div
-                              className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                              className={`text-sm  text-left md:px-2 lg:pl-8 py-2 rounded-md ${
                                 location.pathname === "/puzzles"
                                   ? "bg-[#2255B8] text-white"
-                                  : "hover:bg-white text-blue-500 "
+                                  : `${getThemeTextPrimaryColor(
+                                      app.themeMode
+                                    )} ${getThemeHoverPrimaryBgColor(
+                                      app.themeMode
+                                    )}`
                               }`}
                             >
                               Puzzles
@@ -406,12 +489,18 @@ const TopicBar = (value) => {
           </div>
           <Link to="/settings">
             <div className=" py-2 ">
-              <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
-                <CogIcon className="w-6 text-blue-500" />
+              <div
+                className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
+                  app.themeMode
+                )}`}
+              >
+                <CogIcon
+                  className={`w-6 ${getThemeTextPrimaryColor(app.themeMode)}`}
+                />
                 <div
-                  className={`ml-5 text-blue-500 md:text-md ${
-                    sidebar ? "hidden" : ""
-                  }`}
+                  className={`ml-5 ${getThemeTextPrimaryColor(
+                    app.themeMode
+                  )} md:text-md ${sidebar ? "hidden" : ""}`}
                 >
                   Settings
                 </div>
@@ -419,48 +508,72 @@ const TopicBar = (value) => {
             </div>
           </Link>
           <div className=" py-2 ">
-            <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
-              <DocumentTextIcon className="w-6 text-blue-500" />
+            <div
+              className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
+                app.themeMode
+              )}`}
+            >
+              <DocumentTextIcon
+                className={`w-6 ${getThemeTextPrimaryColor(app.themeMode)}`}
+              />
               <div
-                className={`ml-5 text-blue-500 md:text-md ${
-                  sidebar ? "hidden" : ""
-                }`}
+                className={`ml-5 ${getThemeTextPrimaryColor(
+                  app.themeMode
+                )} md:text-md ${sidebar ? "hidden" : ""}`}
               >
                 Notice Board
               </div>
             </div>
           </div>
           <div className=" py-2 ">
-            <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
-              <MapIcon className="w-6 text-blue-500" />
+            <div
+              className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
+                app.themeMode
+              )}`}
+            >
+              <MapIcon
+                className={`w-6 ${getThemeTextPrimaryColor(app.themeMode)}`}
+              />
               <div
-                className={`ml-5 text-blue-500 md:text-md ${
-                  sidebar ? "hidden" : ""
-                }`}
+                className={`ml-5 ${getThemeTextPrimaryColor(
+                  app.themeMode
+                )} md:text-md ${sidebar ? "hidden" : ""}`}
               >
                 Roadmap
               </div>
             </div>
           </div>
           <div className="py-2 ">
-            <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
-              <PencilAltIcon className="w-6 text-blue-500" />
+            <div
+              className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
+                app.themeMode
+              )}`}
+            >
+              <PencilAltIcon
+                className={`w-6 ${getThemeTextPrimaryColor(app.themeMode)}`}
+              />
               <div
-                className={`ml-5 text-blue-500 md:text-md ${
-                  sidebar ? "hidden" : ""
-                }`}
+                className={`ml-5 ${getThemeTextPrimaryColor(
+                  app.themeMode
+                )} md:text-md ${sidebar ? "hidden" : ""}`}
               >
                 Exams
               </div>
             </div>
           </div>
           <div className="py-2 ">
-            <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
-              <ChatAlt2Icon className="w-6 text-blue-500" />
+            <div
+              className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
+                app.themeMode
+              )}`}
+            >
+              <ChatAlt2Icon
+                className={`w-6 ${getThemeTextPrimaryColor(app.themeMode)}`}
+              />
               <div
-                className={`ml-5 text-blue-500 md:text-md ${
-                  sidebar ? "hidden" : ""
-                }`}
+                className={`ml-5 ${getThemeTextPrimaryColor(
+                  app.themeMode
+                )} md:text-md ${sidebar ? "hidden" : ""}`}
               >
                 Forum
               </div>
@@ -468,12 +581,18 @@ const TopicBar = (value) => {
           </div>
           {user.loginInfo.username ? (
             <div className=" py-2 cursor-pointer" onClick={Logout}>
-              <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
-                <LogoutIcon className="w-6 text-blue-500" />
+              <div
+                className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
+                  app.themeMode
+                )}`}
+              >
+                <LogoutIcon
+                  className={`w-6 ${getThemeTextPrimaryColor(app.themeMode)}`}
+                />
                 <div
-                  className={`ml-5 text-blue-500 md:text-md ${
-                    sidebar ? "hidden" : ""
-                  }`}
+                  className={`ml-5 ${getThemeTextPrimaryColor(
+                    app.themeMode
+                  )} md:text-md ${sidebar ? "hidden" : ""}`}
                 >
                   Logout
                 </div>

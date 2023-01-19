@@ -3,6 +3,8 @@ const initialState = {
   currentCalendarDate: new Date(),
   lastAvailableDailyWordDate: new Date(),
   lastUpdated: new Date(),
+  fontSize: 0,
+  themeMode: 0,
 };
 
 export const appSlice = createSlice({
@@ -23,11 +25,22 @@ export const appSlice = createSlice({
     setLastUpdated: (state, date) => {
       state.lastUpdated = date.payload;
     },
+    setFontSize: (state, value) => {
+      state.fontSize = parseInt(value.payload);
+    },
+    setThemeMode: (state, value) => {
+      state.themeMode = parseInt(value.payload);
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setCurrentCalendarDate, setLastAvailableDailyWordDate, setLastUpdated } =
-  appSlice.actions;
+export const {
+  setCurrentCalendarDate,
+  setLastAvailableDailyWordDate,
+  setLastUpdated,
+  setFontSize,
+  setThemeMode,
+} = appSlice.actions;
 
 export default appSlice.reducer;

@@ -10,11 +10,12 @@ import CourseCard from "../Components/CourseCard";
 import NotificationBar from "../Components/NotificationBar";
 import Navbar from "../Components/Navbar";
 import { AiFillTrophy } from "react-icons/ai";
-
 import RightDrawer from "../Components/RightDrawer";
 import LeftDrawer from "../Components/LeftDrawer";
+import { getThemeBackgroundColor } from "../data/themesData";
 const LandingPage = (isOpen) => {
   const user = useSelector((state) => state.user);
+  const app = useSelector((state) => state.app);
   const [testData, setTestData] = useState([]);
   const [leaderboard, setLeaderboard] = useState(false);
   const [leaderboardData, setLeaderboardData] = useState([]);
@@ -78,7 +79,9 @@ const LandingPage = (isOpen) => {
         <TopicBar />
       </LeftDrawer>
       <RightDrawer isOpen={isLeaderboardOpen} setIsOpen={setIsLeaderboardOpen}>
-        <div className="w-full h-full bg-white">
+        <div
+          className={`w-full h-full bg-red-400 ${getThemeBackgroundColor(2)}`}
+        >
           <div
             className={`bg-[#EDF3FF] h-full
           `}

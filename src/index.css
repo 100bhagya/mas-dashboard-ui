@@ -109,3 +109,65 @@
   font-size: 1em !important;
   color: white;
 }
+
+/* Background Theme Colour */
+.bgcolor-one {
+  @apply bg-blue-100;
+}
+
+.bgcolor-two {
+  @apply bg-slate-800;
+}
+
+/* Theme Text Color */
+.textcolor-one {
+  @apply text-black;
+}
+
+.textcolor-two {
+  @apply text-white;
+}
+
+/* Theme Border Color */
+.bordercolor-one {
+  @apply border-black;
+}
+
+.bordercolor-two {
+  @apply border-white;
+}
+
+.text-one {
+  @apply text-xs;
+}
+.text-two {
+  @apply text-sm;
+}
+.text-three {
+  @apply text-base;
+}
+.text-four {
+  @apply text-lg;
+}
+
+.textcolor-primary-one {
+  @apply text-blue-500;
+}
+.textcolor-primary-two {
+  @apply text-white;
+}
+
+.textcolor-secondary-one {
+  @apply text-sky-800;
+}
+.textcolor-secondary-two {
+  /* TODO */
+  @apply text-sky-800;
+}
+
+.hover-bg-color-primary-one {
+  @apply hover:bg-white;
+}
+.hover-bg-color-primary-two {
+  @apply hover:bg-blue-500;
+}

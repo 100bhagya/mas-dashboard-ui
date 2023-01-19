@@ -12,6 +12,7 @@ import {
   setCurrentCalendarDate,
   setLastUpdated,
 } from "../app/features/app/appSlice";
+import { getThemeBackgroundColor } from "../data/themesData";
 
 //Toast Notifications
 const toastMessage = (message) => toast(message);
@@ -241,7 +242,11 @@ const WordOfDay = (isOpen) => {
       </div>
       {/* Modal End */}
       <TopicBar value={(isOpen = false)} />
-      <div className="flex-grow py-10 md:px-20 px-10">
+      <div
+        className={`flex-grow py-10 md:px-20 px-10 ${getThemeBackgroundColor(
+          app.themeMode
+        )}`}
+      >
         <div className=" pb-4 border-b-2 border-[#2255B8]">
           <div className="text-3xl text-sky-800">Word of the day</div>
           <div className="text-slate-600 text-md">{date}</div>

@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import Navbar from "../Components/Navbar";
 import TopicBar from "../Components/TopicBar";
+import { getText } from "../data/themesData";
 import Artboard from "../images/Tech Article.png";
 const TechArticles = (isOpen) => {
   const [limit, setLimit] = useState(800);
   const Continue = () => {
     setLimit((prevValue) => prevValue + 100);
   };
+  const app = useSelector((state) => state.app);
   const str =
     "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis, non. In unde tempora dolorem expedita quasi possimus provident ut minima, reiciendis quo fugit similique vel labore dolor perferendis quod delectus consequuntur, beatae eligendi temporibus atque laborum cupiditate commodi autem! Modi, id aspernatur. Voluptas facilis inventore ipsum modi recusandae sed autem? Quae eveniet soluta nostrum eum ratione? Aperiam earum nam atque, cum beatae incidunt facere a. Amet laborum vel consectetur voluptatibus rem harum similique excepturi tenetur possimus vitae? Aspernatur exercitationem, sint atque dicta labore pariatur nihil tempore est itaque magni aliquid quasi excepturi architecto tempora optio perspiciatis saepe provident doloribus ut dolores reiciendis! Et ut dolor odio, nisi repellendus saepe velit perspiciatis ipsa corporis autem veritatis, ab reprehenderit eos est! Ad aspernatur consectetur nemo sunt doloribus soluta? Blanditiis, non. In unde tempora dolorem expedita quasi possimus provident ut minima, reiciendis quo fugit similique vel labore dolor perferendis quod delectus consequuntur, beatae eligendi temporibus atque laborum cupiditate commodi autem! Modi, id aspernatur. Voluptas facilis inventore ipsum modi recusandae sed autem? Quae eveniet soluta nostrum eum ratione? Aperiam earum nam atque, cum beatae incidunt facere a. Amet laborum vel consectetur voluptatibus rem harum similique excepturi tenetur possimus vitae? Aspernatur exercitationem, sint atque dicta labore pariatur nihil tempore est itaque magni aliquid quasi excepturi architecto tempora optio perspiciatis saepe provident doloribus ut dolores reiciendis! Et ut dolor odio, nisi repellendus saepe velit perspiciatis ipsa corporis autem veritatis, ab reprehenderit eos est!";
 
@@ -27,14 +30,16 @@ const TechArticles = (isOpen) => {
               <div className="md:hidden">
                 <img className="" alt="" src={Artboard} />
               </div>
-              <p>{str.slice(0, limit)}</p>
+              <p className={`${getText(app.fontSize)}`}>
+                {str.slice(0, limit)}
+              </p>
               <div className="hidden md:block min-w-[50%]">
                 <img className="" alt="" src={Artboard} />
               </div>
             </div>
 
             <button
-              className="py-2 px-6 text-white rounded-xl bg-[#2255B8] md:w-[50%]"
+              className={`py-2 px-6 text-white rounded-xl bg-[#2255B8] md:w-[50%]`}
               onClick={Continue}
             >
               Click here to continue reading
