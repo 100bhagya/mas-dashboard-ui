@@ -63,7 +63,7 @@ const TopicBar = ({ value }) => {
   return (
     <div
       className={`flex shrink-0 ${sidebar ? "basis-1/10" : "basis-1/5"} ${
-        !sidebar && "min-w-[300px]"
+        !sidebar && "md:min-w-[300px]"
       }  h-full`}
     >
       <div className="bg-blue-100 w-full min-h-[100vh] px-2">
@@ -120,7 +120,7 @@ const TopicBar = ({ value }) => {
           </div>
           <Link to="/">
             <div className=" py-2 ">
-              <div className="flex py-2  md:px-2 lg:px-8 rounded-lg hover:bg-white">
+              <div className="flex py-2  md:px-1 lg:px-8 rounded-lg hover:bg-white">
                 <HomeIcon className="w-6 text-blue-500" />
                 <div
                   className={`ml-5 text-blue-500 md:text-md ${
@@ -134,7 +134,7 @@ const TopicBar = ({ value }) => {
           </Link>
           <div className="py-2">
             <div
-              className=" flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white cursor-pointer"
+              className=" flex py-2 md:px-1 lg:px-8 rounded-lg hover:bg-white cursor-pointer"
               onClick={() => {
                 dispatch(setTasksOpen(!app.tasksOpen));
               }}
@@ -166,7 +166,7 @@ const TopicBar = ({ value }) => {
                 <div className="mt-2 border-blue-700 border-l-2 md:pl-4 px-2">
                   <Link to="/wordofday">
                     <div
-                      className={`text-sm  text-left md:px-2 lg:pl-8 py-2 rounded-md ${
+                      className={`text-sm  text-left md:px-1 lg:pl-8 px-2 py-2 rounded-md ${
                         location.pathname === "/wordofday"
                           ? "bg-[#2255B8] text-white"
                           : "hover:bg-white text-blue-500 "
@@ -177,7 +177,7 @@ const TopicBar = ({ value }) => {
                   </Link>
                   <Link to="/summarywriting">
                     <div
-                      className={`text-sm  text-left md:px-2  lg:pl-8 py-2 rounded-md ${
+                      className={`text-sm  text-left md:px-1  lg:pl-8 px-2 py-2 rounded-md ${
                         location.pathname === "/summarywriting"
                           ? "bg-[#2255B8] text-white"
                           : "hover:bg-white text-blue-500 "
@@ -188,7 +188,7 @@ const TopicBar = ({ value }) => {
                   </Link>
                   <Link to="/techarticles">
                     <div
-                      className={`text-sm  text-left md:px-2 lg:pl-8  py-2 rounded-md ${
+                      className={`text-sm  text-left md:px-1 lg:pl-8 px-2 py-2 rounded-md ${
                         location.pathname === "/techarticles"
                           ? "bg-[#2255B8] text-white"
                           : "hover:bg-white text-blue-500 "
@@ -199,7 +199,7 @@ const TopicBar = ({ value }) => {
                   </Link>
                   <Link to="/quizes">
                     <div
-                      className={`text-sm  text-left md:px-2  lg:pl-8 py-2 rounded-md ${
+                      className={`text-sm  text-left px-2 md:px-1  lg:pl-8 py-2 rounded-md ${
                         location.pathname === "/quizes"
                           ? "bg-[#2255B8] text-white"
                           : "hover:bg-white text-blue-500 "
@@ -210,7 +210,7 @@ const TopicBar = ({ value }) => {
                   </Link>
                   <div className="">
                     <div
-                      className="flex md:px-2 lg:pl-8 pr-4 gap-2 py-2 rounded-md hover:bg-white  cursor-pointer"
+                      className="flex px-2 md:px-1 lg:pl-8 pr-4 gap-2 py-2 rounded-md hover:bg-white  cursor-pointer"
                       onClick={() => {
                         dispatch(setAptitudeOpen(!app.aptitudeOpen));
                       }}
@@ -237,7 +237,7 @@ const TopicBar = ({ value }) => {
                         <div className="border-blue-700 border-l-2 pl-2  mt-2">
                           <Link to="/quant">
                             <div
-                              className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                              className={`text-sm text-left px-2 md:px-1 lg:px-6 py-2 rounded-md ${
                                 location.pathname === "/quant"
                                   ? "bg-[#2255B8] text-white"
                                   : "hover:bg-white text-blue-500 "
@@ -248,7 +248,7 @@ const TopicBar = ({ value }) => {
                           </Link>
                           <Link to="/lrdi">
                             <div
-                              className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                              className={`text-sm text-left px-2 md:px-1 lg:px-6 py-2 rounded-md ${
                                 location.pathname === "/lrdi"
                                   ? "bg-[#2255B8] text-white"
                                   : "hover:bg-white text-blue-500 "
@@ -259,7 +259,7 @@ const TopicBar = ({ value }) => {
                           </Link>
                           <Link to="/verbal">
                             <div
-                              className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                              className={`text-sm text-left px-2 md:px-1 lg:px-6 py-2 rounded-md ${
                                 location.pathname === "/verbal"
                                   ? "bg-[#2255B8] text-white"
                                   : "hover:bg-white text-blue-500 "
@@ -274,7 +274,7 @@ const TopicBar = ({ value }) => {
                   </div>
                   <Link to="/mlandpython">
                     <div
-                      className={`text-sm text-blue-500 text-left md:px-2 lg:pl-8 py-2 rounded-md ${
+                      className={`text-sm text-blue-500 text-left px-2 md:px-1 lg:pl-8 py-2 rounded-md ${
                         location.pathname === "/mlandpython"
                           ? "bg-[#2255B8] !text-white"
                           : "hover:bg-white text-blue-500"
@@ -285,7 +285,7 @@ const TopicBar = ({ value }) => {
                   </Link>
                   <Link to="/dataanalysis">
                     <div
-                      className={`text-sm text-left md:px-2 lg:pl-8 py-2 rounded-md ${
+                      className={`text-sm text-left px-2 md:px-1 lg:pl-8 py-2 rounded-md ${
                         location.pathname === "/dataanalysis"
                           ? "bg-[#2255B8] text-white"
                           : "hover:bg-white text-blue-500 "
@@ -296,7 +296,7 @@ const TopicBar = ({ value }) => {
                   </Link>
                   <Link to="/sql">
                     <div
-                      className={`text-sm text-left md:px-2 lg:pl-8 py-2 rounded-md ${
+                      className={`text-sm text-left px-2 md:px-1 lg:pl-8 py-2 rounded-md ${
                         location.pathname === "/sql"
                           ? "bg-[#2255B8] text-white"
                           : "hover:bg-white text-blue-500 "
@@ -335,7 +335,7 @@ const TopicBar = ({ value }) => {
                         <div className="pl-4 border-l-2 border-blue-700 mt-2">
                           <Link to="/groupdiscussion">
                             <div
-                              className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                              className={`text-sm text-left px-2 md:px-1 lg:px-6 py-2 rounded-md ${
                                 location.pathname === "/groupdiscussion"
                                   ? "bg-[#2255B8] text-white"
                                   : "hover:bg-white text-blue-500 "
@@ -346,7 +346,7 @@ const TopicBar = ({ value }) => {
                           </Link>
                           <Link to="/casestudy">
                             <div
-                              className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                              className={`text-sm text-left px-2 md:px-1 lg:px-6 py-2 rounded-md ${
                                 location.pathname === "/casestudy"
                                   ? "bg-[#2255B8] text-white"
                                   : "hover:bg-white text-blue-500 "
@@ -357,7 +357,7 @@ const TopicBar = ({ value }) => {
                           </Link>
                           <Link to="/guessestimate">
                             <div
-                              className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                              className={`text-sm text-left px-2 md:px-1 lg:px-6 py-2 rounded-md ${
                                 location.pathname === "/guessestimate"
                                   ? "bg-[#2255B8] text-white"
                                   : "hover:bg-white text-blue-500 "
@@ -368,7 +368,7 @@ const TopicBar = ({ value }) => {
                           </Link>
                           <Link to="/puzzles">
                             <div
-                              className={`text-sm text-left md:px-2 lg:px-6 py-2 rounded-md ${
+                              className={`text-sm text-left px-2 md:px-1 lg:px-6 py-2 rounded-md ${
                                 location.pathname === "/puzzles"
                                   ? "bg-[#2255B8] text-white"
                                   : "hover:bg-white text-blue-500 "
@@ -387,7 +387,7 @@ const TopicBar = ({ value }) => {
           </div>
           <Link to="/settings">
             <div className=" py-2 ">
-              <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
+              <div className="flex py-2 md:px-1 lg:px-8 rounded-lg hover:bg-white">
                 <CogIcon className="w-6 text-blue-500" />
                 <div
                   className={`ml-5 text-blue-500 md:text-md ${
@@ -400,7 +400,7 @@ const TopicBar = ({ value }) => {
             </div>
           </Link>
           <div className=" py-2 ">
-            <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
+            <div className="flex py-2 md:px-1 lg:px-8 rounded-lg hover:bg-white">
               <DocumentTextIcon className="w-6 text-blue-500" />
               <div
                 className={`ml-5 text-blue-500 md:text-md ${
@@ -412,7 +412,7 @@ const TopicBar = ({ value }) => {
             </div>
           </div>
           <div className=" py-2 ">
-            <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
+            <div className="flex py-2 md:px-1 lg:px-8 rounded-lg hover:bg-white">
               <MapIcon className="w-6 text-blue-500" />
               <div
                 className={`ml-5 text-blue-500 md:text-md ${
@@ -424,7 +424,7 @@ const TopicBar = ({ value }) => {
             </div>
           </div>
           <div className="py-2 ">
-            <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
+            <div className="flex py-2 md:px-1 lg:px-8 rounded-lg hover:bg-white">
               <PencilAltIcon className="w-6 text-blue-500" />
               <div
                 className={`ml-5 text-blue-500 md:text-md ${
@@ -436,7 +436,7 @@ const TopicBar = ({ value }) => {
             </div>
           </div>
           <div className="py-2 ">
-            <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
+            <div className="flex py-2 md:px-1 lg:px-8 rounded-lg hover:bg-white">
               <ChatAlt2Icon className="w-6 text-blue-500" />
               <div
                 className={`ml-5 text-blue-500 md:text-md ${
@@ -449,7 +449,7 @@ const TopicBar = ({ value }) => {
           </div>
           {user.loginInfo.username ? (
             <div className=" py-2 cursor-pointer" onClick={Logout}>
-              <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
+              <div className="flex py-2 md:px-1 lg:px-8 rounded-lg hover:bg-white">
                 <LogoutIcon className="w-6 text-blue-500" />
                 <div
                   className={`ml-5 text-blue-500 md:text-md ${
@@ -463,7 +463,7 @@ const TopicBar = ({ value }) => {
           ) : (
             <Link to="/signin">
               <div className=" py-2 cursor-pointer">
-                <div className="flex py-2 md:px-2 lg:px-8 rounded-lg hover:bg-white">
+                <div className="flex py-2 md:px-1 lg:px-8 rounded-lg hover:bg-white">
                   <LogoutIcon className="w-6 text-blue-500" />
                   <div
                     className={`ml-5 text-blue-500 md:text-md ${

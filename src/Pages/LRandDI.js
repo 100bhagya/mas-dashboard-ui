@@ -144,133 +144,135 @@ const LRandDI = (isOpen) => {
               Lunchdisco
             </div>
           </div>
-          <div className="grid lg:grid-cols-3 md:grid-cols-1 gap-6 justify-between mt-12">
-            {ratingResponse.length > 0 && (
-              <>
-                <RatingCard
-                  serialNo={1}
-                  Title="Cubes"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Cubes";
-                  })}
-                />
-                <RatingCard
-                  serialNo={2}
-                  Title="Venn Diagram"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Venn Diagram";
-                  })}
-                />
-                <RatingCard
-                  serialNo={3}
-                  Title="Linear & Circular Arrangement"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Linear & Circular Arrangement";
-                  })}
-                />
-                <RatingCard
-                  serialNo={4}
-                  Title="Line, Bar, Column, Pie Charts, Tables"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return (
-                      el.chapter === "Line, Bar, Column, Pie Charts, Tables"
-                    );
-                  })}
-                />
-                <RatingCard
-                  serialNo={5}
-                  Title="Games & Tournament"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Games & Tournament";
-                  })}
-                />
-                <RatingCard
-                  serialNo={6}
-                  Title="Blood Relations"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Blood Relations";
-                  })}
-                />
-                <RatingCard
-                  serialNo={7}
-                  Title="Calendars & Clocks"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Calendars & Clocks";
-                  })}
-                />
-                <RatingCard
-                  serialNo={8}
-                  Title="Syllogism"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Syllogism";
-                  })}
-                />
-                <RatingCard
-                  serialNo={9}
-                  Title="Number and Letter Series"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Number and Letter Series";
-                  })}
-                />
-                <RatingCard
-                  serialNo={10}
-                  Title="Non Verbal Reasoning"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Non Verbal Reasoning";
-                  })}
-                />
-              </>
-            )}
-            {ratingResponse.length === 0 && (
-              <>
-                <RatingCard serialNo={1} Title="Cubes" currentChapter={[]} />
-                <RatingCard
-                  serialNo={2}
-                  Title="Venn Diagram"
-                  currentChapter={[]}
-                />
-                <RatingCard
-                  serialNo={3}
-                  Title="Linear & Circular Arrangement"
-                  currentChapter={[]}
-                />
-                <RatingCard
-                  serialNo={4}
-                  Title="Line, Bar, Column, Pie Charts, Tables"
-                  currentChapter={[]}
-                />
-                <RatingCard
-                  serialNo={5}
-                  Title="Games & Tournament"
-                  currentChapter={[]}
-                />
-                <RatingCard
-                  serialNo={6}
-                  Title="Blood Relations"
-                  currentChapter={[]}
-                />
-                <RatingCard
-                  serialNo={7}
-                  Title="Calendars & Clocks"
-                  currentChapter={[]}
-                />
-                <RatingCard
-                  serialNo={8}
-                  Title="Syllogism"
-                  currentChapter={[]}
-                />
-                <RatingCard
-                  serialNo={9}
-                  Title="Number and Letter Series"
-                  currentChapter={[]}
-                />
-                <RatingCard
-                  serialNo={10}
-                  Title="Non Verbal Reasoning"
-                  currentChapter={[]}
-                />
-              </>
-            )}
+          <div className="flex w-full justify-center">
+            <div className="grid lg:grid-cols-3 md:grid-cols-1 gap-6 justify-between mt-12">
+              {ratingResponse.length > 0 && (
+                <>
+                  <RatingCard
+                    serialNo={1}
+                    Title="Cubes"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Cubes";
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={2}
+                    Title="Venn Diagram"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Venn Diagram";
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={3}
+                    Title="Linear & Circular Arrangement"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Linear & Circular Arrangement";
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={4}
+                    Title="Line, Bar, Column, Pie Charts, Tables"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return (
+                        el.chapter === "Line, Bar, Column, Pie Charts, Tables"
+                      );
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={5}
+                    Title="Games & Tournament"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Games & Tournament";
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={6}
+                    Title="Blood Relations"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Blood Relations";
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={7}
+                    Title="Calendars & Clocks"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Calendars & Clocks";
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={8}
+                    Title="Syllogism"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Syllogism";
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={9}
+                    Title="Number and Letter Series"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Number and Letter Series";
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={10}
+                    Title="Non Verbal Reasoning"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Non Verbal Reasoning";
+                    })}
+                  />
+                </>
+              )}
+              {ratingResponse.length === 0 && (
+                <>
+                  <RatingCard serialNo={1} Title="Cubes" currentChapter={[]} />
+                  <RatingCard
+                    serialNo={2}
+                    Title="Venn Diagram"
+                    currentChapter={[]}
+                  />
+                  <RatingCard
+                    serialNo={3}
+                    Title="Linear & Circular Arrangement"
+                    currentChapter={[]}
+                  />
+                  <RatingCard
+                    serialNo={4}
+                    Title="Line, Bar, Column, Pie Charts, Tables"
+                    currentChapter={[]}
+                  />
+                  <RatingCard
+                    serialNo={5}
+                    Title="Games & Tournament"
+                    currentChapter={[]}
+                  />
+                  <RatingCard
+                    serialNo={6}
+                    Title="Blood Relations"
+                    currentChapter={[]}
+                  />
+                  <RatingCard
+                    serialNo={7}
+                    Title="Calendars & Clocks"
+                    currentChapter={[]}
+                  />
+                  <RatingCard
+                    serialNo={8}
+                    Title="Syllogism"
+                    currentChapter={[]}
+                  />
+                  <RatingCard
+                    serialNo={9}
+                    Title="Number and Letter Series"
+                    currentChapter={[]}
+                  />
+                  <RatingCard
+                    serialNo={10}
+                    Title="Non Verbal Reasoning"
+                    currentChapter={[]}
+                  />
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>

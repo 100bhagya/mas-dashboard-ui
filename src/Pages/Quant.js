@@ -106,16 +106,15 @@ const Quant = (isOpen) => {
           </div>
           <div className="flex mt-6 gap-8 md:gap-12">
             <p className="w-[50%] hidden md:block">
-              LR: Two kinds of logical reasoning are often distinguished in
-              addition to formal deduction: induction and abduction. Given a
-              precondition or premise, a conclusion or logical consequence and a
-              rule or material conditional that implies the conclusion given the
-              precondition, one can explain the following.
-              <br />
-              <br />
-              DI: Data analysis and interpretation is the process of assigning
-              meaning to the collected information and determining the
-              conclusions, significance, and implications of the findings.
+              Quantitative Aptitude is that one integral, and inseparable part
+              of aptitude exams in India. Quantitative aptitude tests the number
+              handling techniques and problem-solving skills of an individual.
+              It is an important requisite in clearing the preliminary stages of
+              several exams, especially the Management courses. The whole
+              purpose of Quantitative Aptitude is to evaluate the thinking
+              process along with the analytical skills of the aspirants. It is
+              not just the ability to solve numerical problems, the candidates
+              require a lot of logical thinking to crack Quantitative Aptitude
             </p>
             <div className="basis-1/2 shadow-xl rounded-xl p-6">
               <span className="text-center block text-[#2255B8] text-lg">
@@ -145,171 +144,181 @@ const Quant = (isOpen) => {
               Lunchdisco
             </div>
           </div>
-          <div className="grid lg:grid-cols-3 md:grid-cols-1 gap-6 justify-between mt-12">
-            {ratingResponse.length > 0 && (
-              <>
-                <RatingCard
-                  serialNo={1}
-                  Title="Probability"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Probability";
-                  })}
-                />
-                <RatingCard
-                  serialNo={2}
-                  Title="Statistics"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Statistics";
-                  })}
-                />
-                <RatingCard
-                  serialNo={3}
-                  Title="P & C"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "P & C";
-                  })}
-                />
-                <RatingCard
-                  serialNo={4}
-                  Title="Profit & Loss"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Profit & Loss";
-                  })}
-                />
-                <RatingCard
-                  serialNo={5}
-                  Title="Simple & Compound Interest"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Simple & Compound Interest";
-                  })}
-                />
-                <RatingCard
-                  serialNo={6}
-                  Title="Time & Work"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Time & Work";
-                  })}
-                />
-                <RatingCard
-                  serialNo={7}
-                  Title="Average, Mixture & Allegations"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Average, Mixture & Allegations";
-                  })}
-                />
-                <RatingCard
-                  serialNo={8}
-                  Title="Time, Speed & Distance"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Time, Speed & Distance";
-                  })}
-                />
-                <RatingCard
-                  serialNo={9}
-                  Title="Geometry"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Time, Speed & Distance";
-                  })}
-                />
-                <RatingCard
-                  serialNo={10}
-                  Title="Coordinate Geometry"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Time, Speed & Distance";
-                  })}
-                />
-                <RatingCard
-                  serialNo={11}
-                  Title="Trigonometry"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Time, Speed & Distance";
-                  })}
-                />
-                <RatingCard
-                  serialNo={12}
-                  Title="Numbers"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Time, Speed & Distance";
-                  })}
-                />
-                <RatingCard
-                  serialNo={13}
-                  Title="Simple, Special & Quadratic Equation"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Time, Speed & Distance";
-                  })}
-                />
-                <RatingCard
-                  serialNo={14}
-                  Title="Sequence & Series"
-                  currentChapter={ratingResponse.filter((el) => {
-                    return el.chapter === "Time, Speed & Distance";
-                  })}
-                />
-              </>
-            )}
-            {ratingResponse.length === 0 && (
-              <>
-                <RatingCard
-                  serialNo={1}
-                  Title="Probability"
-                  currentChapter={[]}
-                />
-                <RatingCard
-                  serialNo={2}
-                  Title="Statistics"
-                  currentChapter={[]}
-                />
-                <RatingCard serialNo={3} Title="P & C" currentChapter={[]} />
-                <RatingCard
-                  serialNo={4}
-                  Title="Profit & Loss"
-                  currentChapter={[]}
-                />
-                <RatingCard
-                  serialNo={5}
-                  Title="Simple & Compound Interest"
-                  currentChapter={[]}
-                />
-                <RatingCard
-                  serialNo={6}
-                  Title="Time & Work"
-                  currentChapter={[]}
-                />
-                <RatingCard
-                  serialNo={7}
-                  Title="Average, Mixture & Allegations"
-                  currentChapter={[]}
-                />
-                <RatingCard
-                  serialNo={8}
-                  Title="Time, Speed & Distance"
-                  currentChapter={[]}
-                />
-                <RatingCard serialNo={9} Title="Geometry" currentChapter={[]} />
-                <RatingCard
-                  serialNo={10}
-                  Title="Coordinate Geometry"
-                  currentChapter={[]}
-                />
-                <RatingCard
-                  serialNo={11}
-                  Title="Trigonometry"
-                  currentChapter={[]}
-                />
-                <RatingCard serialNo={12} Title="Numbers" currentChapter={[]} />
-                <RatingCard
-                  serialNo={13}
-                  Title="Simple, Special & Quadratic Equation"
-                  currentChapter={[]}
-                />
-                <RatingCard
-                  serialNo={14}
-                  Title="Sequence & Series"
-                  currentChapter={[]}
-                />
-              </>
-            )}
+          <div className="flex w-full justify-center">
+            <div className="grid lg:grid-cols-3 md:grid-cols-1 gap-6 justify-between mt-12">
+              {ratingResponse.length > 0 && (
+                <>
+                  <RatingCard
+                    serialNo={1}
+                    Title="Probability"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Probability";
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={2}
+                    Title="Statistics"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Statistics";
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={3}
+                    Title="P & C"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "P & C";
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={4}
+                    Title="Profit & Loss"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Profit & Loss";
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={5}
+                    Title="Simple & Compound Interest"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Simple & Compound Interest";
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={6}
+                    Title="Time & Work"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Time & Work";
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={7}
+                    Title="Average, Mixture & Allegations"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Average, Mixture & Allegations";
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={8}
+                    Title="Time, Speed & Distance"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Time, Speed & Distance";
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={9}
+                    Title="Geometry"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Time, Speed & Distance";
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={10}
+                    Title="Coordinate Geometry"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Time, Speed & Distance";
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={11}
+                    Title="Trigonometry"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Time, Speed & Distance";
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={12}
+                    Title="Numbers"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Time, Speed & Distance";
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={13}
+                    Title="Simple, Special & Quadratic Equation"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Time, Speed & Distance";
+                    })}
+                  />
+                  <RatingCard
+                    serialNo={14}
+                    Title="Sequence & Series"
+                    currentChapter={ratingResponse.filter((el) => {
+                      return el.chapter === "Time, Speed & Distance";
+                    })}
+                  />
+                </>
+              )}
+              {ratingResponse.length === 0 && (
+                <>
+                  <RatingCard
+                    serialNo={1}
+                    Title="Probability"
+                    currentChapter={[]}
+                  />
+                  <RatingCard
+                    serialNo={2}
+                    Title="Statistics"
+                    currentChapter={[]}
+                  />
+                  <RatingCard serialNo={3} Title="P & C" currentChapter={[]} />
+                  <RatingCard
+                    serialNo={4}
+                    Title="Profit & Loss"
+                    currentChapter={[]}
+                  />
+                  <RatingCard
+                    serialNo={5}
+                    Title="Simple & Compound Interest"
+                    currentChapter={[]}
+                  />
+                  <RatingCard
+                    serialNo={6}
+                    Title="Time & Work"
+                    currentChapter={[]}
+                  />
+                  <RatingCard
+                    serialNo={7}
+                    Title="Average, Mixture & Allegations"
+                    currentChapter={[]}
+                  />
+                  <RatingCard
+                    serialNo={8}
+                    Title="Time, Speed & Distance"
+                    currentChapter={[]}
+                  />
+                  <RatingCard
+                    serialNo={9}
+                    Title="Geometry"
+                    currentChapter={[]}
+                  />
+                  <RatingCard
+                    serialNo={10}
+                    Title="Coordinate Geometry"
+                    currentChapter={[]}
+                  />
+                  <RatingCard
+                    serialNo={11}
+                    Title="Trigonometry"
+                    currentChapter={[]}
+                  />
+                  <RatingCard
+                    serialNo={12}
+                    Title="Numbers"
+                    currentChapter={[]}
+                  />
+                  <RatingCard
+                    serialNo={13}
+                    Title="Simple, Special & Quadratic Equation"
+                    currentChapter={[]}
+                  />
+                  <RatingCard
+                    serialNo={14}
+                    Title="Sequence & Series"
+                    currentChapter={[]}
+                  />
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>
