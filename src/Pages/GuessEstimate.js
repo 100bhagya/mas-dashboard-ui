@@ -12,7 +12,7 @@ const GuessEstimate = (isOpen) => {
   const [rating, setRating] = useState();
   const user = useSelector((state) => state.user);
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/task/task-rating?category=GD`, {
+    fetch(`${API_BASE_URL}/api/task/task-rating?category=GuessEstimate`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -28,7 +28,7 @@ const GuessEstimate = (isOpen) => {
   const ratingChanged = async (newRating) => {
     setRating(newRating);
     let item = {
-      category: "GD",
+      category: "GuessEstimate",
       chapter: null,
       studentId: user.loginInfo.id,
       rating: newRating,
