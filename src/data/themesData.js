@@ -10,6 +10,18 @@ export const getThemeBackgroundColor = (value) => {
   }
 };
 
+export const getThemeBLightBackgroundColor = (value) => {
+  value = (value % 2) + 1;
+  switch (value) {
+    case 1:
+      return "light-bgcolor-one";
+    case 2:
+      return "light-bgcolor-two";
+    default:
+      return "light-bgcolor-one";
+  }
+};
+
 export const getThemeTextColor = (value) => {
   value = (value % 2) + 1;
   switch (value) {
@@ -52,6 +64,18 @@ export const getThemeTextSecondaryColor = (value) => {
       return "textcolor-secondary-two";
     default:
       return "textcolor-secondary-one";
+  }
+};
+
+export const getThemeLightTextColor = (value) => {
+  value = (value % 2) + 1;
+  switch (value) {
+    case 1:
+      return "light-textcolor-one";
+    case 2:
+      return "light-textcolor-two";
+    default:
+      return "light-textcolor-one";
   }
 };
 

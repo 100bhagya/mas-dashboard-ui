@@ -130,7 +130,7 @@
 
 /* Theme Border Color */
 .bordercolor-one {
-  @apply border-black;
+  @apply border-blue-700;
 }
 
 .bordercolor-two {
@@ -162,7 +162,7 @@
 }
 .textcolor-secondary-two {
   /* TODO */
-  @apply text-sky-800;
+  @apply text-white;
 }
 
 .hover-bg-color-primary-one {
@@ -170,4 +170,19 @@
 }
 .hover-bg-color-primary-two {
   @apply hover:bg-blue-500;
+}
+
+.light-bgcolor-one {
+  @apply bg-blue-50;
+}
+.light-bgcolor-two {
+  @apply bg-slate-700;
+}
+
+.light-textcolor-one {
+  @apply text-slate-500;
+}
+
+.light-textcolor-two {
+  @apply text-slate-300;
 }

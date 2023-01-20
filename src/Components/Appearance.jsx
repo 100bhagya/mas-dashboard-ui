@@ -1,10 +1,14 @@
-import React from "react";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFontSize, setThemeMode } from "../app/features/app/appSlice";
 import toast, { Toaster } from "react-hot-toast";
-const toastMessage = (message) => toast(message);
+import {
+  getThemeTextColor,
+  getThemeTextSecondaryColor,
+} from "../data/themesData";
+
 const Appearance = () => {
+  const toastMessage = (message) => toast(message);
   const app = useSelector((state) => state.app);
   const themeModeRef = useRef(app.themeMode);
   const fontSizeRef = useRef(app.fontSize);
@@ -12,21 +16,31 @@ const Appearance = () => {
 
   const handleSave = () => {
     dispatch(setThemeMode(themeModeRef.current.value));
-    console.log(themeModeRef.current.value);
     dispatch(setFontSize(fontSizeRef.current.value));
     toastMessage("Saved Successfully");
   };
+  useEffect(() => {
+    return () => {
+      toast.dismiss();
+    };
+  }, []);
 
   return (
     <div className="px-2 md:px-8 py-4">
       <div className="flex flex-col gap-4 md:max-w-[800px] min-h-[90vh] mx-auto">
-        <div className="text-3xl font-bold">Appearance</div>
+        <div
+          className={`text-3xl font-bold ${getThemeTextColor(app.themeMode)}`}
+        >
+          Appearance
+        </div>
         <section className="flex flex-col gap-2 my-2">
           <div className="grid md:grid-cols-1 md:w-1/2 gap-4">
             <div className="flex flex-col gap-1 w-full">
               <label
                 htmlFor="theme-mode"
-                className="text-sm text-slate-600 font-medium"
+                className={`text-sm ${getThemeTextSecondaryColor(
+                  app.themeMode
+                )} font-medium`}
               >
                 Theme Mode
               </label>
@@ -47,8 +61,10 @@ const Appearance = () => {
             </div>
             <div className="flex flex-col gap-1 w-full">
               <label
-                htmlFor="font-size"
-                className="text-sm text-slate-600 font-medium"
+                htmlFor="theme-mode"
+                className={`text-sm ${getThemeTextSecondaryColor(
+                  app.themeMode
+                )} font-medium`}
               >
                 Font Size
               </label>
@@ -86,7 +102,6 @@ const Appearance = () => {
           </div>
         </section>
       </div>
-      <Toaster />
     </div>
   );
 };

@@ -16,6 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../app/features/user/userSlice";
 import {
   getThemeBackgroundColor,
+  getThemeBLightBackgroundColor,
+  getThemeBorderColor,
   getThemeHoverPrimaryBgColor,
   getThemeTextColor,
   getThemeTextPrimaryColor,
@@ -87,11 +89,6 @@ const TopicBar = (value) => {
   const activatesidebar = () => {
     setSidebar(!sidebar);
   };
-  useEffect(() => {
-    console.log(
-      `${getThemeBackgroundColor(app.themeMode)} w-full min-h-[100vh] px-2`
-    );
-  }, [app.themeMode]);
   return (
     <div
       className={`flex shrink-0 ${
@@ -214,7 +211,7 @@ const TopicBar = (value) => {
               >
                 {/* <div className="bg-blue-700 w-[1.5px]"></div> */}
                 <div
-                  className={`mt-2 ${getThemeTextPrimaryColor(
+                  className={`mt-2 ${getThemeBorderColor(
                     app.themeMode
                   )} border-l-2 md:pl-4 px-2`}
                 >
@@ -298,7 +295,11 @@ const TopicBar = (value) => {
                     ) : (
                       <div className="flex ml-4 lg:pl-8">
                         {/* <div className="bg-blue-700 w-[1px]"></div> */}
-                        <div className={`border-l-2 pl-2  mt-2`}>
+                        <div
+                          className={`border-l-2 pl-2 ${getThemeBorderColor(
+                            app.themeMode
+                          )} mt-2`}
+                        >
                           <Link to="/quant">
                             <div
                               className={`text-sm  text-left md:px-2 lg:pl-8 py-2 rounded-md ${
@@ -395,7 +396,7 @@ const TopicBar = (value) => {
                       }}
                     >
                       <div
-                        className={`text-sm text-left md:px-2 lg:pl-8 py-2 rounded-md ${`${getThemeTextPrimaryColor(
+                        className={`text-sm text-left md:px- lg:pl-8 py-2 rounded-md ${`${getThemeTextPrimaryColor(
                           app.themeMode
                         )} ${getThemeHoverPrimaryBgColor(app.themeMode)}`}`}
                       >
@@ -418,7 +419,11 @@ const TopicBar = (value) => {
                     ) : (
                       <div className="flex ml-2  lg:pl-8">
                         {/* <div className="bg-blue-700 w-[1px]"></div> */}
-                        <div className={`border-l-2 pl-2  mt-2`}>
+                        <div
+                          className={`border-l-2 pl-2 ${getThemeBorderColor(
+                            app.themeMode
+                          )} mt-2`}
+                        >
                           <Link to="/groupdiscussion">
                             <div
                               className={`text-sm  text-left md:px-2 lg:pl-8 py-2 rounded-md ${
