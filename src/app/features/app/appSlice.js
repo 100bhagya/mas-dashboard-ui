@@ -3,7 +3,8 @@ const initialState = {
   currentCalendarDate: new Date(),
   lastAvailableDailyWordDate: new Date(),
   lastUpdated: new Date(),
-
+  fontSize: 0,
+  themeMode: 0,
   tasksOpen: true,
   aptitudeOpen: true,
   nonTechOpen: true,
@@ -27,7 +28,12 @@ export const appSlice = createSlice({
     setLastUpdated: (state, date) => {
       state.lastUpdated = date.payload;
     },
-
+    setFontSize: (state, value) => {
+      state.fontSize = parseInt(value.payload);
+    },
+    setThemeMode: (state, value) => {
+      state.themeMode = parseInt(value.payload);
+    },
     setTasksOpen: (state, value) => {
       state.tasksOpen = value.payload;
     },
@@ -45,7 +51,8 @@ export const {
   setCurrentCalendarDate,
   setLastAvailableDailyWordDate,
   setLastUpdated,
-  setIsTopicBarCollapsed,
+  setFontSize,
+  setThemeMode,
   setTasksOpen,
   setAptitudeOpen,
   setNonTechOpen,

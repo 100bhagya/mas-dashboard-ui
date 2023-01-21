@@ -3,8 +3,16 @@ import TopicBar from "../Components/TopicBar";
 import Data from "../data/QuizData";
 import { Link } from "react-router-dom";
 import Navbar from "../Components/Navbar";
+import { useSelector } from "react-redux";
+import {
+  getThemeBackgroundColor,
+  getThemeBLightBackgroundColor,
+  getThemeBorderColor,
+  getThemeTextSecondaryColor,
+} from "../data/themesData";
 
 const Quizes = (isOpen) => {
+  const app = useSelector((state) => state.app);
   return (
     <div className="flex flex-col">
       <Navbar />
@@ -12,9 +20,21 @@ const Quizes = (isOpen) => {
         <div className="hidden md:block">
           <TopicBar value={(isOpen = true)} />
         </div>
-        <div className=" py-10 md:px-20 px-10 flex-grow">
-          <div className=" pb-4 border-b-2 border-[#2255B8]">
-            <div className="text-3xl px-2 text-sky-800">Quizzes</div>
+        <div
+          className={`py-10 md:px-20 px-10 flex-grow ${getThemeBLightBackgroundColor(
+            app.themeMode
+          )}`}
+        >
+          <div
+            className={`pb-4 border-b-2 ${getThemeBorderColor(app.themeMode)}`}
+          >
+            <div
+              className={`text-3xl px-2 ${getThemeTextSecondaryColor(
+                app.themeMode
+              )}`}
+            >
+              Quizzes
+            </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-center h-fit mt-8">
             {Data.map((item) => {
@@ -22,13 +42,25 @@ const Quizes = (isOpen) => {
                 <div className="relative">
                   <Link to="/quizdetail">
                     <div className="rounded-xl shadow-xl flex w-full h-fit md:pr-1 top-0">
-                      <div className="w-1/5 bg-[#EDF3FF] py-2 rounded-l-lg justify-center items-center flex">
-                        <span className="text-2xl text-[#2255B8] flex items-center">
+                      <div
+                        className={`w-1/5 ${getThemeBackgroundColor(
+                          app.themeMode
+                        )} py-2 rounded-l-lg justify-center items-center flex`}
+                      >
+                        <span
+                          className={`text-2xl ${getThemeTextSecondaryColor(
+                            app.themeMode
+                          )} flex items-center`}
+                        >
                           {" "}
                           {item.id}{" "}
                         </span>
                       </div>
-                      <div className=" w-3/5 py-6 pl-6 flex items-center text-sm text-[#2255B8]">
+                      <div
+                        className={`w-3/5 py-6 pl-6 flex items-center text-sm ${getThemeBLightBackgroundColor(
+                          app.themeMode
+                        )} ${getThemeTextSecondaryColor(app.themeMode)}`}
+                      >
                         {item.quiz}
                       </div>
                     </div>

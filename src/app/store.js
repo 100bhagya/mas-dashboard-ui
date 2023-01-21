@@ -8,12 +8,15 @@ const userPersistConfig = {
   key: "user-persist",
   storage,
 };
-
+const appPersistConfig = {
+  key: "app-persist",
+  storage,
+};
 const userPersistedReducer = persistReducer(userPersistConfig, userReducer);
-
+const appPersistedReducer = persistReducer(appPersistConfig, appReducer);
 const rootReducer = combineReducers({
   user: userPersistedReducer,
-  app: appReducer,
+  app: appPersistedReducer,
 });
 
 export const store = configureStore({
