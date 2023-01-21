@@ -173,7 +173,7 @@
 }
 
 .light-bgcolor-one {
-  @apply bg-blue-50;
+  @apply bg-white;
 }
 .light-bgcolor-two {
   @apply bg-slate-700;

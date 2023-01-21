@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "../Components/Navbar";
 import TopicBar from "../Components/TopicBar";
-import { getText } from "../data/themesData";
+import {
+  getText,
+  getThemeBackgroundColor,
+  getThemeBorderColor,
+  getThemeTextColor,
+  getThemeTextSecondaryColor,
+} from "../data/themesData";
 import Artboard from "../images/Tech Article.png";
 const TechArticles = (isOpen) => {
   const [limit, setLimit] = useState(800);
@@ -20,9 +26,23 @@ const TechArticles = (isOpen) => {
         <div className="hidden md:block">
           <TopicBar value={(isOpen = true)} />
         </div>
-        <div className=" py-10 md:px-20 px-10">
-          <div className=" pb-4 border-b-2 border-[#2255B8]">
-            <div className="text-3xl text-sky-800">Tech Articles</div>
+        <div
+          className={` py-10 md:px-20 px-10 ${getThemeBackgroundColor(
+            app.themeMode
+          )}`}
+        >
+          <div
+            className={` pb-4 border-b-2 ${getThemeBorderColor(
+              app.themeMode
+            )} `}
+          >
+            <div
+              className={`text-3xl ${getThemeTextSecondaryColor(
+                app.themeMode
+              )}`}
+            >
+              Tech Articles
+            </div>
           </div>
 
           <div className="flex flex-col">
@@ -30,7 +50,11 @@ const TechArticles = (isOpen) => {
               <div className="md:hidden">
                 <img className="" alt="" src={Artboard} />
               </div>
-              <p className={`${getText(app.fontSize)}`}>
+              <p
+                className={`${getThemeTextColor(app.themeMode)} ${getText(
+                  app.fontSize
+                )}`}
+              >
                 {str.slice(0, limit)}
               </p>
               <div className="hidden md:block min-w-[50%]">

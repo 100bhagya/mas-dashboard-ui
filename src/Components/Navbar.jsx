@@ -15,6 +15,9 @@ const Navbar = ({ children, rightControl }) => {
             setIsOpen((prev) => !prev);
           }}
         />
+        <div>
+          <img alt="myanalyticsschool logo" src="/mas_logo.png" />
+        </div>
         <div
           onClick={() => {
             rightControl(true);
