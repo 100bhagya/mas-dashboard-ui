@@ -18,7 +18,6 @@ import {
   setUsername,
 } from "../app/features/user/userSlice";
 import {
-  getThemeBLightBackgroundColor,
   getThemeLightTextColor,
   getThemeTextColor,
   getThemeTextSecondaryColor,
@@ -29,6 +28,7 @@ const toastMessage = (message) => toast(message);
 const Account = () => {
   const dispatch = useDispatch();
   const app = useSelector((state) => state.app);
+  const theme = useSelector((state) => state.app);
   const user = useSelector((state) => state.user);
   //Refs and States
   const firstNameRef = useRef();

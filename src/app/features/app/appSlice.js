@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import moment from "moment";
 const initialState = {
-  currentCalendarDate: moment().format("DD-MM-YYYY"),
+  currentCalendarDate: new Date(),
   lastAvailableDailyWordDate: new Date(),
   lastUpdated: new Date(),
   fontSize: 0,

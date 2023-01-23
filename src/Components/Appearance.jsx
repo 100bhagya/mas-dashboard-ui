@@ -1,16 +1,17 @@
 import { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setFontSize, setThemeMode } from "../app/features/app/appSlice";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import {
   getThemeTextColor,
   getThemeTextSecondaryColor,
 } from "../data/themesData";
+import { setFontSize, setThemeMode } from "../app/features/theme/themeSlice";
 
 const Appearance = () => {
   const toastMessage = (message) => toast(message);
   const app = useSelector((state) => state.app);
-  const themeModeRef = useRef(app.themeMode);
+  const theme = useSelector((state) => state.theme);
+  const themeModeRef = useRef(theme.themeMode);
   const fontSizeRef = useRef(app.fontSize);
   const dispatch = useDispatch();
 
@@ -29,7 +30,7 @@ const Appearance = () => {
     <div className="px-2 md:px-8 py-4">
       <div className="flex flex-col gap-4 md:max-w-[800px] min-h-[90vh] mx-auto">
         <div
-          className={`text-3xl font-bold ${getThemeTextColor(app.themeMode)}`}
+          className={`text-3xl font-bold ${getThemeTextColor(theme.themeMode)}`}
         >
           Appearance
         </div>
@@ -39,7 +40,7 @@ const Appearance = () => {
               <label
                 htmlFor="theme-mode"
                 className={`text-sm ${getThemeTextSecondaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )} font-medium`}
               >
                 Theme Mode
@@ -51,10 +52,10 @@ const Appearance = () => {
                 name="theme-mode"
                 id="theme-mode"
               >
-                <option selected={app.themeMode === 0} value={0}>
+                <option selected={theme.themeMode === 0} value={0}>
                   Light
                 </option>
-                <option selected={app.themeMode === 1} value={1}>
+                <option selected={theme.themeMode === 1} value={1}>
                   Dark
                 </option>
               </select>
@@ -63,7 +64,7 @@ const Appearance = () => {
               <label
                 htmlFor="theme-mode"
                 className={`text-sm ${getThemeTextSecondaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )} font-medium`}
               >
                 Font Size

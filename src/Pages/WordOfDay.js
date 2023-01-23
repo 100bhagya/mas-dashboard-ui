@@ -125,12 +125,11 @@ const WordOfDay = (isOpen) => {
               "partially-completed";
           }
         }
-
         const lastAvailableDate = moment(
           `${latestAvailableDay}-${app.currentMonthAndYear}`,
           "DD-MM-YYYY"
         ).toDate();
-        // dispatch(setCurrentCalendarDate(lastAvailableDate));
+        dispatch(setCurrentCalendarDate(lastAvailableDate));
         dispatch(setLastAvailableDailyWordDate(lastAvailableDate));
         dispatch(setMarkedDates(markedDates));
       })
