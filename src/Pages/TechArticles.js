@@ -54,7 +54,7 @@ const TechArticles = (isOpen) => {
               </div>
               <p
                 className={`${getThemeTextColor(theme.themeMode)} ${getText(
-                  app.fontSize
+                  theme.fontSize
                 )}`}
               >
                 {str.slice(0, limit)}

@@ -12,7 +12,7 @@ const Appearance = () => {
   const app = useSelector((state) => state.app);
   const theme = useSelector((state) => state.theme);
   const themeModeRef = useRef(theme.themeMode);
-  const fontSizeRef = useRef(app.fontSize);
+  const fontSizeRef = useRef(theme.fontSize);
   const dispatch = useDispatch();
 
   const handleSave = () => {
@@ -76,16 +76,16 @@ const Appearance = () => {
                 name="font-size"
                 id="font-size"
               >
-                <option selected={app.fontSize === 0} value={0}>
+                <option selected={theme.fontSize === 0} value={0}>
                   Extra Small
                 </option>
-                <option selected={app.fontSize === 1} value={1}>
+                <option selected={theme.fontSize === 1} value={1}>
                   Small
                 </option>
-                <option selected={app.fontSize === 2} value={2}>
+                <option selected={theme.fontSize === 2} value={2}>
                   Medium
                 </option>
-                <option selected={app.fontSize === 3} value={3}>
+                <option selected={theme.fontSize === 3} value={3}>
                   Large
                 </option>
               </select>
