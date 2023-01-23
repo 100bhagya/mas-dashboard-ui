@@ -43,6 +43,7 @@ const WordOfDay = (isOpen) => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   useEffect(() => {
+    console.log("redmn");
     let source = axios.CancelToken.source();
     axios
       .get(`${API_BASE_URL}/api/task/daily-words?date=${date}`, {
@@ -145,7 +146,7 @@ const WordOfDay = (isOpen) => {
         .then((response) => {
           toastMessage("Your Response Has Been Submitted");
           setWordingsResponse(response?.data);
-          // dispatch(setLastUpdated(new Date()));
+          dispatch(setLastUpdated(new Date()));
         })
         .catch((err) => {
           console.log(err);
@@ -175,7 +176,7 @@ const WordOfDay = (isOpen) => {
         console.log(response);
         toastMessage("Your Response Has Been Updated");
         setWordingsResponse(response?.data);
-        // dispatch(setLastUpdated(new Date()));
+        dispatch(setLastUpdated(new Date()));
       })
       .catch((err) => {
         console.log(err);

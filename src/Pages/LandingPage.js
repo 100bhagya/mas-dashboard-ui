@@ -13,8 +13,15 @@ import { AiFillTrophy } from "react-icons/ai";
 
 import RightDrawer from "../Components/RightDrawer";
 import LeftDrawer from "../Components/LeftDrawer";
+import {
+  getThemeBackgroundColor,
+  getThemeBLightBackgroundColor,
+  getThemeLightTextColor,
+  getThemeTextSecondaryColor,
+} from "../data/themesData";
 const LandingPage = (isOpen) => {
   const user = useSelector((state) => state.user);
+  const app = useSelector((state) => state.app);
   const [testData, setTestData] = useState([]);
   const [leaderboard, setLeaderboard] = useState(false);
   const [leaderboardData, setLeaderboardData] = useState([]);
@@ -78,12 +85,20 @@ const LandingPage = (isOpen) => {
         <TopicBar />
       </LeftDrawer>
       <RightDrawer isOpen={isLeaderboardOpen} setIsOpen={setIsLeaderboardOpen}>
-        <div className="w-full h-full bg-white">
+        <div
+          className={`w-full h-full ${getThemeBLightBackgroundColor(
+            app.themeMode
+          )}`}
+        >
           <div
-            className={`bg-[#EDF3FF] h-full
+            className={`${getThemeBackgroundColor(app.themeMode)} h-full
           `}
           >
-            <div className="py-6 text-3xl text-[#2255B8] text-center">
+            <div
+              className={`py-6 text-3xl ${getThemeTextSecondaryColor(
+                app.themeMode
+              )} text-center`}
+            >
               Leaderboard
             </div>
             <div className="p-2">
@@ -104,7 +119,11 @@ const LandingPage = (isOpen) => {
                   </thead>
                   <tbody>
                     {leaderboardData.map((student, i) => (
-                      <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                      <tr
+                        class={`${getThemeBLightBackgroundColor(
+                          app.themeMode
+                        )} border-b dark:bg-gray-800 dark:border-gray-700`}
+                      >
                         <th
                           scope="row"
                           class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -127,14 +146,26 @@ const LandingPage = (isOpen) => {
           <TopicBar value={(isOpen = true)} />
         </div>
 
-        <div className="w-full flex">
+        <div
+          className={`w-full flex ${getThemeBLightBackgroundColor(
+            app.themeMode
+          )}`}
+        >
           <div className="w-full md:w-[70%]">
             <div className="md:px-10 p-6">
               <div>
-                <div className="text-base md:text-3xl text-sky-800">
+                <div
+                  className={`text-base md:text-3xl ${getThemeTextSecondaryColor(
+                    app.themeMode
+                  )}`}
+                >
                   Hello, Peter
                 </div>
-                <div className="text-xs">{moment().format("MM/DD/YYYY")}</div>
+                <div
+                  className={`text-xs ${getThemeLightTextColor(app.themeMode)}`}
+                >
+                  {moment().format("MM/DD/YYYY")}
+                </div>
               </div>
 
               <div
@@ -144,7 +175,11 @@ const LandingPage = (isOpen) => {
                 }}
               ></div>
 
-              <div className="text-xl text-sky-800 my-5">
+              <div
+                className={`text-xl ${getThemeTextSecondaryColor(
+                  app.themeMode
+                )} my-5`}
+              >
                 Latest test Performance
               </div>
 
@@ -173,7 +208,11 @@ const LandingPage = (isOpen) => {
                 })}
               </div>
               <div className="">
-                <div className="text-xl text-sky-800 my-10">
+                <div
+                  className={`text-xl ${getThemeTextSecondaryColor(
+                    app.themeMode
+                  )} my-10`}
+                >
                   Performance History
                 </div>
                 <div className="text-right shadow-2xl rounded-2xl h-[300px] w-full ">
@@ -181,7 +220,11 @@ const LandingPage = (isOpen) => {
                 </div>
               </div>
               <div>
-                <div className="text-xl text-sky-800 my-10">
+                <div
+                  className={`text-xl ${getThemeTextSecondaryColor(
+                    app.themeMode
+                  )} my-10`}
+                >
                   Course completion
                 </div>
                 <div className="grid md:grid-cols-3 grid-cols-2 gap-6">
@@ -201,7 +244,9 @@ const LandingPage = (isOpen) => {
               </div>
 
               <p
-                className="text-3xl text-center text-sky-800 mt-24"
+                className={`text-3xl text-center ${getThemeTextSecondaryColor(
+                  app.themeMode
+                )} mt-24`}
                 style={{ fontFamily: "Cookie, cursive" }}
               >
                 Remember why you started
@@ -209,11 +254,15 @@ const LandingPage = (isOpen) => {
             </div>
           </div>
           <div
-            className={`bg-[#EDF3FF] md:w-[30%] ${
+            className={`${getThemeBackgroundColor(app.themeMode)} md:w-[30%] ${
               leaderboard ? "hidden" : ""
             } hidden md:block`}
           >
-            <div className="my-6 text-3xl text-[#2255B8] text-center">
+            <div
+              className={`my-6 text-3xl ${getThemeTextSecondaryColor(
+                app.themeMode
+              )} text-center`}
+            >
               Leaderboard
             </div>
             <div className="p-2">

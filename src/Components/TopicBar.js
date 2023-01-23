@@ -173,7 +173,9 @@ const TopicBar = ({ value }) => {
               <img
                 src={arrow}
                 alt=""
-                className={`w-3 h-2 relative left-[15%] top-2 cursor-pointer ${
+                className={`${getThemeBackgroundColor(
+                  app.themeMode
+                )} w-3 h-2 relative left-[15%] top-2 cursor-pointer ${
                   sidebar ? "hidden" : ""
                 }`}
                 style={{ transform: !app.tasksOpen ? "rotate(180deg)" : null }}
@@ -603,15 +605,21 @@ const TopicBar = ({ value }) => {
           )}
         </div>
       </div>
-      <div className="w-6 h-10 bg-blue-100 relative top-[50vh] hidden md:block">
-        <img
-          src={arrow}
-          alt=""
-          className={`${
-            sidebar ? "-rotate-90" : "rotate-90"
-          } h-4 w-6 cursor-pointer relative top-3`}
-          onClick={activatesidebar}
-        />
+      <div className={`${getThemeBLightBackgroundColor(app.themeMode)}`}>
+        <div
+          className={`${getThemeBackgroundColor(
+            app.themeMode
+          )} top-[50vh] -translate-y-1/2 w-6 h-10  relative hidden md:block`}
+        >
+          <img
+            src={arrow}
+            alt=""
+            className={`${
+              sidebar ? "-rotate-90" : "rotate-90"
+            } h-4 w-6 cursor-pointer relative top-3`}
+            onClick={activatesidebar}
+          />
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import moment from "moment";
@@ -21,8 +21,7 @@ export default function App(props) {
   const [currentMonthAndYear, setCurrentMonthAndYear] = useState(
     moment(new Date()).format("MM-YYYY")
   );
-
-  useEffect(() => {
+  const getCalendarData = useCallback(() => {
     axios
       .get(
         `${API_BASE_URL}/api/task/daily-words/check-status?fromDate=1-${currentMonthAndYear}&toDate=${
@@ -68,7 +67,10 @@ export default function App(props) {
       .catch((error) => {
         console.error(error);
       });
-  }, [currentMonthAndYear, app.lastUpdated]);
+  }, []);
+  useEffect(() => {
+    getCalendarData();
+  }, [currentMonthAndYear]);
 
   const Dated = moment(app.currentCalendarDate).format("DD-MM-YYYY");
   return (
