@@ -67,7 +67,8 @@ const WordOfDay = (isOpen) => {
       setWordingsResponse(wordsResponseData?.data);
       setLoading(false);
     } catch (e) {
-      console.log(e.message);
+      console.log(e, "500");
+      setIsModalOpen(e.response.status === 500);
       setLoading(false);
     }
   };
@@ -81,14 +82,17 @@ const WordOfDay = (isOpen) => {
       setWordings({});
       setLoading(true);
       setMessage("");
+      setIsModalOpen(false);
     };
   }, [app.currentCalendarDate, user]);
-  useEffect(() => {
-    if (!loading) {
-      !dailyWordsId && setIsModalOpen(true);
-    }
-  }, [dailyWordsId]);
-  //doubt
+  // useEffect(() => {
+  //   !dailyWordsId &&
+  //     !loading &&
+  //     moment(app.currentCalendarDate).format("DD-MM-YYYY") !==
+  //       moment().format("DD-MM-YYYY") &&
+  //     setIsModalOpen(!!wordings);
+  // }, [wordings]);
+  // //doubt
 
   const getCalendarData = () => {
     axios
