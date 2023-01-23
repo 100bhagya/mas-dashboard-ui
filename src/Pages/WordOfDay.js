@@ -12,6 +12,15 @@ import {
   setCurrentCalendarDate,
   setLastUpdated,
 } from "../app/features/app/appSlice";
+import {
+  getThemeBackgroundColor,
+  getThemeBLightBackgroundColor,
+  getThemeBorderColor,
+  getThemeLightTextColor,
+  getThemeTextColor,
+  getThemeTextPrimaryColor,
+  getThemeTextSecondaryColor,
+} from "../data/themesData";
 
 //Toast Notifications
 const toastMessage = (message) => toast(message);
@@ -136,7 +145,7 @@ const WordOfDay = (isOpen) => {
         .then((response) => {
           toastMessage("Your Response Has Been Submitted");
           setWordingsResponse(response?.data);
-          dispatch(setLastUpdated(new Date()));
+          // dispatch(setLastUpdated(new Date()));
         })
         .catch((err) => {
           console.log(err);
@@ -166,7 +175,7 @@ const WordOfDay = (isOpen) => {
         console.log(response);
         toastMessage("Your Response Has Been Updated");
         setWordingsResponse(response?.data);
-        dispatch(setLastUpdated(new Date()));
+        // dispatch(setLastUpdated(new Date()));
       })
       .catch((err) => {
         console.log(err);
@@ -192,7 +201,9 @@ const WordOfDay = (isOpen) => {
             &#8203;
           </span>
           <div
-            class="inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+            class={`inline-block align-center ${getThemeBLightBackgroundColor(
+              app.themeMode
+            )} rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full`}
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-headline"
@@ -238,57 +249,113 @@ const WordOfDay = (isOpen) => {
         </div>
       </div>
       {/* Modal End */}
-      <TopicBar value={(isOpen = false)} />
-      <div className="flex-grow py-10 md:px-20 px-10">
-        <div className=" pb-4 border-b-2 border-[#2255B8]">
-          <div className="text-3xl text-sky-800">Word of the day</div>
-          <div className="text-slate-600 text-md">{date}</div>
+      <div className="hidden lg:block">
+        {" "}
+        <TopicBar value={(isOpen = false)} />{" "}
+      </div>
+      <div
+        className={`flex-grow py-5 px-5 lg:py-10 md:px-20 lg:px-10 overflow-x-hidden ${getThemeBLightBackgroundColor(
+          app.themeMode
+        )}`}
+      >
+        <div
+          className={`pb-4 border-b-2 ${getThemeBorderColor(app.themeMode)}`}
+        >
+          <div
+            className={`text-3xl ${getThemeTextSecondaryColor(app.themeMode)}`}
+          >
+            Word of the day
+          </div>
+          <div className={`${getThemeLightTextColor(app.themeMode)} text-md`}>
+            {date}
+          </div>
         </div>
-        <div className="md:flex mt-8 gap-4 md:flex-col lg:flex-row">
+        <div className="flex mt-8 gap-4 flex-col-reverse lg:flex-row">
           {dailyWordsId ? (
             <div className="basis-4/5 flex flex-col">
-              <div className="py-4 px-8  rounded-lg shadow-xl my-3">
+              <div
+                className={`py-4 px-8  rounded-lg shadow-xl my-3 ${getThemeBackgroundColor(
+                  app.themeMode
+                )}`}
+              >
                 <div className="flex items-center">
-                  <h3 className="text-xl text-[#2255B8] py-2">
+                  <h3
+                    className={`text-xl ${getThemeTextSecondaryColor(
+                      app.themeMode
+                    )} py-2`}
+                  >
                     {wordings.wordOne}
                   </h3>
-                  <span className="flex justify-center text-[10px] px-2 uppercase font-semibold text-gray-400 text-center">
+                  <span
+                    className={`flex justify-center text-[10px] px-2 uppercase font-semibold ${getThemeLightTextColor(
+                      app.themeMode
+                    )} text-center`}
+                  >
                     ({wordings.wordOneCat})
                   </span>
                 </div>
 
-                <p className="py-2 text-[#898989]">{wordings.wordOneMeaning}</p>
+                <p className={`py-2 ${getThemeLightTextColor(app.themeMode)}`}>
+                  {wordings.wordOneMeaning}
+                </p>
                 <input
                   placeholder="Let’s make a sentence out of the word !"
                   type="text"
                   id="large-input"
                   ref={responseOneRef}
                   defaultValue={wordingsResponse?.responseOne}
-                  className="block p-4 w-full bg-[#dee9ff] text-blue-900 rounded-lg border border-gray-300 sm:text-[16px] focus:ring-blue-500 focus:border-blue-500 "
+                  className={`block p-4 w-full ${getThemeBLightBackgroundColor(
+                    app.themeMode
+                  )} ${getThemeTextSecondaryColor(
+                    app.themeMode
+                  )} rounded-lg border border-gray-300 sm:text-[16px] focus:ring-blue-500 focus:${getThemeBorderColor(
+                    app.themeMode
+                  )} `}
                 />
                 <div className="text-right mt-3"></div>
               </div>
-              <div className="py-4 px-8  rounded-lg shadow-xl my-3 flex flex-col">
+              <div
+                className={`py-4 px-8  rounded-lg shadow-xl my-3 ${getThemeBackgroundColor(
+                  app.themeMode
+                )}`}
+              >
                 <div className="flex items-center">
-                  <h3 className="text-xl text-[#2255B8] py-2">
+                  <h3
+                    className={`text-xl ${getThemeTextSecondaryColor(
+                      app.themeMode
+                    )} py-2`}
+                  >
                     {wordings.wordTwo}
                   </h3>
-                  <span className="flex justify-center text-[10px] px-2 uppercase font-semibold text-gray-400 text-center">
+                  <span
+                    className={`flex justify-center text-[10px] px-2 uppercase font-semibold ${getThemeLightTextColor(
+                      app.themeMode
+                    )} text-center`}
+                  >
                     ({wordings.wordTwoCat})
                   </span>
                 </div>
 
-                <p className="py-2 text-[#898989]">{wordings.wordTwoMeaning}</p>
+                <p className={`py-2 ${getThemeLightTextColor(app.themeMode)}`}>
+                  {wordings.wordTwoMeaning}
+                </p>
                 <input
                   placeholder="Let’s make a sentence out of the word !"
                   type="text"
                   id="large-input"
                   ref={responseTwoRef}
                   defaultValue={wordingsResponse?.responseTwo}
-                  className="block p-4 w-full bg-[#dee9ff] text-blue-900 rounded-lg border border-gray-300 sm:text-[16px] focus:ring-blue-500 focus:border-blue-500 "
+                  className={`block p-4 w-full ${getThemeBLightBackgroundColor(
+                    app.themeMode
+                  )} ${getThemeTextSecondaryColor(
+                    app.themeMode
+                  )} rounded-lg border border-gray-300 sm:text-[16px] focus:ring-blue-500 focus:${getThemeBorderColor(
+                    app.themeMode
+                  )} `}
                 />
                 <div className="text-right mt-3"></div>
               </div>
+
               {!(wordingsResponse?.id === undefined) ? (
                 <button
                   className="py-2 px-6 text-white rounded-xl bg-[#2255B8] w-[50%] relative  left-[27%]"
@@ -314,11 +381,11 @@ const WordOfDay = (isOpen) => {
           ) : (
             <NoDailyWords loading={loading} />
           )}
-          <div className="basis-1/5 ml-28 ">
+          <div className=" ml-auto mr-0 basis-1/5 lg:ml-28 ">
             {/* <div inline-datepicker data-date="02/25/2022"></div> */}
             <Calendar alert={props} />
             {dailyWordsId ? (
-              <img src={Artboard} alt="" className="mt-24" />
+              <img src={Artboard} alt="" className="mt-24 hidden lg:block" />
             ) : null}
           </div>
         </div>
