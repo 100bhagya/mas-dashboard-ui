@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import moment from "moment";
 const initialState = {
-  currentCalendarDate: new Date(),
+  currentCalendarDate: moment().format("DD-MM-YYYY"),
   lastAvailableDailyWordDate: new Date(),
   lastUpdated: new Date(),
   fontSize: 0,
@@ -8,6 +9,8 @@ const initialState = {
   tasksOpen: true,
   aptitudeOpen: true,
   nonTechOpen: true,
+  markedDates: {},
+  currentMonthAndYear: moment().format("MM-YYYY"),
 };
 
 export const appSlice = createSlice({
@@ -43,6 +46,12 @@ export const appSlice = createSlice({
     setNonTechOpen: (state, value) => {
       state.nonTechOpen = value.payload;
     },
+    setMarkedDates: (state, value) => {
+      state.markedDates = value.payload;
+    },
+    setCurrentMonthAndYear: (state, value) => {
+      state.currentMonthAndYear = value.payload;
+    },
   },
 });
 
@@ -56,6 +65,8 @@ export const {
   setTasksOpen,
   setAptitudeOpen,
   setNonTechOpen,
+  setMarkedDates,
+  setCurrentMonthAndYear,
 } = appSlice.actions;
 
 export default appSlice.reducer;

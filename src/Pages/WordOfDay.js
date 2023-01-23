@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import TopicBar from "../Components/TopicBar";
 import Calendar from "../Components/Calender";
-import Artboard from "../images/wordofday.png";
 import moment from "moment";
 import NoDailyWords from "../Components/NoDailyWords";
 import axios from "axios";
@@ -10,15 +9,14 @@ import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setCurrentCalendarDate,
-  setLastUpdated,
+  setLastAvailableDailyWordDate,
+  setMarkedDates,
 } from "../app/features/app/appSlice";
 import {
   getThemeBackgroundColor,
   getThemeBLightBackgroundColor,
   getThemeBorderColor,
   getThemeLightTextColor,
-  getThemeTextColor,
-  getThemeTextPrimaryColor,
   getThemeTextSecondaryColor,
 } from "../data/themesData";
 
@@ -27,7 +25,6 @@ const toastMessage = (message) => toast(message);
 
 const WordOfDay = (isOpen) => {
   // todo: get latest date for which daily word is present and use it below for date
-  const [date, setDate] = useState(moment(new Date()).format("DD-MM-YYYY"));
   const [wordings, setWordings] = useState({});
   const [wordingsResponse, setWordingsResponse] = useState({});
   // todo: dailyWordsId comes by calling dailywords get api, date is used as parameter
@@ -42,63 +39,40 @@ const WordOfDay = (isOpen) => {
   const app = useSelector((state) => state.app);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  useEffect(() => {
-    console.log("redmn");
-    let source = axios.CancelToken.source();
-    axios
-      .get(`${API_BASE_URL}/api/task/daily-words?date=${date}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + user.loginInfo.accessToken,
-        },
-      })
-      .then((dailyWordsFetchedResponse) => {
-        setLoading(true);
-        setWordings(dailyWordsFetchedResponse?.data);
-        setDailyWordsId(dailyWordsFetchedResponse?.data.id);
-        return dailyWordsFetchedResponse?.data.id;
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      })
-      .then((dailyWordsId) => {
-        setLoading(true);
-        if (
-          dailyWordsId === "" ||
-          dailyWordsId === null ||
-          dailyWordsId === undefined
-        ) {
-          setIsModalOpen(true);
-        } else {
-          setIsModalOpen(false);
+  const fetchDailyWordData = async () => {
+    try {
+      const dailyWordsFetchedResponse = await axios.get(
+        `${API_BASE_URL}/api/task/daily-words?date=${moment(
+          app.currentCalendarDate
+        ).format("DD-MM-YYYY")}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + user.loginInfo.accessToken,
+          },
         }
-        axios
-          .get(
-            `${API_BASE_URL}/api/task/daily-words-response?dailyWordsId=${dailyWordsId}`,
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + user.loginInfo.accessToken,
-              },
-            }
-          )
-          .catch((err) => {
-            console.log(err);
-            setLoading(false);
-          })
-          .then((wordsResponseData) => {
-            setLoading(true);
-            setWordingsResponse(wordsResponseData?.data);
-          })
-          .catch((err) => {
-            console.log(err);
-            setLoading(false);
-          })
-          .finally(() => {
-            setLoading(false);
-          });
-      });
+      );
+      const wordsResponseData = await axios.get(
+        `${API_BASE_URL}/api/task/daily-words-response?dailyWordsId=${dailyWordsFetchedResponse?.data.id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + user.loginInfo.accessToken,
+          },
+        }
+      );
+      setWordings(dailyWordsFetchedResponse?.data);
+      setDailyWordsId(dailyWordsFetchedResponse?.data.id);
+      setWordingsResponse(wordsResponseData?.data);
+      setLoading(false);
+    } catch (e) {
+      console.log(e.message);
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    let source = axios.CancelToken.source();
+    app.currentCalendarDate && fetchDailyWordData();
     return function () {
       source.cancel("Cancelling in cleanup");
       setDailyWordsId(null);
@@ -107,15 +81,103 @@ const WordOfDay = (isOpen) => {
       setLoading(true);
       setMessage("");
     };
-  }, [date, user]);
-  //doubt
-  function props(data) {
-    setDate(data);
-    if (!wordingsResponse) {
-      // setResponseOne(null);
-      // setResponseTwo(null);
+  }, [app.currentCalendarDate, user]);
+  useEffect(() => {
+    if (!loading) {
+      !dailyWordsId && setIsModalOpen(true);
     }
-  }
+  }, [dailyWordsId]);
+  //doubt
+
+  const getCalendarData = () => {
+    axios
+      .get(
+        `${API_BASE_URL}/api/task/daily-words/check-status?fromDate=1-${
+          app.currentMonthAndYear
+        }&toDate=${
+          moment().format("MM-YYYY") === app.currentMonthAndYear
+            ? moment().format("DD")
+            : moment(app.currentMonthAndYear, "MM-YYYY").daysInMonth()
+        }-${app.currentMonthAndYear}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + user.loginInfo.accessToken,
+          },
+        }
+      )
+      .then((response) => {
+        //default date of previous months is 1
+        let latestAvailableDay = 1;
+        const markedDates = {};
+        for (const [key, value] of Object.entries(response.data)) {
+          let curDay = parseInt(moment(key).format("DD"));
+          if (curDay > latestAvailableDay) {
+            latestAvailableDay = curDay;
+          }
+
+          if (value[0] === true && value[1] === true) {
+            markedDates[moment(key).format("DD-MM-YYYY")] = "completed";
+          } else if (value[0] === false && value[1] === false) {
+            markedDates[moment(key).format("DD-MM-YYYY")] = "not-attempted";
+          } else {
+            markedDates[moment(key).format("DD-MM-YYYY")] =
+              "partially-completed";
+          }
+        }
+
+        const lastAvailableDate = moment(
+          `${latestAvailableDay}-${app.currentMonthAndYear}`,
+          "DD-MM-YYYY"
+        ).toDate();
+        // dispatch(setCurrentCalendarDate(lastAvailableDate));
+        dispatch(setLastAvailableDailyWordDate(lastAvailableDate));
+        dispatch(setMarkedDates(markedDates));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  const updateCalenderData = () => {
+    axios
+      .get(
+        `${API_BASE_URL}/api/task/daily-words/check-status?fromDate=1-${
+          app.currentMonthAndYear
+        }&toDate=${
+          moment().format("MM-YYYY") === app.currentMonthAndYear
+            ? moment().format("DD")
+            : moment(app.currentMonthAndYear, "MM-YYYY").daysInMonth()
+        }-${app.currentMonthAndYear}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + user.loginInfo.accessToken,
+          },
+        }
+      )
+      .then((response) => {
+        //default date of previous months is 1
+
+        const markedDates = {};
+        for (const [key, value] of Object.entries(response.data)) {
+          if (value[0] === true && value[1] === true) {
+            markedDates[moment(key).format("DD-MM-YYYY")] = "completed";
+          } else if (value[0] === false && value[1] === false) {
+            markedDates[moment(key).format("DD-MM-YYYY")] = "not-attempted";
+          } else {
+            markedDates[moment(key).format("DD-MM-YYYY")] =
+              "partially-completed";
+          }
+        }
+        dispatch(setMarkedDates(markedDates));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  useEffect(() => {
+    getCalendarData();
+  }, []);
 
   const sendResponse = async () => {
     if (
@@ -146,7 +208,7 @@ const WordOfDay = (isOpen) => {
         .then((response) => {
           toastMessage("Your Response Has Been Submitted");
           setWordingsResponse(response?.data);
-          dispatch(setLastUpdated(new Date()));
+          updateCalenderData();
         })
         .catch((err) => {
           console.log(err);
@@ -176,7 +238,7 @@ const WordOfDay = (isOpen) => {
         console.log(response);
         toastMessage("Your Response Has Been Updated");
         setWordingsResponse(response?.data);
-        dispatch(setLastUpdated(new Date()));
+        updateCalenderData();
       })
       .catch((err) => {
         console.log(err);
@@ -268,11 +330,11 @@ const WordOfDay = (isOpen) => {
             Word of the day
           </div>
           <div className={`${getThemeLightTextColor(app.themeMode)} text-md`}>
-            {date}
+            {`${moment(app.currentCalendarDate).format("DD-MM-YYYY")}`}
           </div>
         </div>
         <div className="flex mt-8 gap-4 flex-col-reverse lg:flex-row">
-          {dailyWordsId ? (
+          {!loading && dailyWordsId ? (
             <div className="basis-4/5 flex flex-col">
               <div
                 className={`py-4 px-8  rounded-lg shadow-xl my-3 ${getThemeBackgroundColor(
@@ -384,10 +446,10 @@ const WordOfDay = (isOpen) => {
           )}
           <div className=" ml-auto mr-0 basis-1/5 lg:ml-28 ">
             {/* <div inline-datepicker data-date="02/25/2022"></div> */}
-            <Calendar alert={props} />
-            {dailyWordsId ? (
+            <Calendar />
+            {/* {dailyWordsId ? (
               <img src={Artboard} alt="" className="mt-24 hidden lg:block" />
-            ) : null}
+            ) : null} */}
           </div>
         </div>
       </div>
