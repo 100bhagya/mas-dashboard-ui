@@ -19,7 +19,8 @@ import {
 const CaseStudy = (isOpen) => {
   const [rating, setRating] = useState();
   const user = useSelector((state) => state.user);
-  const app = useSelector((state) => state.app);
+  const theme = useSelector((state) => state.theme);
+
   useEffect(() => {
     fetch(`${API_BASE_URL}/api/task/task-rating?category=CaseStudy`, {
       method: "GET",
@@ -78,15 +79,17 @@ const CaseStudy = (isOpen) => {
         </div>
         <div
           className={`flex flex-col gap-6 md:gap-12 p-2 md:p-8 ${getThemeBLightBackgroundColor(
-            app.themeMode
+            theme.themeMode
           )}`}
         >
           <div
-            className={`pb-4 border-b-2 ${getThemeBorderColor(app.themeMode)}`}
+            className={`pb-4 border-b-2 ${getThemeBorderColor(
+              theme.themeMode
+            )}`}
           >
             <div
               className={`text-3xl ${getThemeTextSecondaryColor(
-                app.themeMode
+                theme.themeMode
               )} p-2`}
             >
               Case Study
@@ -95,8 +98,8 @@ const CaseStudy = (isOpen) => {
           <div className="flex mt-6 gap-8 md:gap-12">
             <p
               className={`w-[50%] hidden md:block ${getThemeBackgroundColor(
-                app.themeMode
-              )} ${getThemeTextColor(app.themeMode)} px-4 py-2 rounded-xl`}
+                theme.themeMode
+              )} ${getThemeTextColor(theme.themeMode)} px-4 py-2 rounded-xl`}
             >
               LR: Two kinds of logical reasoning are often distinguished in
               addition to formal deduction: induction and abduction. Given a
@@ -112,35 +115,35 @@ const CaseStudy = (isOpen) => {
 
             <div
               className={`basis-1/2 shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeBackgroundColor(
-                app.themeMode
+                theme.themeMode
               )}`}
             >
               <span
                 className={`text-center block ${getThemeTextSecondaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )} text-lg`}
               >
                 Practice Mode
               </span>
               <img src={Artboard1} className="w-48" />
-              <div className={`${getThemeLightTextColor(app.themeMode)}`}>
+              <div className={`${getThemeLightTextColor(theme.themeMode)}`}>
                 Lorem ipsum dolor sit amet consectetur adipisicing.
               </div>
             </div>
             <div
               className={`basis-1/2 shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeBackgroundColor(
-                app.themeMode
+                theme.themeMode
               )}`}
             >
               <span
                 className={`text-center block ${getThemeTextSecondaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )} text-lg`}
               >
                 Test Mode
               </span>
               <img src={Artboard2} className="w-48" />
-              <div className={`${getThemeLightTextColor(app.themeMode)}`}>
+              <div className={`${getThemeLightTextColor(theme.themeMode)}`}>
                 Lorem ipsum dolor sit amet consectetur adipisicing.
               </div>
             </div>
@@ -148,12 +151,14 @@ const CaseStudy = (isOpen) => {
           <div className="flex flex-col gap-6">
             <div
               className={`text-3xl ${getThemeTextSecondaryColor(
-                app.themeMode
+                theme.themeMode
               )}`}
             >
               Case Study Practice
             </div>
-            <div className={`${getThemeLightTextColor(app.themeMode)} text-md`}>
+            <div
+              className={`${getThemeLightTextColor(theme.themeMode)} text-md`}
+            >
               Lörem ipsum mansskatt postform, förutom genusbudgetering pretrede.
               Lunchdisco
             </div>
@@ -163,19 +168,19 @@ const CaseStudy = (isOpen) => {
                 <TableContent name={"buddy1"} />
                 <div
                   className={`${getThemeBackgroundColor(
-                    app.themeMode
+                    theme.themeMode
                   )} text-center justify-center rounded-xl px-2 py-1 shadow-2xl flex flex-col items-center`}
                 >
                   <div
                     className={`${getThemeTextColor(
-                      app.themeMode
+                      theme.themeMode
                     )} text-2xl font-semibold`}
                   >
                     Self Evaluation
                   </div>
                   <div
                     className={`${getThemeLightTextColor(
-                      app.themeMode
+                      theme.themeMode
                     )} text-center`}
                   >
                     Lörem ipsum mansskatt postform, förutom genusbudgetering

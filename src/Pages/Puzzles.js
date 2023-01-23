@@ -4,7 +4,6 @@ import Navbar from "../Components/Navbar";
 import TopicBar from "../Components/TopicBar";
 import {
   getText,
-  getThemeBackgroundColor,
   getThemeBLightBackgroundColor,
   getThemeBorderColor,
   getThemeTextColor,
@@ -17,6 +16,7 @@ const Puzzels = (isOpen) => {
     setLimit((prevValue) => prevValue + 100);
   };
   const app = useSelector((state) => state.app);
+  const theme = useSelector((state) => state.theme);
   const str =
     "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis, non. In unde tempora dolorem expedita quasi possimus provident ut minima, reiciendis quo fugit similique vel labore dolor perferendis quod delectus consequuntur, beatae eligendi temporibus atque laborum cupiditate commodi autem! Modi, id aspernatur. Voluptas facilis inventore ipsum modi recusandae sed autem? Quae eveniet soluta nostrum eum ratione? Aperiam earum nam atque, cum beatae incidunt facere a. Amet laborum vel consectetur voluptatibus rem harum similique excepturi tenetur possimus vitae? Aspernatur exercitationem, sint atque dicta labore pariatur nihil tempore est itaque magni aliquid quasi excepturi architecto tempora optio perspiciatis saepe provident doloribus ut dolores reiciendis! Et ut dolor odio, nisi repellendus saepe velit perspiciatis ipsa corporis autem veritatis, ab reprehenderit eos est! Ad aspernatur consectetur nemo sunt doloribus soluta? Blanditiis, non. In unde tempora dolorem expedita quasi possimus provident ut minima, reiciendis quo fugit similique vel labore dolor perferendis quod delectus consequuntur, beatae eligendi temporibus atque laborum cupiditate commodi autem! Modi, id aspernatur. Voluptas facilis inventore ipsum modi recusandae sed autem? Quae eveniet soluta nostrum eum ratione? Aperiam earum nam atque, cum beatae incidunt facere a. Amet laborum vel consectetur voluptatibus rem harum similique excepturi tenetur possimus vitae? Aspernatur exercitationem, sint atque dicta labore pariatur nihil tempore est itaque magni aliquid quasi excepturi architecto tempora optio perspiciatis saepe provident doloribus ut dolores reiciendis! Et ut dolor odio, nisi repellendus saepe velit perspiciatis ipsa corporis autem veritatis, ab reprehenderit eos est!";
 
@@ -29,17 +29,17 @@ const Puzzels = (isOpen) => {
         </div>
         <div
           className={` py-10 md:px-20 px-10 ${getThemeBLightBackgroundColor(
-            app.themeMode
+            theme.themeMode
           )}`}
         >
           <div
             className={` pb-4 border-b-2 ${getThemeBorderColor(
-              app.themeMode
+              theme.themeMode
             )} `}
           >
             <div
               className={`text-3xl ${getThemeTextSecondaryColor(
-                app.themeMode
+                theme.themeMode
               )}`}
             >
               Puzzels
@@ -52,7 +52,7 @@ const Puzzels = (isOpen) => {
                 <img className="" alt="" src={Artboard} />
               </div>
               <p
-                className={`${getThemeTextColor(app.themeMode)} ${getText(
+                className={`${getThemeTextColor(theme.themeMode)} ${getText(
                   app.fontSize
                 )}`}
               >

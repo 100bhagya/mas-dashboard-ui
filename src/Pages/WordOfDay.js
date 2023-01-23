@@ -38,6 +38,7 @@ const WordOfDay = (isOpen) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const app = useSelector((state) => state.app);
   const user = useSelector((state) => state.user);
+  const theme = useSelector((state) => state.theme);
   const dispatch = useDispatch();
   const fetchDailyWordData = async () => {
     try {
@@ -264,7 +265,7 @@ const WordOfDay = (isOpen) => {
           </span>
           <div
             class={`inline-block align-center ${getThemeBLightBackgroundColor(
-              app.themeMode
+              theme.themeMode
             )} rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full`}
             role="dialog"
             aria-modal="true"
@@ -317,18 +318,20 @@ const WordOfDay = (isOpen) => {
       </div>
       <div
         className={`flex-grow py-5 px-5 lg:py-10 md:px-20 lg:px-10 overflow-x-hidden ${getThemeBLightBackgroundColor(
-          app.themeMode
+          theme.themeMode
         )}`}
       >
         <div
-          className={`pb-4 border-b-2 ${getThemeBorderColor(app.themeMode)}`}
+          className={`pb-4 border-b-2 ${getThemeBorderColor(theme.themeMode)}`}
         >
           <div
-            className={`text-3xl ${getThemeTextSecondaryColor(app.themeMode)}`}
+            className={`text-3xl ${getThemeTextSecondaryColor(
+              theme.themeMode
+            )}`}
           >
             Word of the day
           </div>
-          <div className={`${getThemeLightTextColor(app.themeMode)} text-md`}>
+          <div className={`${getThemeLightTextColor(theme.themeMode)} text-md`}>
             {`${moment(app.currentCalendarDate).format("DD-MM-YYYY")}`}
           </div>
         </div>
@@ -337,27 +340,29 @@ const WordOfDay = (isOpen) => {
             <div className="basis-4/5 flex flex-col">
               <div
                 className={`py-4 px-8  rounded-lg shadow-xl my-3 ${getThemeBackgroundColor(
-                  app.themeMode
+                  theme.themeMode
                 )}`}
               >
                 <div className="flex items-center">
                   <h3
                     className={`text-xl ${getThemeTextSecondaryColor(
-                      app.themeMode
+                      theme.themeMode
                     )} py-2`}
                   >
                     {wordings.wordOne}
                   </h3>
                   <span
                     className={`flex justify-center text-[10px] px-2 uppercase font-semibold ${getThemeLightTextColor(
-                      app.themeMode
+                      theme.themeMode
                     )} text-center`}
                   >
                     ({wordings.wordOneCat})
                   </span>
                 </div>
 
-                <p className={`py-2 ${getThemeLightTextColor(app.themeMode)}`}>
+                <p
+                  className={`py-2 ${getThemeLightTextColor(theme.themeMode)}`}
+                >
                   {wordings.wordOneMeaning}
                 </p>
                 <input
@@ -367,38 +372,40 @@ const WordOfDay = (isOpen) => {
                   ref={responseOneRef}
                   defaultValue={wordingsResponse?.responseOne}
                   className={`block p-4 w-full ${getThemeBLightBackgroundColor(
-                    app.themeMode
+                    theme.themeMode
                   )} ${getThemeTextSecondaryColor(
-                    app.themeMode
+                    theme.themeMode
                   )} rounded-lg border border-gray-300 sm:text-[16px] focus:ring-blue-500 focus:${getThemeBorderColor(
-                    app.themeMode
+                    theme.themeMode
                   )} `}
                 />
                 <div className="text-right mt-3"></div>
               </div>
               <div
                 className={`py-4 px-8  rounded-lg shadow-xl my-3 ${getThemeBackgroundColor(
-                  app.themeMode
+                  theme.themeMode
                 )}`}
               >
                 <div className="flex items-center">
                   <h3
                     className={`text-xl ${getThemeTextSecondaryColor(
-                      app.themeMode
+                      theme.themeMode
                     )} py-2`}
                   >
                     {wordings.wordTwo}
                   </h3>
                   <span
                     className={`flex justify-center text-[10px] px-2 uppercase font-semibold ${getThemeLightTextColor(
-                      app.themeMode
+                      theme.themeMode
                     )} text-center`}
                   >
                     ({wordings.wordTwoCat})
                   </span>
                 </div>
 
-                <p className={`py-2 ${getThemeLightTextColor(app.themeMode)}`}>
+                <p
+                  className={`py-2 ${getThemeLightTextColor(theme.themeMode)}`}
+                >
                   {wordings.wordTwoMeaning}
                 </p>
                 <input
@@ -408,11 +415,11 @@ const WordOfDay = (isOpen) => {
                   ref={responseTwoRef}
                   defaultValue={wordingsResponse?.responseTwo}
                   className={`block p-4 w-full ${getThemeBLightBackgroundColor(
-                    app.themeMode
+                    theme.themeMode
                   )} ${getThemeTextSecondaryColor(
-                    app.themeMode
+                    theme.themeMode
                   )} rounded-lg border border-gray-300 sm:text-[16px] focus:ring-blue-500 focus:${getThemeBorderColor(
-                    app.themeMode
+                    theme.themeMode
                   )} `}
                 />
                 <div className="text-right mt-3"></div>

@@ -21,7 +21,8 @@ import {
 } from "../data/themesData";
 const LandingPage = (isOpen) => {
   const user = useSelector((state) => state.user);
-  const app = useSelector((state) => state.app);
+  const theme = useSelector((state) => state.theme);
+
   const [testData, setTestData] = useState([]);
   const [leaderboard, setLeaderboard] = useState(false);
   const [leaderboardData, setLeaderboardData] = useState([]);
@@ -87,16 +88,16 @@ const LandingPage = (isOpen) => {
       <RightDrawer isOpen={isLeaderboardOpen} setIsOpen={setIsLeaderboardOpen}>
         <div
           className={`w-full h-full ${getThemeBLightBackgroundColor(
-            app.themeMode
+            theme.themeMode
           )}`}
         >
           <div
-            className={`${getThemeBackgroundColor(app.themeMode)} h-full
+            className={`${getThemeBackgroundColor(theme.themeMode)} h-full
           `}
           >
             <div
               className={`py-6 text-3xl ${getThemeTextSecondaryColor(
-                app.themeMode
+                theme.themeMode
               )} text-center`}
             >
               Leaderboard
@@ -121,7 +122,7 @@ const LandingPage = (isOpen) => {
                     {leaderboardData.map((student, i) => (
                       <tr
                         class={`${getThemeBLightBackgroundColor(
-                          app.themeMode
+                          theme.themeMode
                         )} border-b dark:bg-gray-800 dark:border-gray-700`}
                       >
                         <th
@@ -148,7 +149,7 @@ const LandingPage = (isOpen) => {
 
         <div
           className={`w-full flex ${getThemeBLightBackgroundColor(
-            app.themeMode
+            theme.themeMode
           )}`}
         >
           <div className="w-full md:w-[70%]">
@@ -156,13 +157,15 @@ const LandingPage = (isOpen) => {
               <div>
                 <div
                   className={`text-base md:text-3xl ${getThemeTextSecondaryColor(
-                    app.themeMode
+                    theme.themeMode
                   )}`}
                 >
                   Hello, Peter
                 </div>
                 <div
-                  className={`text-xs ${getThemeLightTextColor(app.themeMode)}`}
+                  className={`text-xs ${getThemeLightTextColor(
+                    theme.themeMode
+                  )}`}
                 >
                   {moment().format("MM/DD/YYYY")}
                 </div>
@@ -177,7 +180,7 @@ const LandingPage = (isOpen) => {
 
               <div
                 className={`text-xl ${getThemeTextSecondaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )} my-5`}
               >
                 Latest test Performance
@@ -210,7 +213,7 @@ const LandingPage = (isOpen) => {
               <div className="">
                 <div
                   className={`text-xl ${getThemeTextSecondaryColor(
-                    app.themeMode
+                    theme.themeMode
                   )} my-10`}
                 >
                   Performance History
@@ -222,7 +225,7 @@ const LandingPage = (isOpen) => {
               <div>
                 <div
                   className={`text-xl ${getThemeTextSecondaryColor(
-                    app.themeMode
+                    theme.themeMode
                   )} my-10`}
                 >
                   Course completion
@@ -245,7 +248,7 @@ const LandingPage = (isOpen) => {
 
               <p
                 className={`text-3xl text-center ${getThemeTextSecondaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )} mt-24`}
                 style={{ fontFamily: "Cookie, cursive" }}
               >
@@ -254,13 +257,13 @@ const LandingPage = (isOpen) => {
             </div>
           </div>
           <div
-            className={`${getThemeBackgroundColor(app.themeMode)} md:w-[30%] ${
-              leaderboard ? "hidden" : ""
-            } hidden md:block`}
+            className={`${getThemeBackgroundColor(
+              theme.themeMode
+            )} md:w-[30%] ${leaderboard ? "hidden" : ""} hidden md:block`}
           >
             <div
               className={`my-6 text-3xl ${getThemeTextSecondaryColor(
-                app.themeMode
+                theme.themeMode
               )} text-center`}
             >
               Leaderboard

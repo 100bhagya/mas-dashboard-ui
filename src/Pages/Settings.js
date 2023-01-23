@@ -16,7 +16,7 @@ import {
 import { useSelector } from "react-redux";
 const Settings = (isOpen) => {
   const [tab, setTab] = useState(0);
-  const app = useSelector((state) => state.app);
+  const theme = useSelector((state) => state.theme);
   useEffect(() => {
     return () => {
       toast.dismiss();
@@ -63,13 +63,13 @@ const Settings = (isOpen) => {
 
         <div
           className={`flex w-full ${getThemeBLightBackgroundColor(
-            app.themeMode
+            theme.themeMode
           )}`}
         >
           <div className=" border border-gray-300 hidden md:block md:max-w-[30%]">
             <div
               className={`text-2xl p-6 font-medium ${getThemeTextColor(
-                app.themeMode
+                theme.themeMode
               )}`}
             >
               Settings
@@ -79,22 +79,24 @@ const Settings = (isOpen) => {
                 setTab(0);
               }}
               className={`flex flex-col justify-center p-6 ${
-                tab === 0 ? getThemeBackgroundColor(app.themeMode) : ""
+                tab === 0 ? getThemeBackgroundColor(theme.themeMode) : ""
               }  border-t border-gray-300 cursor-pointer`}
             >
               <div className="flex gap-4 items-center">
                 <FiSettings
                   size={25}
-                  className={`${getThemeTextColor(app.themeMode)}`}
+                  className={`${getThemeTextColor(theme.themeMode)}`}
                 />
-                <div className={`text-lg ${getThemeTextColor(app.themeMode)}`}>
+                <div
+                  className={`text-lg ${getThemeTextColor(theme.themeMode)}`}
+                >
                   Account
                 </div>
               </div>
 
               <div
                 className={`text-base pl-10 ${getThemeLightTextColor(
-                  app.themeMode
+                  theme.themeMode
                 )}`}
               >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -106,22 +108,24 @@ const Settings = (isOpen) => {
                 setTab(1);
               }}
               className={`flex flex-col justify-center p-6 ${
-                tab === 1 ? getThemeBackgroundColor(app.themeMode) : ""
+                tab === 1 ? getThemeBackgroundColor(theme.themeMode) : ""
               } border-y border-gray-300 cursor-pointer`}
             >
               <div className="flex gap-4 items-center">
                 <MdOutlineStyle
                   size={25}
-                  className={`${getThemeTextColor(app.themeMode)}`}
+                  className={`${getThemeTextColor(theme.themeMode)}`}
                 />
-                <div className={`text-lg ${getThemeTextColor(app.themeMode)}`}>
+                <div
+                  className={`text-lg ${getThemeTextColor(theme.themeMode)}`}
+                >
                   Appearance
                 </div>
               </div>
 
               <div
                 className={`text-base pl-10 ${getThemeLightTextColor(
-                  app.themeMode
+                  theme.themeMode
                 )}`}
               >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit afefaf
@@ -131,7 +135,7 @@ const Settings = (isOpen) => {
           </div>
           <div
             className={`${getThemeBLightBackgroundColor(
-              app.themeMode
+              theme.themeMode
             )} w-full md:min-w-[70%]`}
           >
             {tab === 0 ? <Account /> : null}

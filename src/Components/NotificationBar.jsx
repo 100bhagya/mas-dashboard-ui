@@ -7,17 +7,17 @@ import {
 } from "../data/themesData";
 
 const NotificationBar = () => {
-  const app = useSelector((state) => state.app);
+  const theme = useSelector((state) => state.theme);
   return (
     <div>
       <div
         className={`flex gap-1 justify-between p-4  md:flex-row flex-col border-b ${getThemeBackgroundColor(
-          app.themeMode
+          theme.themeMode
         )}`}
       >
         <h3
           className={`md:text-xl text-lg ${getThemeTextSecondaryColor(
-            app.themeMode
+            theme.themeMode
           )}`}
         >
           {" "}
@@ -25,7 +25,7 @@ const NotificationBar = () => {
         </h3>
         <h3
           className={`md:text-md text-sm py-3 ${getThemeLightTextColor(
-            app.themeMode
+            theme.themeMode
           )}`}
         >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit

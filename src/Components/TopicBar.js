@@ -33,6 +33,8 @@ const TopicBar = ({ value }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const app = useSelector((state) => state.app);
+  const theme = useSelector((state) => state.theme);
+
   const [selectedimage, setSelectedimage] = useState();
   const [sidebar, setSidebar] = useState(false);
   useEffect(() => {
@@ -74,7 +76,7 @@ const TopicBar = ({ value }) => {
     >
       <div
         className={`${getThemeBackgroundColor(
-          app.themeMode
+          theme.themeMode
         )} w-full min-h-[100vh] px-2`}
       >
         <div className="text-center mt-12 ">
@@ -119,13 +121,13 @@ const TopicBar = ({ value }) => {
           )}
           <div
             className={`mt-5 ${getThemeTextColor(
-              app.themeMode
+              theme.themeMode
             )} max-w-[100%] text-xl font-medium ${sidebar ? "hidden" : ""}`}
           >
             {user.loginInfo ? user.loginInfo?.username : ""}
           </div>
           <div
-            className={`text-sm ${getThemeTextColor(app.themeMode)} mt-1 ${
+            className={`text-sm ${getThemeTextColor(theme.themeMode)} mt-1 ${
               sidebar ? "hidden" : ""
             }`}
           >
@@ -135,15 +137,15 @@ const TopicBar = ({ value }) => {
             <div className=" py-2 ">
               <div
                 className={`flex py-2  md:px-1 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
-                  app.themeMode
+                  theme.themeMode
                 )}`}
               >
                 <HomeIcon
-                  className={`w-6 ${getThemeTextPrimaryColor(app.themeMode)}`}
+                  className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
                 />
                 <div
                   className={`ml-5 ${getThemeTextPrimaryColor(
-                    app.themeMode
+                    theme.themeMode
                   )}  text-blue-500 md:text-md ${sidebar ? "hidden" : ""}`}
                 >
                   Home
@@ -154,18 +156,18 @@ const TopicBar = ({ value }) => {
           <div className="py-2">
             <div
               className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
-                app.themeMode
+                theme.themeMode
               )}`}
               onClick={() => {
                 dispatch(setTasksOpen(!app.tasksOpen));
               }}
             >
               <ClipboardCheckIcon
-                className={`w-6 ${getThemeTextPrimaryColor(app.themeMode)}`}
+                className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
               />
               <div
                 className={`ml-5 ${getThemeTextPrimaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )} text-blue-500  md:text-md ${sidebar ? "hidden" : ""}`}
               >
                 Tasks
@@ -174,7 +176,7 @@ const TopicBar = ({ value }) => {
                 src={arrow}
                 alt=""
                 className={`${getThemeBackgroundColor(
-                  app.themeMode
+                  theme.themeMode
                 )} w-3 h-2 relative left-[15%] top-2 cursor-pointer ${
                   sidebar ? "hidden" : ""
                 }`}
@@ -190,7 +192,7 @@ const TopicBar = ({ value }) => {
                 {/* <div className="bg-blue-700 w-[1.5px]"></div> */}
                 <div
                   className={`mt-2 ${getThemeBorderColor(
-                    app.themeMode
+                    theme.themeMode
                   )} border-l-2 md:pl-4 px-2`}
                 >
                   <Link to="/wordofday">
@@ -199,8 +201,8 @@ const TopicBar = ({ value }) => {
                         location.pathname === "/wordofday"
                           ? "bg-[#2255B8] text-white"
                           : `${getThemeTextPrimaryColor(
-                              app.themeMode
-                            )} ${getThemeHoverPrimaryBgColor(app.themeMode)}`
+                              theme.themeMode
+                            )} ${getThemeHoverPrimaryBgColor(theme.themeMode)}`
                       }`}
                     >
                       Word of the day
@@ -212,8 +214,8 @@ const TopicBar = ({ value }) => {
                         location.pathname === "/summarywriting"
                           ? "bg-[#2255B8] text-white"
                           : `${getThemeTextPrimaryColor(
-                              app.themeMode
-                            )} ${getThemeHoverPrimaryBgColor(app.themeMode)}`
+                              theme.themeMode
+                            )} ${getThemeHoverPrimaryBgColor(theme.themeMode)}`
                       }`}
                     >
                       Summary Writing
@@ -225,8 +227,8 @@ const TopicBar = ({ value }) => {
                         location.pathname === "/techarticles"
                           ? "bg-[#2255B8] text-white"
                           : `${getThemeTextPrimaryColor(
-                              app.themeMode
-                            )} ${getThemeHoverPrimaryBgColor(app.themeMode)}`
+                              theme.themeMode
+                            )} ${getThemeHoverPrimaryBgColor(theme.themeMode)}`
                       }`}
                     >
                       Tech Articles
@@ -238,8 +240,8 @@ const TopicBar = ({ value }) => {
                         location.pathname === "/quizes"
                           ? "bg-[#2255B8] text-white"
                           : `${getThemeTextPrimaryColor(
-                              app.themeMode
-                            )} ${getThemeHoverPrimaryBgColor(app.themeMode)}`
+                              theme.themeMode
+                            )} ${getThemeHoverPrimaryBgColor(theme.themeMode)}`
                       }`}
                     >
                       Untimed Quizzes
@@ -248,7 +250,7 @@ const TopicBar = ({ value }) => {
                   <div className="">
                     <div
                       className={`flex px-2 md:px-1 lg:pl-8 pr-4 gap-2 py-2 rounded-md ${getThemeHoverPrimaryBgColor(
-                        app.themeMode
+                        theme.themeMode
                       )} cursor-pointer`}
                       onClick={() => {
                         dispatch(setAptitudeOpen(!app.aptitudeOpen));
@@ -256,7 +258,7 @@ const TopicBar = ({ value }) => {
                     >
                       <div
                         className={`text-sm text-left ${getThemeTextPrimaryColor(
-                          app.themeMode
+                          theme.themeMode
                         )}`}
                       >
                         Aptitude Preparation
@@ -279,7 +281,7 @@ const TopicBar = ({ value }) => {
                         {/* <div className="bg-blue-700 w-[1px]"></div> */}
                         <div
                           className={`border-l-2 pl-2 ${getThemeBorderColor(
-                            app.themeMode
+                            theme.themeMode
                           )} mt-2`}
                         >
                           <Link to="/quant">
@@ -288,9 +290,9 @@ const TopicBar = ({ value }) => {
                                 location.pathname === "/quant"
                                   ? "bg-[#2255B8] text-white"
                                   : `${getThemeTextPrimaryColor(
-                                      app.themeMode
+                                      theme.themeMode
                                     )} ${getThemeHoverPrimaryBgColor(
-                                      app.themeMode
+                                      theme.themeMode
                                     )}`
                               }`}
                             >
@@ -303,9 +305,9 @@ const TopicBar = ({ value }) => {
                                 location.pathname === "/lrdi"
                                   ? "bg-[#2255B8] text-white"
                                   : `${getThemeTextPrimaryColor(
-                                      app.themeMode
+                                      theme.themeMode
                                     )} ${getThemeHoverPrimaryBgColor(
-                                      app.themeMode
+                                      theme.themeMode
                                     )}`
                               }`}
                             >
@@ -318,9 +320,9 @@ const TopicBar = ({ value }) => {
                                 location.pathname === "/verbal"
                                   ? "bg-[#2255B8] text-white"
                                   : `${getThemeTextPrimaryColor(
-                                      app.themeMode
+                                      theme.themeMode
                                     )} ${getThemeHoverPrimaryBgColor(
-                                      app.themeMode
+                                      theme.themeMode
                                     )}`
                               }`}
                             >
@@ -337,8 +339,8 @@ const TopicBar = ({ value }) => {
                         location.pathname === "/mlandpython"
                           ? "bg-[#2255B8] !text-white"
                           : `${getThemeTextPrimaryColor(
-                              app.themeMode
-                            )} ${getThemeHoverPrimaryBgColor(app.themeMode)}`
+                              theme.themeMode
+                            )} ${getThemeHoverPrimaryBgColor(theme.themeMode)}`
                       }`}
                     >
                       ML and Python
@@ -350,8 +352,8 @@ const TopicBar = ({ value }) => {
                         location.pathname === "/dataanalysis"
                           ? "bg-[#2255B8] text-white"
                           : `${getThemeTextPrimaryColor(
-                              app.themeMode
-                            )} ${getThemeHoverPrimaryBgColor(app.themeMode)}`
+                              theme.themeMode
+                            )} ${getThemeHoverPrimaryBgColor(theme.themeMode)}`
                       }`}
                     >
                       Data Analysis
@@ -363,8 +365,8 @@ const TopicBar = ({ value }) => {
                         location.pathname === "/sql"
                           ? "bg-[#2255B8] text-white"
                           : `${getThemeTextPrimaryColor(
-                              app.themeMode
-                            )} ${getThemeHoverPrimaryBgColor(app.themeMode)}`
+                              theme.themeMode
+                            )} ${getThemeHoverPrimaryBgColor(theme.themeMode)}`
                       }`}
                     >
                       SQL
@@ -373,7 +375,7 @@ const TopicBar = ({ value }) => {
                   <div className="">
                     <div
                       className={`flex px-2 py-2 lg:pl-8 rounded-md ${getThemeHoverPrimaryBgColor(
-                        app.themeMode
+                        theme.themeMode
                       )}`}
                       onClick={() => {
                         dispatch(setNonTechOpen(!app.nonTechOpen));
@@ -381,7 +383,7 @@ const TopicBar = ({ value }) => {
                     >
                       <div
                         className={`text-sm text-left ${getThemeTextPrimaryColor(
-                          app.themeMode
+                          theme.themeMode
                         )}`}
                       >
                         Non-Tech Prep
@@ -405,7 +407,7 @@ const TopicBar = ({ value }) => {
                         {/* <div className="bg-blue-700 w-[1px]"></div> */}
                         <div
                           className={`pl-4 border-l-2 ${getThemeBorderColor(
-                            app.themeMode
+                            theme.themeMode
                           )} mt-2`}
                         >
                           <Link to="/groupdiscussion">
@@ -414,9 +416,9 @@ const TopicBar = ({ value }) => {
                                 location.pathname === "/groupdiscussion"
                                   ? "bg-[#2255B8] text-white"
                                   : `${getThemeTextPrimaryColor(
-                                      app.themeMode
+                                      theme.themeMode
                                     )} ${getThemeHoverPrimaryBgColor(
-                                      app.themeMode
+                                      theme.themeMode
                                     )}`
                               }`}
                             >
@@ -429,9 +431,9 @@ const TopicBar = ({ value }) => {
                                 location.pathname === "/casestudy"
                                   ? "bg-[#2255B8] text-white"
                                   : `${getThemeTextPrimaryColor(
-                                      app.themeMode
+                                      theme.themeMode
                                     )} ${getThemeHoverPrimaryBgColor(
-                                      app.themeMode
+                                      theme.themeMode
                                     )}`
                               }`}
                             >
@@ -444,9 +446,9 @@ const TopicBar = ({ value }) => {
                                 location.pathname === "/guessestimate"
                                   ? "bg-[#2255B8] text-white"
                                   : `${getThemeTextPrimaryColor(
-                                      app.themeMode
+                                      theme.themeMode
                                     )} ${getThemeHoverPrimaryBgColor(
-                                      app.themeMode
+                                      theme.themeMode
                                     )}`
                               }`}
                             >
@@ -459,9 +461,9 @@ const TopicBar = ({ value }) => {
                                 location.pathname === "/puzzles"
                                   ? "bg-[#2255B8] text-white"
                                   : `${getThemeTextPrimaryColor(
-                                      app.themeMode
+                                      theme.themeMode
                                     )} ${getThemeHoverPrimaryBgColor(
-                                      app.themeMode
+                                      theme.themeMode
                                     )}`
                               }`}
                             >
@@ -480,15 +482,15 @@ const TopicBar = ({ value }) => {
             <div className=" py-2 ">
               <div
                 className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
-                  app.themeMode
+                  theme.themeMode
                 )}`}
               >
                 <CogIcon
-                  className={`w-6 ${getThemeTextPrimaryColor(app.themeMode)}`}
+                  className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
                 />
                 <div
                   className={`ml-5 ${getThemeTextPrimaryColor(
-                    app.themeMode
+                    theme.themeMode
                   )} md:text-md ${sidebar ? "hidden" : ""}`}
                 >
                   Settings
@@ -499,15 +501,15 @@ const TopicBar = ({ value }) => {
           <div className=" py-2 ">
             <div
               className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
-                app.themeMode
+                theme.themeMode
               )}`}
             >
               <DocumentTextIcon
-                className={`w-6 ${getThemeTextPrimaryColor(app.themeMode)}`}
+                className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
               />
               <div
                 className={`ml-5 ${getThemeTextPrimaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )} md:text-md ${sidebar ? "hidden" : ""}`}
               >
                 Notice Board
@@ -517,15 +519,15 @@ const TopicBar = ({ value }) => {
           <div className=" py-2 ">
             <div
               className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
-                app.themeMode
+                theme.themeMode
               )}`}
             >
               <MapIcon
-                className={`w-6 ${getThemeTextPrimaryColor(app.themeMode)}`}
+                className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
               />
               <div
                 className={`ml-5 ${getThemeTextPrimaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )} md:text-md ${sidebar ? "hidden" : ""}`}
               >
                 Roadmap
@@ -535,15 +537,15 @@ const TopicBar = ({ value }) => {
           <div className="py-2 ">
             <div
               className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
-                app.themeMode
+                theme.themeMode
               )}`}
             >
               <PencilAltIcon
-                className={`w-6 ${getThemeTextPrimaryColor(app.themeMode)}`}
+                className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
               />
               <div
                 className={`ml-5 ${getThemeTextPrimaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )} md:text-md ${sidebar ? "hidden" : ""}`}
               >
                 Exams
@@ -553,15 +555,15 @@ const TopicBar = ({ value }) => {
           <div className="py-2 ">
             <div
               className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
-                app.themeMode
+                theme.themeMode
               )}`}
             >
               <ChatAlt2Icon
-                className={`w-6 ${getThemeTextPrimaryColor(app.themeMode)}`}
+                className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
               />
               <div
                 className={`ml-5 ${getThemeTextPrimaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )} md:text-md ${sidebar ? "hidden" : ""}`}
               >
                 Forum
@@ -572,15 +574,15 @@ const TopicBar = ({ value }) => {
             <div className=" py-2 cursor-pointer" onClick={Logout}>
               <div
                 className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
-                  app.themeMode
+                  theme.themeMode
                 )}`}
               >
                 <LogoutIcon
-                  className={`w-6 ${getThemeTextPrimaryColor(app.themeMode)}`}
+                  className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
                 />
                 <div
                   className={`ml-5 ${getThemeTextPrimaryColor(
-                    app.themeMode
+                    theme.themeMode
                   )} md:text-md ${sidebar ? "hidden" : ""}`}
                 >
                   Logout
@@ -605,10 +607,10 @@ const TopicBar = ({ value }) => {
           )}
         </div>
       </div>
-      <div className={`${getThemeBLightBackgroundColor(app.themeMode)}`}>
+      <div className={`${getThemeBLightBackgroundColor(theme.themeMode)}`}>
         <div
           className={`${getThemeBackgroundColor(
-            app.themeMode
+            theme.themeMode
           )} top-[50vh] -translate-y-1/2 w-6 h-10  relative hidden md:block`}
         >
           <img

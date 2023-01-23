@@ -27,8 +27,7 @@ const toastMessage = (message) => toast(message);
 
 const Account = () => {
   const dispatch = useDispatch();
-  const app = useSelector((state) => state.app);
-  const theme = useSelector((state) => state.app);
+  const theme = useSelector((state) => state.theme);
   const user = useSelector((state) => state.user);
   //Refs and States
   const firstNameRef = useRef();
@@ -220,14 +219,14 @@ const Account = () => {
       <Toaster />
       <div className="flex flex-col gap-4 md:max-w-[800px] mx-auto">
         <div
-          className={`text-3xl font-bold ${getThemeTextColor(app.themeMode)}`}
+          className={`text-3xl font-bold ${getThemeTextColor(theme.themeMode)}`}
         >
           Account
         </div>
         <section className="flex flex-col gap-2 my-2">
           <div
             className={`text-lg font-medium ${getThemeTextColor(
-              app.themeMode
+              theme.themeMode
             )}`}
           >
             Profile
@@ -235,7 +234,7 @@ const Account = () => {
 
           <div
             className={`text-sm text-slate-500 ${getThemeLightTextColor(
-              app.themeMode
+              theme.themeMode
             )}`}
           >
             This Information will be displayed publicly so be careful what you
@@ -245,7 +244,7 @@ const Account = () => {
             <div className="flex flex-col gap-1 w-full">
               <div
                 className={`text-sm text-slate-600 font-medium ${getThemeTextSecondaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )}`}
               >
                 First Name
@@ -259,7 +258,7 @@ const Account = () => {
             <div className="flex flex-col gap-1 w-full">
               <div
                 className={`text-sm text-slate-600 font-medium ${getThemeTextSecondaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )}`}
               >
                 Last Name
@@ -273,7 +272,7 @@ const Account = () => {
             <div className="flex flex-col gap-1 w-full">
               <div
                 className={`text-sm text-slate-600 font-medium ${getThemeTextSecondaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )}`}
               >
                 Username
@@ -287,7 +286,7 @@ const Account = () => {
           </div>
         </section>
         <section className="flex flex-col gap-2 w-full my-2">
-          <div className={`font-medium ${getThemeTextColor(app.themeMode)}`}>
+          <div className={`font-medium ${getThemeTextColor(theme.themeMode)}`}>
             Photo
           </div>
           <div className="flex items-center gap-6">
@@ -299,7 +298,7 @@ const Account = () => {
             <div
               className={`text-sm font-medium ${
                 !user.profilePic && "hidden"
-              } cursor-pointer ${getThemeTextColor(app.themeMode)}`}
+              } cursor-pointer ${getThemeTextColor(theme.themeMode)}`}
               onClick={() => dispatch(resetProfilePic())}
             >
               Remove
@@ -327,14 +326,14 @@ const Account = () => {
         <section className="flex flex-col gap-2 my-2">
           <div
             className={`text-lg font-medium ${getThemeTextColor(
-              app.themeMode
+              theme.themeMode
             )}`}
           >
             Personal Information
           </div>
           <div
             className={`text-sm text-slate-500 ${getThemeLightTextColor(
-              app.themeMode
+              theme.themeMode
             )}`}
           >
             This Information will be displayed publicly so be careful what you
@@ -345,7 +344,7 @@ const Account = () => {
               <div className="flex flex-col gap-1">
                 <div
                   className={`text-sm text-slate-600 font-medium ${getThemeTextSecondaryColor(
-                    app.themeMode
+                    theme.themeMode
                   )}`}
                 >
                   Email
@@ -355,14 +354,14 @@ const Account = () => {
                   disabled
                   type="text"
                   className={`p-1 rounded-md border border-gray-300 cursor-not-allowed  ${getThemeLightTextColor(
-                    app.themeMode
+                    theme.themeMode
                   )}`}
                 />
               </div>
               <div className="flex flex-col gap-1 w-full">
                 <div
                   className={`text-sm text-slate-600 font-medium ${getThemeTextSecondaryColor(
-                    app.themeMode
+                    theme.themeMode
                   )}`}
                 >
                   Phone Number
@@ -371,7 +370,7 @@ const Account = () => {
                   {/* <span className="absolute flex items-center ">+91</span> */}
                   <span
                     className={`flex justify-center items-center w-[40px] p-1 rounded-l-md border border-gray-300 border-r-0 ${getThemeTextColor(
-                      app.themeMode
+                      theme.themeMode
                     )}`}
                   >
                     +91
@@ -386,7 +385,7 @@ const Account = () => {
               <div className="flex flex-col gap-1">
                 <div
                   className={`text-sm text-slate-600 font-medium ${getThemeTextSecondaryColor(
-                    app.themeMode
+                    theme.themeMode
                   )}`}
                 >
                   Postal Code
@@ -400,7 +399,7 @@ const Account = () => {
               <div className="flex flex-col gap-1">
                 <div
                   className={`text-sm text-slate-600 font-medium ${getThemeTextSecondaryColor(
-                    app.themeMode
+                    theme.themeMode
                   )}`}
                 >
                   State
@@ -414,7 +413,7 @@ const Account = () => {
               <div className="flex flex-col gap-1">
                 <div
                   className={`text-sm text-slate-600 font-medium ${getThemeTextSecondaryColor(
-                    app.themeMode
+                    theme.themeMode
                   )}`}
                 >
                   City
@@ -430,7 +429,7 @@ const Account = () => {
             <div className="flex flex-col gap-1">
               <div
                 className={`text-sm text-slate-600 font-medium ${getThemeTextSecondaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )}`}
               >
                 Address

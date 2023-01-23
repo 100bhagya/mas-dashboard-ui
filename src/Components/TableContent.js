@@ -7,7 +7,8 @@ import {
 } from "../data/themesData";
 
 const TableContent = ({ name }) => {
-  const app = useSelector((state) => state.app);
+  const theme = useSelector((state) => state.theme);
+
   const buddy = [
     { id: 1, name: "Dog" },
     { id: 2, name: "Bird" },
@@ -27,13 +28,15 @@ const TableContent = ({ name }) => {
     return (
       <div
         className={`rounded-lg shadow-xl basis-1/2 ${getThemeBackgroundColor(
-          app.themeMode
+          theme.themeMode
         )}`}
       >
         <div
           className={`text-xl ${getThemeTextSecondaryColor(
-            app.themeMode
-          )} text-center py-2 border-b-2 ${getThemeBorderColor(app.themeMode)}`}
+            theme.themeMode
+          )} text-center py-2 border-b-2 ${getThemeBorderColor(
+            theme.themeMode
+          )}`}
         >
           {" "}
           Buddy{" "}
@@ -44,7 +47,7 @@ const TableContent = ({ name }) => {
             <tbody className="px-2 py-4">
               <tr
                 className={`${getThemeTextSecondaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )} lg:text-lg md:text-md`}
               >
                 <td>S.no</td>
@@ -55,7 +58,7 @@ const TableContent = ({ name }) => {
               {buddy.map((a) => (
                 <tr
                   className={`${getThemeTextSecondaryColor(
-                    app.themeMode
+                    theme.themeMode
                   )} lg:text-lg md:text-sm`}
                 >
                   <td> {a.id}</td>
@@ -76,13 +79,15 @@ const TableContent = ({ name }) => {
     return (
       <div
         className={`rounded-lg shadow-xl basis-1/2 ${getThemeBackgroundColor(
-          app.themeMode
+          theme.themeMode
         )}`}
       >
         <div
           className={`text-xl ${getThemeTextSecondaryColor(
-            app.themeMode
-          )} text-center py-2 border-b-2 ${getThemeBorderColor(app.themeMode)}`}
+            theme.themeMode
+          )} text-center py-2 border-b-2 ${getThemeBorderColor(
+            theme.themeMode
+          )}`}
         >
           {" "}
           Buddy{" "}
@@ -93,7 +98,7 @@ const TableContent = ({ name }) => {
             <tbody className="px-2 py-4">
               <tr
                 className={`${getThemeTextSecondaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )} lg:text-lg md:text-md`}
               >
                 <td>S.no</td>
@@ -104,7 +109,7 @@ const TableContent = ({ name }) => {
               {mentor.map((a) => (
                 <tr
                   className={`${getThemeTextSecondaryColor(
-                    app.themeMode
+                    theme.themeMode
                   )} lg:text-lg md:text-sm`}
                 >
                   <td> {a.id}</td>

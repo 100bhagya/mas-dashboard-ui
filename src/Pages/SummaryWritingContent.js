@@ -35,7 +35,7 @@ function WEEK({
   articleNumber,
   statusResponse,
 }) {
-  const app = useSelector((state) => state.app);
+  const theme = useSelector((state) => state.theme);
   useEffect(() => {
     const startDateMomentObject = moment("13-09-2022", "DD-MM-YYYY");
     const weekIndex = moment().diff(startDateMomentObject, "weeks") - 1;
@@ -55,8 +55,8 @@ function WEEK({
         <div
           className={`faq-question cursor-pointer my-6 ${
             week.open
-              ? getThemeTextSecondaryColor(app.themeMode) + ` font-semibold`
-              : getThemeTextPrimaryColor(app.themeMode)
+              ? getThemeTextSecondaryColor(theme.themeMode) + ` font-semibold`
+              : getThemeTextPrimaryColor(theme.themeMode)
           }`}
         >
           <div className="flex gap-2 items-center">
@@ -84,7 +84,7 @@ function WEEK({
                 className={`cursor-pointer mb-2 px-2 py-1 rounded-lg ${
                   articleNumber === post?.articleNumber
                     ? "bg-blue-500 text-white"
-                    : getThemeTextColor(app.themeMode)
+                    : getThemeTextColor(theme.themeMode)
                 }`}
                 onClick={() => {
                   const articleNumber = post?.articleNumber;
@@ -119,6 +119,7 @@ const SummaryWritingContent = ({ isOpen }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const app = useSelector((state) => state.app);
+  const theme = useSelector((state) => state.theme);
   const toggleWEEK = (index) => {
     setArticleNumber(1);
     setweeks(
@@ -295,7 +296,7 @@ const SummaryWritingContent = ({ isOpen }) => {
       >
         <div
           className={`flex flex-col ${getThemeBLightBackgroundColor(
-            app.themeMode
+            theme.themeMode
           )} h-[100vh] w-44 px-2 py-4 overflow-auto items-center`}
         >
           <div className="cursor-pointer text-2xl text-blue-800 font-semibold">
@@ -322,25 +323,25 @@ const SummaryWritingContent = ({ isOpen }) => {
         </div>
         <div
           className={`w-full flex ${getThemeBLightBackgroundColor(
-            app.themeMode
+            theme.themeMode
           )}`}
         >
           <div className="flex-grow p-2">
             <div
               className={`${getThemeBorderColor(
-                app.themeMode
+                theme.themeMode
               )} pb-4 border-b-2 `}
             >
               <div
                 className={`text-3xl ${getThemeTextSecondaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )}`}
               >
                 Summary Writing
               </div>
               <div
                 className={`text-slate-600 text-md ${getThemeLightTextColor(
-                  app.themeMode
+                  theme.themeMode
                 )}`}
               >
                 {`WEEK ${weekNumber}`}
@@ -372,7 +373,7 @@ const SummaryWritingContent = ({ isOpen }) => {
             <div className={`${summary === null && "hidden"}`}>
               <div
                 className={`text-3xl font-normal ${getThemeTextSecondaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )} mt-8`}
               >
                 {summary?.articleTopic}
@@ -380,7 +381,7 @@ const SummaryWritingContent = ({ isOpen }) => {
               <div className="flex gap-4 mt-4 text-gray-400">
                 <div
                   className={`flex items-center ${getThemeLightTextColor(
-                    app.themeMode
+                    theme.themeMode
                   )}`}
                 >
                   <BsFillPersonFill size={20} className="mr-1" />
@@ -389,7 +390,7 @@ const SummaryWritingContent = ({ isOpen }) => {
 
                 <div
                   className={`flex items-center ${getThemeLightTextColor(
-                    app.themeMode
+                    theme.themeMode
                   )}`}
                 >
                   <BiCategory size={20} className="mr-1" />
@@ -398,7 +399,7 @@ const SummaryWritingContent = ({ isOpen }) => {
 
                 <div
                   className={`flex items-center ${getThemeLightTextColor(
-                    app.themeMode
+                    theme.themeMode
                   )}`}
                 >
                   <BiTime size={20} className="mr-1" />
@@ -412,9 +413,9 @@ const SummaryWritingContent = ({ isOpen }) => {
                   ref={summaryTextRef}
                   placeholder="Write summary here..."
                   className={`w-full h-[50vh] my-6 p-4 rounded-md ${getThemeTextSecondaryColor(
-                    app.themeMode
+                    theme.themeMode
                   )} ${getThemeBLightBackgroundColor(
-                    app.themeMode
+                    theme.themeMode
                   )} placeholder-black`}
                 ></textarea>
                 <div className="flex justify-end">
@@ -459,7 +460,7 @@ const SummaryWritingContent = ({ isOpen }) => {
               {/* Article Box */}
               <div className={`mt-8 ${isSendSummaryBoxOpen && "hidden"}`}>
                 <>
-                  <p className={`${getThemeTextColor(app.themeMode)} mb-8`}>
+                  <p className={`${getThemeTextColor(theme.themeMode)} mb-8`}>
                     {parse(String(summary?.articleText))}
                   </p>
 
@@ -490,12 +491,12 @@ const SummaryWritingContent = ({ isOpen }) => {
           <div className="hidden md:block">
             <div
               className={`flex flex-col ${getThemeBackgroundColor(
-                app.themeMode
+                theme.themeMode
               )} h-[100vh] w-44 px-2 py-4 overflow-auto items-center`}
             >
               <div
                 className={`cursor-pointer text-2xl text-blue-800 font-semibold ${getThemeTextSecondaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )}`}
               >
                 Weeks

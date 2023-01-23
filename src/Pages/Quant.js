@@ -18,7 +18,7 @@ import {
 
 const RatingCard = ({ serialNo, Title, currentChapter }) => {
   const user = useSelector((state) => state.user);
-  const app = useSelector((state) => state.app);
+  const theme = useSelector((state) => state.theme);
   const [rating, setRating] = useState(
     currentChapter && currentChapter.length > 0
       ? currentChapter[0].rating
@@ -67,12 +67,12 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
       <div className="rounded-xl shadow-xl flex w-full items-center h-20">
         <div
           className={`w-1/5 ${getThemeBackgroundColor(
-            app.themeMode
+            theme.themeMode
           )} h-full rounded-l-lg`}
         >
           <div
             className={`text-2xl ${getThemeTextSecondaryColor(
-              app.themeMode
+              theme.themeMode
             )} flex items-center justify-center mt-6`}
           >
             {" "}
@@ -81,7 +81,7 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
         </div>
         <div
           className={`w-2/5 pl-6 flex items-center ${getThemeTextColor(
-            app.themeMode
+            theme.themeMode
           )}`}
         >
           {Title}
@@ -100,7 +100,7 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
 };
 const Quant = (isOpen) => {
   const user = useSelector((state) => state.user);
-  const app = useSelector((state) => state.app);
+  const theme = useSelector((state) => state.theme);
   const [ratingResponse, setRatingResponse] = useState([]);
 
   useEffect(() => {
@@ -126,15 +126,17 @@ const Quant = (isOpen) => {
         </div>
         <div
           className={`flex flex-col gap-6 md:gap-12 p-2 md:p-8 ${getThemeBLightBackgroundColor(
-            app.themeMode
+            theme.themeMode
           )}`}
         >
           <div
-            className={`pb-4 border-b-2 ${getThemeBorderColor(app.themeMode)}`}
+            className={`pb-4 border-b-2 ${getThemeBorderColor(
+              theme.themeMode
+            )}`}
           >
             <div
               className={`text-3xl ${getThemeTextSecondaryColor(
-                app.themeMode
+                theme.themeMode
               )} p-2`}
             >
               Quant
@@ -143,8 +145,8 @@ const Quant = (isOpen) => {
           <div className="flex mt-6 gap-8 md:gap-12">
             <p
               className={`w-[50%] hidden md:block ${getThemeBackgroundColor(
-                app.themeMode
-              )} ${getThemeTextColor(app.themeMode)} px-4 py-2 rounded-xl`}
+                theme.themeMode
+              )} ${getThemeTextColor(theme.themeMode)} px-4 py-2 rounded-xl`}
             >
               LR: Two kinds of logical reasoning are often distinguished in
               addition to formal deduction: induction and abduction. Given a
@@ -160,35 +162,35 @@ const Quant = (isOpen) => {
 
             <div
               className={`basis-1/2 shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeBackgroundColor(
-                app.themeMode
+                theme.themeMode
               )}`}
             >
               <span
                 className={`text-center block ${getThemeTextSecondaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )} text-lg`}
               >
                 Practice Mode
               </span>
               <img src={Artboard1} className="w-48" />
-              <div className={`${getThemeLightTextColor(app.themeMode)}`}>
+              <div className={`${getThemeLightTextColor(theme.themeMode)}`}>
                 Lorem ipsum dolor sit amet consectetur adipisicing.
               </div>
             </div>
             <div
               className={`basis-1/2 shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeBackgroundColor(
-                app.themeMode
+                theme.themeMode
               )}`}
             >
               <span
                 className={`text-center block ${getThemeTextSecondaryColor(
-                  app.themeMode
+                  theme.themeMode
                 )} text-lg`}
               >
                 Test Mode
               </span>
               <img src={Artboard2} className="w-48" />
-              <div className={`${getThemeLightTextColor(app.themeMode)}`}>
+              <div className={`${getThemeLightTextColor(theme.themeMode)}`}>
                 Lorem ipsum dolor sit amet consectetur adipisicing.
               </div>
             </div>
@@ -196,12 +198,14 @@ const Quant = (isOpen) => {
           <div>
             <div
               className={`text-3xl ${getThemeTextSecondaryColor(
-                app.themeMode
+                theme.themeMode
               )}`}
             >
               Priority
             </div>
-            <div className={`${getThemeLightTextColor(app.themeMode)} text-md`}>
+            <div
+              className={`${getThemeLightTextColor(theme.themeMode)} text-md`}
+            >
               Lörem ipsum mansskatt postform, förutom genusbudgetering pretrede.
               Lunchdisco
             </div>
