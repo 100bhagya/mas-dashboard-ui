@@ -1,6 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import {
+  getThemeBackgroundColor,
+  getThemeBorderColor,
+  getThemeTextSecondaryColor,
+} from "../data/themesData";
 
 const TableContent = ({ name }) => {
+  const theme = useSelector((state) => state.theme);
+
   const buddy = [
     { id: 1, name: "Dog" },
     { id: 2, name: "Bird" },
@@ -18,8 +26,18 @@ const TableContent = ({ name }) => {
 
   if (name === "buddy")
     return (
-      <div className="rounded-lg shadow-xl basis-1/2">
-        <div className="text-xl text-[#2255B8] text-center py-2 border-b-2 border-[#2255B8]">
+      <div
+        className={`rounded-lg shadow-xl basis-1/2 ${getThemeBackgroundColor(
+          theme.themeMode
+        )}`}
+      >
+        <div
+          className={`text-xl ${getThemeTextSecondaryColor(
+            theme.themeMode
+          )} text-center py-2 border-b-2 ${getThemeBorderColor(
+            theme.themeMode
+          )}`}
+        >
           {" "}
           Buddy{" "}
         </div>
@@ -27,14 +45,22 @@ const TableContent = ({ name }) => {
         <div className="px-6 py-4">
           <table className="table-auto w-full  py-2 px-4">
             <tbody className="px-2 py-4">
-              <tr className="text-[#2255B8] lg:text-lg md:text-md">
+              <tr
+                className={`${getThemeTextSecondaryColor(
+                  theme.themeMode
+                )} lg:text-lg md:text-md`}
+              >
                 <td>S.no</td>
                 <td>Name</td>
                 <td>Contact</td>
                 <td>Status</td>
               </tr>
               {buddy.map((a) => (
-                <tr className="py-2 lg:text-lg md:text-sm">
+                <tr
+                  className={`${getThemeTextSecondaryColor(
+                    theme.themeMode
+                  )} lg:text-lg md:text-sm`}
+                >
                   <td> {a.id}</td>
                   <td> {a.name}</td>
                   <td> {a.name}</td>
@@ -51,8 +77,18 @@ const TableContent = ({ name }) => {
     );
   else
     return (
-      <div className="rounded-lg shadow-xl basis-1/2 h-fit">
-        <div className="text-xl text-[#2255B8] text-center py-2 border-b-2 border-[#2255B8]">
+      <div
+        className={`rounded-lg shadow-xl basis-1/2 ${getThemeBackgroundColor(
+          theme.themeMode
+        )}`}
+      >
+        <div
+          className={`text-xl ${getThemeTextSecondaryColor(
+            theme.themeMode
+          )} text-center py-2 border-b-2 ${getThemeBorderColor(
+            theme.themeMode
+          )}`}
+        >
           {" "}
           Buddy{" "}
         </div>
@@ -60,14 +96,22 @@ const TableContent = ({ name }) => {
         <div className="px-6 py-4">
           <table className="table-auto w-full  py-2 px-4">
             <tbody className="px-2 py-4">
-              <tr className="text-[#2255B8] lg:text-lg md:text-md">
+              <tr
+                className={`${getThemeTextSecondaryColor(
+                  theme.themeMode
+                )} lg:text-lg md:text-md`}
+              >
                 <td>S.no</td>
                 <td>Name</td>
                 <td>Contact</td>
                 <td>Status</td>
               </tr>
               {mentor.map((a) => (
-                <tr className="py-2 lg:text-lg md:text-sm">
+                <tr
+                  className={`${getThemeTextSecondaryColor(
+                    theme.themeMode
+                  )} lg:text-lg md:text-sm`}
+                >
                   <td> {a.id}</td>
                   <td> {a.name}</td>
                   <td> {a.name}</td>

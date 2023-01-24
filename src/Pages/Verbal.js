@@ -7,9 +7,17 @@ import { useSelector } from "react-redux";
 import { API_BASE_URL } from "../data/consts";
 import Navbar from "../Components/Navbar";
 import axios from "axios";
-
+import {
+  getThemeBackgroundColor,
+  getThemeBLightBackgroundColor,
+  getThemeBorderColor,
+  getThemeLightTextColor,
+  getThemeTextColor,
+  getThemeTextSecondaryColor,
+} from "../data/themesData";
 const RatingCard = ({ serialNo, Title, currentChapter }) => {
   const user = useSelector((state) => state.user);
+  const theme = useSelector((state) => state.theme);
   const [rating, setRating] = useState(
     currentChapter && currentChapter.length > 0
       ? currentChapter[0].rating
@@ -56,14 +64,27 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
   return (
     <>
       <div className="rounded-xl shadow-xl flex w-full items-center h-20">
-        <div className="w-1/5 bg-[#EDF3FF] h-full rounded-l-lg">
-          <div className="text-2xl text-[#2255B8] flex items-center justify-center mt-6">
+        <div
+          className={`w-1/5 ${getThemeBackgroundColor(
+            theme.themeMode
+          )} h-full rounded-l-lg`}
+        >
+          <div
+            className={`text-2xl ${getThemeTextSecondaryColor(
+              theme.themeMode
+            )} flex items-center justify-center mt-6`}
+          >
             {" "}
             {serialNo}{" "}
           </div>
         </div>
-        <div className="w-2/5 pl-6 flex items-center">{Title}</div>
-
+        <div
+          className={`w-2/5 pl-6 flex items-center ${getThemeTextColor(
+            theme.themeMode
+          )}`}
+        >
+          {Title}
+        </div>
         <StarsRating
           value={rating}
           count={5}
@@ -77,6 +98,7 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
 };
 const Verbal = (isOpen) => {
   const user = useSelector((state) => state.user);
+  const theme = useSelector((state) => state.theme);
   const [ratingResponse, setRatingResponse] = useState([]);
   useEffect(() => {
     axios
@@ -98,46 +120,88 @@ const Verbal = (isOpen) => {
         <div className="hidden md:block">
           <TopicBar value={(isOpen = true)} />
         </div>
-        <div className="flex flex-col gap-6 p-2 md:p-8">
-          <div className="pb-4 border-b-2 border-[#2255B8]">
-            <div className="text-3xl text-sky-800 p-2">Verbal Preparation</div>
+        <div
+          className={`flex flex-col gap-6 md:gap-12 p-2 md:p-8 ${getThemeBLightBackgroundColor(
+            theme.themeMode
+          )}`}
+        >
+          <div
+            className={`pb-4 border-b-2 ${getThemeBorderColor(
+              theme.themeMode
+            )}`}
+          >
+            <div
+              className={`text-3xl ${getThemeTextSecondaryColor(
+                theme.themeMode
+              )} p-2`}
+            >
+              Verbal
+            </div>
           </div>
           <div className="flex mt-6 gap-8 md:gap-12">
-            <p className="w-[50%] hidden md:block">
-              Verbal aptitude refers to a person's ability to understand and
-              respond to spoken information. Aptitude tests are used to assess
-              an individual's skills or ability. These tests are intended to
-              evaluate the person's natural abilities or talents rather than
-              learned skills. To prepare for Verbal, stick to the rule of –
-              concepts first and practice later. Study English grammar to
-              understand the concepts. Then practice a number of sample
-              questions of different kinds to gain confidence, speed and
-              accuracy. Develop the habit of reading from early stages.
+            <p
+              className={`w-[50%] hidden md:block ${getThemeBackgroundColor(
+                theme.themeMode
+              )} ${getThemeTextColor(theme.themeMode)} px-4 py-2 rounded-xl`}
+            >
+              LR: Two kinds of logical reasoning are often distinguished in
+              addition to formal deduction: induction and abduction. Given a
+              precondition or premise, a conclusion or logical consequence and a
+              rule or material conditional that implies the conclusion given the
+              precondition, one can explain the following.
+              <br />
+              <br />
+              DI: Data analysis and interpretation is the process of assigning
+              meaning to the collected information and determining the
+              conclusions, significance, and implications of the findings.
             </p>
-            <div className="basis-1/2 shadow-xl rounded-xl p-6">
-              <span className="text-center block text-[#2255B8] text-lg">
-                {" "}
+
+            <div
+              className={`basis-1/2 shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeBackgroundColor(
+                theme.themeMode
+              )}`}
+            >
+              <span
+                className={`text-center block ${getThemeTextSecondaryColor(
+                  theme.themeMode
+                )} text-lg`}
+              >
                 Practice Mode
               </span>
-              <img src={Artboard1} alt="" className="mt-10" />
-              <div className="mt-5">
+              <img src={Artboard1} className="w-48" />
+              <div className={`${getThemeLightTextColor(theme.themeMode)}`}>
                 Lorem ipsum dolor sit amet consectetur adipisicing.
               </div>
             </div>
-            <div className="basis-1/2 shadow-xl rounded-xl p-6">
-              <span className="text-center block text-[#2255B8] text-lg">
-                {" "}
+            <div
+              className={`basis-1/2 shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeBackgroundColor(
+                theme.themeMode
+              )}`}
+            >
+              <span
+                className={`text-center block ${getThemeTextSecondaryColor(
+                  theme.themeMode
+                )} text-lg`}
+              >
                 Test Mode
               </span>
-              <img src={Artboard2} alt="" />
-              <div className="mt-5">
+              <img src={Artboard2} className="w-48" />
+              <div className={`${getThemeLightTextColor(theme.themeMode)}`}>
                 Lorem ipsum dolor sit amet consectetur adipisicing.
               </div>
             </div>
           </div>
           <div>
-            <div className="text-3xl text-sky-800">Priority</div>
-            <div className="text-[#898989] text-md w-full mt-2">
+            <div
+              className={`text-3xl ${getThemeTextSecondaryColor(
+                theme.themeMode
+              )}`}
+            >
+              Priority
+            </div>
+            <div
+              className={`${getThemeLightTextColor(theme.themeMode)} text-md`}
+            >
               Lörem ipsum mansskatt postform, förutom genusbudgetering pretrede.
               Lunchdisco
             </div>

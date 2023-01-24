@@ -1,11 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import TopicBar from "../Components/TopicBar";
 import { FiSettings } from "react-icons/fi";
 import { MdOutlineStyle } from "react-icons/md";
 import Account from "../Components/Account";
 import Navbar from "../Components/Navbar";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import Appearance from "../Components/Appearance";
+import toast, { Toaster } from "react-hot-toast";
+import {
+  getThemeBackgroundColor,
+  getThemeBLightBackgroundColor,
+  getThemeLightTextColor,
+  getThemeTextColor,
+} from "../data/themesData";
+import { useSelector } from "react-redux";
 const Settings = (isOpen) => {
+  const [tab, setTab] = useState(0);
+  const theme = useSelector((state) => state.theme);
+  useEffect(() => {
+    return () => {
+      toast.dismiss();
+    };
+  }, []);
+
   return (
     <div className="flex flex-col">
       <Navbar>
@@ -16,6 +33,9 @@ const Settings = (isOpen) => {
           <ul class="dropdown-menu absolute hidden text-blue-700 pt-1 right-4">
             <li class="">
               <a
+                onClick={() => {
+                  setTab(0);
+                }}
                 class="rounded-t bg-blue-200 hover:bg-blue-400 py-2 px-4 block whitespace-no-wrap"
                 href="#"
               >
@@ -24,6 +44,9 @@ const Settings = (isOpen) => {
             </li>
             <li class="">
               <a
+                onClick={() => {
+                  setTab(1);
+                }}
                 class="bg-blue-200 hover:bg-blue-400 py-2 px-4 block whitespace-no-wrap"
                 href="#"
               >
@@ -38,37 +61,89 @@ const Settings = (isOpen) => {
           <TopicBar value={(isOpen = true)} />
         </div>
 
-        <div className="flex w-full">
+        <div
+          className={`flex w-full ${getThemeBLightBackgroundColor(
+            theme.themeMode
+          )}`}
+        >
           <div className=" border border-gray-300 hidden md:block md:max-w-[30%]">
-            <div className="text-2xl p-6 font-medium">Settings</div>
-            <div className="flex flex-col justify-center p-6 bg-blue-50 border-t border-gray-300">
+            <div
+              className={`text-2xl p-6 font-medium ${getThemeTextColor(
+                theme.themeMode
+              )}`}
+            >
+              Settings
+            </div>
+            <div
+              onClick={() => {
+                setTab(0);
+              }}
+              className={`flex flex-col justify-center p-6 ${
+                tab === 0 ? getThemeBackgroundColor(theme.themeMode) : ""
+              }  border-t border-gray-300 cursor-pointer`}
+            >
               <div className="flex gap-4 items-center">
-                <FiSettings size={25} className="text-slate-600" />
-                <div className="text-lg">Account</div>
+                <FiSettings
+                  size={25}
+                  className={`${getThemeTextColor(theme.themeMode)}`}
+                />
+                <div
+                  className={`text-lg ${getThemeTextColor(theme.themeMode)}`}
+                >
+                  Account
+                </div>
               </div>
 
-              <div className="text-base pl-10 text-slate-500">
+              <div
+                className={`text-base pl-10 ${getThemeLightTextColor(
+                  theme.themeMode
+                )}`}
+              >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
               </div>
             </div>
 
-            <div className="flex flex-col justify-center p-6 border-y border-gray-300">
+            <div
+              onClick={() => {
+                setTab(1);
+              }}
+              className={`flex flex-col justify-center p-6 ${
+                tab === 1 ? getThemeBackgroundColor(theme.themeMode) : ""
+              } border-y border-gray-300 cursor-pointer`}
+            >
               <div className="flex gap-4 items-center">
-                <MdOutlineStyle size={25} className="text-slate-600" />
-                <div className="text-lg">Appearance</div>
+                <MdOutlineStyle
+                  size={25}
+                  className={`${getThemeTextColor(theme.themeMode)}`}
+                />
+                <div
+                  className={`text-lg ${getThemeTextColor(theme.themeMode)}`}
+                >
+                  Appearance
+                </div>
               </div>
 
-              <div className="text-base pl-10 text-slate-500">
+              <div
+                className={`text-base pl-10 ${getThemeLightTextColor(
+                  theme.themeMode
+                )}`}
+              >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit afefaf
                 ageag.
               </div>
             </div>
           </div>
-          <div className="bg-blue-50 w-full md:min-w-[70%]">
-            <Account />
+          <div
+            className={`${getThemeBLightBackgroundColor(
+              theme.themeMode
+            )} w-full md:min-w-[70%]`}
+          >
+            {tab === 0 ? <Account /> : null}
+            {tab === 1 ? <Appearance /> : null}
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };

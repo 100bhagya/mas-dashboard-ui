@@ -1,12 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
+import moment from "moment";
 const initialState = {
   currentCalendarDate: new Date(),
   lastAvailableDailyWordDate: new Date(),
   lastUpdated: new Date(),
-
+  fontSize: 0,
+  themeMode: 0,
   tasksOpen: true,
   aptitudeOpen: true,
   nonTechOpen: true,
+  markedDates: {},
+  currentMonthAndYear: moment().format("MM-YYYY"),
 };
 
 export const appSlice = createSlice({
@@ -27,7 +31,12 @@ export const appSlice = createSlice({
     setLastUpdated: (state, date) => {
       state.lastUpdated = date.payload;
     },
-
+    setFontSize: (state, value) => {
+      state.fontSize = parseInt(value.payload);
+    },
+    setThemeMode: (state, value) => {
+      state.themeMode = parseInt(value.payload);
+    },
     setTasksOpen: (state, value) => {
       state.tasksOpen = value.payload;
     },
@@ -37,6 +46,12 @@ export const appSlice = createSlice({
     setNonTechOpen: (state, value) => {
       state.nonTechOpen = value.payload;
     },
+    setMarkedDates: (state, value) => {
+      state.markedDates = value.payload;
+    },
+    setCurrentMonthAndYear: (state, value) => {
+      state.currentMonthAndYear = value.payload;
+    },
   },
 });
 
@@ -45,10 +60,13 @@ export const {
   setCurrentCalendarDate,
   setLastAvailableDailyWordDate,
   setLastUpdated,
-  setIsTopicBarCollapsed,
+  setFontSize,
+  setThemeMode,
   setTasksOpen,
   setAptitudeOpen,
   setNonTechOpen,
+  setMarkedDates,
+  setCurrentMonthAndYear,
 } = appSlice.actions;
 
 export default appSlice.reducer;
