@@ -4,13 +4,109 @@ const initialState = {
   currentCalendarDate: new Date(),
   lastAvailableDailyWordDate: new Date(),
   lastUpdated: new Date(),
-  fontSize: 0,
-  themeMode: 0,
   tasksOpen: true,
   aptitudeOpen: true,
   nonTechOpen: true,
   markedDates: {},
   currentMonthAndYear: moment().format("MM-YYYY"),
+  testData: [
+    {
+      testLink: "https://forms.gle/C6hdv2JbkEJpeoHC6",
+      deadline: "03-04-2023",
+    },
+    {
+      testLink: "https://forms.gle/mECq4ft5PWSm56nq9",
+      deadline: "04-04-2023",
+    },
+    {
+      testLink: "https://forms.gle/7Nm5mDwt6a2VCvqB8",
+      deadline: "05-04-2023",
+    },
+    {
+      testLink: "https://forms.gle/Pt4HAsXe3Wi8ea2e7",
+      deadline: "06-04-2023",
+    },
+    {
+      testLink: "https://forms.gle/4CVFd91aDEG1xLpQA",
+      deadline: "07-04-2023",
+    },
+    {
+      testLink: "https://forms.gle/YRfA8zHUe7wpwdhW7",
+      deadline: "10-04-2023",
+    },
+    {
+      testLink: "https://forms.gle/Kbao49488722v5M5A",
+      deadline: "11-04-2023",
+    },
+    {
+      testLink: "https://forms.gle/GNrmUptvGpS4WzDB6",
+      deadline: "12-04-2023",
+    },
+    {
+      testLink: "https://forms.gle/iQKvqqTqdEh9i36f7",
+      deadline: "13-04-2023",
+    },
+    {
+      testLink: "https://forms.gle/fkWcKw7ud21Ce1DH8",
+      deadline: "14-04-2023",
+    },
+    {
+      testLink: "https://forms.gle/BZthDZCH93zwW1GN9",
+      deadline: "17-04-2023",
+    },
+    {
+      testLink: "https://forms.gle/5bq5R7K7dRZBZ4W17",
+      deadline: "18-04-2023",
+    },
+    {
+      testLink: "https://forms.gle/fxGBMK7PdCN7tVSWA",
+      deadline: "19-04-2023",
+    },
+    {
+      testLink: "https://forms.gle/ZBL4Ko2L7sjkAfPA6",
+      deadline: "20-04-2023",
+    },
+    {
+      testLink: "https://forms.gle/hZRxdLcddBxmC2B87",
+      deadline: "21-04-2023",
+    },
+    {
+      testLink: "https://forms.gle/hZRxdLcddBxmC2B87",
+      deadline: "24-04-2023",
+    },
+    {
+      testLink: "https://forms.gle/MSFCnkxsoQme8Dir9",
+      deadline: "25-04-2023",
+    },
+    {
+      testLink: "https://forms.gle/Us8JjeP89Q6rSoSN6",
+      deadline: "26-04-2023",
+    },
+    {
+      testLink: "https://forms.gle/ayMvCTh69xzn9Hzv8",
+      deadline: "27-04-2023",
+    },
+    {
+      testLink: "https://forms.gle/xeJzHwiFUfjwRPze8",
+      deadline: "28-04-2023",
+    },
+    {
+      testLink: "https://forms.gle/NSxTg6SYX2ampEzD6",
+      deadline: "31-04-2023",
+    },
+    {
+      testLink: "https://forms.gle/vQPdpJQ9tJexsKen7",
+      deadline: "01-05-2023",
+    },
+    {
+      testLink: "https://forms.gle/u6ok9HmQGACtauux8",
+      deadline: "02-05-2023",
+    },
+    {
+      testLink: "https://forms.gle/WrDudU4XVsQ3gFfz8",
+      deadline: "03-05-2023",
+    },
+  ],
 };
 
 export const appSlice = createSlice({
@@ -30,12 +126,6 @@ export const appSlice = createSlice({
     },
     setLastUpdated: (state, date) => {
       state.lastUpdated = date.payload;
-    },
-    setFontSize: (state, value) => {
-      state.fontSize = parseInt(value.payload);
-    },
-    setThemeMode: (state, value) => {
-      state.themeMode = parseInt(value.payload);
     },
     setTasksOpen: (state, value) => {
       state.tasksOpen = value.payload;

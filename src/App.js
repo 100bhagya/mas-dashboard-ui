@@ -69,7 +69,7 @@ function App() {
             <Route path="mlandpython" element={<MLandPython />} />
             <Route path="dataanalysis" element={<DataAnalysis />} />
             <Route path="sql" element={<SQL />} />
-            <Route path="quizdetail" element={<QuizDetail />} />
+            <Route path="quizdetail/:test" element={<QuizDetail />} />
           </Route>
         </Routes>
       </Router>
