@@ -70,14 +70,14 @@ const TopicBar = ({ value }) => {
   };
   return (
     <div
-      className={`flex shrink-0 ${sidebar ? "basis-1/10" : "basis-1/5"} ${
+      className={`flex  shrink-0 ${sidebar ? "basis-1/10" : "basis-1/5"} ${
         !sidebar && "md:min-w-[300px]"
       }  h-full`}
     >
       <div
         className={`${getThemeBackgroundColor(
           theme.themeMode
-        )} w-full min-h-[100vh] px-2`}
+        )} sticky top-0 w-full h-screen px-2 overflow-auto`}
       >
         <div className="text-center mt-12 ">
           {selectedimage ? (
@@ -607,7 +607,11 @@ const TopicBar = ({ value }) => {
           )}
         </div>
       </div>
-      <div className={`${getThemeBLightBackgroundColor(theme.themeMode)}`}>
+      <div
+        className={`${getThemeBLightBackgroundColor(
+          theme.themeMode
+        )} sticky top-0 h-screen`}
+      >
         <div
           className={`${getThemeBackgroundColor(
             theme.themeMode

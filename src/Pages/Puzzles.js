@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "../Components/Navbar";
 import TopicBar from "../Components/TopicBar";
+import parse from "html-react-parser";
 import {
   getText,
   getThemeBLightBackgroundColor,
@@ -56,7 +57,24 @@ const Puzzels = (isOpen) => {
                   theme.fontSize
                 )}`}
               >
-                {str.slice(0, limit)}
+                {parse(`<p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">Puzzles are a form of mental challenge or game that involves arranging, solving, or manipzulating a set of pieces or elements in order to achieve a certain goal or form a specific solution. Puzzles can come in many different forms, such as jigsaw puzzles, crossword puzzles, Sudoku, Rubik&#39;s cube, riddles, and many others.</span></span></span></p>
+
+<p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">Some common features of puzzles include:</span></span></span></p>
+
+<ul>
+	<li style="list-style-type:disc"><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">They have a specific goal or solution</span></span></span></li>
+	<li style="list-style-type:disc"><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">They require the use of critical thinking, problem-solving, and logical reasoning skills</span></span></span></li>
+	<li style="list-style-type:disc"><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">They can be solved by breaking them down into smaller parts and working on each part separately</span></span></span></li>
+	<li style="list-style-type:disc"><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">They can be challenging and may require persistence and patience to solve</span></span></span></li>
+	<li style="list-style-type:disc"><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">Some puzzles can be solved by trial and error, others require a methodical approach.</span></span></span></li>
+</ul>
+
+<p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">Puzzles can be found in many different forms and can be enjoyed by people of all ages. They are known for helping with cognitive development, logical thinking, and problem-solving abilities, and can be a fun and entertaining way to pass the time.</span></span></span></p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+`)}
               </p>
               <div className="hidden md:block min-w-[50%]">
                 <img className="" alt="" src={Artboard} />

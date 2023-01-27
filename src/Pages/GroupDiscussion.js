@@ -6,6 +6,7 @@ import StarsRating from "stars-rating";
 import { useSelector } from "react-redux";
 import { API_BASE_URL } from "../data/consts";
 import Navbar from "../Components/Navbar";
+import parse from "html-react-parser";
 import {
   getThemeBackgroundColor,
   getThemeBLightBackgroundColor,
@@ -99,16 +100,23 @@ const GroupDiscussion = (isOpen) => {
                 theme.themeMode
               )} ${getThemeTextColor(theme.themeMode)} px-4 py-2 rounded-xl`}
             >
-              LR: Two kinds of logical reasoning are often distinguished in
-              addition to formal deduction: induction and abduction. Given a
-              precondition or premise, a conclusion or logical consequence and a
-              rule or material conditional that implies the conclusion given the
-              precondition, one can explain the following.
-              <br />
-              <br />
-              DI: Data analysis and interpretation is the process of assigning
-              meaning to the collected information and determining the
-              conclusions, significance, and implications of the findings.
+              {parse(`<p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">GD stands for Group Discussion. It is a method of evaluating a candidate&#39;s ability to communicate effectively and express their thoughts and ideas in a group setting. In a GD, a group of candidates are given a topic or a problem to discuss, and they are expected to express their opinions, ideas, and thoughts on the topic while also listening and responding to the ideas of others.</span></span></span></p>
+
+<p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">The purpose of GD is to assess a candidate&#39;s:</span></span></span></p>
+
+<ul>
+	<li style="list-style-type:disc"><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">ability to express their thoughts and ideas clearly and effectively</span></span></span></li>
+	<li style="list-style-type:disc"><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">ability to listen to and respond to the ideas of others</span></span></span></li>
+	<li style="list-style-type:disc"><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">ability to work as part of a team</span></span></span></li>
+	<li style="list-style-type:disc"><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">ability to think on their feet</span></span></span></li>
+	<li style="list-style-type:disc"><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">ability to persuade others</span></span></span></li>
+	<li style="list-style-type:disc"><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">ability to handle pressure and stay calm in a group setting.</span></span></span></li>
+</ul>
+
+<p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">GD is commonly used as a selection process in the placement process where it&#39;s used to evaluate the candidate&#39;s leadership, communication, and team-working skills.</span></span></span></p>
+
+<p>&nbsp;</p>
+`)}
             </p>
 
             <div

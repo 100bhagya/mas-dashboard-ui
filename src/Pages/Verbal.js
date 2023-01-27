@@ -144,16 +144,18 @@ const Verbal = (isOpen) => {
                 theme.themeMode
               )} ${getThemeTextColor(theme.themeMode)} px-4 py-2 rounded-xl`}
             >
-              LR: Two kinds of logical reasoning are often distinguished in
-              addition to formal deduction: induction and abduction. Given a
-              precondition or premise, a conclusion or logical consequence and a
-              rule or material conditional that implies the conclusion given the
-              precondition, one can explain the following.
-              <br />
-              <br />
-              DI: Data analysis and interpretation is the process of assigning
-              meaning to the collected information and determining the
-              conclusions, significance, and implications of the findings.
+              VARC stands for Verbal Ability and Reading Comprehension. It is a
+              section of aptitude tests that assesses a person's ability to
+              understand and analyze written text, as well as their ability to
+              understand and use the English language effectively. The Verbal
+              Ability section of the VARC typically includes questions on
+              grammar, vocabulary, sentence construction, and comprehension of
+              written text. The Reading Comprehension section typically includes
+              passages of written text followed by questions designed to test
+              the person's understanding of the text. In placement tests, the
+              VARC section is designed to test a candidate's ability to
+              understand, analyze, and interpret written text, which is
+              considered as an important skill for managers and leaders.
             </p>
 
             <div
