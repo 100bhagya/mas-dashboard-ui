@@ -7,7 +7,6 @@ import {
   DocumentTextIcon,
   MapIcon,
   PencilAltIcon,
-  ChatAlt2Icon,
   LogoutIcon,
 } from "@heroicons/react/outline";
 import userDefaultImage from "../images/user.png";
@@ -29,6 +28,7 @@ import {
   getThemeTextColor,
   getThemeTextPrimaryColor,
 } from "../data/themesData";
+import { FaDiscord } from "react-icons/fa";
 const TopicBar = ({ value }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -498,6 +498,25 @@ const TopicBar = ({ value }) => {
               </div>
             </div>
           </Link>
+
+          <div className="py-2 ">
+            <div
+              className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
+                theme.themeMode
+              )}`}
+            >
+              <PencilAltIcon
+                className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
+              />
+              <div
+                className={`ml-5 ${getThemeTextPrimaryColor(
+                  theme.themeMode
+                )} md:text-md ${sidebar ? "hidden" : ""}`}
+              >
+                Exams
+              </div>
+            </div>
+          </div>
           <div className=" py-2 ">
             <div
               className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
@@ -512,7 +531,26 @@ const TopicBar = ({ value }) => {
                   theme.themeMode
                 )} md:text-md ${sidebar ? "hidden" : ""}`}
               >
-                Notice Board
+                Learn
+              </div>
+            </div>
+          </div>
+          <div className=" py-2 ">
+            <div
+              className={`flex items-center py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
+                theme.themeMode
+              )}`}
+            >
+              <FaDiscord
+                size={20}
+                className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
+              />
+              <div
+                className={`ml-5 ${getThemeTextPrimaryColor(
+                  theme.themeMode
+                )} md:text-md ${sidebar ? "hidden" : ""}`}
+              >
+                Discord
               </div>
             </div>
           </div>
@@ -534,42 +572,7 @@ const TopicBar = ({ value }) => {
               </div>
             </div>
           </div>
-          <div className="py-2 ">
-            <div
-              className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
-                theme.themeMode
-              )}`}
-            >
-              <PencilAltIcon
-                className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
-              />
-              <div
-                className={`ml-5 ${getThemeTextPrimaryColor(
-                  theme.themeMode
-                )} md:text-md ${sidebar ? "hidden" : ""}`}
-              >
-                Exams
-              </div>
-            </div>
-          </div>
-          <div className="py-2 ">
-            <div
-              className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
-                theme.themeMode
-              )}`}
-            >
-              <ChatAlt2Icon
-                className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
-              />
-              <div
-                className={`ml-5 ${getThemeTextPrimaryColor(
-                  theme.themeMode
-                )} md:text-md ${sidebar ? "hidden" : ""}`}
-              >
-                Forum
-              </div>
-            </div>
-          </div>
+
           {user.loginInfo.username ? (
             <div className=" py-2 cursor-pointer" onClick={Logout}>
               <div
