@@ -10,7 +10,7 @@ import {
   getThemeTextSecondaryColor,
 } from "../data/themesData";
 import Artboard from "../images/Tech Article.png";
-const Puzzels = (isOpen) => {
+const Puzzles = (isOpen) => {
   const [limit, setLimit] = useState(800);
   const Continue = () => {
     setLimit((prevValue) => prevValue + 100);
@@ -42,7 +42,7 @@ const Puzzels = (isOpen) => {
                 theme.themeMode
               )}`}
             >
-              Puzzels
+              Puzzles
             </div>
           </div>
 
@@ -76,4 +76,4 @@ const Puzzels = (isOpen) => {
   );
 };
 
-export default Puzzels;
+export default Puzzles;

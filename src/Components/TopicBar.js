@@ -382,7 +382,7 @@ const TopicBar = ({ value }) => {
                       }}
                     >
                       <div
-                        className={`text-sm text-left ${getThemeTextPrimaryColor(
+                        className={`text-sm text-left cursor-pointer ${getThemeTextPrimaryColor(
                           theme.themeMode
                         )}`}
                       >
