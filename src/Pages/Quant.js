@@ -144,7 +144,7 @@ const Quant = (isOpen) => {
           </div>
           <div className="flex mt-6 gap-8 md:gap-12">
             <p
-              className={`w-[50%] hidden md:block ${getThemeBackgroundColor(
+              className={`w-[80%] hidden md:block ${getThemeBackgroundColor(
                 theme.themeMode
               )} ${getThemeTextColor(theme.themeMode)} px-4 py-2 rounded-xl`}
             >
@@ -161,7 +161,7 @@ const Quant = (isOpen) => {
             </p>
 
             <div
-              className={`basis-1/2 shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeBackgroundColor(
+              className={`basis-1/2 max-h-[400px] shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeBackgroundColor(
                 theme.themeMode
               )}`}
             >
@@ -178,7 +178,7 @@ const Quant = (isOpen) => {
               </div>
             </div>
             <div
-              className={`basis-1/2 shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeBackgroundColor(
+              className={`basis-1/2 max-h-[400px] shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeBackgroundColor(
                 theme.themeMode
               )}`}
             >
