@@ -77,7 +77,7 @@ const TopicBar = ({ value }) => {
       <div
         className={`${getThemeBackgroundColor(
           theme.themeMode
-        )} w-full min-h-[100vh] px-2`}
+        )} w-full sticky top-0 h-screen px-2 overflow-auto`}
       >
         <div className="text-center mt-12 ">
           {selectedimage ? (
@@ -607,7 +607,11 @@ const TopicBar = ({ value }) => {
           )}
         </div>
       </div>
-      <div className={`${getThemeBLightBackgroundColor(theme.themeMode)}`}>
+      <div
+        className={`${getThemeBLightBackgroundColor(
+          theme.themeMode
+        )} sticky top-0 h-screen`}
+      >
         <div
           className={`${getThemeBackgroundColor(
             theme.themeMode
