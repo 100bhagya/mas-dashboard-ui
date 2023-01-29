@@ -186,3 +186,11 @@
 .light-textcolor-two {
   @apply text-slate-300;
 }
+
+.white-dark-bgcolor-one {
+  @apply bg-white;
+}
+
+.white-dark-bgcolor-two {
+  @apply bg-slate-800;
+}

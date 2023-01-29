@@ -79,6 +79,18 @@ export const getThemeLightTextColor = (value) => {
   }
 };
 
+export const getThemeWhiteDarkBGColor = (value) => {
+  value = (value % 2) + 1;
+  switch (value) {
+    case 1:
+      return "white-dark-bgcolor-one";
+    case 2:
+      return "white-dark-bgcolor-two";
+    default:
+      return "white-dark-bgcolor-one";
+  }
+};
+
 export const getThemeBorderColor = (value) => {
   value = (value % 2) + 1;
   switch (value) {

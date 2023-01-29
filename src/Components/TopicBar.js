@@ -277,7 +277,7 @@ const TopicBar = ({ value }) => {
                     {app.aptitudeOpen ? (
                       <div></div>
                     ) : (
-                      <div className="flex ml-4 lg:pl-8">
+                      <div className="flex ml-2 lg:pl-8">
                         {/* <div className="bg-blue-700 w-[1px]"></div> */}
                         <div
                           className={`border-l-2 pl-2 ${getThemeBorderColor(
