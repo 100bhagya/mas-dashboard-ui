@@ -99,7 +99,7 @@ const Settings = (isOpen) => {
                   theme.themeMode
                 )}`}
               >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                View and update your profile information.
               </div>
             </div>
 
@@ -128,8 +128,7 @@ const Settings = (isOpen) => {
                   theme.themeMode
                 )}`}
               >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit afefaf
-                ageag.
+                Change theme and font size.
               </div>
             </div>
           </div>

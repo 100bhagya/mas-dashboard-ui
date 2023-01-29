@@ -492,7 +492,7 @@ const SummaryWritingContent = ({ isOpen }) => {
             <div
               className={`flex flex-col ${getThemeBackgroundColor(
                 theme.themeMode
-              )} h-[100vh] w-44 px-2 py-4 overflow-auto items-center`}
+              )} sticky top-0 h-screen w-44 px-2 py-4 overflow-auto items-center`}
             >
               <div
                 className={`cursor-pointer text-2xl text-blue-800 font-semibold ${getThemeTextSecondaryColor(

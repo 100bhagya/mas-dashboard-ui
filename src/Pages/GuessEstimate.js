@@ -14,6 +14,7 @@ import {
   getThemeLightTextColor,
   getThemeTextColor,
   getThemeTextSecondaryColor,
+  getThemeWhiteDarkBGColor,
 } from "../data/themesData";
 
 const GuessEstimate = (isOpen) => {
@@ -97,24 +98,52 @@ const GuessEstimate = (isOpen) => {
           </div>
           <div className="flex mt-6 gap-8 md:gap-12">
             <p
-              className={`w-[50%] hidden md:block ${getThemeBackgroundColor(
+              className={`w-[80%] hidden md:block ${getThemeWhiteDarkBGColor(
                 theme.themeMode
               )} ${getThemeTextColor(theme.themeMode)} px-4 py-2 rounded-xl`}
             >
-              LR: Two kinds of logical reasoning are often distinguished in
-              addition to formal deduction: induction and abduction. Given a
-              precondition or premise, a conclusion or logical consequence and a
-              rule or material conditional that implies the conclusion given the
-              precondition, one can explain the following.
-              <br />
-              <br />
-              DI: Data analysis and interpretation is the process of assigning
-              meaning to the collected information and determining the
-              conclusions, significance, and implications of the findings.
+              <p>
+                Guesstimate is a method of solving a problem or making an
+                estimate by using rough and approximate calculations, rather
+                than precise and exact ones. The purpose of guesstimate is to
+                come up with a quick, rough estimate or a solution that is good
+                enough for the given situation.
+              </p>
+              <p>
+                This method is often used in business, finance, and engineering
+                to quickly estimate costs, revenues, or other important metrics.
+              </p>
+              <p>Guesstimate problems typically involve:</p>
+              <p>
+                <ul className="ml-4 list-disc">
+                  <li>
+                    estimating a quantity without having all the information.
+                  </li>
+                  <li>
+                    using assumptions and simplifications to make the problem
+                    more manageable.
+                  </li>
+                  <li>
+                    using rough calculations and common sense to come up with a
+                    quick answer.
+                  </li>
+                </ul>
+              </p>
+              <p>
+                The key to solving guesstimate problems is to use a logical and
+                structured approach and to clearly state your assumptions and
+                simplifications. It's important to remember that the goal is not
+                to come up with a precise answer, but to come up with an
+                estimate that is good enough for the given situation.
+                Guesstimate questions are also common in aptitude tests, such as
+                those used for job interviews, where they aim to assess the
+                candidate's ability to think on their feet and solve problems
+                with limited information.
+              </p>
             </p>
 
             <div
-              className={`basis-1/2 shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeBackgroundColor(
+              className={`basis-1/2 max-h-[400px] shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeWhiteDarkBGColor(
                 theme.themeMode
               )}`}
             >
@@ -131,7 +160,7 @@ const GuessEstimate = (isOpen) => {
               </div>
             </div>
             <div
-              className={`basis-1/2 shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeBackgroundColor(
+              className={`basis-1/2  max-h-[400px] shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeWhiteDarkBGColor(
                 theme.themeMode
               )}`}
             >

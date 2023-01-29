@@ -11,11 +11,6 @@ import {
 } from "../data/themesData";
 import Artboard from "../images/Tech Article.png";
 const DataAnalysis = (isOpen) => {
-  const [limit, setLimit] = useState(800);
-  const Continue = () => {
-    setLimit((prevValue) => prevValue + 100);
-  };
-  const app = useSelector((state) => state.app);
   const theme = useSelector((state) => state.theme);
 
   const str =
@@ -57,19 +52,24 @@ const DataAnalysis = (isOpen) => {
                   theme.fontSize
                 )}`}
               >
-                {str.slice(0, limit)}
+                Data interpretation is the process of understanding, analyzing,
+                and making conclusions from data. It involves the ability to
+                extract information from data sets, such as tables, graphs, and
+                charts, and use it to make informed decisions. Data
+                interpretation often involves using mathematical and statistical
+                techniques to analyze and understand the data, as well as using
+                critical thinking and logical reasoning to draw conclusions from
+                it. It's a crucial skill in fields such as business, finance,
+                and market research, where large amounts of data need to be
+                analyzed and understood in order to make informed decisions. In
+                aptitude tests, data interpretation questions test the ability
+                to understand and interpret data presented in tables, graphs,
+                charts, and so on.
               </p>
               <div className="hidden md:block min-w-[50%]">
                 <img className="" alt="" src={Artboard} />
               </div>
             </div>
-
-            <button
-              className={`py-2 px-6 text-white rounded-xl bg-[#2255B8] md:w-[50%]`}
-              onClick={Continue}
-            >
-              Click here to continue reading
-            </button>
           </div>
         </div>
       </div>

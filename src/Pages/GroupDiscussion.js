@@ -13,6 +13,7 @@ import {
   getThemeLightTextColor,
   getThemeTextColor,
   getThemeTextSecondaryColor,
+  getThemeWhiteDarkBGColor,
 } from "../data/themesData";
 const GroupDiscussion = (isOpen) => {
   const [rating, setRating] = useState();
@@ -95,24 +96,47 @@ const GroupDiscussion = (isOpen) => {
           </div>
           <div className="flex mt-6 gap-8 md:gap-12">
             <p
-              className={`w-[50%] hidden md:block ${getThemeBackgroundColor(
+              className={`w-[80%] hidden md:block ${getThemeWhiteDarkBGColor(
                 theme.themeMode
               )} ${getThemeTextColor(theme.themeMode)} px-4 py-2 rounded-xl`}
             >
-              LR: Two kinds of logical reasoning are often distinguished in
-              addition to formal deduction: induction and abduction. Given a
-              precondition or premise, a conclusion or logical consequence and a
-              rule or material conditional that implies the conclusion given the
-              precondition, one can explain the following.
-              <br />
-              <br />
-              DI: Data analysis and interpretation is the process of assigning
-              meaning to the collected information and determining the
-              conclusions, significance, and implications of the findings.
+              <p>
+                GD stands for Group Discussion. It is a method of evaluating a
+                candidate's ability to communicate effectively and express their
+                thoughts and ideas in a group setting. In a GD, a group of
+                candidates are given a topic or a problem to discuss, and they
+                are expected to express their opinions, ideas, and thoughts on
+                the topic while also listening and responding to the ideas of
+                others.
+                <br />
+                The purpose of GD is to assess a candidate's:
+              </p>
+              <p className="pl-4">
+                <ul className="list-disc">
+                  <li>
+                    ability to express their thoughts and ideas clearly and
+                    effectively
+                  </li>
+                  <li>
+                    ability to listen to and respond to the ideas of others
+                  </li>
+                  <li>ability to work as part of a team</li>
+                  <li>ability to think on their feet</li>
+                  <li>ability to persuade others</li>
+                  <li>
+                    ability to handle pressure and stay calm in a group setting.
+                  </li>
+                </ul>
+              </p>
+              <p>
+                GD is commonly used as a selection process in the placement
+                process where it's used to evaluate the candidate's leadership,
+                communication, and team-working skills.
+              </p>
             </p>
 
             <div
-              className={`basis-1/2 shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeBackgroundColor(
+              className={`basis-1/2 max-h-[400px] shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeWhiteDarkBGColor(
                 theme.themeMode
               )}`}
             >
@@ -129,7 +153,7 @@ const GroupDiscussion = (isOpen) => {
               </div>
             </div>
             <div
-              className={`basis-1/2 shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeBackgroundColor(
+              className={`basis-1/2 max-h-[400px] shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeWhiteDarkBGColor(
                 theme.themeMode
               )}`}
             >
