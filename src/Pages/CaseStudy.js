@@ -14,6 +14,7 @@ import {
   getThemeLightTextColor,
   getThemeTextColor,
   getThemeTextSecondaryColor,
+  getThemeWhiteDarkBGColor,
 } from "../data/themesData";
 
 const CaseStudy = (isOpen) => {
@@ -97,24 +98,52 @@ const CaseStudy = (isOpen) => {
           </div>
           <div className="flex mt-6 gap-8 md:gap-12">
             <p
-              className={`w-[80%] hidden md:block ${getThemeBackgroundColor(
+              className={`w-[80%] hidden md:block ${getThemeWhiteDarkBGColor(
                 theme.themeMode
               )} ${getThemeTextColor(theme.themeMode)} px-4 py-2 rounded-xl`}
             >
-              LR: Two kinds of logical reasoning are often distinguished in
-              addition to formal deduction: induction and abduction. Given a
-              precondition or premise, a conclusion or logical consequence and a
-              rule or material conditional that implies the conclusion given the
-              precondition, one can explain the following.
-              <br />
-              <br />
-              DI: Data analysis and interpretation is the process of assigning
-              meaning to the collected information and determining the
-              conclusions, significance, and implications of the findings.
+              <p>
+                A case study for a placement interview is a problem-solving
+                exercise in which a candidate is presented with a business
+                problem or scenario and is asked to analyze it and come up with
+                a solution. The case study is designed to assess the candidate's
+                problem-solving, critical thinking, and decision-making skills,
+                as well as their ability to communicate and present their ideas
+                effectively.
+              </p>
+              <p>
+                During a placement case study interview, the interviewer will
+                typically present the candidate with a business problem or
+                scenario and ask them to analyze the situation, identify the key
+                issues and opportunities, and develop a solution or a plan of
+                action. The interviewer may also ask the candidate to make
+                assumptions or provide additional information to make the
+                problem more manageable. The candidate will then present their
+                analysis and solution to the interviewer, who will ask follow-up
+                questions and provide feedback.
+              </p>
+              <p>
+                The case study is used to evaluate the candidate's ability to:
+              </p>
+              <p className="pl-4">
+                <ul className="list-disc">
+                  <li>Understand a complex business problem or scenario</li>
+                  <li>Identify and analyze key issues and opportunities</li>
+                  <li>Develop a logical and structured solution</li>
+                  <li>Communicate and present their ideas effectively</li>
+                  <li>Handle pressure and stay calm under stress</li>
+                </ul>
+              </p>
+              <p>
+                Case study is a common method used in placement interviews,
+                especially in consulting, finance, and strategy roles. It allows
+                the interviewer to see how the candidate thinks and how they
+                would approach a real-world problem.
+              </p>
             </p>
 
             <div
-              className={`basis-1/2 max-h-[400px] shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeBackgroundColor(
+              className={`basis-1/2 max-h-[400px] shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeWhiteDarkBGColor(
                 theme.themeMode
               )}`}
             >
@@ -131,7 +160,7 @@ const CaseStudy = (isOpen) => {
               </div>
             </div>
             <div
-              className={`basis-1/2 max-h-[400px] shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeBackgroundColor(
+              className={`basis-1/2 max-h-[400px] shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeWhiteDarkBGColor(
                 theme.themeMode
               )}`}
             >

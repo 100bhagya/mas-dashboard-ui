@@ -11,15 +11,7 @@ import {
 } from "../data/themesData";
 import Artboard from "../images/Tech Article.png";
 const MLAndPython = (isOpen) => {
-  const [limit, setLimit] = useState(800);
-  const Continue = () => {
-    setLimit((prevValue) => prevValue + 100);
-  };
   const theme = useSelector((state) => state.theme);
-  const app = useSelector((state) => state.app);
-  const str =
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis, non. In unde tempora dolorem expedita quasi possimus provident ut minima, reiciendis quo fugit similique vel labore dolor perferendis quod delectus consequuntur, beatae eligendi temporibus atque laborum cupiditate commodi autem! Modi, id aspernatur. Voluptas facilis inventore ipsum modi recusandae sed autem? Quae eveniet soluta nostrum eum ratione? Aperiam earum nam atque, cum beatae incidunt facere a. Amet laborum vel consectetur voluptatibus rem harum similique excepturi tenetur possimus vitae? Aspernatur exercitationem, sint atque dicta labore pariatur nihil tempore est itaque magni aliquid quasi excepturi architecto tempora optio perspiciatis saepe provident doloribus ut dolores reiciendis! Et ut dolor odio, nisi repellendus saepe velit perspiciatis ipsa corporis autem veritatis, ab reprehenderit eos est! Ad aspernatur consectetur nemo sunt doloribus soluta? Blanditiis, non. In unde tempora dolorem expedita quasi possimus provident ut minima, reiciendis quo fugit similique vel labore dolor perferendis quod delectus consequuntur, beatae eligendi temporibus atque laborum cupiditate commodi autem! Modi, id aspernatur. Voluptas facilis inventore ipsum modi recusandae sed autem? Quae eveniet soluta nostrum eum ratione? Aperiam earum nam atque, cum beatae incidunt facere a. Amet laborum vel consectetur voluptatibus rem harum similique excepturi tenetur possimus vitae? Aspernatur exercitationem, sint atque dicta labore pariatur nihil tempore est itaque magni aliquid quasi excepturi architecto tempora optio perspiciatis saepe provident doloribus ut dolores reiciendis! Et ut dolor odio, nisi repellendus saepe velit perspiciatis ipsa corporis autem veritatis, ab reprehenderit eos est!";
-
   return (
     <div className="flex flex-col">
       <Navbar />
@@ -56,19 +48,57 @@ const MLAndPython = (isOpen) => {
                   theme.fontSize
                 )}`}
               >
-                {str.slice(0, limit)}
+                <p>
+                  Machine learning is a branch of Artificial Intelligence (AI)
+                  that involves the development of algorithms and statistical
+                  models that enable computers to learn from and make
+                  predictions or decisions without being explicitly programmed.
+                  Machine learning is based on the idea that systems can learn
+                  from data, identify patterns and make decisions with minimal
+                  human intervention. There are three main types of machine
+                  learning: supervised learning, unsupervised learning, and
+                  reinforcement learning. Supervised learning is when a model is
+                  trained on a labeled dataset, unsupervised learning is when a
+                  model is trained on an unlabeled dataset, and reinforcement
+                  lePython is a popular, high-level programming language for
+                  general-purpose programming. It was created by Guido van
+                  Rossum in 1991 and has a design philosophy that emphasizes
+                  code readability, and a syntax that allows programmers to
+                  express concepts in fewer lines of code than languages like
+                  C++ or Java. Python is considered an easy-to-learn language
+                  and has a large, active community which has developed a wide
+                  range of libraries and frameworks for various tasks such as
+                  machine learning, web development, and data analysis. Some of
+                  the most popular libraries in Python include NumPy, Pandas,
+                  Matplotlib, and TensorFlow. Python is also widely used in
+                  scientific computing, data science, artificial intelligence,
+                  and back-end web development.arning is when a model learns
+                  from interacting with an environment. Machine learning is used
+                  in a wide range of applications, such as natural language
+                  processing, image recognition, self-driving cars, fraud
+                  detection, and many others.
+                </p>
+                <br />
+                <p>
+                  Python is a popular, high-level programming language for
+                  general-purpose programming. It was created by Guido van
+                  Rossum in 1991 and has a design philosophy that emphasizes
+                  code readability, and a syntax that allows programmers to
+                  express concepts in fewer lines of code than languages like
+                  C++ or Java. Python is considered an easy-to-learn language
+                  and has a large, active community which has developed a wide
+                  range of libraries and frameworks for various tasks such as
+                  machine learning, web development, and data analysis. Some of
+                  the most popular libraries in Python include NumPy, Pandas,
+                  Matplotlib, and TensorFlow. Python is also widely used in
+                  scientific computing, data science, artificial intelligence,
+                  and back-end web development.
+                </p>
               </p>
               <div className="hidden md:block min-w-[50%]">
                 <img className="" alt="" src={Artboard} />
               </div>
             </div>
-
-            <button
-              className={`py-2 px-6 text-white rounded-xl bg-[#2255B8] md:w-[50%]`}
-              onClick={Continue}
-            >
-              Click here to continue reading
-            </button>
           </div>
         </div>
       </div>

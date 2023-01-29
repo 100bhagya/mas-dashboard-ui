@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import Navbar from "../Components/Navbar";
 import TopicBar from "../Components/TopicBar";
@@ -11,14 +11,7 @@ import {
 } from "../data/themesData";
 import Artboard from "../images/Tech Article.png";
 const Puzzles = (isOpen) => {
-  const [limit, setLimit] = useState(800);
-  const Continue = () => {
-    setLimit((prevValue) => prevValue + 100);
-  };
-  const app = useSelector((state) => state.app);
   const theme = useSelector((state) => state.theme);
-  const str =
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis, non. In unde tempora dolorem expedita quasi possimus provident ut minima, reiciendis quo fugit similique vel labore dolor perferendis quod delectus consequuntur, beatae eligendi temporibus atque laborum cupiditate commodi autem! Modi, id aspernatur. Voluptas facilis inventore ipsum modi recusandae sed autem? Quae eveniet soluta nostrum eum ratione? Aperiam earum nam atque, cum beatae incidunt facere a. Amet laborum vel consectetur voluptatibus rem harum similique excepturi tenetur possimus vitae? Aspernatur exercitationem, sint atque dicta labore pariatur nihil tempore est itaque magni aliquid quasi excepturi architecto tempora optio perspiciatis saepe provident doloribus ut dolores reiciendis! Et ut dolor odio, nisi repellendus saepe velit perspiciatis ipsa corporis autem veritatis, ab reprehenderit eos est! Ad aspernatur consectetur nemo sunt doloribus soluta? Blanditiis, non. In unde tempora dolorem expedita quasi possimus provident ut minima, reiciendis quo fugit similique vel labore dolor perferendis quod delectus consequuntur, beatae eligendi temporibus atque laborum cupiditate commodi autem! Modi, id aspernatur. Voluptas facilis inventore ipsum modi recusandae sed autem? Quae eveniet soluta nostrum eum ratione? Aperiam earum nam atque, cum beatae incidunt facere a. Amet laborum vel consectetur voluptatibus rem harum similique excepturi tenetur possimus vitae? Aspernatur exercitationem, sint atque dicta labore pariatur nihil tempore est itaque magni aliquid quasi excepturi architecto tempora optio perspiciatis saepe provident doloribus ut dolores reiciendis! Et ut dolor odio, nisi repellendus saepe velit perspiciatis ipsa corporis autem veritatis, ab reprehenderit eos est!";
 
   return (
     <div className="flex flex-col">
@@ -56,19 +49,48 @@ const Puzzles = (isOpen) => {
                   theme.fontSize
                 )}`}
               >
-                {str.slice(0, limit)}
+                <p>
+                  Puzzles are a form of mental challenge or game that involves
+                  arranging, solving, or manipulating a set of pieces or
+                  elements in order to achieve a certain goal or form a specific
+                  solution. Puzzles can come in many different forms, such as
+                  jigsaw puzzles, crossword puzzles, Sudoku, Rubik's cube,
+                  riddles, and many others.
+                </p>
+                <p>Some common features of puzzles include:</p>
+                <p>
+                  <ul className="ml-4 list-disc">
+                    <li>They have a specific goal or solution</li>
+                    <li>
+                      They require the use of critical thinking,
+                      problem-solving, and logical reasoning skills
+                    </li>
+                    <li>
+                      They can be solved by breaking them down into smaller
+                      parts and working on each part separately
+                    </li>
+                    <li>
+                      They can be challenging and may require persistence and
+                      patience to solve
+                    </li>
+                    <li>
+                      Some puzzles can be solved by trial and error, others
+                      require a methodical approach
+                    </li>
+                  </ul>
+                </p>
+                <p>
+                  Puzzles can be found in many different forms and can be
+                  enjoyed by people of all ages. They are known for helping with
+                  cognitive development, logical thinking, and problem-solving
+                  abilities, and can be a fun and entertaining way to pass the
+                  time.
+                </p>
               </p>
               <div className="hidden md:block min-w-[50%]">
                 <img className="" alt="" src={Artboard} />
               </div>
             </div>
-
-            <button
-              className={`py-2 px-6 text-white rounded-xl bg-[#2255B8] md:w-[50%]`}
-              onClick={Continue}
-            >
-              Click here to continue reading
-            </button>
           </div>
         </div>
       </div>

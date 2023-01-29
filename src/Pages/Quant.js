@@ -145,20 +145,17 @@ const Quant = (isOpen) => {
           </div>
           <div className="flex mt-6 gap-8 md:gap-12">
             <p
-              className={`w-[80%] hidden md:block ${getThemeWhiteDarkBGColor(
+              className={`w-[80%] h-[210px] text-ellipsis hidden md:block ${getThemeWhiteDarkBGColor(
                 theme.themeMode
               )} ${getThemeTextColor(theme.themeMode)} px-4 py-2 rounded-xl`}
             >
-              LR: Two kinds of logical reasoning are often distinguished in
-              addition to formal deduction: induction and abduction. Given a
-              precondition or premise, a conclusion or logical consequence and a
-              rule or material conditional that implies the conclusion given the
-              precondition, one can explain the following.
-              <br />
-              <br />
-              DI: Data analysis and interpretation is the process of assigning
-              meaning to the collected information and determining the
-              conclusions, significance, and implications of the findings.
+              Quantitative aptitude is a branch of mathematics that focuses on
+              problem-solving using numerical and quantitative methods. It is
+              often used in aptitude tests, such as those used for college
+              admissions or job applications, to assess a person's ability to
+              reason and solve mathematical problems. The topics covered in
+              quantitative aptitude include arithmetic, algebra, geometry, and
+              data interpretation.
             </p>
 
             <div
