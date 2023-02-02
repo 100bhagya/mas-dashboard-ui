@@ -77,7 +77,7 @@ const TopicBar = ({ value }) => {
   return (
     <div
       className={`flex shrink-0 ${sidebar ? "basis-1/10" : "basis-1/5"} ${
-        !sidebar && "md:min-w-[300px]"
+        !sidebar && "md:min-w-[320px]"
       }  h-full`}
     >
       <div
