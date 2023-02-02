@@ -179,25 +179,15 @@ const TopicBar = ({ value }) => {
                 >
                   Tasks
                 </div>
+
                 <div className={`${getThemeTextPrimaryColor(theme.themeMode)}`}>
-                  {app.tasksOpen ? (
+                  {/* {app.tasksOpen ? (
                     <RiArrowDropUpLine size={30} />
                   ) : (
                     <RiArrowDropDownLine size={30} />
-                  )}
+                  )} */}
                 </div>
               </div>
-
-              {/* <img
-                src={arrow}
-                alt=""
-                className={`${getThemeBackgroundColor(
-                  theme.themeMode
-                )} w-3 h-2 relative rounded-full left-[15%] top-2 cursor-pointer ${
-                  sidebar ? "hidden" : ""
-                }`}
-                style={{ transform: !app.tasksOpen ? "rotate(180deg)" : null }}
-              /> */}
             </div>
             {app.tasksOpen ? (
               <div className=""></div>
@@ -280,17 +270,19 @@ const TopicBar = ({ value }) => {
                         >
                           Aptitude Preparation
                         </div>
-                        <div
-                          className={`${getThemeTextPrimaryColor(
-                            theme.themeMode
-                          )}`}
-                        >
-                          {app.aptitudeOpen ? (
-                            <RiArrowDropUpLine size={25} />
-                          ) : (
-                            <RiArrowDropDownLine size={25} />
-                          )}
-                        </div>
+                        {!sidebar ? (
+                          <div
+                            className={`${getThemeTextPrimaryColor(
+                              theme.themeMode
+                            )}`}
+                          >
+                            {app.aptitudeOpen ? (
+                              <RiArrowDropUpLine size={25} />
+                            ) : (
+                              <RiArrowDropDownLine size={25} />
+                            )}
+                          </div>
+                        ) : null}
                       </div>
                     </div>
                     {app.aptitudeOpen ? (
