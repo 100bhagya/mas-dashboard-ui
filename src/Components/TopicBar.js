@@ -171,25 +171,29 @@ const TopicBar = ({ value }) => {
               <ClipboardCheckIcon
                 className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
               />
-              <div className="flex items-center  gap-1">
+              <div
+                className={`${
+                  sidebar ? "hidden" : ""
+                } flex items-center  gap-1`}
+              >
                 <div
                   className={`ml-5 ${getThemeTextPrimaryColor(
                     theme.themeMode
-                  )} text-blue-500  md:text-md ${sidebar ? "hidden" : ""}`}
+                  )} text-blue-500  md:text-md `}
                 >
                   Tasks
                 </div>
 
                 <div className={`${getThemeTextPrimaryColor(theme.themeMode)}`}>
-                  {/* {app.tasksOpen ? (
+                  {app.tasksOpen ? (
                     <RiArrowDropUpLine size={30} />
                   ) : (
                     <RiArrowDropDownLine size={30} />
-                  )} */}
+                  )}
                 </div>
               </div>
             </div>
-            {app.tasksOpen ? (
+            {!app.tasksOpen ? (
               <div className=""></div>
             ) : (
               <div
@@ -276,7 +280,7 @@ const TopicBar = ({ value }) => {
                               theme.themeMode
                             )}`}
                           >
-                            {app.aptitudeOpen ? (
+                            {!app.aptitudeOpen ? (
                               <RiArrowDropUpLine size={25} />
                             ) : (
                               <RiArrowDropDownLine size={25} />
@@ -405,7 +409,7 @@ const TopicBar = ({ value }) => {
                             theme.themeMode
                           )}`}
                         >
-                          {app.nonTechOpen ? (
+                          {!app.nonTechOpen ? (
                             <RiArrowDropUpLine size={25} />
                           ) : (
                             <RiArrowDropDownLine size={25} />

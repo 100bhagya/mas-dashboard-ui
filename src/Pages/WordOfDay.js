@@ -183,7 +183,7 @@ const WordOfDay = (isOpen) => {
   };
   useEffect(() => {
     getCalendarData();
-  }, []);
+  }, [app.currentMonthAndYear]);
 
   const sendResponse = async () => {
     if (
