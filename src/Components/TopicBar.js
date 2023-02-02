@@ -29,6 +29,12 @@ import {
   getThemeTextPrimaryColor,
 } from "../data/themesData";
 import { FaDiscord } from "react-icons/fa";
+import {
+  RiArrowDropLeftLine,
+  RiArrowDropDownLine,
+  RiArrowDropUpLine,
+  RiArrowDropRightLine,
+} from "react-icons/ri";
 const TopicBar = ({ value }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -155,7 +161,7 @@ const TopicBar = ({ value }) => {
           </Link>
           <div className="py-2">
             <div
-              className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
+              className={`flex py-2  md:px-2 lg:px-8 cursor-pointer rounded-lg ${getThemeHoverPrimaryBgColor(
                 theme.themeMode
               )}`}
               onClick={() => {
@@ -165,23 +171,29 @@ const TopicBar = ({ value }) => {
               <ClipboardCheckIcon
                 className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
               />
-              <div
-                className={`ml-5 ${getThemeTextPrimaryColor(
-                  theme.themeMode
-                )} text-blue-500  md:text-md ${sidebar ? "hidden" : ""}`}
-              >
-                Tasks
+              <div className="flex items-center  gap-1">
+                <div
+                  className={`ml-5 ${getThemeTextPrimaryColor(
+                    theme.themeMode
+                  )} text-blue-500  md:text-md ${sidebar ? "hidden" : ""}`}
+                >
+                  Tasks
+                </div>
+                <div
+                  className={`${getThemeTextPrimaryColor(theme.themeMode)}`}
+                ></div>
               </div>
-              <img
+
+              {/* <img
                 src={arrow}
                 alt=""
                 className={`${getThemeBackgroundColor(
                   theme.themeMode
-                )} w-3 h-2 relative left-[15%] top-2 cursor-pointer ${
+                )} w-3 h-2 relative rounded-full left-[15%] top-2 cursor-pointer ${
                   sidebar ? "hidden" : ""
                 }`}
                 style={{ transform: !app.tasksOpen ? "rotate(180deg)" : null }}
-              />
+              /> */}
             </div>
             {app.tasksOpen ? (
               <div className=""></div>
@@ -256,23 +268,26 @@ const TopicBar = ({ value }) => {
                         dispatch(setAptitudeOpen(!app.aptitudeOpen));
                       }}
                     >
-                      <div
-                        className={`text-sm text-left ${getThemeTextPrimaryColor(
-                          theme.themeMode
-                        )}`}
-                      >
-                        Aptitude Preparation
+                      <div className="flex items-center gap-1">
+                        <div
+                          className={`text-sm text-left ${getThemeTextPrimaryColor(
+                            theme.themeMode
+                          )}`}
+                        >
+                          Aptitude Preparation
+                        </div>
+                        <div
+                          className={`${getThemeTextPrimaryColor(
+                            theme.themeMode
+                          )}`}
+                        >
+                          {app.aptitudeOpen ? (
+                            <RiArrowDropUpLine size={25} />
+                          ) : (
+                            <RiArrowDropDownLine size={25} />
+                          )}
+                        </div>
                       </div>
-                      <img
-                        src={arrow}
-                        alt=""
-                        className="w-3 h-2 relative top-2 cursor-pointer"
-                        style={{
-                          transform: !app.aptitudeOpen
-                            ? "rotate(180deg)"
-                            : null,
-                        }}
-                      />
                     </div>
                     {app.aptitudeOpen ? (
                       <div></div>
@@ -374,31 +389,33 @@ const TopicBar = ({ value }) => {
                   </Link>
                   <div className="">
                     <div
-                      className={`flex px-2 py-2 lg:pl-8 rounded-md ${getThemeHoverPrimaryBgColor(
+                      className={`flex px-2 py-2 lg:pl-8 cursor-pointer rounded-md ${getThemeHoverPrimaryBgColor(
                         theme.themeMode
                       )}`}
                       onClick={() => {
                         dispatch(setNonTechOpen(!app.nonTechOpen));
                       }}
                     >
-                      <div
-                        className={`text-sm text-left cursor-pointer ${getThemeTextPrimaryColor(
-                          theme.themeMode
-                        )}`}
-                      >
-                        Non-Tech Prep
+                      <div className="flex items-center  gap-1">
+                        <div
+                          className={`text-sm text-left cursor-pointer ${getThemeTextPrimaryColor(
+                            theme.themeMode
+                          )}`}
+                        >
+                          Non-Tech Prep
+                        </div>
+                        <div
+                          className={`${getThemeTextPrimaryColor(
+                            theme.themeMode
+                          )}`}
+                        >
+                          {app.nonTechOpen ? (
+                            <RiArrowDropUpLine size={25} />
+                          ) : (
+                            <RiArrowDropDownLine size={25} />
+                          )}
+                        </div>
                       </div>
-                      <img
-                        src={arrow}
-                        alt=""
-                        className="w-3 h-2 relative left-[10%] top-2 cursor-pointer"
-                        style={{
-                          transform: !app.nonTechOpen ? "rotate(180deg)" : null,
-                        }}
-                        onClick={() => {
-                          setNonTechOpen(!app.nonTechOpen);
-                        }}
-                      />
                     </div>
                     {app.nonTechOpen ? (
                       <div></div>
@@ -503,7 +520,7 @@ const TopicBar = ({ value }) => {
             <div
               className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
                 theme.themeMode
-              )}`}
+              )} cursor-pointer`}
             >
               <PencilAltIcon
                 className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
@@ -521,7 +538,7 @@ const TopicBar = ({ value }) => {
             <div
               className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
                 theme.themeMode
-              )}`}
+              )} cursor-pointer`}
             >
               <DocumentTextIcon
                 className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
@@ -539,7 +556,7 @@ const TopicBar = ({ value }) => {
             <div
               className={`flex items-center py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
                 theme.themeMode
-              )}`}
+              )} cursor-pointer`}
             >
               <FaDiscord
                 size={20}
@@ -558,7 +575,7 @@ const TopicBar = ({ value }) => {
             <div
               className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
                 theme.themeMode
-              )}`}
+              )} cursor-pointer`}
             >
               <MapIcon
                 className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
@@ -618,16 +635,28 @@ const TopicBar = ({ value }) => {
         <div
           className={`${getThemeBackgroundColor(
             theme.themeMode
-          )} top-[50vh] -translate-y-1/2 w-6 h-10  relative hidden md:block`}
+          )} top-[50vh] -translate-y-1/2 relative hidden md:block`}
         >
-          <img
+          <div
+            className={`flex items-center justify-center ${getThemeTextPrimaryColor(
+              theme.themeMode
+            )}`}
+            onClick={activatesidebar}
+          >
+            {sidebar ? (
+              <RiArrowDropLeftLine size={35} />
+            ) : (
+              <RiArrowDropRightLine size={35} />
+            )}
+          </div>
+
+          {/* <img
             src={arrow}
             alt=""
             className={`${
               sidebar ? "-rotate-90" : "rotate-90"
             } h-4 w-6 cursor-pointer relative top-3`}
-            onClick={activatesidebar}
-          />
+          /> */}
         </div>
       </div>
     </div>

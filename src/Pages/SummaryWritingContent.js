@@ -24,6 +24,7 @@ import {
   getThemeTextColor,
   getThemeTextPrimaryColor,
   getThemeTextSecondaryColor,
+  getText,
 } from "../data/themesData";
 const toastMessage = (message) => toast(message);
 
@@ -412,7 +413,9 @@ const SummaryWritingContent = ({ isOpen }) => {
                   autoFocus={true}
                   ref={summaryTextRef}
                   placeholder="Write summary here..."
-                  className={`w-full h-[50vh] my-6 p-4 rounded-md ${getThemeTextSecondaryColor(
+                  className={`${getText(
+                    theme.mode
+                  )} w-full h-[50vh] my-6 p-4 rounded-md ${getThemeTextSecondaryColor(
                     theme.themeMode
                   )} ${getThemeBLightBackgroundColor(
                     theme.themeMode
@@ -460,7 +463,11 @@ const SummaryWritingContent = ({ isOpen }) => {
               {/* Article Box */}
               <div className={`mt-8 ${isSendSummaryBoxOpen && "hidden"}`}>
                 <>
-                  <p className={`${getThemeTextColor(theme.themeMode)} mb-8`}>
+                  <p
+                    className={`${getText(theme.mode)} ${getThemeTextColor(
+                      theme.themeMode
+                    )} mb-8`}
+                  >
                     {parse(String(summary?.articleText))}
                   </p>
 

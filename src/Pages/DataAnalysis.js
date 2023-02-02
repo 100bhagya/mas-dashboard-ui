@@ -47,11 +47,7 @@ const DataAnalysis = (isOpen) => {
               <div className="md:hidden">
                 <img className="" alt="" src={Artboard} />
               </div>
-              <p
-                className={`${getThemeTextColor(theme.themeMode)} ${getText(
-                  theme.fontSize
-                )}`}
-              >
+              <p className={`${getThemeTextColor(theme.themeMode)}`}>
                 Data interpretation is the process of understanding, analyzing,
                 and making conclusions from data. It involves the ability to
                 extract information from data sets, such as tables, graphs, and

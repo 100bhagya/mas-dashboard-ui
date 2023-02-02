@@ -43,11 +43,7 @@ const SQL = (isOpen) => {
               <div className="md:hidden">
                 <img className="" alt="" src={Artboard} />
               </div>
-              <p
-                className={`${getThemeTextColor(theme.themeMode)} ${getText(
-                  theme.fontSize
-                )}`}
-              >
+              <p className={`${getThemeTextColor(theme.themeMode)}`}>
                 SQL (Structured Query Language) is a programming language used
                 to manage and manipulate relational databases. It is used to
                 create, modify, and query databases. SQL allows you to insert,
