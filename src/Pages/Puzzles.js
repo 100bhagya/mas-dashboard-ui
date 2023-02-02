@@ -44,11 +44,7 @@ const Puzzles = (isOpen) => {
               <div className="md:hidden">
                 <img className="" alt="" src={Artboard} />
               </div>
-              <p
-                className={`${getThemeTextColor(theme.themeMode)} ${getText(
-                  theme.fontSize
-                )}`}
-              >
+              <p className={`${getThemeTextColor(theme.themeMode)} `}>
                 <p>
                   Puzzles are a form of mental challenge or game that involves
                   arranging, solving, or manipulating a set of pieces or
