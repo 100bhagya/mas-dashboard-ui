@@ -179,9 +179,13 @@ const TopicBar = ({ value }) => {
                 >
                   Tasks
                 </div>
-                <div
-                  className={`${getThemeTextPrimaryColor(theme.themeMode)}`}
-                ></div>
+                <div className={`${getThemeTextPrimaryColor(theme.themeMode)}`}>
+                  {app.tasksOpen ? (
+                    <RiArrowDropUpLine size={30} />
+                  ) : (
+                    <RiArrowDropDownLine size={30} />
+                  )}
+                </div>
               </div>
 
               {/* <img
