@@ -70,7 +70,7 @@ const WordOfDay = (isOpen) => {
       setLoading(false);
     } catch (e) {
       console.log(e, "500");
-      setIsModalOpen(e.response.status === 500);
+      if (!!app.lastAvailableDate) setIsModalOpen(e.response.status === 500);
       setLoading(false);
     }
   };
