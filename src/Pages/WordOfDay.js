@@ -136,7 +136,10 @@ const WordOfDay = (isOpen) => {
           `${latestAvailableDay}-${app.currentMonthAndYear}`,
           "DD-MM-YYYY"
         ).toDate();
-        dispatch(setCurrentCalendarDate(lastAvailableDate));
+        if (!moment(lastAvailableDate).isAfter(moment())) {
+          dispatch(setCurrentCalendarDate(lastAvailableDate));
+        }
+
         dispatch(setLastAvailableDailyWordDate(lastAvailableDate));
         dispatch(setMarkedDates(markedDates));
       })
