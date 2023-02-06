@@ -70,7 +70,7 @@ const WordOfDay = (isOpen) => {
       setLoading(false);
     } catch (e) {
       console.log(e, "500");
-      setIsModalOpen(e.response.status === 500);
+      if (!!app.lastAvailableDate) setIsModalOpen(e.response.status === 500);
       setLoading(false);
     }
   };
@@ -136,7 +136,10 @@ const WordOfDay = (isOpen) => {
           `${latestAvailableDay}-${app.currentMonthAndYear}`,
           "DD-MM-YYYY"
         ).toDate();
-        dispatch(setCurrentCalendarDate(lastAvailableDate));
+        if (!moment(lastAvailableDate).isAfter(moment())) {
+          dispatch(setCurrentCalendarDate(lastAvailableDate));
+        }
+
         dispatch(setLastAvailableDailyWordDate(lastAvailableDate));
         dispatch(setMarkedDates(markedDates));
       })

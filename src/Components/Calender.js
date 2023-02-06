@@ -9,13 +9,15 @@ import {
 export default function App() {
   const app = useSelector((state) => state.app);
   const dispatch = useDispatch();
-
+  const isDisabled = (e) => {
+    return moment(e.date).isAfter(moment());
+  };
   return (
     <>
       <Calendar
         value={moment(app.currentCalendarDate).toDate()}
         onChange={(e) => {
-          dispatch(setCurrentCalendarDate(e));
+          if (!isDisabled(e)) dispatch(setCurrentCalendarDate(e));
         }}
         tileClassName={({ date }) => {
           // returning className that will be applied on calendar tiles
@@ -40,6 +42,7 @@ export default function App() {
             return "partially-completed-words";
           }
         }}
+        tileDisabled={(e) => isDisabled(e)}
         onActiveStartDateChange={({ activeStartDate }) => {
           //updating "currentMonthAndYear" state when calendar view is changed
           dispatch(
