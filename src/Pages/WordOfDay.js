@@ -68,9 +68,9 @@ const WordOfDay = (isOpen) => {
       setDailyWordsId(dailyWordsFetchedResponse?.data.id);
       setWordingsResponse(wordsResponseData?.data);
       setLoading(false);
-    } catch (e) {
-      console.log(e, "500");
-      if (!!app.lastAvailableDate) setIsModalOpen(e.response.status === 500);
+    } catch (err) {
+      console.log(err, "500");
+      setIsModalOpen(err.response.status === 500);
       setLoading(false);
     }
   };
@@ -136,7 +136,8 @@ const WordOfDay = (isOpen) => {
           `${latestAvailableDay}-${app.currentMonthAndYear}`,
           "DD-MM-YYYY"
         ).toDate();
-        if (!moment(lastAvailableDate).isAfter(moment())) {
+       
+        if (moment(lastAvailableDate).isAfter(moment())===false) {
           dispatch(setCurrentCalendarDate(lastAvailableDate));
         }
 
@@ -349,9 +350,9 @@ const WordOfDay = (isOpen) => {
               {`${moment(app.currentCalendarDate).format("DD-MM-YYYY")}`}
             </div>
           </div>
-          <div className="flex mt-8 gap-4 flex-col-reverse lg:flex-row">
+          <div className="flex flex-col-reverse gap-4 mt-8 lg:flex-row">
             {!loading && dailyWordsId ? (
-              <div className="basis-4/5 flex flex-col">
+              <div className="flex flex-col basis-4/5">
                 <div
                   className={`py-4 px-8  rounded-lg shadow-xl my-3 ${getThemeBackgroundColor(
                     theme.themeMode
@@ -395,7 +396,7 @@ const WordOfDay = (isOpen) => {
                       theme.themeMode
                     )} `}
                   />
-                  <div className="text-right mt-3"></div>
+                  <div className="mt-3 text-right"></div>
                 </div>
                 <div
                   className={`py-4 px-8  rounded-lg shadow-xl my-3 ${getThemeBackgroundColor(
@@ -440,7 +441,7 @@ const WordOfDay = (isOpen) => {
                       theme.themeMode
                     )} `}
                   />
-                  <div className="text-right mt-3"></div>
+                  <div className="mt-3 text-right"></div>
                 </div>
 
                 {!(wordingsResponse?.id === undefined) ? (
@@ -469,11 +470,11 @@ const WordOfDay = (isOpen) => {
               <NoDailyWords loading={loading} />
             )}
 
-            <div className="relative ml-auto mr-0 basis-1/5 lg:ml-28 translate-x-1/2 right-1/2 md:translate-x-0 md:right-0 ">
+            <div className="relative ml-auto mr-0 translate-x-1/2 basis-1/5 lg:ml-28 right-1/2 md:translate-x-0 md:right-0 ">
               {/* <div inline-datepicker data-date="02/25/2022"></div> */}
               <Calendar />
               {/* {dailyWordsId ? (
-              <img src={Artboard} alt="" className="mt-24 hidden lg:block" />
+              <img src={Artboard} alt="" className="hidden mt-24 lg:block" />
             ) : null} */}
             </div>
           </div>
