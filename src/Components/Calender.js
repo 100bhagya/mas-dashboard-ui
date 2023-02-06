@@ -6,9 +6,15 @@ import {
   setCurrentCalendarDate,
   setCurrentMonthAndYear,
 } from "../app/features/app/appSlice";
+import { FiLock } from "react-icons/fi";
+
 export default function App() {
   const app = useSelector((state) => state.app);
   const dispatch = useDispatch();
+
+  const isFutureDate = (date) => {
+    return moment(date).isAfter(moment());
+  };
 
   return (
     <>
@@ -18,7 +24,7 @@ export default function App() {
           dispatch(setCurrentCalendarDate(e));
         }}
         tileClassName={({ date }) => {
-          // returning className that will be applied on calendar tiles
+          if (isFutureDate(date)) return "disable-word";
           if (
             app.markedDates[moment(date).format("DD-MM-YYYY")] === "completed"
           ) {
@@ -40,13 +46,16 @@ export default function App() {
             return "partially-completed-words";
           }
         }}
+        tileContent={({ date }) => {
+          if (isFutureDate(date)) return <FiLock className="disable-word" />;
+        }}
         onActiveStartDateChange={({ activeStartDate }) => {
           //updating "currentMonthAndYear" state when calendar view is changed
           dispatch(
             setCurrentMonthAndYear(moment(activeStartDate).format("MM-YYYY"))
           );
         }}
-        className="rounded-2xl shadow-2xl shadow-blue-100"
+        className="shadow-2xl rounded-2xl shadow-blue-100"
       />
     </>
   );

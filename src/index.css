@@ -100,9 +100,14 @@
   font-size: 1em !important;
   color: white;
 }
+.disable-word{
+  pointer-events: none !important;
+
+}
 
 .not-attempted-words {
   background-color: red !important;
+  
   border-radius: 10%;
   box-sizing: border-box !important;
   border: 2px white solid !important;
