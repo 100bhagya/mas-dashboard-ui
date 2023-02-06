@@ -12,9 +12,7 @@ export default function App() {
   const app = useSelector((state) => state.app);
   const dispatch = useDispatch();
 
-  const isFutureDate = (date) => {
-    return moment(date).isAfter(moment());
-  };
+  
 
   return (
     <>
@@ -24,7 +22,8 @@ export default function App() {
           dispatch(setCurrentCalendarDate(e));
         }}
         tileClassName={({ date }) => {
-          if (isFutureDate(date)) return "disable-word";
+
+          if (moment(date).isAfter(moment())===true) return "disable-word";//will disable future dates in calender
           if (
             app.markedDates[moment(date).format("DD-MM-YYYY")] === "completed"
           ) {
@@ -47,7 +46,7 @@ export default function App() {
           }
         }}
         tileContent={({ date }) => {
-          if (isFutureDate(date)) return <FiLock className="disable-word" />;
+          if (moment(date).isAfter(moment())===true) return <FiLock className="disable-word" />;
         }}
         onActiveStartDateChange={({ activeStartDate }) => {
           //updating "currentMonthAndYear" state when calendar view is changed
