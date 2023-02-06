@@ -38,13 +38,13 @@ function WEEK({
 }) {
   const theme = useSelector((state) => state.theme);
   useEffect(() => {
-    const startDateMomentObject = moment("13-09-2022", "DD-MM-YYYY");
+    const startDateMomentObject = moment("10-01-2023", "DD-MM-YYYY");
     const weekIndex = moment().diff(startDateMomentObject, "weeks") - 1;
     if (index === weekIndex) toggleWEEK(weekIndex);
 
-    return () => {
-      week.open = false;
-    };
+    if(index===weekIndex){
+      week.open=true;
+    }
   }, []);
   return (
     <div>
@@ -60,7 +60,7 @@ function WEEK({
               : getThemeTextPrimaryColor(theme.themeMode)
           }`}
         >
-          <div className="flex gap-2 items-center">
+          <div className="flex items-center gap-2">
             {week.question}
             <div>
               {statusResponse[week.id]?.[0] && statusResponse[week.id]?.[1] ? (
@@ -92,7 +92,7 @@ function WEEK({
                   handleArticle(index, articleNumber);
                 }}
               >
-                <div className="flex gap-2 justify-start items-center">
+                <div className="flex items-center justify-start gap-2">
                   <div>{post?.role}</div>
                   {statusResponse[week?.id]?.[post?.articleNumber - 1] ? (
                     <Checkmark size="14px" />
@@ -300,7 +300,7 @@ const SummaryWritingContent = ({ isOpen }) => {
             theme.themeMode
           )} h-[100vh] w-44 px-2 py-4 overflow-auto items-center`}
         >
-          <div className="cursor-pointer text-2xl text-blue-800 font-semibold">
+          <div className="text-2xl font-semibold text-blue-800 cursor-pointer">
             Weeks
           </div>
           <div className="">
@@ -362,7 +362,7 @@ const SummaryWritingContent = ({ isOpen }) => {
                 (summary !== null || isLoading) && "hidden"
               } flex flex-col justify-center items-center mt-8`}
             >
-              <div className="font-bold text-4xl text-center mb-5 text-red-500 ">
+              <div className="mb-5 text-4xl font-bold text-center text-red-500 ">
                 Ooops!!
               </div>
               <div className="text-4xl font-bold text-red-600 mr-14">
