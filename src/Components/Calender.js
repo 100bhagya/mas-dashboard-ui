@@ -23,7 +23,7 @@ export default function App() {
         }}
         tileClassName={({ date }) => {
 
-          if (moment(date).isAfter(moment())===true) return "disable-word";//will disable future dates in calender
+          if (moment(date).isAfter(moment())===true && (moment(date).day()!==6 && moment(date).day()!==0)) return "disable-word";//will disable future dates in calender
           if (
             app.markedDates[moment(date).format("DD-MM-YYYY")] === "completed"
           ) {
@@ -46,7 +46,7 @@ export default function App() {
           }
         }}
         tileContent={({ date }) => {
-          if (moment(date).isAfter(moment())===true) return <FiLock className="disable-word" />;
+          if (moment(date).isAfter(moment())===true && (moment(date).day()!==6 && moment(date).day()!==0)) return <FiLock className="disable-word" />;
         }}
         onActiveStartDateChange={({ activeStartDate }) => {
           //updating "currentMonthAndYear" state when calendar view is changed
