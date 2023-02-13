@@ -7,9 +7,14 @@ import { useSelector } from "react-redux";
 import {
   getThemeBackgroundColor,
   getThemeBLightBackgroundColor,
+  getThemeBorderColor,
   getThemeLightTextColor,
+  getThemeTextPrimaryColor,
   getThemeTextSecondaryColor,
 } from "../data/themesData";
+import { FiCopy } from "react-icons/fi";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+
 const QuizDetail = (isOpen) => {
   const { test } = useParams();
   const app = useSelector((state) => state.app);
@@ -52,6 +57,20 @@ const QuizDetail = (isOpen) => {
                 className={`text-xs ${getThemeLightTextColor(theme.themeMode)}`}
               >{`Deadline: ${app.testData[test - 1].deadline}`}</div>
             </div>
+            <CopyToClipboard text={app.testData[test - 1].testLink}>
+              <button
+                className={`group flex items-center gap-2 border-2 p-2 rounded-full ${getThemeBorderColor(
+                  app.themeMode
+                )} ${getThemeTextPrimaryColor(app.themeMode)}`}
+              >
+                <div>
+                  <FiCopy className="group-hover:scale-110" size={20} />
+                </div>
+                <span className={`group-hover:scale-110 text-sm`}>
+                  Copy test link
+                </span>
+              </button>
+            </CopyToClipboard>
           </div>
           <iframe
             className="w-full h-full rounded px-2"
