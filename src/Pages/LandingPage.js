@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TopicBar from "../Components/TopicBar";
 import Graph from "../Components/Graph";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { API_BASE_URL } from "../data/consts";
 import Tooltip from "../Components/Tooltip";
 import moment from "moment";
@@ -19,10 +19,12 @@ import {
   getThemeLightTextColor,
   getThemeTextSecondaryColor,
 } from "../data/themesData";
+import { toggleThemeMode } from "../app/features/theme/themeSlice";
+import { MdDarkMode } from "react-icons/md";
 const LandingPage = (isOpen) => {
   const user = useSelector((state) => state.user);
   const theme = useSelector((state) => state.theme);
-
+  const dispatch = useDispatch();
   const [testData, setTestData] = useState([]);
   const [leaderboard, setLeaderboard] = useState(false);
   const [leaderboardData, setLeaderboardData] = useState([]);
@@ -37,44 +39,46 @@ const LandingPage = (isOpen) => {
       headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
     };
     axios
-      .get(`${API_BASE_URL}/api/getStudentReport`, config)
+      .get(`http://localhost:8080/api/student/data/`, config)
       .then((res) => {
-        let testArray = [];
-        for (let i = 0; i < res.data.length && i < 5; i++) {
-          testArray.push({
-            examDate: res.data[i][0],
-            examName: res.data[i][1],
-            rank: `#${parseInt(Math.random() * (150 - 1) + 1)}`,
-          });
-        }
-        setTestData(testArray);
-        setIsLoading(false);
+        console.log(res);
+        setTestData(res.data);
+        // let testArray = [];
+        // for (let i = 0; i < res.data.length && i < 5; i++) {
+        //   testArray.push({
+        //     examDate: res.data[i][0],
+        //     examName: res.data[i][1],
+        //     rank: `#${parseInt(Math.random() * (150 - 1) + 1)}`,
+        //   });
+        // }
+        // setTestData(testArray);
+        // setIsLoading(false);
       })
       .catch((err) => {
         console.error(err);
         setIsLoading(false);
       });
     setIsLoading(true);
-    axios
-      .get(`${API_BASE_URL}/api/getLeaderboard`, config)
-      .then((res) => {
-        let leaderboardData = [];
-        for (let i = 0; i < res.data.length && i < 5; i++) {
-          leaderboardData.push({
-            studentName: res.data[i][0],
-            totalScore: res.data[i][2],
-          });
-        }
-        leaderboardData.sort((a, b) => {
-          return a.totalScore > b.totalScore;
-        });
-        setLeaderboardData(leaderboardData);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setIsLoading(false);
-      });
+    // axios
+    //   .get(`${API_BASE_URL}/api/getLeaderboard`, config)
+    //   .then((res) => {
+    //     let leaderboardData = [];
+    //     for (let i = 0; i < res.data.length && i < 5; i++) {
+    //       leaderboardData.push({
+    //         studentName: res.data[i][0],
+    //         totalScore: res.data[i][2],
+    //       });
+    //     }
+    //     leaderboardData.sort((a, b) => {
+    //       return a.totalScore > b.totalScore;
+    //     });
+    //     setLeaderboardData(leaderboardData);
+    //     setIsLoading(false);
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //     setIsLoading(false);
+    //   });
   }, [user]);
 
   return (
@@ -154,20 +158,37 @@ const LandingPage = (isOpen) => {
         >
           <div className="w-full md:w-[70%]">
             <div className="md:px-10 p-6">
-              <div>
-                <div
-                  className={`text-base md:text-3xl ${getThemeTextSecondaryColor(
-                    theme.themeMode
-                  )}`}
-                >
-                  Hello, Peter
+              <div className="flex justify-between items-center">
+                <div>
+                  <div
+                    className={`text-base md:text-3xl ${getThemeTextSecondaryColor(
+                      theme.themeMode
+                    )}`}
+                  >
+                    Hello, {user.loginInfo.username}
+                  </div>
+                  <div
+                    className={`text-xs ${getThemeLightTextColor(
+                      theme.themeMode
+                    )}`}
+                  >
+                    {moment().format("MM/DD/YYYY")}
+                  </div>
                 </div>
-                <div
-                  className={`text-xs ${getThemeLightTextColor(
-                    theme.themeMode
-                  )}`}
-                >
-                  {moment().format("MM/DD/YYYY")}
+
+                <div>
+                  <button
+                    className={`p-1.5 rounded-full ${
+                      theme.themeMode
+                        ? "text-white border-2 border-white shadow-sm shadow-white"
+                        : "text-black border-2 border-dark shadow-sm shadow-dark"
+                    }`}
+                    onClick={() => {
+                      dispatch(toggleThemeMode());
+                    }}
+                  >
+                    <MdDarkMode size={30} />
+                  </button>
                 </div>
               </div>
 
@@ -190,25 +211,28 @@ const LandingPage = (isOpen) => {
                 id="performanceCard"
                 className="grid md:grid-cols-5 grid-cols-2 gap-4 md:p-10 md:shadow-xl md:rounded-2xl"
               >
-                {testData.map((test) => {
-                  return (
-                    <div className="shadow-xl rounded-2xl md:shadow-none md:rounded-none">
-                      <Tooltip text={test.examName}>
-                        <div className="flex flex-col justify-center items-center">
-                          {/* <div className="md:text-2xl  text-xl border-b-2 w-fit pb-2 border-gray-500">
+                {testData
+                  .filter((test) => test.rollNumber === "MAS1012022045")
+                  .splice(0, 5)
+                  .map((test) => {
+                    return (
+                      <div className="shadow-xl rounded-2xl md:shadow-none md:rounded-none">
+                        <Tooltip text={test.testName}>
+                          <div className="flex flex-col justify-center items-center">
+                            {/* <div className="md:text-2xl  text-xl border-b-2 w-fit pb-2 border-gray-500">
                             {test.examName}
                           </div> */}
-                          <div className="md:text-2xl !text-4xl text-sky-800 mt-4">
-                            {test.rank}
+                            <div className="md:text-2xl !text-4xl text-sky-800 mt-4">
+                              {test.rank}
+                            </div>
+                            <div className="md:text-md text-md">
+                              {moment(test.testDate).format("DD/MM/YYYY")}
+                            </div>
                           </div>
-                          <div className="md:text-md text-md">
-                            {test.examDate}
-                          </div>
-                        </div>
-                      </Tooltip>
-                    </div>
-                  );
-                })}
+                        </Tooltip>
+                      </div>
+                    );
+                  })}
               </div>
               <div className="">
                 <div
@@ -219,7 +243,11 @@ const LandingPage = (isOpen) => {
                   Performance History
                 </div>
                 <div className="text-right shadow-2xl rounded-2xl h-[300px] w-full ">
-                  <Graph />
+                  <Graph
+                    testData={testData.filter(
+                      (test) => test.rollNumber === "MAS1012022045"
+                    )}
+                  />
                 </div>
               </div>
               <div>
@@ -285,18 +313,21 @@ const LandingPage = (isOpen) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {leaderboardData.map((student, i) => (
-                      <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <th
-                          scope="row"
-                          class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                        >
-                          {i + 1}
-                        </th>
-                        <td class="py-4 px-6">{student.studentName}</td>
-                        <td class="py-4 px-6">{student.totalScore}</td>
-                      </tr>
-                    ))}
+                    {testData
+                      .filter((test) => test.testName === "Combined Test 3")
+                      .sort((test1, test2) => test1.rank - test2.rank)
+                      .map((student, i) => (
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                          <th
+                            scope="row"
+                            class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          >
+                            {student.rank}
+                          </th>
+                          <td class="py-4 px-6">{student.studentName}</td>
+                          <td class="py-4 px-6">{student.totalMarks}</td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>

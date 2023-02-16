@@ -3,7 +3,7 @@ import parse from "html-react-parser";
 import TopicBar from "../Components/TopicBar";
 import WeekData from "../data/WeekData";
 import { API_BASE_URL } from "../data/consts";
-import { BiTime, BiCategory } from "react-icons/bi";
+import { BiTime, BiCategory, BiFontSize } from "react-icons/bi";
 import { BsFillPersonFill } from "react-icons/bs";
 import axios from "axios";
 import NotFound from "../images/not found.jpg";
@@ -12,7 +12,11 @@ import { Checkmark } from "react-checkmark";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
-import { setLastUpdated } from "../app/features/app/appSlice";
+import {
+  setFontSize,
+  setLastUpdated,
+  setThemeMode,
+} from "../app/features/app/appSlice";
 import { FaCalendarWeek } from "react-icons/fa";
 import Navbar from "../Components/Navbar";
 import RightDrawer from "../Components/RightDrawer";
@@ -26,7 +30,15 @@ import {
   getThemeTextSecondaryColor,
   getText,
 } from "../data/themesData";
+import { BiMinus } from "react-icons/bi";
+import { MdOutlineAdd } from "react-icons/md";
+import {
+  decreaseFontSize,
+  increaseFontSize,
+} from "../app/features/theme/themeSlice";
 const toastMessage = (message) => toast(message);
+
+const fontSizes = [];
 
 function WEEK({
   week,
@@ -42,8 +54,8 @@ function WEEK({
     const weekIndex = moment().diff(startDateMomentObject, "weeks") - 1;
     if (index === weekIndex) toggleWEEK(weekIndex);
 
-    if(index===weekIndex){
-      week.open=true;
+    if (index === weekIndex) {
+      week.open = true;
     }
   }, []);
   return (
@@ -283,6 +295,12 @@ const SummaryWritingContent = ({ isOpen }) => {
     }
   };
 
+  const handleIncreaseFontSize = () => {
+    dispatch(increaseFontSize());
+  };
+  const handleDecreaseFontSize = () => {
+    dispatch(decreaseFontSize());
+  };
   return (
     <div className="flex flex-col">
       <Navbar rightControl={setIsWeeksOpen}>
@@ -406,6 +424,36 @@ const SummaryWritingContent = ({ isOpen }) => {
                   <BiTime size={20} className="mr-1" />
                   {summary?.readTime} Mins
                 </div>
+                <div>
+                  <div
+                    className={`flex gap-2 items-center ${getThemeTextSecondaryColor(
+                      theme.themeMode
+                    )}`}
+                  >
+                    <button
+                      onClick={handleDecreaseFontSize}
+                      className={`${
+                        theme.fontSize <= 0
+                          ? "bg-opacity-10 cursor-not-allowed"
+                          : "hover:scale-125"
+                      }`}
+                      disabled={theme.fontSize <= 0}
+                    >
+                      <BiMinus size={20} />
+                    </button>
+                    <BiFontSize className="" size={30} />
+                    <button
+                      onClick={handleIncreaseFontSize}
+                      className={`${
+                        theme.fontSize >= 3
+                          ? "bg-opacity-10 cursor-not-allowed"
+                          : "hover:scale-125"
+                      }`}
+                    >
+                      <MdOutlineAdd size={20} />
+                    </button>
+                  </div>
+                </div>
               </div>
               {/* Write Summary Box */}
               <div className={`${!isSendSummaryBoxOpen && "hidden"}`}>
@@ -464,7 +512,7 @@ const SummaryWritingContent = ({ isOpen }) => {
               <div className={`mt-8 ${isSendSummaryBoxOpen && "hidden"}`}>
                 <>
                   <p
-                    className={`${getText(theme.mode)} ${getThemeTextColor(
+                    className={`${getText(theme.fontSize)} ${getThemeTextColor(
                       theme.themeMode
                     )} mb-8`}
                   >

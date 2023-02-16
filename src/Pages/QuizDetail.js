@@ -60,8 +60,8 @@ const QuizDetail = (isOpen) => {
             <CopyToClipboard text={app.testData[test - 1].testLink}>
               <button
                 className={`group flex items-center gap-2 border-2 p-2 rounded-full ${getThemeBorderColor(
-                  app.themeMode
-                )} ${getThemeTextPrimaryColor(app.themeMode)}`}
+                  theme.themeMode
+                )} ${getThemeTextPrimaryColor(theme.themeMode)}`}
               >
                 <div>
                   <FiCopy className="group-hover:scale-110" size={20} />
