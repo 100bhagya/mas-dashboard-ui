@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TopicBar from "../Components/TopicBar";
 import Graph from "../Components/Graph";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { API_BASE_URL } from "../data/consts";
 import Tooltip from "../Components/Tooltip";
 import moment from "moment";
@@ -10,20 +10,24 @@ import CourseCard from "../Components/CourseCard";
 import NotificationBar from "../Components/NotificationBar";
 import Navbar from "../Components/Navbar";
 import { AiFillTrophy } from "react-icons/ai";
-
 import RightDrawer from "../Components/RightDrawer";
 import LeftDrawer from "../Components/LeftDrawer";
 import {
   getThemeBackgroundColor,
   getThemeBLightBackgroundColor,
   getThemeLightTextColor,
+  getThemeTextColor,
   getThemeTextSecondaryColor,
 } from "../data/themesData";
+import { toggleThemeMode } from "../app/features/theme/themeSlice";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
+import { setStudentData } from "../app/features/app/appSlice";
 const LandingPage = (isOpen) => {
   const user = useSelector((state) => state.user);
   const theme = useSelector((state) => state.theme);
-
+  const dispatch = useDispatch();
   const [testData, setTestData] = useState([]);
+  const app = useSelector((state) => state.app);
   const [leaderboard, setLeaderboard] = useState(false);
   const [leaderboardData, setLeaderboardData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,52 +35,30 @@ const LandingPage = (isOpen) => {
     setLeaderboard(!leaderboard);
   };
   const [isLeaderboardOpen, setIsLeaderboardOpen] = useState(false);
+
   useEffect(() => {
-    setIsLoading(true);
     const config = {
       headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
     };
     axios
-      .get(`${API_BASE_URL}/api/getStudentReport`, config)
-      .then((res) => {
-        let testArray = [];
-        for (let i = 0; i < res.data.length && i < 5; i++) {
-          testArray.push({
-            examDate: res.data[i][0],
-            examName: res.data[i][1],
-            rank: `#${parseInt(Math.random() * (150 - 1) + 1)}`,
-          });
-        }
-        setTestData(testArray);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setIsLoading(false);
-      });
-    setIsLoading(true);
-    axios
-      .get(`${API_BASE_URL}/api/getLeaderboard`, config)
-      .then((res) => {
-        let leaderboardData = [];
-        for (let i = 0; i < res.data.length && i < 5; i++) {
-          leaderboardData.push({
-            studentName: res.data[i][0],
-            totalScore: res.data[i][2],
-          });
-        }
-        leaderboardData.sort((a, b) => {
-          return a.totalScore > b.totalScore;
-        });
-        setLeaderboardData(leaderboardData);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setIsLoading(false);
-      });
-  }, [user]);
+      .get(`${API_BASE_URL}/api/student/data/`, config)
+      .then((response) => dispatch(setStudentData(response.data)))
+      .catch((err) => console.log(err));
 
+    axios
+      .get(`${API_BASE_URL}/api/leaderboard/data`, config)
+      .then((res) => {
+        setLeaderboardData(res.data.splice(0, 5));
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setIsLoading(false);
+      });
+  }, [user, dispatch]);
+  useEffect(() => {
+    setTestData([...app.studentData]);
+  }, [app.studentData]);
   return (
     <div className="flex flex-col">
       <Navbar rightControl={setIsLeaderboardOpen}>
@@ -129,10 +111,10 @@ const LandingPage = (isOpen) => {
                           scope="row"
                           class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                         >
-                          {i + 1}
+                          {student.rank}
                         </th>
                         <td class="py-4 px-6">{student.studentName}</td>
-                        <td class="py-4 px-6">{student.totalScore}</td>
+                        <td class="py-4 px-6">{student.totalMarks}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -154,20 +136,41 @@ const LandingPage = (isOpen) => {
         >
           <div className="w-full md:w-[70%]">
             <div className="md:px-10 p-6">
-              <div>
-                <div
-                  className={`text-base md:text-3xl ${getThemeTextSecondaryColor(
-                    theme.themeMode
-                  )}`}
-                >
-                  Hello, Peter
+              <div className="flex justify-between items-center">
+                <div>
+                  <div
+                    className={`text-base md:text-3xl ${getThemeTextSecondaryColor(
+                      theme.themeMode
+                    )}`}
+                  >
+                    Hello, {user.loginInfo.username}
+                  </div>
+                  <div
+                    className={`text-xs ${getThemeLightTextColor(
+                      theme.themeMode
+                    )}`}
+                  >
+                    {moment().format("MM/DD/YYYY")}
+                  </div>
                 </div>
-                <div
-                  className={`text-xs ${getThemeLightTextColor(
-                    theme.themeMode
-                  )}`}
-                >
-                  {moment().format("MM/DD/YYYY")}
+
+                <div>
+                  <button
+                    className={`p-1.5 rounded-full ${
+                      theme.themeMode
+                        ? "text-white border-2 border-white shadow-sm shadow-white"
+                        : "text-black border-2 border-dark shadow-sm shadow-dark"
+                    }`}
+                    onClick={() => {
+                      dispatch(toggleThemeMode());
+                    }}
+                  >
+                    {theme.themeMode ? (
+                      <MdLightMode size={30} />
+                    ) : (
+                      <MdDarkMode size={30} />
+                    )}
+                  </button>
                 </div>
               </div>
 
@@ -188,21 +191,32 @@ const LandingPage = (isOpen) => {
 
               <div
                 id="performanceCard"
-                className="grid md:grid-cols-5 grid-cols-2 gap-4 md:p-10 md:shadow-xl md:rounded-2xl"
+                className={`grid md:grid-cols-5 grid-cols-2 gap-4 md:p-10 md:shadow-xl md:rounded-2xl ${getThemeBackgroundColor(
+                  theme.themeMode
+                )}`}
               >
-                {testData.map((test) => {
+                {testData.slice(0, 5).map((test) => {
+                  console.log(test);
                   return (
                     <div className="shadow-xl rounded-2xl md:shadow-none md:rounded-none">
-                      <Tooltip text={test.examName}>
+                      <Tooltip text={test.testName}>
                         <div className="flex flex-col justify-center items-center">
                           {/* <div className="md:text-2xl  text-xl border-b-2 w-fit pb-2 border-gray-500">
                             {test.examName}
                           </div> */}
-                          <div className="md:text-2xl !text-4xl text-sky-800 mt-4">
+                          <div
+                            className={`md:text-2xl !text-4xl text-sky-800 mt-4 ${getThemeTextSecondaryColor(
+                              theme.themeMode
+                            )}`}
+                          >
                             {test.rank}
                           </div>
-                          <div className="md:text-md text-md">
-                            {test.examDate}
+                          <div
+                            className={`md:text-md text-md ${getThemeTextColor(
+                              theme.themeMode
+                            )}`}
+                          >
+                            {moment(test.testDate).format("DD/MM/YYYY")}
                           </div>
                         </div>
                       </Tooltip>
@@ -218,8 +232,12 @@ const LandingPage = (isOpen) => {
                 >
                   Performance History
                 </div>
-                <div className="text-right shadow-2xl rounded-2xl h-[300px] w-full ">
-                  <Graph />
+                <div
+                  className={`text-right shadow-2xl rounded-2xl h-[300px] w-full px-2 py-4 ${getThemeBackgroundColor(
+                    theme.themeMode
+                  )}`}
+                >
+                  <Graph testData={testData} />
                 </div>
               </div>
               <div>
@@ -238,7 +256,13 @@ const LandingPage = (isOpen) => {
                 </div>
               </div>
               <div>
-                <div className="text-xl text-sky-800 my-10">Notification</div>
+                <div
+                  className={`text-xl ${getThemeTextSecondaryColor(
+                    theme.themeMode
+                  )} my-10`}
+                >
+                  Notification
+                </div>
                 <div className="shadow-xl rounded-2xl">
                   <NotificationBar />
                   <NotificationBar />
@@ -291,10 +315,10 @@ const LandingPage = (isOpen) => {
                           scope="row"
                           class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                         >
-                          {i + 1}
+                          {student.rank}
                         </th>
                         <td class="py-4 px-6">{student.studentName}</td>
-                        <td class="py-4 px-6">{student.totalScore}</td>
+                        <td class="py-4 px-6">{student.totalMarks}</td>
                       </tr>
                     ))}
                   </tbody>

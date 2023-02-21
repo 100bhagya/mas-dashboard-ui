@@ -14,16 +14,33 @@ export const themeSlice = createSlice({
       };
     },
 
+    toggleThemeMode: (state) => {
+      state.themeMode = !state.themeMode;
+    },
+
     setFontSize: (state, value) => {
       state.fontSize = parseInt(value.payload);
     },
     setThemeMode: (state, value) => {
       state.themeMode = parseInt(value.payload);
     },
+    increaseFontSize: (state) => {
+      state.fontSize < 3 && (state.fontSize = state.fontSize + 1);
+    },
+    decreaseFontSize: (state) => {
+      console.log("decreaseFontSize", state.fontSize);
+      state.fontSize > 0 && (state.fontSize = state.fontSize - 1);
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setFontSize, setThemeMode } = themeSlice.actions;
+export const {
+  setFontSize,
+  setThemeMode,
+  increaseFontSize,
+  decreaseFontSize,
+  toggleThemeMode,
+} = themeSlice.actions;
 
 export default themeSlice.reducer;

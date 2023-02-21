@@ -57,6 +57,7 @@ const Account = () => {
     axios
       .get(`${API_BASE_URL}/api/getUserProfile`, config)
       .then((response) => {
+        console.log(response.data);
         firstNameRef.current.value = response.data.firstName || "";
         lastNameRef.current.value = response.data.lastName || "";
         userNameRef.current.value = response.data.username || "";

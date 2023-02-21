@@ -8,6 +8,7 @@ const initialState = {
   aptitudeOpen: true,
   nonTechOpen: true,
   markedDates: {},
+  studentData: [],
   currentMonthAndYear: moment().format("MM-YYYY"),
   testData: [
     {
@@ -142,6 +143,9 @@ export const appSlice = createSlice({
     setCurrentMonthAndYear: (state, value) => {
       state.currentMonthAndYear = value.payload;
     },
+    setStudentData: (state, studentData) => {
+      state.studentData = [...studentData.payload];
+    },
   },
 });
 
@@ -157,6 +161,7 @@ export const {
   setNonTechOpen,
   setMarkedDates,
   setCurrentMonthAndYear,
+  setStudentData,
 } = appSlice.actions;
 
 export default appSlice.reducer;
