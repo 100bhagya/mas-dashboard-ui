@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import TopicBar from "../Components/TopicBar";
 import Graph from "../Components/Graph";
 import axios from "axios";
@@ -17,10 +17,11 @@ import {
   getThemeBackgroundColor,
   getThemeBLightBackgroundColor,
   getThemeLightTextColor,
+  getThemeTextColor,
   getThemeTextSecondaryColor,
 } from "../data/themesData";
 import { toggleThemeMode } from "../app/features/theme/themeSlice";
-import { MdDarkMode } from "react-icons/md";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
 const LandingPage = (isOpen) => {
   const user = useSelector((state) => state.user);
   const theme = useSelector((state) => state.theme);
@@ -33,46 +34,20 @@ const LandingPage = (isOpen) => {
     setLeaderboard(!leaderboard);
   };
   const [isLeaderboardOpen, setIsLeaderboardOpen] = useState(false);
+
   useEffect(() => {
-    setIsLoading(true);
     const config = {
       headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
     };
     axios
-      .get(`http://localhost:8080/api/student/data/`, config)
-      .then((res) => {
-        console.log(res);
-        setTestData(res.data);
-        // let testArray = [];
-        // for (let i = 0; i < res.data.length && i < 5; i++) {
-        //   testArray.push({
-        //     examDate: res.data[i][0],
-        //     examName: res.data[i][1],
-        //     rank: `#${parseInt(Math.random() * (150 - 1) + 1)}`,
-        //   });
-        // }
-        // setTestData(testArray);
-        // setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setIsLoading(false);
-      });
-    setIsLoading(true);
+      .get(`${API_BASE_URL}/api/student/data/`, config)
+      .then((response) => setTestData(response.data))
+      .catch((err) => console.log(err));
+
     // axios
-    //   .get(`${API_BASE_URL}/api/getLeaderboard`, config)
+    //   .get(`${API_BASE_URL}/api/leaderboard/data`, config)
     //   .then((res) => {
-    //     let leaderboardData = [];
-    //     for (let i = 0; i < res.data.length && i < 5; i++) {
-    //       leaderboardData.push({
-    //         studentName: res.data[i][0],
-    //         totalScore: res.data[i][2],
-    //       });
-    //     }
-    //     leaderboardData.sort((a, b) => {
-    //       return a.totalScore > b.totalScore;
-    //     });
-    //     setLeaderboardData(leaderboardData);
+    //     setLeaderboardData(res.data.splice(0, 5));
     //     setIsLoading(false);
     //   })
     //   .catch((err) => {
@@ -133,10 +108,10 @@ const LandingPage = (isOpen) => {
                           scope="row"
                           class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                         >
-                          {i + 1}
+                          {student.rank}
                         </th>
                         <td class="py-4 px-6">{student.studentName}</td>
-                        <td class="py-4 px-6">{student.totalScore}</td>
+                        <td class="py-4 px-6">{student.totalMarks}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -187,7 +162,11 @@ const LandingPage = (isOpen) => {
                       dispatch(toggleThemeMode());
                     }}
                   >
-                    <MdDarkMode size={30} />
+                    {theme.themeMode ? (
+                      <MdLightMode size={30} />
+                    ) : (
+                      <MdDarkMode size={30} />
+                    )}
                   </button>
                 </div>
               </div>
@@ -209,30 +188,39 @@ const LandingPage = (isOpen) => {
 
               <div
                 id="performanceCard"
-                className="grid md:grid-cols-5 grid-cols-2 gap-4 md:p-10 md:shadow-xl md:rounded-2xl"
+                className={`grid md:grid-cols-5 grid-cols-2 gap-4 md:p-10 md:shadow-xl md:rounded-2xl ${getThemeBackgroundColor(
+                  theme.themeMode
+                )}`}
               >
-                {testData
-                  .filter((test) => test.rollNumber === "MAS1012022045")
-                  .splice(0, 5)
-                  .map((test) => {
-                    return (
-                      <div className="shadow-xl rounded-2xl md:shadow-none md:rounded-none">
-                        <Tooltip text={test.testName}>
-                          <div className="flex flex-col justify-center items-center">
-                            {/* <div className="md:text-2xl  text-xl border-b-2 w-fit pb-2 border-gray-500">
+                {testData.splice(0, 5).map((test) => {
+                  console.log(test);
+                  return (
+                    <div className="shadow-xl rounded-2xl md:shadow-none md:rounded-none">
+                      <Tooltip text={test.testName}>
+                        <div className="flex flex-col justify-center items-center">
+                          {/* <div className="md:text-2xl  text-xl border-b-2 w-fit pb-2 border-gray-500">
                             {test.examName}
                           </div> */}
-                            <div className="md:text-2xl !text-4xl text-sky-800 mt-4">
-                              {test.rank}
-                            </div>
-                            <div className="md:text-md text-md">
-                              {moment(test.testDate).format("DD/MM/YYYY")}
-                            </div>
+                          <div
+                            className={`md:text-2xl !text-4xl text-sky-800 mt-4 ${getThemeTextSecondaryColor(
+                              theme.themeMode
+                            )}`}
+                          >
+                            "Hellox"
+                            {test.rank}
                           </div>
-                        </Tooltip>
-                      </div>
-                    );
-                  })}
+                          <div
+                            className={`md:text-md text-md ${getThemeTextColor(
+                              theme.themeMode
+                            )}`}
+                          >
+                            {moment(test.testDate).format("DD/MM/YYYY")}
+                          </div>
+                        </div>
+                      </Tooltip>
+                    </div>
+                  );
+                })}
               </div>
               <div className="">
                 <div
@@ -242,12 +230,12 @@ const LandingPage = (isOpen) => {
                 >
                   Performance History
                 </div>
-                <div className="text-right shadow-2xl rounded-2xl h-[300px] w-full ">
-                  <Graph
-                    testData={testData.filter(
-                      (test) => test.rollNumber === "MAS1012022045"
-                    )}
-                  />
+                <div
+                  className={`text-right shadow-2xl rounded-2xl h-[300px] w-full px-2 py-4 ${getThemeBackgroundColor(
+                    theme.themeMode
+                  )}`}
+                >
+                  <Graph testData={testData} />
                 </div>
               </div>
               <div>
@@ -266,7 +254,13 @@ const LandingPage = (isOpen) => {
                 </div>
               </div>
               <div>
-                <div className="text-xl text-sky-800 my-10">Notification</div>
+                <div
+                  className={`text-xl ${getThemeTextSecondaryColor(
+                    theme.themeMode
+                  )} my-10`}
+                >
+                  Notification
+                </div>
                 <div className="shadow-xl rounded-2xl">
                   <NotificationBar />
                   <NotificationBar />
@@ -313,21 +307,18 @@ const LandingPage = (isOpen) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {testData
-                      .filter((test) => test.testName === "Combined Test 3")
-                      .sort((test1, test2) => test1.rank - test2.rank)
-                      .map((student, i) => (
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                          <th
-                            scope="row"
-                            class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                          >
-                            {student.rank}
-                          </th>
-                          <td class="py-4 px-6">{student.studentName}</td>
-                          <td class="py-4 px-6">{student.totalMarks}</td>
-                        </tr>
-                      ))}
+                    {leaderboardData.map((student, i) => (
+                      <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th
+                          scope="row"
+                          class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
+                          {student.rank}
+                        </th>
+                        <td class="py-4 px-6">{student.studentName}</td>
+                        <td class="py-4 px-6">{student.totalMarks}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import {
   AreaChart,
   Area,
@@ -17,6 +17,7 @@ const Graph = ({ testData }) => {
   const [data, setData] = useState([]);
   const user = useSelector((state) => state.user);
   const [isLoading, setIsLoading] = useState(false);
+  const themeMode = useSelector((state) => state.theme.themeMode);
   useEffect(() => {
     const data = [];
     for (let i = 0; i < testData.length; i++) {
@@ -29,7 +30,7 @@ const Graph = ({ testData }) => {
     }
     console.log(data);
     setData(data);
-  }, []);
+  }, [testData]);
   // useEffect(() => {
   //   setIsLoading(true);
   //   const config = {
@@ -38,7 +39,7 @@ const Graph = ({ testData }) => {
   //   axios
   //     .get(`${API_BASE_URL}/api/getStudentReport`, config)
   //     .then((res) => {
-  //       let dataArray = [];
+  //       let dataA``rray = [];
   //       for (let i = 0; i < res.data.length && i < 20; i++) {
   //         dataArray.push({
   //           examDate: res.data[i][0],
@@ -65,12 +66,26 @@ const Graph = ({ testData }) => {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="testDate" angle={305} dy={20} dx={-15} interval={0} />
+        <XAxis
+          tick={{ fill: `${themeMode ? "white" : "black"}`, fontSize: 15 }}
+          dataKey="testDate"
+          angle={305}
+          dy={20}
+          dx={-15}
+          interval={0}
+        />
         <YAxis
+          tick={{ fill: `${themeMode ? "white" : "black"}` }}
           tickCount={24}
           interval={1}
           domain={[0, 100]}
-          label={{ value: "Percentile", angle: -90, position: "insideLeft" }}
+          fontStyle={{ color: "white" }}
+          label={{
+            value: "Percentile",
+            angle: -90,
+            position: "insideLeft",
+            fill: `${themeMode ? "white" : "black"}`,
+          }}
         />
         <Tooltip
           formatter={(value, name, props) => {

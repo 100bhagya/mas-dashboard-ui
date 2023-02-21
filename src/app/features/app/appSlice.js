@@ -8,6 +8,7 @@ const initialState = {
   aptitudeOpen: true,
   nonTechOpen: true,
   markedDates: {},
+  testData: [],
   currentMonthAndYear: moment().format("MM-YYYY"),
   testData: [
     {
