@@ -135,8 +135,8 @@ const LandingPage = (isOpen) => {
           )}`}
         >
           <div className="w-full md:w-[70%]">
-            <div className="md:px-10 p-6">
-              <div className="flex justify-between items-center">
+            <div className="p-6 md:px-10">
+              <div className="flex items-center justify-between">
                 <div>
                   <div
                     className={`text-base md:text-3xl ${getThemeTextSecondaryColor(
@@ -195,28 +195,35 @@ const LandingPage = (isOpen) => {
                   theme.themeMode
                 )}`}
               >
-                {testData.slice(0, 5).map((test) => {
+                {testData.slice(testData.length-5, testData.length+5).map((test) => {
                   console.log(test);
                   return (
                     <div className="shadow-xl rounded-2xl md:shadow-none md:rounded-none">
                       <Tooltip text={test.testName}>
-                        <div className="flex flex-col justify-center items-center">
-                          {/* <div className="md:text-2xl  text-xl border-b-2 w-fit pb-2 border-gray-500">
+                        <div className="flex flex-col items-center justify-center">
+                          {/* <div className="pb-2 text-xl border-b-2 border-gray-500 md:text-2xl w-fit">
                             {test.examName}
                           </div> */}
                           <div
-                            className={`md:text-2xl !text-4xl text-sky-800 mt-4 ${getThemeTextSecondaryColor(
+                            className={`md:text-xl text-sm border-b border-blue-500 lg:text-xl text-sky-800 mt-3 ${getThemeTextSecondaryColor(
                               theme.themeMode
                             )}`}
                           >
-                            {test.rank}
+                            {test.recentTestName}
+                          </div>
+                          <div
+                            className={`md:text-2xl !text-3xl text-sky-800 mt-4 ${getThemeTextSecondaryColor(
+                              theme.themeMode
+                            )}`}
+                          >
+                            {"#"+test.rank}
                           </div>
                           <div
                             className={`md:text-md text-md ${getThemeTextColor(
                               theme.themeMode
                             )}`}
                           >
-                            {moment(test.testDate).format("DD/MM/YYYY")}
+                            {moment(test.testDate).format("DD MMMM")}
                           </div>
                         </div>
                       </Tooltip>
@@ -248,7 +255,7 @@ const LandingPage = (isOpen) => {
                 >
                   Course completion
                 </div>
-                <div className="grid md:grid-cols-3 grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 gap-6 md:grid-cols-3">
                   <CourseCard />
                   <CourseCard />
                   <CourseCard />
