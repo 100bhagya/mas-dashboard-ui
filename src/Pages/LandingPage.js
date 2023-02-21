@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import TopicBar from "../Components/TopicBar";
 import Graph from "../Components/Graph";
 import axios from "axios";
@@ -10,7 +10,6 @@ import CourseCard from "../Components/CourseCard";
 import NotificationBar from "../Components/NotificationBar";
 import Navbar from "../Components/Navbar";
 import { AiFillTrophy } from "react-icons/ai";
-
 import RightDrawer from "../Components/RightDrawer";
 import LeftDrawer from "../Components/LeftDrawer";
 import {
@@ -22,11 +21,13 @@ import {
 } from "../data/themesData";
 import { toggleThemeMode } from "../app/features/theme/themeSlice";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
+import { setStudentData } from "../app/features/app/appSlice";
 const LandingPage = (isOpen) => {
   const user = useSelector((state) => state.user);
   const theme = useSelector((state) => state.theme);
   const dispatch = useDispatch();
   const [testData, setTestData] = useState([]);
+  const app = useSelector((state) => state.app);
   const [leaderboard, setLeaderboard] = useState(false);
   const [leaderboardData, setLeaderboardData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +42,7 @@ const LandingPage = (isOpen) => {
     };
     axios
       .get(`${API_BASE_URL}/api/student/data/`, config)
-      .then((response) => setTestData(response.data))
+      .then((response) => dispatch(setStudentData(response.data)))
       .catch((err) => console.log(err));
 
     // axios
@@ -54,8 +55,10 @@ const LandingPage = (isOpen) => {
     //     console.error(err);
     //     setIsLoading(false);
     //   });
-  }, [user]);
-
+  }, [user, dispatch]);
+  useEffect(() => {
+    setTestData([...app.studentData]);
+  }, [app.studentData]);
   return (
     <div className="flex flex-col">
       <Navbar rightControl={setIsLeaderboardOpen}>
@@ -192,7 +195,7 @@ const LandingPage = (isOpen) => {
                   theme.themeMode
                 )}`}
               >
-                {testData.splice(0, 5).map((test) => {
+                {testData.slice(0, 5).map((test) => {
                   console.log(test);
                   return (
                     <div className="shadow-xl rounded-2xl md:shadow-none md:rounded-none">
@@ -206,7 +209,6 @@ const LandingPage = (isOpen) => {
                               theme.themeMode
                             )}`}
                           >
-                            "Hellox"
                             {test.rank}
                           </div>
                           <div
