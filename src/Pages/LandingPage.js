@@ -45,16 +45,16 @@ const LandingPage = (isOpen) => {
       .then((response) => dispatch(setStudentData(response.data)))
       .catch((err) => console.log(err));
 
-    // axios
-    //   .get(`${API_BASE_URL}/api/leaderboard/data`, config)
-    //   .then((res) => {
-    //     setLeaderboardData(res.data.splice(0, 5));
-    //     setIsLoading(false);
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //     setIsLoading(false);
-    //   });
+    axios
+      .get(`${API_BASE_URL}/api/leaderboard/data`, config)
+      .then((res) => {
+        setLeaderboardData(res.data.splice(0, 5));
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setIsLoading(false);
+      });
   }, [user, dispatch]);
   useEffect(() => {
     setTestData([...app.studentData]);
