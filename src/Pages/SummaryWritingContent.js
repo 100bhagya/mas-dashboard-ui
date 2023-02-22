@@ -40,8 +40,6 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 const toastMessage = (message) => toast(message);
 
-const fontSizes = [];
-
 function WEEK({
   week,
   index,
@@ -121,7 +119,6 @@ function WEEK({
   );
 }
 const SummaryWritingContent = ({ isOpen }) => {
-  const [value, setValue] = useState("");
   const summaryTextRef = useRef();
   const [weeklySummaryResponse, setWeeklySummaryResponse] = useState(null);
   const [isSendSummaryBoxOpen, setIsSendSummaryBoxOpen] = useState(false);
