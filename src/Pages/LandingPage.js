@@ -107,7 +107,7 @@ const LandingPage = (isOpen) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {leaderboardData.map((student, i) => (
+                    {leaderboardData.slice(0, 10).map((student, i) => (
                       <tr
                         class={`${getThemeBLightBackgroundColor(
                           theme.themeMode
@@ -124,6 +124,32 @@ const LandingPage = (isOpen) => {
                       </tr>
                     ))}
                   </tbody>
+                   {rank >= 10 ? (
+                    <tbody >
+                      {leaderboardData.map((student, i) =>
+                        student.rank === rank + 1 ? (
+                           <tr
+                        class={`${getThemeBLightBackgroundColor(
+                          theme.themeMode
+                        )} border-b dark:bg-gray-600 dark:border-gray-600`}
+                      >
+                        <th
+                          scope="row"
+                          class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
+                          {student.rank}
+                        </th>
+                        <td class="py-4 px-6">{student.studentName}</td>
+                        <td class="py-4 px-6">{student.totalMarks}</td>
+                      </tr>
+                        ) : (
+                          ""
+                        )
+                      )}
+                    </tbody>
+                  ) : (
+                    <div></div>
+                  )}
                 </table>
               </div>
             </div>
