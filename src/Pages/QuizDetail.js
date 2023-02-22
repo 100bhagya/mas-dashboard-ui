@@ -31,7 +31,7 @@ const QuizDetail = (isOpen) => {
             theme.themeMode
           )}`}
         >
-          <div className="flex gap-4 items-center">
+          <div className="flex items-center gap-4">
             <div
               className={`${getThemeBackgroundColor(
                 theme.themeMode
@@ -73,7 +73,7 @@ const QuizDetail = (isOpen) => {
             </CopyToClipboard>
           </div>
           <iframe
-            className="w-full h-full rounded px-2"
+            className="w-full h-full px-2 rounded"
             src={app.testData[test - 1].testLink}
             frameborder="0"
             marginheight="0"

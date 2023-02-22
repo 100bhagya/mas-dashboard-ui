@@ -31,6 +31,7 @@ const LandingPage = (isOpen) => {
   const [leaderboard, setLeaderboard] = useState(false);
   const [leaderboardData, setLeaderboardData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
   const activateLeaderboard = () => {
     setLeaderboard(!leaderboard);
   };
@@ -48,7 +49,8 @@ const LandingPage = (isOpen) => {
     axios
       .get(`${API_BASE_URL}/api/leaderboard/data`, config)
       .then((res) => {
-        setLeaderboardData(res.data.splice(0, 5));
+        setLeaderboardData(res.data);
+
         setIsLoading(false);
       })
       .catch((err) => {
@@ -59,6 +61,10 @@ const LandingPage = (isOpen) => {
   useEffect(() => {
     setTestData([...app.studentData]);
   }, [app.studentData]);
+  var rank = leaderboardData.findIndex(
+    (obj) => obj.rollNumber === user.loginInfo.rollNumber
+  );
+  
   return (
     <div className="flex flex-col">
       <Navbar rightControl={setIsLeaderboardOpen}>
@@ -135,8 +141,8 @@ const LandingPage = (isOpen) => {
           )}`}
         >
           <div className="w-full md:w-[70%]">
-            <div className="md:px-10 p-6">
-              <div className="flex justify-between items-center">
+            <div className="p-6 md:px-10">
+              <div className="flex items-center justify-between">
                 <div>
                   <div
                     className={`text-base md:text-3xl ${getThemeTextSecondaryColor(
@@ -195,34 +201,46 @@ const LandingPage = (isOpen) => {
                   theme.themeMode
                 )}`}
               >
-                {testData.slice(0, 5).map((test) => {
-                  console.log(test);
-                  return (
-                    <div className="shadow-xl rounded-2xl md:shadow-none md:rounded-none">
-                      <Tooltip text={test.testName}>
-                        <div className="flex flex-col justify-center items-center">
-                          {/* <div className="md:text-2xl  text-xl border-b-2 w-fit pb-2 border-gray-500">
+                {testData
+                  .slice(
+                    testData.length >= 5 ? testData.length - 5 : 0,
+                    testData.length
+                  )
+                  .map((test) => {
+                    console.log(test);
+                    return (
+                      <div className="shadow-xl rounded-2xl md:shadow-none md:rounded-none">
+                        <Tooltip text={test.testName}>
+                          <div className="flex flex-col items-center justify-center">
+                            {/* <div className="pb-2 text-xl border-b-2 border-gray-500 md:text-2xl w-fit">
                             {test.examName}
                           </div> */}
-                          <div
-                            className={`md:text-2xl !text-4xl text-sky-800 mt-4 ${getThemeTextSecondaryColor(
-                              theme.themeMode
-                            )}`}
-                          >
-                            {test.rank}
+                            <div
+                              className={`md:text-xl text-sm border-b border-blue-500 lg:text-xl text-sky-800 mt-3 ${getThemeTextSecondaryColor(
+                                theme.themeMode
+                              )}`}
+                            >
+                              {test.recentTestName}
+                            </div>
+                            <div
+                              className={`md:text-2xl !text-3xl text-sky-800 mt-4 ${getThemeTextSecondaryColor(
+                                theme.themeMode
+                              )}`}
+                            >
+                              {"#" + test.rank}
+                            </div>
+                            <div
+                              className={`md:text-md mt-2 text-md ${getThemeTextColor(
+                                theme.themeMode
+                              )}`}
+                            >
+                              {moment(test.testDate).format("DD MMMM")}
+                            </div>
                           </div>
-                          <div
-                            className={`md:text-md text-md ${getThemeTextColor(
-                              theme.themeMode
-                            )}`}
-                          >
-                            {moment(test.testDate).format("DD/MM/YYYY")}
-                          </div>
-                        </div>
-                      </Tooltip>
-                    </div>
-                  );
-                })}
+                        </Tooltip>
+                      </div>
+                    );
+                  })}
               </div>
               <div className="">
                 <div
@@ -248,7 +266,7 @@ const LandingPage = (isOpen) => {
                 >
                   Course completion
                 </div>
-                <div className="grid md:grid-cols-3 grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 gap-6 md:grid-cols-3">
                   <CourseCard />
                   <CourseCard />
                   <CourseCard />
@@ -309,7 +327,7 @@ const LandingPage = (isOpen) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {leaderboardData.map((student, i) => (
+                    {leaderboardData.slice(0, 10).map((student, i) => (
                       <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th
                           scope="row"
@@ -322,6 +340,29 @@ const LandingPage = (isOpen) => {
                       </tr>
                     ))}
                   </tbody>
+
+                  {rank >= 10 ? (
+                    <tbody >
+                      {leaderboardData.map((student, i) =>
+                        student.rank === rank + 1 ? (
+                          <tr class=" border-t mt-5 dark:bg-gray-600 dark:border-gray-600">
+                            <th
+                              scope="row"
+                              class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                            >
+                              {student.rank}
+                            </th>
+                            <td class="py-4 px-6">{student.studentName}</td>
+                            <td class="py-4 px-6">{student.totalMarks}</td>
+                          </tr>
+                        ) : (
+                          ""
+                        )
+                      )}
+                    </tbody>
+                  ) : (
+                    <div></div>
+                  )}
                 </table>
               </div>
             </div>
