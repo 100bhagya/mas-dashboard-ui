@@ -36,6 +36,8 @@ import {
   decreaseFontSize,
   increaseFontSize,
 } from "../app/features/theme/themeSlice";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 const toastMessage = (message) => toast(message);
 
 const fontSizes = [];
@@ -119,6 +121,7 @@ function WEEK({
   );
 }
 const SummaryWritingContent = ({ isOpen }) => {
+  const [value, setValue] = useState("");
   const summaryTextRef = useRef();
   const [weeklySummaryResponse, setWeeklySummaryResponse] = useState(null);
   const [isSendSummaryBoxOpen, setIsSendSummaryBoxOpen] = useState(false);
@@ -456,19 +459,20 @@ const SummaryWritingContent = ({ isOpen }) => {
                 </div>
               </div>
               {/* Write Summary Box */}
-              <div className={`${!isSendSummaryBoxOpen && "hidden"}`}>
+              <div className={`${!isSendSummaryBoxOpen && "hidden"} `}>
                 <textarea
                   autoFocus={true}
                   ref={summaryTextRef}
                   placeholder="Write summary here..."
                   className={`${getText(
-                    theme.mode
+                    theme.fontSize
                   )} w-full h-[50vh] my-6 p-4 rounded-md ${getThemeTextSecondaryColor(
                     theme.themeMode
                   )} ${getThemeBLightBackgroundColor(
                     theme.themeMode
                   )} placeholder-black`}
                 ></textarea>
+
                 <div className="flex justify-end">
                   <button
                     onClick={() => {
