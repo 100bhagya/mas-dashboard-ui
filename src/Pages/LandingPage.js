@@ -341,7 +341,7 @@ const LandingPage = (isOpen) => {
                     ))}
                   </tbody>
 
-                  {rank > 10 ? (
+                  {rank >= 10 ? (
                     <tbody >
                       {leaderboardData.map((student, i) =>
                         student.rank === rank + 1 ? (
