@@ -28,7 +28,6 @@ export const themeSlice = createSlice({
       state.fontSize < 3 && (state.fontSize = state.fontSize + 1);
     },
     decreaseFontSize: (state) => {
-      console.log("decreaseFontSize", state.fontSize);
       state.fontSize > 0 && (state.fontSize = state.fontSize - 1);
     },
   },

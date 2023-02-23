@@ -17,13 +17,11 @@ const ResetPassword = () => {
   const [fetching, setFetching] = useState(false);
 
   const { token } = useParams();
-  //   console.log("data = ", {token});
 
   useEffect(() => {
     axios
       .get(`${API_BASE_URL}/api/auth/reset_password?token=${token}`)
       .then((response) => {
-        //   console.log("Response from api is = " + response.data);
         setHeading(response.data);
       })
       .catch((err) => {
@@ -45,7 +43,7 @@ const ResetPassword = () => {
         .post(`${API_BASE_URL}/api/auth/reset_password`, bodyParameters)
         .then((response) => {
           setFetching(false);
-          //   console.log("Response from api is = " + response);
+
           setMessage("You have successfully changed your password.");
         })
         .catch((err) => {

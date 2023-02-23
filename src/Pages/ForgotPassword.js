@@ -20,12 +20,12 @@ const ForgotPassword = () => {
       email: email.current.value,
     };
     e.preventDefault();
-    // console.log("data = ", email.current.value);
+
     axios
       .post(`${API_BASE_URL}/api/auth/forgot_password`, bodyParameters)
       .then((response) => {
         setFetching(false);
-        // console.log("Response from api is = " + response.data);
+
         setMessage(response.data);
       })
       .catch((err) => {

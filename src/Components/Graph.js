@@ -21,7 +21,6 @@ const Graph = ({ testData }) => {
   useEffect(() => {
     const data = [];
     for (let i = 0; i < testData.length; i++) {
-      console.log(testData[i].testDate);
       data.push({
         testName: testData[i].testName,
         percentile: testData[i].percentile,

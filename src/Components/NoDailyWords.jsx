@@ -5,7 +5,7 @@ import NotFound from "../images/not found.jpg";
 import LoadingSpinner from "./LoadingSpinner";
 const NoDailyWords = (props) => {
   const theme = useSelector((state) => state.theme);
-  // console.log(props);
+
   if (props.loading) {
     return <LoadingSpinner />;
   }

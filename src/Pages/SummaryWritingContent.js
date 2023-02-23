@@ -196,7 +196,6 @@ const SummaryWritingContent = ({ isOpen }) => {
             }
           )
           .then((response) => {
-            console.log(response);
             setWeeklySummaryResponse(response.data);
             if (response.data.response)
               summaryTextRef.current.value = response.data.response;
@@ -276,7 +275,6 @@ const SummaryWritingContent = ({ isOpen }) => {
         config
       )
       .then((response) => {
-        console.log(response.data);
         setWeeklySummaryResponse(response.data);
         setIsLoading(false);
         dispatch(setLastUpdated(new Date()));
