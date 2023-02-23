@@ -36,6 +36,7 @@ const LandingPage = (isOpen) => {
     setLeaderboard(!leaderboard);
   };
   const [isLeaderboardOpen, setIsLeaderboardOpen] = useState(false);
+  const [courseData, setCourseData] = useState([]);
 
   useEffect(() => {
     const config = {
@@ -45,7 +46,14 @@ const LandingPage = (isOpen) => {
       .get(`${API_BASE_URL}/api/student/data/`, config)
       .then((response) => dispatch(setStudentData(response.data)))
       .catch((err) => console.log(err));
-
+    axios
+      .get(`${API_BASE_URL}/api/course/data`, config)
+      .then((res) => {
+        setCourseData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     axios
       .get(`${API_BASE_URL}/api/leaderboard/data`, config)
       .then((res) => {
@@ -58,13 +66,14 @@ const LandingPage = (isOpen) => {
         setIsLoading(false);
       });
   }, [user, dispatch]);
+
   useEffect(() => {
     setTestData([...app.studentData]);
   }, [app.studentData]);
   var rank = leaderboardData.findIndex(
     (obj) => obj.rollNumber === user.loginInfo.rollNumber
   );
-  
+
   return (
     <div className="flex flex-col">
       <Navbar rightControl={setIsLeaderboardOpen}>
@@ -207,7 +216,6 @@ const LandingPage = (isOpen) => {
                     testData.length
                   )
                   .map((test) => {
-                    console.log(test);
                     return (
                       <div className="shadow-xl rounded-2xl md:shadow-none md:rounded-none">
                         <Tooltip text={test.testName}>
@@ -267,10 +275,14 @@ const LandingPage = (isOpen) => {
                   Course completion
                 </div>
                 <div className="grid grid-cols-2 gap-6 md:grid-cols-3">
-                  <CourseCard />
-                  <CourseCard />
-                  <CourseCard />
-                  <CourseCard />
+                  {Array.isArray(courseData) &&
+                    courseData?.map((course) => {
+                      return (
+                        <div key={course.id}>
+                          <CourseCard course={course} />
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
               <div>
@@ -342,7 +354,7 @@ const LandingPage = (isOpen) => {
                   </tbody>
 
                   {rank >= 10 ? (
-                    <tbody >
+                    <tbody>
                       {leaderboardData.map((student, i) =>
                         student.rank === rank + 1 ? (
                           <tr class=" border-t mt-5 dark:bg-gray-600 dark:border-gray-600">

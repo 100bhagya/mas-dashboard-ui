@@ -62,7 +62,6 @@ const TopicBar = ({ value }) => {
     window.location.reload(false);
     dispatch(logout());
   };
-  // console.log(value);
 
   const location = useLocation();
   // const check = (state) => {

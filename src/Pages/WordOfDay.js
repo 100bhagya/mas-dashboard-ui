@@ -245,7 +245,6 @@ const WordOfDay = (isOpen) => {
         config
       )
       .then((response) => {
-        console.log(response);
         toastMessage("Your Response Has Been Updated");
         setWordingsResponse(response?.data);
         updateCalenderData();

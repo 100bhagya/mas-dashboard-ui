@@ -49,7 +49,6 @@ const Account = () => {
   //handlers
 
   const handleFetchProfile = useCallback((cancel = false) => {
-    console.log("r");
     const config = {
       headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
     };
@@ -57,7 +56,6 @@ const Account = () => {
     axios
       .get(`${API_BASE_URL}/api/getUserProfile`, config)
       .then((response) => {
-        console.log(response.data);
         firstNameRef.current.value = response.data.firstName || "";
         lastNameRef.current.value = response.data.lastName || "";
         userNameRef.current.value = response.data.username || "";
@@ -200,7 +198,6 @@ const Account = () => {
 
   function handleFiles(files) {
     for (let i = 0; i < files.length; i++) {
-      console.log(files[i]);
       uploadFile(files[i]);
     }
   }
