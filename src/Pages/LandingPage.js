@@ -117,7 +117,20 @@ const LandingPage = (isOpen) => {
                   </thead>
                   <tbody>
                     {leaderboardData.slice(0, 10).map((student, i) => (
-                      <tr
+                       student.rank === rank + 1?(                           <tr
+                        class={`${getThemeBLightBackgroundColor(
+                          theme.themeMode
+                        )} border-b dark:bg-gray-600 dark:border-gray-600`}
+                      >
+                        <th
+                          scope="row"
+                          class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
+                          {student.rank}
+                        </th>
+                        <td class="py-4 px-6">{student.studentName}</td>
+                        <td class="py-4 px-6">{student.totalMarks}</td>
+                      </tr>):( <tr
                         class={`${getThemeBLightBackgroundColor(
                           theme.themeMode
                         )} border-b dark:bg-gray-800 dark:border-gray-700`}
@@ -130,7 +143,8 @@ const LandingPage = (isOpen) => {
                         </th>
                         <td class="py-4 px-6">{student.studentName}</td>
                         <td class="py-4 px-6">{student.totalMarks}</td>
-                      </tr>
+                      </tr>)
+                     
                     ))}
                   </tbody>
                    {rank >= 10 ? (
@@ -366,7 +380,8 @@ const LandingPage = (isOpen) => {
                   </thead>
                   <tbody>
                     {leaderboardData.slice(0, 10).map((student, i) => (
-                      <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                       student.rank === rank + 1?(
+                        <tr class=" border-t mt-5 dark:bg-gray-600 dark:border-gray-600">
                         <th
                           scope="row"
                           class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -376,6 +391,20 @@ const LandingPage = (isOpen) => {
                         <td class="py-4 px-6">{student.studentName}</td>
                         <td class="py-4 px-6">{student.totalMarks}</td>
                       </tr>
+                       ):(
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th
+                          scope="row"
+                          class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
+                          {student.rank}
+                        </th>
+                        <td class="py-4 px-6">{student.studentName}</td>
+                        <td class="py-4 px-6">{student.totalMarks}</td>
+                      </tr>
+
+                       )
+                     
                     ))}
                   </tbody>
 
