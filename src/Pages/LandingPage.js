@@ -133,24 +133,24 @@ const LandingPage = (isOpen) => {
                       </tr>
                     ))}
                   </tbody>
-                   {rank >= 10 ? (
-                    <tbody >
+                  {rank >= 10 ? (
+                    <tbody>
                       {leaderboardData.map((student, i) =>
                         student.rank === rank + 1 ? (
-                           <tr
-                        class={`${getThemeBLightBackgroundColor(
-                          theme.themeMode
-                        )} border-b dark:bg-gray-600 dark:border-gray-600`}
-                      >
-                        <th
-                          scope="row"
-                          class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                        >
-                          {student.rank}
-                        </th>
-                        <td class="py-4 px-6">{student.studentName}</td>
-                        <td class="py-4 px-6">{student.totalMarks}</td>
-                      </tr>
+                          <tr
+                            class={`${getThemeBLightBackgroundColor(
+                              theme.themeMode
+                            )} border-b dark:bg-gray-600 dark:border-gray-600`}
+                          >
+                            <th
+                              scope="row"
+                              class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                            >
+                              {student.rank}
+                            </th>
+                            <td class="py-4 px-6">{student.studentName}</td>
+                            <td class="py-4 px-6">{student.totalMarks}</td>
+                          </tr>
                         ) : (
                           ""
                         )
@@ -257,9 +257,11 @@ const LandingPage = (isOpen) => {
                               {test.recentTestName}
                             </div>
                             <div
-                              className={`md:text-2xl !text-3xl text-sky-800 mt-4 ${getThemeTextSecondaryColor(
+                              className={`md:text-2xl text-3xl mt-4 ${
                                 theme.themeMode
-                              )}`}
+                                  ? "text-blue-400"
+                                  : "text-blue-800"
+                              } `}
                             >
                               {"#" + test.rank}
                             </div>

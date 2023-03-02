@@ -35,7 +35,6 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
       rating: newRating,
       deleted: "false",
     };
-
     if (currentChapter.length === 0) {
       var response = await fetch(`${API_BASE_URL}/api/task/task-rating`, {
         method: "POST",
@@ -59,6 +58,7 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
         },
         body: JSON.stringify(item),
       });
+
       let result = await updateresponse.json();
     }
   };
@@ -113,9 +113,13 @@ const Quant = (isOpen) => {
         },
       })
       .then((res) => {
+        console.log(res);
         setRatingResponse(res.data);
       })
       .catch((err) => console.log(err));
+    return () => {
+      setRatingResponse([]);
+    };
   }, []);
 
   return (
@@ -272,42 +276,44 @@ const Quant = (isOpen) => {
                     serialNo={9}
                     Title="Geometry"
                     currentChapter={ratingResponse.filter((el) => {
-                      return el.chapter === "Time, Speed & Distance";
+                      return el.chapter === "Geometry";
                     })}
                   />
                   <RatingCard
                     serialNo={10}
                     Title="Coordinate Geometry"
                     currentChapter={ratingResponse.filter((el) => {
-                      return el.chapter === "Time, Speed & Distance";
+                      return el.chapter === "Coordinate Geometrye";
                     })}
                   />
                   <RatingCard
                     serialNo={11}
                     Title="Trigonometry"
                     currentChapter={ratingResponse.filter((el) => {
-                      return el.chapter === "Time, Speed & Distance";
+                      return el.chapter === "Trigonometrye";
                     })}
                   />
                   <RatingCard
                     serialNo={12}
                     Title="Numbers"
                     currentChapter={ratingResponse.filter((el) => {
-                      return el.chapter === "Time, Speed & Distance";
+                      return el.chapter === "Numbers";
                     })}
                   />
                   <RatingCard
                     serialNo={13}
                     Title="Simple, Special & Quadratic Equation"
                     currentChapter={ratingResponse.filter((el) => {
-                      return el.chapter === "Time, Speed & Distance";
+                      return (
+                        el.chapter === "Simple, Special & Quadratic Equation"
+                      );
                     })}
                   />
                   <RatingCard
                     serialNo={14}
                     Title="Sequence & Series"
                     currentChapter={ratingResponse.filter((el) => {
-                      return el.chapter === "Time, Speed & Distance";
+                      return el.chapter === "Sequence & Series";
                     })}
                   />
                 </>
