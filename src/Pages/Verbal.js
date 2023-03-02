@@ -26,6 +26,7 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
   );
 
   const ratingChanged = async (newRating) => {
+    console.log(newRating);
     setRating(newRating);
     let item = {
       category: "Verbal",

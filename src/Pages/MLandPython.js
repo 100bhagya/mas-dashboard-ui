@@ -43,11 +43,7 @@ const MLAndPython = (isOpen) => {
               <div className="md:hidden">
                 <img className="" alt="" src={Artboard} />
               </div>
-              <p
-                className={`${getThemeTextColor(theme.themeMode)} ${getText(
-                  theme.fontSize
-                )}`}
-              >
+              <p className={`${getThemeTextColor(theme.themeMode)} $`}>
                 <p>
                   Machine learning is a branch of Artificial Intelligence (AI)
                   that involves the development of algorithms and statistical
