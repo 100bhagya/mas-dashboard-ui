@@ -47,7 +47,7 @@ function WEEK({
   const theme = useSelector((state) => state.theme);
   useEffect(() => {
     const startDateMomentObject = moment("01-03-2023", "DD-MM-YYYY");
-    const weekIndex = moment().diff(startDateMomentObject, "weeks") - 1;
+    const weekIndex = moment().diff(startDateMomentObject, "weeks");
     if (index === weekIndex) toggleWEEK(weekIndex);
 
     if (index === weekIndex) {
