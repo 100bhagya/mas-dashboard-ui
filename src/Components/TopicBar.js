@@ -230,17 +230,17 @@ const TopicBar = ({ value }) => {
                       Summary Writing
                     </div>
                   </Link>
-                  <Link to="/techarticles">
+                  <Link to="/non-techarticles">
                     <div
                       className={`text-sm  text-left md:px-1 lg:pl-8 px-2 py-2 rounded-md ${
-                        location.pathname === "/techarticles"
+                        location.pathname === "/non-techarticles"
                           ? "bg-[#2255B8] text-white"
                           : `${getThemeTextPrimaryColor(
                               theme.themeMode
                             )} ${getThemeHoverPrimaryBgColor(theme.themeMode)}`
                       }`}
                     >
-                      Tech Articles
+                      Non Tech Articles
                     </div>
                   </Link>
                   <Link to="/quizes">
