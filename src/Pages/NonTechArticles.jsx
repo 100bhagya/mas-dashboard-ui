@@ -120,7 +120,7 @@ const NonTechArticles = ({ isOpen }) => {
   const [weeks, setweeks] = useState(WeekData);
   const [weekNumber, setWeekNumber] = useState(1);
   const [articleNumber, setArticleNumber] = useState(1);
-  const [summary, setSummary] = useState(null);
+  const [article, setArticle] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [statusResponse, setStatusResponse] = useState({});
   const [isWeeksOpen, setIsWeeksOpen] = useState(false);
@@ -168,7 +168,7 @@ const NonTechArticles = ({ isOpen }) => {
       nonTechArticles[weekNumber] &&
       nonTechArticles[weekNumber][articleNumber]
     ) {
-      setSummary(nonTechArticles[weekNumber][articleNumber]);
+      setArticle(nonTechArticles[weekNumber][articleNumber]);
     }
     axios
       .get(
@@ -191,7 +191,7 @@ const NonTechArticles = ({ isOpen }) => {
     return () => {
       if (textRef.current) textRef.current.value = "";
       setIsSendBoxOpen(false);
-      setSummary(null);
+      setArticle(null);
     };
   }, [articleNumber, weekNumber, weeks, user]);
 
@@ -200,7 +200,7 @@ const NonTechArticles = ({ isOpen }) => {
     setArticleNumber(articleNumber);
   };
 
-  const handleUpdate = (nonTechArticleId) => {
+  const handleSubmit = (nonTechArticleId) => {
     if (textRef.current.value === "") {
       toastMessage("Response is empty.");
       return;
@@ -355,7 +355,7 @@ const NonTechArticles = ({ isOpen }) => {
             </div>
             <div
               className={`${
-                (summary !== null || isLoading) && "hidden"
+                (article !== null || isLoading) && "hidden"
               } flex flex-col justify-center items-center mt-8`}
             >
               <div className="mb-5 text-4xl font-bold text-center text-red-500 ">
@@ -367,13 +367,13 @@ const NonTechArticles = ({ isOpen }) => {
               <img className="flex items-center" src={NotFound} alt="" />
             </div>
 
-            <div className={`${summary === null && "hidden"}`}>
+            <div className={`${article === null && "hidden"}`}>
               <div
                 className={`text-3xl font-normal ${getThemeTextSecondaryColor(
                   theme.themeMode
                 )} mt-8`}
               >
-                {summary?.articleTopic}
+                {article?.articleTopic}
               </div>
               <div className="flex gap-4 mt-4 text-gray-400">
                 <div
@@ -382,7 +382,7 @@ const NonTechArticles = ({ isOpen }) => {
                   )}`}
                 >
                   <BsFillPersonFill size={20} className="mr-1" />
-                  {summary?.author}
+                  {article?.author}
                 </div>
 
                 <div
@@ -391,7 +391,7 @@ const NonTechArticles = ({ isOpen }) => {
                   )}`}
                 >
                   <BiCategory size={20} className="mr-1" />
-                  {summary?.category}
+                  {article?.category}
                 </div>
 
                 <div
@@ -400,7 +400,7 @@ const NonTechArticles = ({ isOpen }) => {
                   )}`}
                 >
                   <BiTime size={20} className="mr-1" />
-                  {summary?.readTime} Mins
+                  {article?.readTime} Mins
                 </div>
                 <div>
                   <div
@@ -433,7 +433,7 @@ const NonTechArticles = ({ isOpen }) => {
                   </div>
                 </div>
               </div>
-              {/* Write Summary Box */}
+              {/* Write article Box */}
               <div className={`${!isSendBoxOpen && "hidden"} `}>
                 <textarea
                   autoFocus={true}
@@ -472,9 +472,9 @@ const NonTechArticles = ({ isOpen }) => {
                   <button
                     onClick={() => {
                       if (weeklyResponse) {
-                        handleUpdate(summary?.id);
+                        handleUpdate(article?.id);
                       } else {
-                        handleUpdate(summary?.id);
+                        handleSubmit(article?.id);
                       }
                     }}
                     className="py-2 px-6 text-white rounded-xl bg-[#2255B8] mx-4 shadow-2xl"
@@ -488,7 +488,7 @@ const NonTechArticles = ({ isOpen }) => {
               {/* Article Box */}
               <div className={`mt-8 ${isSendBoxOpen && "hidden"}`}>
                 <>
-                  {summary?.videoLink ? (
+                  {article?.videoLink ? (
                     <>
                       <div className="flex justify-center items-center py-4 md:hidden">
                         <ReactPlayer
@@ -508,7 +508,7 @@ const NonTechArticles = ({ isOpen }) => {
                       theme.themeMode
                     )} mb-8`}
                   >
-                    {parse(String(summary?.articleText))}
+                    {parse(String(article?.articleText))}
                   </p>
 
                   <div className="text-right">
