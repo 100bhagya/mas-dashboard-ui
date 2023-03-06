@@ -1,7 +1,6 @@
 import "./App.css";
 import WordOfDay from "./Pages/WordOfDay";
 import LandingPage from "./Pages/LandingPage";
-import TechArticles from "./Pages/TechArticles";
 import SummaryWritingContent from "./Pages/SummaryWritingContent";
 import GroupDiscussion from "./Pages/GroupDiscussion";
 import CaseStudy from "./Pages/CaseStudy";
@@ -29,6 +28,7 @@ import QuizDetail from "./Pages/QuizDetail";
 import ProtectedRoutes from "./Components/PrivateRoutes";
 import Settings from "./Pages/Settings";
 import { useSelector } from "react-redux";
+import NonTechArticles from "./Pages/NonTechArticles";
 function App() {
   const user = useSelector((state) => state.user);
 
@@ -53,7 +53,7 @@ function App() {
           <Route path="resetPassword/:token" element={<ResetPassword />} />
           <Route element={<ProtectedRoutes />}>
             <Route path="/" element={<LandingPage />} />
-            <Route path="techarticles" element={<TechArticles />} />
+            <Route path="non-techarticles" element={<NonTechArticles />} />
             <Route path="wordofday" element={<WordOfDay />} />
             <Route path="summarywriting" element={<SummaryWritingContent />} />
             <Route path="videorecord" element={<Record />} />
