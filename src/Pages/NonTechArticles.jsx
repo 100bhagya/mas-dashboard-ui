@@ -49,7 +49,6 @@ function WEEK({
     const startDateMomentObject = moment("01-03-2023", "DD-MM-YYYY");
     const weekIndex = moment().diff(startDateMomentObject, "weeks");
     if (index === weekIndex) toggleWEEK(weekIndex);
-
     if (index === weekIndex) {
       week.open = true;
     }
@@ -116,10 +115,10 @@ function WEEK({
 }
 const NonTechArticles = ({ isOpen }) => {
   const textRef = useRef();
-  const [weeklyResponse, setweeklyResponse] = useState(null);
+  const [weeklyResponse, setWeeklyResponse] = useState(null);
   const [isSendBoxOpen, setIsSendBoxOpen] = useState(false);
   const [weeks, setweeks] = useState(WeekData);
-  const [weekNumber, setWeekNumber] = useState(0);
+  const [weekNumber, setWeekNumber] = useState(1);
   const [articleNumber, setArticleNumber] = useState(1);
   const [summary, setSummary] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -164,19 +163,33 @@ const NonTechArticles = ({ isOpen }) => {
         console.error(error);
       });
   }, [app.lastUpdated]);
-
   useEffect(() => {
-    console.log(nonTechArticles[weekNumber]);
     if (
       nonTechArticles[weekNumber] &&
       nonTechArticles[weekNumber][articleNumber]
     ) {
       setSummary(nonTechArticles[weekNumber][articleNumber]);
     }
-
+    axios
+      .get(
+        `${API_BASE_URL}/api/task/non-tech-article-response?studentId=${user.loginInfo.id}&nonTechArticleId=${nonTechArticles[weekNumber][articleNumber]["id"]}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + user.loginInfo.accessToken,
+          },
+        }
+      )
+      .then((res) => {
+        setWeeklyResponse(res.data.response);
+        if (res.data.response) textRef.current.value = res.data.response;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     setIsLoading(false);
     return () => {
-      textRef.current.value = "";
+      if (textRef.current) textRef.current.value = "";
       setIsSendBoxOpen(false);
       setSummary(null);
     };
@@ -187,17 +200,19 @@ const NonTechArticles = ({ isOpen }) => {
     setArticleNumber(articleNumber);
   };
 
-  const handleSubmitSummary = (weeklySummaryId) => {
+  const handleUpdate = (nonTechArticleId) => {
     if (textRef.current.value === "") {
-      toastMessage("Summary Response is empty.");
+      toastMessage("Response is empty.");
       return;
     }
     setIsLoading(true);
     let bodyParameters = {
-      weeklySummaryId: weeklySummaryId,
+      nonTechArticleId: nonTechArticleId,
       response: textRef.current.value,
       studentId: user.loginInfo.id,
       completed: true,
+      articleNo: articleNumber,
+      weekNo: weekNumber,
     };
     const config = {
       headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
@@ -209,10 +224,10 @@ const NonTechArticles = ({ isOpen }) => {
         config
       )
       .then((response) => {
-        setweeklyResponse(response.data);
+        setWeeklyResponse(response.data);
         setIsLoading(false);
         dispatch(setLastUpdated(new Date()));
-        toastMessage("Summary has been submitted.");
+        toastMessage("Response has been submitted.");
       })
       .catch((err) => {
         setIsLoading(false);
@@ -220,13 +235,15 @@ const NonTechArticles = ({ isOpen }) => {
         console.log(err);
       });
   };
-  const handleUpdateSummary = (weeklySummaryId) => {
+  const handleUpdate = (nonTechArticleId) => {
     setIsLoading(true);
     let bodyParameters = {
-      weeklySummaryId: weeklySummaryId,
+      nonTechArticleId: nonTechArticleId,
       response: textRef.current.value,
       studentId: user.loginInfo.id,
       completed: true,
+      articleNo: articleNumber,
+      weekNo: weekNumber,
     };
     const config = {
       headers: { Authorization: `Bearer ${user.loginInfo.accessToken}` },
@@ -238,7 +255,7 @@ const NonTechArticles = ({ isOpen }) => {
         config
       )
       .then((response) => {
-        setweeklyResponse(response.data);
+        setWeeklyResponse(response.data);
         setIsLoading(false);
         dispatch(setLastUpdated(new Date()));
         toastMessage("Response has been updated.");
@@ -455,16 +472,16 @@ const NonTechArticles = ({ isOpen }) => {
                   <button
                     onClick={() => {
                       if (weeklyResponse) {
-                        handleUpdateSummary(summary?.id);
+                        handleUpdate(summary?.id);
                       } else {
-                        handleSubmitSummary(summary?.id);
+                        handleUpdate(summary?.id);
                       }
                     }}
                     className="py-2 px-6 text-white rounded-xl bg-[#2255B8] mx-4 shadow-2xl"
                   >
                     {" "}
                     {isLoading && <LoadingSpinner />}
-                    {!weeklyResponse ? "Submit Response" : "Update RE"}
+                    {!weeklyResponse ? "Submit Response" : "Update Response"}
                   </button>
                 </div>
               </div>
