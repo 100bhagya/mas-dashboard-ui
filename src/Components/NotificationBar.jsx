@@ -6,7 +6,7 @@ import {
   getThemeTextSecondaryColor,
 } from "../data/themesData";
 
-const NotificationBar = () => {
+const NotificationBar = ({ course }) => {
   const theme = useSelector((state) => state.theme);
   return (
     <div>
@@ -20,17 +20,16 @@ const NotificationBar = () => {
             theme.themeMode
           )}`}
         >
-          {" "}
-          Case Study{" "}
+          {course.courseName}
         </h3>
         <h3
           className={`md:text-md text-sm py-3 ${getThemeLightTextColor(
             theme.themeMode
           )}`}
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit
+          Your course progress is currently below the expected level.
         </h3>
-        <h3 className={`md:text-md text-sm text-rose-400 `}>22 Nov 2023</h3>
+        <h3 className={`md:text-md text-sm text-rose-400 `}>{"15 AUG 2023"}</h3>
       </div>
     </div>
   );

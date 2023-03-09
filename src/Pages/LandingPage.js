@@ -116,36 +116,39 @@ const LandingPage = (isOpen) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {leaderboardData.slice(0, 10).map((student, i) => (
-                       student.rank === rank + 1?(                           <tr
-                        class={`${getThemeBLightBackgroundColor(
-                          theme.themeMode
-                        )} border-b dark:bg-gray-600 dark:border-gray-600`}
-                      >
-                        <th
-                          scope="row"
-                          class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    {leaderboardData.slice(0, 10).map((student, i) =>
+                      student.rank === rank + 1 ? (
+                        <tr
+                          class={`${getThemeBLightBackgroundColor(
+                            theme.themeMode
+                          )} border-b dark:bg-gray-600 dark:border-gray-600`}
                         >
-                          {student.rank}
-                        </th>
-                        <td class="py-4 px-6">{student.studentName}</td>
-                        <td class="py-4 px-6">{student.totalMarks}</td>
-                      </tr>):( <tr
-                        class={`${getThemeBLightBackgroundColor(
-                          theme.themeMode
-                        )} border-b dark:bg-gray-800 dark:border-gray-700`}
-                      >
-                        <th
-                          scope="row"
-                          class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          <th
+                            scope="row"
+                            class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          >
+                            {student.rank}
+                          </th>
+                          <td class="py-4 px-6">{student.studentName}</td>
+                          <td class="py-4 px-6">{student.totalMarks}</td>
+                        </tr>
+                      ) : (
+                        <tr
+                          class={`${getThemeBLightBackgroundColor(
+                            theme.themeMode
+                          )} border-b dark:bg-gray-800 dark:border-gray-700`}
                         >
-                          {student.rank}
-                        </th>
-                        <td class="py-4 px-6">{student.studentName}</td>
-                        <td class="py-4 px-6">{student.totalMarks}</td>
-                      </tr>)
-                     
-                    ))}
+                          <th
+                            scope="row"
+                            class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          >
+                            {student.rank}
+                          </th>
+                          <td class="py-4 px-6">{student.studentName}</td>
+                          <td class="py-4 px-6">{student.totalMarks}</td>
+                        </tr>
+                      )
+                    )}
                   </tbody>
                   {rank >= 10 ? (
                     <tbody>
@@ -336,9 +339,24 @@ const LandingPage = (isOpen) => {
                   Notification
                 </div>
                 <div className="shadow-xl rounded-2xl">
-                  <NotificationBar />
-                  <NotificationBar />
-                  <NotificationBar />
+                  {Array.isArray(courseData) &&
+                    courseData?.map((course, i) => {
+                      console.log(
+                        i,
+                        (moment("03-MAR-2023").diff(moment()) * 100) /
+                          moment("03-MAR-2023").diff(moment("15-AUG-2023")) <
+                          course.progress
+                      );
+                      if (
+                        (moment("03-MAR-2023").diff(moment()) * 100) /
+                          moment("03-MAR-2023").diff(moment("15-AUG-2023")) <
+                        course.progress
+                      ) {
+                        return <NotificationBar course={course} />;
+                      } else {
+                        return null;
+                      }
+                    })}
                 </div>
               </div>
 
@@ -381,33 +399,31 @@ const LandingPage = (isOpen) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {leaderboardData.slice(0, 10).map((student, i) => (
-                       student.rank === rank + 1?(
+                    {leaderboardData.slice(0, 10).map((student, i) =>
+                      student.rank === rank + 1 ? (
                         <tr class=" border-t mt-5 dark:bg-gray-600 dark:border-gray-600">
-                        <th
-                          scope="row"
-                          class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                        >
-                          {student.rank}
-                        </th>
-                        <td class="py-4 px-6">{student.studentName}</td>
-                        <td class="py-4 px-6">{student.totalMarks}</td>
-                      </tr>
-                       ):(
+                          <th
+                            scope="row"
+                            class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          >
+                            {student.rank}
+                          </th>
+                          <td class="py-4 px-6">{student.studentName}</td>
+                          <td class="py-4 px-6">{student.totalMarks}</td>
+                        </tr>
+                      ) : (
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <th
-                          scope="row"
-                          class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                        >
-                          {student.rank}
-                        </th>
-                        <td class="py-4 px-6">{student.studentName}</td>
-                        <td class="py-4 px-6">{student.totalMarks}</td>
-                      </tr>
-
-                       )
-                     
-                    ))}
+                          <th
+                            scope="row"
+                            class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          >
+                            {student.rank}
+                          </th>
+                          <td class="py-4 px-6">{student.studentName}</td>
+                          <td class="py-4 px-6">{student.totalMarks}</td>
+                        </tr>
+                      )
+                    )}
                   </tbody>
 
                   {rank >= 10 ? (
