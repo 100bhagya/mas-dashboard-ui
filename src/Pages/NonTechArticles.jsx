@@ -113,6 +113,7 @@ function WEEK({
     </div>
   );
 }
+
 const NonTechArticles = ({ isOpen }) => {
   const textRef = useRef();
   const [weeklyResponse, setWeeklyResponse] = useState(null);
@@ -169,25 +170,26 @@ const NonTechArticles = ({ isOpen }) => {
       nonTechArticles[weekNumber][articleNumber]
     ) {
       setArticle(nonTechArticles[weekNumber][articleNumber]);
+      axios
+        .get(
+          `${API_BASE_URL}/api/task/non-tech-article-response?studentId=${user.loginInfo.id}&nonTechArticleId=${nonTechArticles[weekNumber][articleNumber]["id"]}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + user.loginInfo.accessToken,
+            },
+          }
+        )
+        .then((res) => {
+          setWeeklyResponse(res.data.response);
+          if (res.data.response) textRef.current.value = res.data.response;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      setIsLoading(false);
     }
-    axios
-      .get(
-        `${API_BASE_URL}/api/task/non-tech-article-response?studentId=${user.loginInfo.id}&nonTechArticleId=${nonTechArticles[weekNumber][articleNumber]["id"]}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + user.loginInfo.accessToken,
-          },
-        }
-      )
-      .then((res) => {
-        setWeeklyResponse(res.data.response);
-        if (res.data.response) textRef.current.value = res.data.response;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    setIsLoading(false);
+
     return () => {
       if (textRef.current) textRef.current.value = "";
       setIsSendBoxOpen(false);
