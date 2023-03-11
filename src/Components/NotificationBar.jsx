@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { COURSE_DEADLINE } from "../data/courseData";
 import {
   getThemeBackgroundColor,
   getThemeLightTextColor,
@@ -29,7 +30,9 @@ const NotificationBar = ({ course }) => {
         >
           Your course progress is currently below the expected level.
         </h3>
-        <h3 className={`md:text-md text-sm text-rose-400 `}>{"15 AUG 2023"}</h3>
+        <h3 className={`md:text-md text-sm text-rose-400 `}>
+          {COURSE_DEADLINE[course.courseName].endDate}
+        </h3>
       </div>
     </div>
   );
