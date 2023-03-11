@@ -1,9 +1,9 @@
 export const COURSE_DEADLINE = {
-  quant: {
+  "MAS2022 Machine Learning": {
     startDate: "3 MAR",
     endDate: "15 AUG",
   },
-  lrdi: {
+  "MAS2022 Quantitative Aptitude": {
     startDate: "3 MAR",
     endDate: "15 AUG",
   },

@@ -113,6 +113,7 @@ function WEEK({
     </div>
   );
 }
+
 const NonTechArticles = ({ isOpen }) => {
   const textRef = useRef();
   const [weeklyResponse, setWeeklyResponse] = useState(null);
