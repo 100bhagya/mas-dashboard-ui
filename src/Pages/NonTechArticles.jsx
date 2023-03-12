@@ -492,15 +492,39 @@ const NonTechArticles = ({ isOpen }) => {
                 <>
                   {article?.videoLink ? (
                     <>
-                      <div className="flex justify-center items-center py-4 md:hidden">
-                        <ReactPlayer
-                          width="304px"
-                          height="171px"
-                          url="https://www.youtube.com/watch?v=Sh_YLwJTB38"
-                        />
+                      <div className="flex items-center justify-center py-4 md:hidden">
+                        {
+                          article.videoLink.map(({link})=>{
+                            return(
+                              <ReactPlayer
+                              width="304px"
+                              height="171px"
+                              url={link}
+                            />
+
+                            )
+                           
+
+                          })
+                        }
+                       
                       </div>
-                      <div className="justify-center items-center py-4 hidden md:flex ">
-                        <ReactPlayer url="https://www.youtube.com/watch?v=Sh_YLwJTB38" />
+                      <div className="items-center justify-center hidden py-4 md:space-y-3 md:flex-col md:flex ">
+                      {
+                          article.videoLink.map(({link})=>{
+                            return(
+                              <ReactPlayer width="304px"
+                              height="171px"  
+                              url={link}/>
+                             
+
+                            )
+                           
+
+                          })
+                        }
+
+                       
                       </div>
                     </>
                   ) : null}
