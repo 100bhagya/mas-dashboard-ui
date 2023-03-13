@@ -34,6 +34,7 @@ import {
 } from "../app/features/theme/themeSlice";
 import { nonTechArticles } from "../data/nonTechArticlesData";
 import ReactPlayer from "react-player/lazy";
+import { Link } from "react-router-dom";
 const toastMessage = (message) => toast(message);
 
 function WEEK({
@@ -61,11 +62,10 @@ function WEEK({
         onClick={() => toggleWEEK(index)}
       >
         <div
-          className={`faq-question cursor-pointer my-6 ${
-            week.open
-              ? getThemeTextSecondaryColor(theme.themeMode) + ` font-semibold`
-              : getThemeTextPrimaryColor(theme.themeMode)
-          }`}
+          className={`faq-question cursor-pointer my-6 ${week.open
+            ? getThemeTextSecondaryColor(theme.themeMode) + ` font-semibold`
+            : getThemeTextPrimaryColor(theme.themeMode)
+            }`}
         >
           <div className="flex items-center gap-2">
             {week.question}
@@ -75,8 +75,8 @@ function WEEK({
               ) : null}
               {(statusResponse[week.id]?.[0] &&
                 !statusResponse[week.id]?.[1]) ||
-              (!statusResponse[week.id]?.[0] &&
-                statusResponse[week.id]?.[1]) ? (
+                (!statusResponse[week.id]?.[0] &&
+                  statusResponse[week.id]?.[1]) ? (
                 <Checkmark color="#F6BE00" size="16px" />
               ) : null}
             </div>
@@ -89,11 +89,10 @@ function WEEK({
           {week.answer.map((post) => {
             return (
               <div
-                className={`cursor-pointer mb-2 px-2 py-1 rounded-lg ${
-                  articleNumber === post?.articleNumber
-                    ? "bg-blue-500 text-white"
-                    : getThemeTextColor(theme.themeMode)
-                }`}
+                className={`cursor-pointer mb-2 px-2 py-1 rounded-lg ${articleNumber === post?.articleNumber
+                  ? "bg-blue-500 text-white"
+                  : getThemeTextColor(theme.themeMode)
+                  }`}
                 onClick={() => {
                   const articleNumber = post?.articleNumber;
                   handleArticle(index, articleNumber);
@@ -349,16 +348,14 @@ const NonTechArticles = ({ isOpen }) => {
               </div>
             </div>
             <div
-              className={`${
-                !isLoading && "hidden"
-              } flex justify-center items-center h-full`}
+              className={`${!isLoading && "hidden"
+                } flex justify-center items-center h-full`}
             >
               <LoadingSpinner />
             </div>
             <div
-              className={`${
-                (article !== null || isLoading) && "hidden"
-              } flex flex-col justify-center items-center mt-8`}
+              className={`${(article !== null || isLoading) && "hidden"
+                } flex flex-col justify-center items-center mt-8`}
             >
               <div className="mb-5 text-4xl font-bold text-center text-red-500 ">
                 Ooops!!
@@ -412,11 +409,10 @@ const NonTechArticles = ({ isOpen }) => {
                   >
                     <button
                       onClick={handleDecreaseFontSize}
-                      className={`${
-                        theme.fontSize <= 0
-                          ? "bg-opacity-10 cursor-not-allowed"
-                          : "hover:scale-125"
-                      }`}
+                      className={`${theme.fontSize <= 0
+                        ? "bg-opacity-10 cursor-not-allowed"
+                        : "hover:scale-125"
+                        }`}
                       disabled={theme.fontSize <= 0}
                     >
                       <BiMinus size={20} />
@@ -424,11 +420,10 @@ const NonTechArticles = ({ isOpen }) => {
                     <BiFontSize className="" size={30} />
                     <button
                       onClick={handleIncreaseFontSize}
-                      className={`${
-                        theme.fontSize >= 3
-                          ? "bg-opacity-10 cursor-not-allowed"
-                          : "hover:scale-125"
-                      }`}
+                      className={`${theme.fontSize >= 3
+                        ? "bg-opacity-10 cursor-not-allowed"
+                        : "hover:scale-125"
+                        }`}
                     >
                       <MdOutlineAdd size={20} />
                     </button>
@@ -494,40 +489,79 @@ const NonTechArticles = ({ isOpen }) => {
                     <>
                       <div className="flex items-center justify-center py-4 md:hidden">
                         {
-                          article.videoLink.map(({link})=>{
-                            return(
+                          article.videoLink.map(({ link }) => {
+                            return (
                               <ReactPlayer
-                              width="304px"
-                              height="171px"
-                              url={link}
-                            />
+                                width="304px"
+                                height="171px"
+                                url={link}
+                              />
 
                             )
-                           
+
 
                           })
                         }
-                       
+
                       </div>
                       <div className="items-center justify-center hidden py-4 md:space-y-3 md:flex-col md:flex ">
-                      {
-                          article.videoLink.map(({link})=>{
-                            return(
-                              <ReactPlayer width="304px"
-                              height="171px"  
-                              url={link}/>
-                             
+                        {
+                          article.videoLink.map(({ link }) => {
+                            return (
+                              <ReactPlayer
+                                url={link} />
+
 
                             )
-                           
+
 
                           })
                         }
 
-                       
+
                       </div>
                     </>
                   ) : null}
+
+
+                  {article?.articleLink ? (
+                    <>
+
+                      <div className="flex flex-col items-center mt-[2vh] mb-[2vh] justify-center space-y-4">
+                      
+
+                        {(article.articleLink.length > 0 ? <h1 className={`text-3xl ${getThemeTextSecondaryColor(
+                          theme.themeMode
+                        )} `}>Articles</h1> : null)}
+
+
+                        {
+                          article.articleLink.map(({ link, topic }) => {
+                            return (
+                            
+
+                              <a href={link} target="_blank" rel="noopener noreferrer" className={`text-xl ${getThemeTextSecondaryColor(
+                                theme.themeMode
+                              )} `} >{topic}</a>
+
+                            )
+
+                          })
+                        }
+
+
+                      </div>
+
+
+
+                    </>
+
+                  ) : null}
+
+
+
+
+
 
                   <p
                     className={`${getText(theme.fontSize)} ${getThemeTextColor(
@@ -540,9 +574,8 @@ const NonTechArticles = ({ isOpen }) => {
                   <div className="text-right">
                     <button
                       onClick={handleNext}
-                      className={`py-2 px-6 text-white rounded-xl bg-[#2255B8] mx-4 shadow-2xl ${
-                        articleNumber === 2 && "opacity-20 cursor-not-allowed"
-                      }`}
+                      className={`py-2 px-6 text-white rounded-xl bg-[#2255B8] mx-4 shadow-2xl ${articleNumber === 2 && "opacity-20 cursor-not-allowed"
+                        }`}
                     >
                       {" "}
                       Next
