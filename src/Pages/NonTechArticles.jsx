@@ -523,46 +523,6 @@ const NonTechArticles = ({ isOpen }) => {
                     </>
                   ) : null}
 
-
-                  {article?.articleLink ? (
-                    <>
-
-                      <div className="flex flex-col items-center mt-[2vh] mb-[2vh] justify-center space-y-4">
-                      
-
-                        {(article.articleLink.length > 0 ? <h1 className={`text-3xl ${getThemeTextSecondaryColor(
-                          theme.themeMode
-                        )} `}>Articles</h1> : null)}
-
-
-                        {
-                          article.articleLink.map(({ link, topic }) => {
-                            return (
-                            
-
-                              <a href={link} target="_blank" rel="noopener noreferrer" className={`text-xl ${getThemeTextSecondaryColor(
-                                theme.themeMode
-                              )} `} >{topic}</a>
-
-                            )
-
-                          })
-                        }
-
-
-                      </div>
-
-
-
-                    </>
-
-                  ) : null}
-
-
-
-
-
-
                   <p
                     className={`${getText(theme.fontSize)} ${getThemeTextColor(
                       theme.themeMode
