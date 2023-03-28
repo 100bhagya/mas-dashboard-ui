@@ -637,7 +637,7 @@ const TopicBar = ({ value }) => {
           )} top-[50vh] -translate-y-1/2 rounded-r-lg relative hidden md:block`}
         >
           <div
-            className={`flex items-center h-[3vh] w-[3.2vh] rounded-r-lg justify-center ${getThemeTextPrimaryColor(
+            className={`flex items-center h-[3vh] w-[2.5vh] rounded-r-lg justify-center ${getThemeTextPrimaryColor(
               theme.themeMode
             )}`}
             onClick={activatesidebar}
