@@ -1,12 +1,13 @@
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import moment from "moment";
+import moment, { months } from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setCurrentCalendarDate,
   setCurrentMonthAndYear,
 } from "../app/features/app/appSlice";
 import { FiLock } from "react-icons/fi";
+import ".././index.css"
 
 export default function App() {
   const app = useSelector((state) => state.app);
@@ -21,6 +22,9 @@ export default function App() {
         onChange={(e) => {
           dispatch(setCurrentCalendarDate(e));
         }}
+        prevLabel=""
+        prev2Label=""
+       
         tileClassName={({ date }) => {
 
           if (moment(date).isAfter(moment())===true && (moment(date).day()!==6 && moment(date).day()!==0)) return "disable-word";//will disable future dates in calender
@@ -44,10 +48,15 @@ export default function App() {
             //orange tile
             return "partially-completed-words";
           }
+          if(moment(date).month()<moment().month()){
+            return "disable-click"
+          }
         }}
         tileContent={({ date }) => {
           if (moment(date).isAfter(moment())===true && (moment(date).day()!==6 && moment(date).day()!==0)) return <FiLock className="disable-word" />;
+          
         }}
+       
         onActiveStartDateChange={({ activeStartDate }) => {
           //updating "currentMonthAndYear" state when calendar view is changed
           dispatch(

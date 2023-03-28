@@ -104,6 +104,20 @@
   pointer-events: none !important;
 
 }
+.disable-click{
+  opacity: 0.5;
+  pointer-events: none;
+
+}
+
+.react-calendar__navigation__prev-button {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.react-calendar__navigation__prev2-button {
+  opacity: 0.5;
+  pointer-events: none;
+}
 
 .not-attempted-words {
   background-color: red !important;
