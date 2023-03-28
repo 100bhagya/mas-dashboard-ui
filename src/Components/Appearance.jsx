@@ -12,7 +12,9 @@ const Appearance = () => {
   const app = useSelector((state) => state.app);
   const theme = useSelector((state) => state.theme);
   const themeModeRef = useRef(theme.themeMode);
+ 
   const fontSizeRef = useRef(theme.fontSize);
+  
   const dispatch = useDispatch();
 
   const handleSave = () => {
@@ -27,7 +29,7 @@ const Appearance = () => {
   }, []);
 
   return (
-    <div className="px-2 md:px-8 py-4">
+    <div className="px-2 py-4 md:px-8">
       <div className="flex flex-col gap-4 md:max-w-[800px] min-h-[90vh] mx-auto">
         <div
           className={`text-3xl font-bold ${getThemeTextColor(theme.themeMode)}`}
@@ -35,8 +37,8 @@ const Appearance = () => {
           Appearance
         </div>
         <section className="flex flex-col gap-2 my-2">
-          <div className="grid md:grid-cols-1 md:w-1/2 gap-4">
-            <div className="flex flex-col gap-1 w-full">
+          <div className="grid gap-4 md:grid-cols-1 md:w-1/2">
+            <div className="flex flex-col w-full gap-1">
               <label
                 htmlFor="theme-mode"
                 className={`text-sm ${getThemeTextSecondaryColor(
@@ -48,19 +50,19 @@ const Appearance = () => {
 
               <select
                 ref={themeModeRef}
-                className="w-full p-1 rounded-md border border-gray-300"
+                className="w-full p-1 border border-gray-300 rounded-md"
                 name="theme-mode"
                 id="theme-mode"
               >
-                <option selected={theme.themeMode === 0} value={0}>
+                <option selected={theme.themeMode === false} value={0}>
                   Light
                 </option>
-                <option selected={theme.themeMode === 1} value={1}>
+                <option selected={theme.themeMode === true} value={1}>
                   Dark
                 </option>
               </select>
             </div>
-            <div className="flex flex-col gap-1 w-full">
+            <div className="flex flex-col w-full gap-1">
               <label
                 htmlFor="theme-mode"
                 className={`text-sm ${getThemeTextSecondaryColor(
@@ -72,7 +74,7 @@ const Appearance = () => {
 
               <select
                 ref={fontSizeRef}
-                className="w-full p-1 rounded-md border border-gray-300"
+                className="w-full p-1 border border-gray-300 rounded-md"
                 name="font-size"
                 id="font-size"
               >
@@ -96,7 +98,7 @@ const Appearance = () => {
           <div className="flex justify-end gap-6">
             <button
               onClick={handleSave}
-              className="py-1 px-2 rounded-md border border-gray-300 bg-blue-500 text-white"
+              className="px-2 py-1 text-white bg-blue-500 border border-gray-300 rounded-md"
             >
               Save
             </button>
