@@ -58,75 +58,82 @@ const ResetPassword = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
-      <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
+      <div className="flex flex-col items-center justify-center flex-1 w-full px-20 text-center">
         {err ? (
           <div className="bg-white w-[60%] mb-4 flex shadow-xl rounded-tr-xl rounded-br-xl">
             <div className="w-2 bg-red-600 rounded-tl-xl rounded-bl-xl"></div>
-            <div className="py-2 text-red-500 ml-5"> {err} </div>
+            <div className="py-2 ml-5 text-red-500"> {err} </div>
           </div>
         ) : null}
 
-        <div className="bg-white rounded-2xl shadow-2xl flex w-2/3 max-w-4xl">
-          <div className="w-3/5 p-5">
-            <div className="text-left font-bold">
+        <div className="flex flex-col items-center justify-center bg-white shadow-2xl shadow-outline md:flex-row rounded-3xl">
+          <div className="flex flex-col gap-4 p-4 md:w-1/2">
+          <div className="font-bold text-left">
               <img src={Logo} alt="logo" className="h-10" />
             </div>
             {message ? (
-              <div className="text-2xl py-2 text-red-500 ml-5 pt-10">
+              <div className="py-2 pt-10 ml-5 text-2xl text-red-500">
                 {" "}
                 {message}{" "}
               </div>
             ) : (
               <div className="py-10">
-                <h2 className="text-2xl text-blue-500 mb-4">{heading}</h2>
-                <div className="bg-blue-600 h-1 w-10 inline-block mb-2"></div>
+                <h2 className="mb-4 text-2xl font-semibold text-blue-600 lg:px-4 ">{heading}</h2>
+                <div className="inline-block w-10 h-1 mb-2 bg-blue-600"></div>
 
                 <form
-                  className="flex flex-col items-center"
+                  className="flex flex-col items-center gap-4"
                   onSubmit={handleSubmit}
                 >
-                  <div className="bg-gray-100 w-64 p-2 flex items-center mb-3">
-                    <AiOutlineUser className="text-gray-400 m-2" />
+                  <div className="flex items-center w-64 p-2 mb-3 bg-gray-100">
+                    <AiOutlineUser className="m-2 text-gray-400" />
                     <input
                       type="password"
                       name="password"
                       placeholder="Password"
                       required
                       ref={password}
-                      className="bg-gray-100 outline-none text-sm flex-1"
+                      className="flex-1 text-sm bg-gray-100 outline-none"
                     />
                   </div>
 
-                  <div className="bg-gray-100 w-64 p-2 flex items-center mb-3">
-                    <AiOutlineUser className="text-gray-400 m-2" />
+                  <div className="flex items-center w-64 p-2 mb-3 bg-gray-100">
+                    <AiOutlineUser className="m-2 text-gray-400" />
                     <input
                       type="password"
                       name="confirmPassword"
                       placeholder="Confirm Password"
                       required
                       ref={confirmPassword}
-                      className="bg-gray-100 outline-none text-sm flex-1"
+                      className="flex-1 text-sm bg-gray-100 outline-none"
                     />
                   </div>
 
                   <button
-                    className="border-2 cursor-pointer border-blue-600 text-blue-600 rounded-full px-12 py-2 inline-block font-semibold hover:bg-blue-600 hover:text-white"
+                    className="inline-block px-12 py-2 font-semibold text-blue-600 border-2 border-blue-600 rounded-full cursor-pointer hover:bg-blue-600 hover:text-white"
                     type="submit"
                   >
                     {fetching ? <LoadingSpinner /> : "Submit"}
                   </button>
                 </form>
+                <div className="mt-4 text-sm text-black md:hidden">
+                Sign In{" "}
+                <a className="text-blue-500" href="/signin">
+                  Here
+                </a>
+                !
+              </div>
               </div>
             )}
           </div>
-          <div className="w-2/5 bg-blue-600 text-white rounded-tr-2xl rounded-br-2xl py-36 px-12">
-            <h2 className="text-3xl  font-bold mb-2">Hello, Friend!</h2>
-            <div className="bg-white h-1 w-10 inline-block mb-2"></div>
+          <div className="box-border flex-col items-center justify-center hidden h-full gap-4 px-12 py-32 text-white bg-blue-600 md:flex rounded-tr-2xl rounded-br-2xl md:w-1/2">
+            <h2 className="mb-2 text-3xl font-bold">Hello, Friend!</h2>
+            <div className="inline-block w-10 h-1 mb-2 bg-white"></div>
             <p className="mb-10">
               Fill up personal information and start journey with us.
             </p>
             <Link to="/signin">
-              <div className="border-2 border-white rounded-full px-12 py-2 inline-block font-semibold hover:bg-white hover:text-blue-600">
+              <div className="inline-block px-12 py-2 font-semibold border-2 border-white rounded-full hover:bg-white hover:text-blue-600">
                 Sign In
               </div>
             </Link>
