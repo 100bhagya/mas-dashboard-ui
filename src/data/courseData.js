@@ -1,62 +1,62 @@
 export const COURSE_DEADLINE = {
   "MAS2022 Machine Learning": {
-    startDate: "3 MAR",
-    endDate: "15 AUG",
+    startDate: "2023-03-03",
+    endDate: "2023-08-15",
   },
   "MAS2022 Quantitative Aptitude": {
-    startDate: "3 MAR",
-    endDate: "15 AUG",
+    startDate: "2023-03-03",
+    endDate: "2023-08-15",
   },
   varc: {
-    startDate: "3 MAR",
-    endDate: "15 AUG",
+    startDate: "2023-03-03",
+    endDate: "2023-08-15",
   },
   excel_stats: {
-    startDate: "3 MAR",
-    endDate: "15 AUG",
+    startDate: "2023-03-03",
+    endDate: "2023-08-15",
   },
   sql: {
-    startDate: "3 MAR",
-    endDate: "15 AUG",
+    startDate: "2023-03-03",
+    endDate: "2023-08-15",
   },
   python: {
-    startDate: "3 MAR",
-    endDate: "15 AUG",
+    startDate: "2023-03-03",
+    endDate: "2023-08-15",
   },
   ml: {
-    startDate: "3 MAR",
-    endDate: "15 AUG",
+     startDate: "2023-03-03",
+    endDate: "2023-08-15",
   },
   dl: {
-    startDate: "3 MAR",
-    endDate: "15 AUG",
+     startDate: "2023-03-03",
+    endDate: "2023-08-15",
   },
   tableau: {
-    startDate: "3 MAR",
-    endDate: "15 AUG",
+     startDate: "2023-03-03",
+    endDate: "2023-08-15",
   },
   tech_revision: {
-    startDate: "3 MAR",
-    endDate: "15 AUG",
+     startDate: "2023-03-03",
+    endDate: "2023-08-15",
   },
   guess_estimates_case_study: {
-    startDate: "3 MAR",
-    endDate: "15 AUG",
+     startDate: "2023-03-03",
+    endDate: "2023-08-15",
   },
   product_management: {
-    startDate: "3 MAR",
-    endDate: "15 AUG",
+     startDate: "2023-03-03",
+    endDate: "2023-08-15",
   },
   puzzles: {
-    startDate: "3 MAR",
-    endDate: "15 AUG",
+     startDate: "2023-03-03",
+    endDate: "2023-08-15",
   },
   project_one: {
-    startDate: "3 MAR",
-    endDate: "15 AUG",
+     startDate: "2023-03-03",
+    endDate: "2023-08-15",
   },
   project_two: {
-    startDate: "3 MAR",
-    endDate: "15 AUG",
+     startDate: "2023-03-03",
+    endDate: "2023-08-15",
   },
 };

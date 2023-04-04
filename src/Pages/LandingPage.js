@@ -23,6 +23,8 @@ import { toggleThemeMode } from "../app/features/theme/themeSlice";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { setStudentData } from "../app/features/app/appSlice";
 import { COURSE_DEADLINE } from "../data/courseData";
+
+
 const LandingPage = (isOpen) => {
   const user = useSelector((state) => state.user);
   const theme = useSelector((state) => state.theme);
@@ -342,17 +344,22 @@ const LandingPage = (isOpen) => {
                 <div className="shadow-xl rounded-2xl">
                   {Array.isArray(courseData) &&
                     courseData?.map((course, i) => {
+                      
+
                       if (
                         (
-                          moment().diff(
-                            moment(COURSE_DEADLINE[course.courseName].startDate)
-                          ) /
-                          moment(
-                            COURSE_DEADLINE[course.courseName].endDate
-                          ).diff(
-                            moment(COURSE_DEADLINE[course.courseName].startDate)
-                          )
-                        ).toFixed(2) > course.progress
+                            moment().diff(
+                              moment(COURSE_DEADLINE[course.courseName].startDate)
+                            ) /
+                            moment(
+                              COURSE_DEADLINE[course.courseName].endDate
+                            ).diff(
+                              moment(COURSE_DEADLINE[course.courseName].startDate)
+                            )
+  
+                          ).toFixed(2) > course.progress
+                        
+                       
                       ) {
                         return <NotificationBar course={course} />;
                       } else {
@@ -361,6 +368,7 @@ const LandingPage = (isOpen) => {
                     })}
                 </div>
               </div>
+              {/* //  */}
 
               <p
                 className={`text-3xl text-center ${getThemeTextSecondaryColor(
