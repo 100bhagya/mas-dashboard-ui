@@ -115,6 +115,8 @@ function WEEK({
 
 const NonTechArticles = ({ isOpen }) => {
   const textRef = useRef();
+  const [text, setText] = useState("");
+ const [errorMessage, setErrorMessage] = useState("");
   const [weeklyResponse, setWeeklyResponse] = useState(null);
   const [isSendBoxOpen, setIsSendBoxOpen] = useState(false);
   const [weeks, setweeks] = useState(WeekData);
@@ -142,6 +144,16 @@ const NonTechArticles = ({ isOpen }) => {
       })
     );
   };
+  function handleTextChange(event) {
+    const inputValue = event.target.value;
+     const wordCount = inputValue.trim().split(/\s+/).length;
+     if (wordCount <= 500) {
+       setText(inputValue);
+       setErrorMessage("");
+     } else {
+       setErrorMessage("Maximum word limit exceeded.");
+     }
+   }
 
   useEffect(() => {
     axios
@@ -202,8 +214,10 @@ const NonTechArticles = ({ isOpen }) => {
   };
 
   const handleSubmit = (nonTechArticleId) => {
-    if (textRef.current.value === "") {
-      toastMessage("Response is empty.");
+    const inputValue = textRef.current.value;
+    const wordCount = inputValue.trim().split(/\s+/).length;
+    if (wordCount<250) {
+      toastMessage("Summary should be at least 250 words long");
       return;
     }
     setIsLoading(true);
@@ -237,6 +251,13 @@ const NonTechArticles = ({ isOpen }) => {
       });
   };
   const handleUpdate = (nonTechArticleId) => {
+    const inputValue = textRef.current.value;
+    const wordCount = inputValue.trim().split(/\s+/).length;
+    if(wordCount<250){
+      toastMessage("Summary should be at least 250 words long");
+      return;
+
+    }
     setIsLoading(true);
     let bodyParameters = {
       nonTechArticleId: nonTechArticleId,
@@ -435,7 +456,10 @@ const NonTechArticles = ({ isOpen }) => {
                 <textarea
                   autoFocus={true}
                   ref={textRef}
-                  placeholder="Write here..."
+                  value={text}
+                  onChange={handleTextChange}
+                  maxLength={5000}//  Maximum number of characters allowed in textarea
+                  placeholder="Your article length should lie in between 250-500 words "
                   className={`${getText(
                     theme.fontSize
                   )} w-full h-[50vh] my-6 p-4 rounded-md ${getThemeTextSecondaryColor(
@@ -444,6 +468,7 @@ const NonTechArticles = ({ isOpen }) => {
                     theme.themeMode
                   )} placeholder-black`}
                 ></textarea>
+                {errorMessage && <div className="text-red-500">{errorMessage}</div>}
 
                 <div className="flex justify-end">
                   <button

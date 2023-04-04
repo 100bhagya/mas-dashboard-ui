@@ -485,7 +485,7 @@ const SummaryWritingContent = ({ isOpen }) => {
                   value={text}
                   onChange={handleTextChange}
                   maxLength={5000}//  Maximum number of characters allowed in textarea
-                  placeholder="Write summary here..."
+                  placeholder="Your summary should lie in between 250-500 words "
                   className={`${getText(
                     theme.fontSize
                   )} w-full h-[50vh] my-6 p-4 rounded-md ${getThemeTextSecondaryColor(
