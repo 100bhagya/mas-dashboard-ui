@@ -16,10 +16,13 @@ import {
   getThemeTextSecondaryColor,
   getThemeWhiteDarkBGColor,
 } from "../data/themesData";
+import toast, { Toaster } from 'react-hot-toast';
+
 
 const RatingCard = ({ serialNo, Title, currentChapter }) => {
   const user = useSelector((state) => state.user);
   const theme = useSelector((state) => state.theme);
+  const toastMessage = (message) => toast(message);
   const [rating, setRating] = useState(
     currentChapter && currentChapter.length > 0
       ? currentChapter[0].rating
@@ -48,6 +51,7 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
 
       let result = await response.json();
       currentChapter.push(item);
+      toastMessage(`Rating submitted successfully for ${item.chapter} `);
     } else {
       var updateresponse = await fetch(`${API_BASE_URL}/api/task/task-rating`, {
         method: "PUT",
@@ -60,12 +64,13 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
       });
 
       let result = await updateresponse.json();
+      toastMessage(`Rating updated successfully for ${item.chapter} `);
     }
   };
 
   return (
     <>
-      <div className="rounded-xl shadow-xl flex w-full items-center h-20">
+      <div className="flex items-center w-full h-20 shadow-xl rounded-xl">
         <div
           className={`w-1/5 ${getThemeBackgroundColor(
             theme.themeMode
@@ -147,7 +152,7 @@ const Quant = (isOpen) => {
               Quant
             </div>
           </div>
-          <div className="flex mt-6 gap-8 md:gap-12">
+          <div className="flex gap-8 mt-6 md:gap-12">
             <p
               className={`w-[80%] h-[210px] text-ellipsis hidden md:block ${getThemeWhiteDarkBGColor(
                 theme.themeMode
@@ -212,8 +217,8 @@ const Quant = (isOpen) => {
               Lunchdisco
             </div>
           </div>
-          <div className="flex w-full justify-center">
-            <div className="grid lg:grid-cols-3 md:grid-cols-1 gap-6 justify-between mt-12">
+          <div className="flex justify-center w-full">
+            <div className="grid justify-between gap-6 mt-12 lg:grid-cols-3 md:grid-cols-1">
               {ratingResponse.length > 0 && (
                 <>
                   <RatingCard
@@ -392,6 +397,7 @@ const Quant = (isOpen) => {
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };
