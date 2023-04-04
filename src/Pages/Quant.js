@@ -47,11 +47,17 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
           Authorization: "Bearer " + user.loginInfo.accessToken,
         },
         body: JSON.stringify(item),
-      });
+      }).then((res)=>{
+        toastMessage(`Rating submitted successfully for ${item.chapter} `);
 
-      let result = await response.json();
+      }).catch((res)=>{
+        toastMessage(`Something went wrong `);;
+
+      })
+
+      
       currentChapter.push(item);
-      toastMessage(`Rating submitted successfully for ${item.chapter} `);
+      
     } else {
       var updateresponse = await fetch(`${API_BASE_URL}/api/task/task-rating`, {
         method: "PUT",
@@ -61,10 +67,16 @@ const RatingCard = ({ serialNo, Title, currentChapter }) => {
           Authorization: "Bearer " + user.loginInfo.accessToken,
         },
         body: JSON.stringify(item),
-      });
+      }).then((res)=>{
+        toastMessage(`Rating updated successfully for ${item.chapter} `);
 
-      let result = await updateresponse.json();
-      toastMessage(`Rating updated successfully for ${item.chapter} `);
+      }).catch((res)=>{
+        toastMessage(`Something went wrong `);;
+
+      })
+
+      
+     
     }
   };
 
