@@ -32,6 +32,14 @@
   content: "\f005";
   /* text-shadow: -2px 0 blue, 0 2px blue, 2px 0 blue, 0 -2px blue;  */
 }
+.disable-word {
+  color: #ccc;
+  pointer-events: none !important; 
+}
+
+.react-calendar__tile--prev-month {
+  color: #aaa; 
+}
 
 .rating > .half:before {
   content: "\f005";
@@ -100,10 +108,7 @@
   font-size: 1em !important;
   color: white;
 }
-.disable-word{
-  pointer-events: none !important;
 
-}
 
 .not-attempted-words {
   background-color: red !important;

@@ -84,13 +84,13 @@ const TopicBar = ({ value }) => {
           theme.themeMode
         )} w-full sticky top-0 h-screen px-2 overflow-auto`}
       >
-        <div className="text-center mt-12 ">
+        <div className="mt-12 text-center ">
           {selectedimage ? (
             <label>
               <input
                 type="file"
                 name="myImage"
-                className="text-sm hidden"
+                className="hidden text-sm"
                 onChange={(event) => {
                   setSelectedimage(event.target.files[0]);
                 }}
@@ -108,7 +108,7 @@ const TopicBar = ({ value }) => {
               <input
                 type="file"
                 name="myImage"
-                className="text-sm hidden"
+                className="hidden text-sm"
                 onChange={(event) => {
                   setSelectedimage(event.target.files[0]);
                 }}
@@ -139,7 +139,7 @@ const TopicBar = ({ value }) => {
             {user.loginInfo ? user.loginInfo?.email : ""}
           </div>
           <Link to="/">
-            <div className=" py-2 ">
+            <div className="py-2 ">
               <div
                 className={`flex py-2  md:px-1 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
                   theme.themeMode
@@ -395,7 +395,7 @@ const TopicBar = ({ value }) => {
                         dispatch(setNonTechOpen(!app.nonTechOpen));
                       }}
                     >
-                      <div className="flex items-center  gap-1">
+                      <div className="flex items-center gap-1">
                         <div
                           className={`text-sm text-left cursor-pointer ${getThemeTextPrimaryColor(
                             theme.themeMode
@@ -419,7 +419,7 @@ const TopicBar = ({ value }) => {
                     {app.nonTechOpen ? (
                       <div></div>
                     ) : (
-                      <div className="flex ml-2  lg:pl-8">
+                      <div className="flex ml-2 lg:pl-8">
                         {/* <div className="bg-blue-700 w-[1px]"></div> */}
                         <div
                           className={`pl-4 border-l-2 ${getThemeBorderColor(
@@ -495,7 +495,7 @@ const TopicBar = ({ value }) => {
             )}
           </div>
           <Link to="/settings">
-            <div className=" py-2 ">
+            <div className="py-2 ">
               <div
                 className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
                   theme.themeMode
@@ -533,7 +533,7 @@ const TopicBar = ({ value }) => {
               </div>
             </div>
           </div>
-          <div className=" py-2 ">
+          <div className="py-2 ">
             <div
               className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
                 theme.themeMode
@@ -551,7 +551,7 @@ const TopicBar = ({ value }) => {
               </div>
             </div>
           </div>
-          <div className=" py-2 ">
+          <div className="py-2 ">
             <div
               className={`flex items-center py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
                 theme.themeMode
@@ -570,7 +570,7 @@ const TopicBar = ({ value }) => {
               </div>
             </div>
           </div>
-          <div className=" py-2 ">
+          <div className="py-2 ">
             <div
               className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
                 theme.themeMode
@@ -590,7 +590,7 @@ const TopicBar = ({ value }) => {
           </div>
 
           {user.loginInfo.username ? (
-            <div className=" py-2 cursor-pointer" onClick={Logout}>
+            <div className="py-2 cursor-pointer " onClick={Logout}>
               <div
                 className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
                   theme.themeMode
@@ -610,8 +610,8 @@ const TopicBar = ({ value }) => {
             </div>
           ) : (
             <Link to="/signin">
-              <div className=" py-2 cursor-pointer">
-                <div className="flex py-2 md:px-1 lg:px-8 rounded-lg hover:bg-white">
+              <div className="py-2 cursor-pointer ">
+                <div className="flex py-2 rounded-lg md:px-1 lg:px-8 hover:bg-white">
                   <LogoutIcon className="w-6 text-blue-500" />
                   <div
                     className={`ml-5 text-blue-500 md:text-md ${
@@ -634,18 +634,18 @@ const TopicBar = ({ value }) => {
         <div
           className={`${getThemeBackgroundColor(
             theme.themeMode
-          )} top-[50vh] -translate-y-1/2 relative hidden md:block`}
+          )} top-[50vh] -translate-y-1/2 rounded-r-lg relative hidden md:block`}
         >
           <div
-            className={`flex items-center justify-center ${getThemeTextPrimaryColor(
+            className={`flex items-center h-[3vh] w-[2.5vh] rounded-r-lg justify-center ${getThemeTextPrimaryColor(
               theme.themeMode
             )}`}
             onClick={activatesidebar}
           >
             {sidebar ? (
-              <RiArrowDropLeftLine size={35} />
+              <RiArrowDropRightLine size={35}  />
             ) : (
-              <RiArrowDropRightLine size={35} />
+              <RiArrowDropLeftLine size={35} />
             )}
           </div>
 

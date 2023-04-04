@@ -7,12 +7,13 @@ import {
   setCurrentMonthAndYear,
 } from "../app/features/app/appSlice";
 import { FiLock } from "react-icons/fi";
+import { useState } from "react";
+import "../index.css"
 
 export default function App() {
   const app = useSelector((state) => state.app);
   const dispatch = useDispatch();
-
-  
+  const [minDate, setMinDate] = useState(new Date("2023-01-01"));// this minDate is our Course Starting day
 
   return (
     <>
@@ -22,8 +23,15 @@ export default function App() {
           dispatch(setCurrentCalendarDate(e));
         }}
         tileClassName={({ date }) => {
+          if (moment(date).isBefore(moment(minDate)) === true)// disable all the days, months, years before the minDate
+          return "disable-word react-calendar__tile--prev-month";
 
-          if (moment(date).isAfter(moment())===true && (moment(date).day()!==6 && moment(date).day()!==0)) return "disable-word";//will disable future dates in calender
+          if (
+            moment(date).isAfter(moment()) === true &&
+            moment(date).day() !== 6 &&
+            moment(date).day() !== 0
+          )
+            return "disable-word"; //will disable future dates in calender
           if (
             app.markedDates[moment(date).format("DD-MM-YYYY")] === "completed"
           ) {
@@ -46,8 +54,17 @@ export default function App() {
           }
         }}
         tileContent={({ date }) => {
-          if (moment(date).isAfter(moment())===true && (moment(date).day()!==6 && moment(date).day()!==0)) return <FiLock className="disable-word" />;
+          if (moment(date).isBefore(moment(minDate)) === true)
+            return <FiLock className="disable-word" />;
+          if (
+            moment(date).isAfter(moment()) === true &&
+            moment(date).day() !== 6 &&
+            moment(date).day() !== 0
+          )
+            return <FiLock className="disable-word" />;
         }}
+        minDate={minDate}// this will disable the previous arrow key before the minDate
+        showPreviousMonths={false}
         onActiveStartDateChange={({ activeStartDate }) => {
           //updating "currentMonthAndYear" state when calendar view is changed
           dispatch(

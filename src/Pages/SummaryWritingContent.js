@@ -133,6 +133,8 @@ const SummaryWritingContent = ({ isOpen }) => {
   const user = useSelector((state) => state.user);
   const app = useSelector((state) => state.app);
   const theme = useSelector((state) => state.theme);
+ const [text, setText] = useState("");
+ const [errorMessage, setErrorMessage] = useState("");
   const toggleWEEK = (index) => {
     setArticleNumber(1);
     setweeks(
@@ -147,6 +149,16 @@ const SummaryWritingContent = ({ isOpen }) => {
       })
     );
   };
+  function handleTextChange(event) {
+   const inputValue = event.target.value;
+    const wordCount = inputValue.trim().split(/\s+/).length;
+    if (wordCount <= 500) {
+      setText(inputValue);
+      setErrorMessage("");
+    } else {
+      setErrorMessage("Maximum word limit exceeded.");
+    }
+  }
 
   useEffect(() => {
     axios
@@ -225,9 +237,12 @@ const SummaryWritingContent = ({ isOpen }) => {
   };
 
   const handleSubmitSummary = (weeklySummaryId) => {
-    if (summaryTextRef.current.value === "") {
-      toastMessage("Summary Response is empty.");
+    const inputValue = summaryTextRef.current.value;
+    const wordCount = inputValue.trim().split(/\s+/).length;
+    if(wordCount<250){
+      toastMessage("Summary should be at least 250 words long");
       return;
+
     }
     setIsLoading(true);
     let bodyParameters = {
@@ -258,6 +273,15 @@ const SummaryWritingContent = ({ isOpen }) => {
       });
   };
   const handleUpdateSummary = (weeklySummaryId) => {
+    const inputValue = summaryTextRef.current.value;
+    const wordCount = inputValue.trim().split(/\s+/).length;
+    if(wordCount<250){
+      toastMessage("Summary should be at least 250 words long");
+      return;
+
+    }
+
+
     setIsLoading(true);
     let bodyParameters = {
       weeklySummaryId: weeklySummaryId,
@@ -458,7 +482,10 @@ const SummaryWritingContent = ({ isOpen }) => {
                 <textarea
                   autoFocus={true}
                   ref={summaryTextRef}
-                  placeholder="Write summary here..."
+                  value={text}
+                  onChange={handleTextChange}
+                  maxLength={5000}//  Maximum number of characters allowed in textarea
+                  placeholder="Your summary should lie in between 250-500 words "
                   className={`${getText(
                     theme.fontSize
                   )} w-full h-[50vh] my-6 p-4 rounded-md ${getThemeTextSecondaryColor(
@@ -467,6 +494,7 @@ const SummaryWritingContent = ({ isOpen }) => {
                     theme.themeMode
                   )} placeholder-black`}
                 ></textarea>
+                {errorMessage && <div className="text-red-500">{errorMessage}</div>}
 
                 <div className="flex justify-end">
                   <button

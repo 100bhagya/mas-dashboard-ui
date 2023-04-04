@@ -15,10 +15,12 @@ import {
   getThemeTextSecondaryColor,
   getThemeWhiteDarkBGColor,
 } from "../data/themesData";
+import toast, { Toaster } from 'react-hot-toast';
 const GroupDiscussion = (isOpen) => {
   const [rating, setRating] = useState();
   const user = useSelector((state) => state.user);
   const theme = useSelector((state) => state.theme);
+  const toastMessage = (message) => toast(message);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/api/task/task-rating?category=GD`, {
@@ -53,9 +55,13 @@ const GroupDiscussion = (isOpen) => {
           Authorization: "Bearer " + user.loginInfo.accessToken,
         },
         body: JSON.stringify(item),
-      });
+      }).then((res)=>{
+        toastMessage(`Rating submitted successfully for ${item.category} `);
 
-      let result = await response.json();
+      }).catch((res)=>{
+        toastMessage(`Something went wrong `);;
+
+      })
     } else {
       var updateresponse = await fetch(`${API_BASE_URL}/api/task/task-rating`, {
         method: "PUT",
@@ -65,8 +71,13 @@ const GroupDiscussion = (isOpen) => {
           Authorization: "Bearer " + user.loginInfo.accessToken,
         },
         body: JSON.stringify(item),
-      });
-      let result = await updateresponse.json();
+      }).then((res)=>{
+        toastMessage(`Rating updated successfully for ${item.category} `);
+
+      }).catch((res)=>{
+        toastMessage(`Something went wrong `);;
+
+      })
     }
   };
   return (
@@ -94,7 +105,7 @@ const GroupDiscussion = (isOpen) => {
               Group Discussion
             </div>
           </div>
-          <div className="flex mt-6 gap-8 md:gap-12">
+          <div className="flex gap-8 mt-6 md:gap-12">
             <p
               className={`w-[80%] hidden md:block ${getThemeWhiteDarkBGColor(
                 theme.themeMode
@@ -257,6 +268,7 @@ const GroupDiscussion = (isOpen) => {
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };
