@@ -469,7 +469,7 @@ const WordOfDay = (isOpen) => {
               <NoDailyWords loading={loading} />
             )}
 
-            <div className="relative ml-auto mr-0 translate-x-1/2 basis-1/5 lg:ml-28 right-1/2 md:translate-x-0 md:right-0 ">
+            <div className="relative ml-auto mr-0 translate-x-1/2 basis-1/5 lg:ml-28 right-[59%] md:translate-x-0 md:right-0 ">
               {/* <div inline-datepicker data-date="02/25/2022"></div> */}
               <Calendar />
               {/* {dailyWordsId ? (
