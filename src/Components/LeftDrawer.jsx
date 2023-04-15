@@ -4,7 +4,7 @@ export default function LeftDrawer({ children, isOpen, setIsOpen }) {
   return (
     <div
       className={
-        "fixed overflow-auto z-10 bg-opacity-25 inset-0 transform ease-in-out h-full" +
+        "fixed overflow-auto z-20 bg-opacity-25 inset-0 transform ease-in-out h-full" +
         (isOpen
           ? " transition-opacity opacity-100 duration-500 -translate-x-0  "
           : " transition-all delay-500 opacity-0 -translate-x-full  ")
@@ -16,7 +16,7 @@ export default function LeftDrawer({ children, isOpen, setIsOpen }) {
           (isOpen ? " -translate-x-0 " : " -translate-x-full ")
         }
       >
-        <div className="bg-blue-100 md:bg-white relative flex flex-col space-y-6 overflow-y-scroll h-full">
+        <div className="relative flex flex-col h-full space-y-6 overflow-y-scroll bg-blue-100 md:bg-white">
           {children}
         </div>
       </div>

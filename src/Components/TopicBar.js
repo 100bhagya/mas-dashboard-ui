@@ -35,7 +35,7 @@ import {
   RiArrowDropUpLine,
   RiArrowDropRightLine,
 } from "react-icons/ri";
-const TopicBar = ({ value }) => {
+const TopicBar = (props) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const app = useSelector((state) => state.app);
@@ -72,6 +72,7 @@ const TopicBar = ({ value }) => {
   // };
   const activatesidebar = () => {
     setSidebar(!sidebar);
+    props.onSidebarData(!sidebar);
   };
   return (
     <div
@@ -256,6 +257,19 @@ const TopicBar = ({ value }) => {
                       Untimed Quizzes
                     </div>
                   </Link>
+                  <a href="/" target="_blank">
+                    <div
+                      className={`text-sm  text-left px-2 md:px-1  lg:pl-8 py-2 rounded-md ${
+                        location.pathname === "/"
+                          ? "bg-[#2255B8] text-white"
+                          : `${getThemeTextPrimaryColor(
+                              theme.themeMode
+                            )} ${getThemeHoverPrimaryBgColor(theme.themeMode)}`
+                      }`}
+                    >
+                      SEP
+                    </div>
+                  </a>
                   <div className="">
                     <div
                       className={`flex px-2 md:px-1 lg:pl-8 pr-4 gap-2 py-2 rounded-md ${getThemeHoverPrimaryBgColor(

@@ -8,8 +8,9 @@ import {
   getThemeTextColor,
   getThemeWhiteDarkBGColor,
 } from "../data/themesData";
-const Navbar = ({ children, rightControl }) => {
+const Navbar = ({ children, rightControl  }) => {
   const [isOpen, setIsOpen] = useState(false);
+
   const theme = useSelector((state) => state.theme);
   return (
     <div className="md:hidden">
@@ -22,6 +23,7 @@ const Navbar = ({ children, rightControl }) => {
           size={30}
           onClick={() => {
             setIsOpen((prev) => !prev);
+           
           }}
         />
         <div
