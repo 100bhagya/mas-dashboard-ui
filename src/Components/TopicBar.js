@@ -524,6 +524,7 @@ const TopicBar = ({ value }) => {
               <PencilAltIcon
                 className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
               />
+              <a  href="http://myanalyticsschool.ezexam.in/login"  target="_blank">
               <div
                 className={`ml-5 ${getThemeTextPrimaryColor(
                   theme.themeMode
@@ -531,6 +532,8 @@ const TopicBar = ({ value }) => {
               >
                 Exams
               </div>
+              </a>
+             
             </div>
           </div>
           <div className="py-2 ">
@@ -542,6 +545,7 @@ const TopicBar = ({ value }) => {
               <DocumentTextIcon
                 className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
               />
+              <a href="https://learn.myanalyticsschool.com/"  target="_blank">
               <div
                 className={`ml-5 ${getThemeTextPrimaryColor(
                   theme.themeMode
@@ -549,6 +553,9 @@ const TopicBar = ({ value }) => {
               >
                 Learn
               </div>
+
+              </a>
+             
             </div>
           </div>
           <div className="py-2 ">
@@ -561,6 +568,7 @@ const TopicBar = ({ value }) => {
                 size={20}
                 className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
               />
+              <a href="https://discord.gg/yUUZyvWyjG" target="_blank" >
               <div
                 className={`ml-5 ${getThemeTextPrimaryColor(
                   theme.themeMode
@@ -568,6 +576,9 @@ const TopicBar = ({ value }) => {
               >
                 Discord
               </div>
+
+              </a>
+             
             </div>
           </div>
           <div className="py-2 ">
