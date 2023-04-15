@@ -257,12 +257,10 @@ const TopicBar = (props) => {
                       Untimed Quizzes
                     </div>
                   </Link>
-                  <a href="/" target="_blank">
+                  <a href="https://docs.google.com/forms/d/1arZxnI7C6pK3XWHrn0M2Ev1DBJQjGFWU5RCU3SCbsLE/edit" target="_blank">
                     <div
                       className={`text-sm  text-left px-2 md:px-1  lg:pl-8 py-2 rounded-md ${
-                        location.pathname === "/"
-                          ? "bg-[#2255B8] text-white"
-                          : `${getThemeTextPrimaryColor(
+                       `${getThemeTextPrimaryColor(
                               theme.themeMode
                             )} ${getThemeHoverPrimaryBgColor(theme.themeMode)}`
                       }`}
