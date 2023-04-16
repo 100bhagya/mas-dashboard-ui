@@ -10,41 +10,41 @@ import {
   getThemeLightTextColor,
   getThemeTextSecondaryColor,
 } from "../data/themesData";
-import Data  from "../data/roadMap";
+import Data from "../data/roadMap";
 import Rectangle from "../images/Rectangle 52.png";
-import "../index.css"
-
+import "../index.css";
 
 function FAQ({ faq, index, toggleFAQ }) {
-    return (
-      <div
-        className={"faq " + (faq.open ? "open" : "")}
-        key={index}
-        onClick={() => toggleFAQ(index)}
-      >
-        <div className="text-lg font-semibold faq-question font">
-          {faq.question}
-        </div>
-        <div className="text-sm faq-answer font">
-          <div className="mt-2 text-lg font-normal">{faq.Status}</div>
-          <div className="mt-10 mb-3">
-            {faq.answer.map((post) => {
-              return (
-                <div className="flex">
-                  <img
-                    src={Rectangle}
-                    alt="rectangle"
-                    className="relative w-4 h-1 my-5 mr-7 left-3 bottom-3 rounded-xl"
-                  />
-                  <div className="">{post.role}</div>
-                </div>
-              );
-            })}
-          </div>
+  return (
+    <div
+      className={"faq " + (faq.open ? "open" : "")}
+      key={index}
+      onClick={() => toggleFAQ(index)}
+    >
+      <div className="text-lg font-semibold faq-question font">
+        {faq.question}
+      </div>
+      <div className="text-sm faq-answer font">
+        <div className="mt-2 text-lg font-normal">{faq.Status}</div>
+        <div className="mt-10 mb-3">
+          {faq.answer.map((post) => {
+            return (
+              <div className="flex justify-between gap-1 p-1 ">
+                <img
+                  src={Rectangle}
+                  alt="rectangle"
+                  className="relative w-4 h-1 my-5 mr-7 left-3 bottom-3 rounded-xl"
+                />
+                <div className="w-[60%]">{post.role}</div>
+                <div className="flex-end ml-10 w-[40%] text-rose-400">{post.date}</div>
+              </div>
+            );
+          })}
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
 const RoadMap = (isOpen) => {
   const theme = useSelector((state) => state.theme);
   const app = useSelector((state) => state.app);
@@ -88,21 +88,17 @@ const RoadMap = (isOpen) => {
               Weekly Study Plan
             </div>
           </div>
-     
-       
-        <div className="pt-1 pb-16 mt-20 lg:pb-36 bg-back">
-       
-        <div className="faqs lg:w-[58%] md:w-[90%] w-full relative lg:left-[21%] md:left-[5%] bg-back lg:bg-white lg:py-10 lg:px-20 rounded-3xl">
-          {faqs.map((faq, i) => (
-            <FAQ faq={faq} index={i} toggleFAQ={toggleFAQ} />
-          ))}
-         
+
+          <div className="pt-1 pb-16 mt-20 lg:pb-36 bg-back">
+            <div className="faqs lg:w-[65%] md:w-[90%] w-full relative lg:left-[21%] md:left-[5%] bg-back lg:bg-white lg:py-10 lg:px-20 rounded-3xl">
+              {faqs.map((faq, i) => (
+                <FAQ faq={faq} index={i} toggleFAQ={toggleFAQ} />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-      </div>
-        </div>
-      </div>
-    
+    </div>
   );
 };
 
