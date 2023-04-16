@@ -14,19 +14,27 @@ import Data from "../data/roadMap";
 import Rectangle from "../images/Rectangle 52.png";
 import "../index.css";
 
-function FAQ({ faq, index, toggleFAQ }) {
+function FAQ({ faq, index, toggleFAQ ,theme}) {
   return (
     <div
-      className={"faq " + (faq.open ? "open" : "")}
+      className={"faq " + (faq.open ? "open" : "")+` ${getThemeBackgroundColor(theme.themeMode)} ${getThemeTextSecondaryColor(
+        theme.themeMode
+      )} ${getThemeBorderColor(
+        theme.themeMode
+      )} border `}
       key={index}
       onClick={() => toggleFAQ(index)}
     >
-      <div className="text-lg font-semibold faq-question font">
+      <div className={`text-lg font-semibold   rounded-2xl faq-question font ${getThemeBackgroundColor(theme.themeMode)} ${getThemeTextSecondaryColor(
+                  theme.themeMode
+                )} `}>
         {faq.question}
       </div>
-      <div className="text-sm faq-answer font">
-        <div className="mt-2 text-lg font-normal">{faq.Status}</div>
-        <div className="flex-col justify-between gap-1 p-1 mt-10 mb-3 ">
+      <div className={`text-sm faq-answer  ${getThemeBackgroundColor(theme.themeMode)} `}>
+        <div className={`mt-2 text-lg ${getThemeBorderColor(theme.themeMode)} font-normal ${getThemeTextSecondaryColor(
+                  theme.themeMode
+                )}  ${getThemeBackgroundColor(theme.themeMode)}`}>{faq.Status}</div> 
+        <div className={`flex-col justify-between ${getThemeBackgroundColor(theme.themeMode)} gap-1 p-1 mt-5 mb-3 `}>
           {faq.answer.map((post) => {
             return (
               <div className="flex ">
@@ -35,8 +43,10 @@ function FAQ({ faq, index, toggleFAQ }) {
                   alt="rectangle"
                   className="relative w-4 h-1 my-5 mr-7 left-3 bottom-3 rounded-xl"
                 />
-                <div className="w-[70%]">{post.role}</div>
-                <div className="flex-end ml-10 w-[25%] text-rose-400">{post.date}</div>
+                <div className={`w-[70%] ${getThemeTextSecondaryColor(
+                  theme.themeMode
+                )}`}>{post.role}</div>
+                <div className={`flex-end ml-10 w-[25%] text-rose-400  `}>{post.date}</div>
               </div>
             );
           })}
@@ -89,10 +99,10 @@ const RoadMap = (isOpen) => {
             </div>
           </div>
 
-          <div className="pt-1 pb-16 mt-20 lg:pb-36 bg-back">
-            <div className="faqs lg:w-[75%] md:w-[90%] w-full relative lg:left-[15%] md:left-[5%] bg-back lg:bg-white lg:py-16 lg:px-20 rounded-3xl">
+          <div className= {`pt-1 pb-16 mt-20 lg:pb-36 bg-back  `}>
+            <div className={`faqs lg:w-[75%] p-[10%] lg:p-[0%] md:w-[90%] w-full relative lg:left-[15%] md:left-[5%] bg-back  lg:py-16 lg:px-20 rounded-3xl  ${getThemeBackgroundColor(theme.themeMode)} `}>
               {faqs.map((faq, i) => (
-                <FAQ faq={faq} index={i} toggleFAQ={toggleFAQ} />
+                <FAQ faq={faq} index={i} toggleFAQ={toggleFAQ} theme={theme} />
               ))}
             </div>
           </div>
