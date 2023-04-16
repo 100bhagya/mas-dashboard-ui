@@ -593,6 +593,7 @@ const TopicBar = (props) => {
              
             </div>
           </div>
+          <Link to="/roadmap">
           <div className="py-2 ">
             <div
               className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
@@ -611,6 +612,7 @@ const TopicBar = (props) => {
               </div>
             </div>
           </div>
+          </Link>
 
           {user.loginInfo.username ? (
             <div className="py-2 cursor-pointer " onClick={Logout}>
