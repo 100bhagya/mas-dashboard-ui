@@ -257,13 +257,14 @@ const TopicBar = (props) => {
                       Untimed Quizzes
                     </div>
                   </Link>
-                  <a href="https://docs.google.com/forms/d/1arZxnI7C6pK3XWHrn0M2Ev1DBJQjGFWU5RCU3SCbsLE/edit" target="_blank">
+                  <a
+                    href="https://docs.google.com/forms/d/1arZxnI7C6pK3XWHrn0M2Ev1DBJQjGFWU5RCU3SCbsLE/edit"
+                    target="_blank"
+                  >
                     <div
-                      className={`text-sm  text-left px-2 md:px-1  lg:pl-8 py-2 rounded-md ${
-                       `${getThemeTextPrimaryColor(
-                              theme.themeMode
-                            )} ${getThemeHoverPrimaryBgColor(theme.themeMode)}`
-                      }`}
+                      className={`text-sm  text-left px-2 md:px-1  lg:pl-8 py-2 rounded-md ${`${getThemeTextPrimaryColor(
+                        theme.themeMode
+                      )} ${getThemeHoverPrimaryBgColor(theme.themeMode)}`}`}
                     >
                       SEP
                     </div>
@@ -526,28 +527,28 @@ const TopicBar = (props) => {
               </div>
             </div>
           </Link>
-
-          <div className="py-2 ">
-            <div
-              className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
-                theme.themeMode
-              )} cursor-pointer`}
-            >
-              <PencilAltIcon
-                className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
-              />
-              <a  href="http://myanalyticsschool.ezexam.in/login"  target="_blank">
+          <a href="http://myanalyticsschool.ezexam.in/login" target="_blank">
+            <div className="py-2 ">
               <div
-                className={`ml-5 ${getThemeTextPrimaryColor(
+                className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
                   theme.themeMode
-                )} md:text-md ${sidebar ? "hidden" : ""}`}
+                )} cursor-pointer`}
               >
-                Exams
+                <PencilAltIcon
+                  className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
+                />
+
+                <div
+                  className={`ml-5 ${getThemeTextPrimaryColor(
+                    theme.themeMode
+                  )} md:text-md ${sidebar ? "hidden" : ""}`}
+                >
+                  Exams
+                </div>
               </div>
-              </a>
-             
             </div>
-          </div>
+          </a>
+          <a href="https://learn.myanalyticsschool.com/" target="_blank">
           <div className="py-2 ">
             <div
               className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
@@ -557,19 +558,19 @@ const TopicBar = (props) => {
               <DocumentTextIcon
                 className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
               />
-              <a href="https://learn.myanalyticsschool.com/"  target="_blank">
-              <div
-                className={`ml-5 ${getThemeTextPrimaryColor(
-                  theme.themeMode
-                )} md:text-md ${sidebar ? "hidden" : ""}`}
-              >
-                Learn
-              </div>
-
-              </a>
+             
+                <div
+                  className={`ml-5 ${getThemeTextPrimaryColor(
+                    theme.themeMode
+                  )} md:text-md ${sidebar ? "hidden" : ""}`}
+                >
+                  Learn
+                </div>
              
             </div>
           </div>
+          </a>
+          <a href="https://discord.gg/yUUZyvWyjG" target="_blank">
           <div className="py-2 ">
             <div
               className={`flex items-center py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
@@ -580,38 +581,37 @@ const TopicBar = (props) => {
                 size={20}
                 className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
               />
-              <a href="https://discord.gg/yUUZyvWyjG" target="_blank" >
-              <div
-                className={`ml-5 ${getThemeTextPrimaryColor(
-                  theme.themeMode
-                )} md:text-md ${sidebar ? "hidden" : ""}`}
-              >
-                Discord
-              </div>
-
-              </a>
+             
+                <div
+                  className={`ml-5 ${getThemeTextPrimaryColor(
+                    theme.themeMode
+                  )} md:text-md ${sidebar ? "hidden" : ""}`}
+                >
+                  Discord
+                </div>
              
             </div>
           </div>
+          </a>
           <Link to="/roadmap">
-          <div className="py-2 ">
-            <div
-              className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
-                theme.themeMode
-              )} cursor-pointer`}
-            >
-              <MapIcon
-                className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
-              />
+            <div className="py-2 ">
               <div
-                className={`ml-5 ${getThemeTextPrimaryColor(
+                className={`flex py-2  md:px-2 lg:px-8 rounded-lg ${getThemeHoverPrimaryBgColor(
                   theme.themeMode
-                )} md:text-md ${sidebar ? "hidden" : ""}`}
+                )} cursor-pointer`}
               >
-                Roadmap
+                <MapIcon
+                  className={`w-6 ${getThemeTextPrimaryColor(theme.themeMode)}`}
+                />
+                <div
+                  className={`ml-5 ${getThemeTextPrimaryColor(
+                    theme.themeMode
+                  )} md:text-md ${sidebar ? "hidden" : ""}`}
+                >
+                  Roadmap
+                </div>
               </div>
             </div>
-          </div>
           </Link>
 
           {user.loginInfo.username ? (
@@ -668,7 +668,7 @@ const TopicBar = (props) => {
             onClick={activatesidebar}
           >
             {sidebar ? (
-              <RiArrowDropRightLine size={35}  />
+              <RiArrowDropRightLine size={35} />
             ) : (
               <RiArrowDropLeftLine size={35} />
             )}
