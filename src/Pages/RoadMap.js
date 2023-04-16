@@ -26,17 +26,17 @@ function FAQ({ faq, index, toggleFAQ }) {
       </div>
       <div className="text-sm faq-answer font">
         <div className="mt-2 text-lg font-normal">{faq.Status}</div>
-        <div className="mt-10 mb-3">
+        <div className="flex-col justify-between gap-1 p-1 mt-10 mb-3 ">
           {faq.answer.map((post) => {
             return (
-              <div className="flex justify-between gap-1 p-1 ">
+              <div className="flex ">
                 <img
                   src={Rectangle}
                   alt="rectangle"
                   className="relative w-4 h-1 my-5 mr-7 left-3 bottom-3 rounded-xl"
                 />
-                <div className="w-[60%]">{post.role}</div>
-                <div className="flex-end ml-10 w-[40%] text-rose-400">{post.date}</div>
+                <div className="w-[70%]">{post.role}</div>
+                <div className="flex-end ml-10 w-[25%] text-rose-400">{post.date}</div>
               </div>
             );
           })}
@@ -90,7 +90,7 @@ const RoadMap = (isOpen) => {
           </div>
 
           <div className="pt-1 pb-16 mt-20 lg:pb-36 bg-back">
-            <div className="faqs lg:w-[65%] md:w-[90%] w-full relative lg:left-[21%] md:left-[5%] bg-back lg:bg-white lg:py-10 lg:px-20 rounded-3xl">
+            <div className="faqs lg:w-[75%] md:w-[90%] w-full relative lg:left-[15%] md:left-[5%] bg-back lg:bg-white lg:py-16 lg:px-20 rounded-3xl">
               {faqs.map((faq, i) => (
                 <FAQ faq={faq} index={i} toggleFAQ={toggleFAQ} />
               ))}
