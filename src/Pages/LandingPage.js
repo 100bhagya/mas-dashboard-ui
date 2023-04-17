@@ -87,6 +87,7 @@ const LandingPage = (isOpen) => {
   var rank = leaderboardData.findIndex(
     (obj) => obj.rollNumber === user.loginInfo.rollNumber
   );
+ 
 
   return (
     <div className="flex flex-col">
@@ -306,13 +307,14 @@ const LandingPage = (isOpen) => {
               ) : (
                 ""
               )}
+             
 
               <div
                 id="performanceCard"
                 className={
-                  `grid md:grid-cols-5 grid-cols-2 gap-4 md:p-10 md:shadow-xl md:rounded-2xl ${getThemeBackgroundColor(
+                  `grid md:grid-cols-5 grid-cols-2 gap-4  md:p-10 md:shadow-xl md:rounded-2xl ${getThemeBackgroundColor(
                     theme.themeMode
-                  )}` + (isBeforeMay152023 ? "  blur-md" : "")
+                  )}` + (isBeforeMay152023 ? "  blur-md" : "") +  (testData.length===0 ? " md:p-[12vh] p-[12vh]  ":"" )
                 }
               >
                 {testData
@@ -324,7 +326,7 @@ const LandingPage = (isOpen) => {
                     return (
                       <div className="shadow-xl rounded-2xl md:shadow-none md:rounded-none">
                         <Tooltip text={test.testName}>
-                          <div className="flex flex-col items-center justify-center">
+                          <div className="flex flex-col items-center justify-center ">
                             {/* <div className="pb-2 text-xl border-b-2 border-gray-500 md:text-2xl w-fit">
                             {test.examName}
                           </div> */}
@@ -366,7 +368,7 @@ const LandingPage = (isOpen) => {
                   Performance History
                 </div>
                 {isBeforeMay152023 ? (
-                <div className="relative top-[14vh] z-10">
+                <div className="relative top-[20vh] md:top-[13vh] z-10">
                   <div className="text-center">
                     <div
                       className={
@@ -403,13 +405,14 @@ const LandingPage = (isOpen) => {
                 >
                   Course completion
                   {isBeforeMay152023 ? (
-                <div className="relative z-10 top-[14vh]">
+                <div className={`relative z-10 top-[14vh]`+(Array.isArray(courseData) &&
+                courseData.length==0? " top-[6vh]":"" )}>
                   <div className="text-center">
                     <div
                       className={
                         ` ${getThemeTextSecondaryColor(theme.themeMode)} my-5` +
                         "mb-4 text-lg md:text-sm font-bold"
-                      }
+                        }
                     >
                       The analytics for Course Completion will be
                       generated as the course progresses
