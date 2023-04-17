@@ -475,7 +475,7 @@ const Data = [
     //   question: "Week 19 ",
     //   answer: [
     //     {
-    //       role: "Linear Arrangement Sectional Test ",
+    //       role: "Sequence & Series",
     //       date: "26 Jun",
     //     },
     //     {
