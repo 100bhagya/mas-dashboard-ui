@@ -10,18 +10,18 @@ const TableContent = ({ name }) => {
   const theme = useSelector((state) => state.theme);
 
   const buddy = [
-    { id: 1, name: "Dog" },
-    { id: 2, name: "Bird" },
-    { id: 3, name: "Cat" },
-    { id: 4, name: "Mouse" },
-    { id: 6, name: "Horse" },
-    { id: 7, name: "Horse" },
-    { id: 8, name: "Horse" },
-    { id: 9, name: "Horse" },
+    // { id: 1, name: "Dog" },
+    // { id: 2, name: "Bird" },
+    // { id: 3, name: "Cat" },
+    // { id: 4, name: "Mouse" },
+    // { id: 6, name: "Horse" },
+    // { id: 7, name: "Horse" },
+    // { id: 8, name: "Horse" },
+    // { id: 9, name: "Horse" },
   ];
   const mentor = [
-    { id: 1, name: "Dog" },
-    { id: 2, name: "Bird" },
+    // { id: 1, name: "Dog" },
+    // { id: 2, name: "Bird" },
   ];
 
   if (name === "buddy")
@@ -43,7 +43,7 @@ const TableContent = ({ name }) => {
         </div>
 
         <div className="px-6 py-4">
-          <table className="table-auto w-full  py-2 px-4">
+          <table className="w-full px-4 py-2 table-auto">
             <tbody className="px-2 py-4">
               <tr
                 className={`${getThemeTextSecondaryColor(
@@ -94,7 +94,7 @@ const TableContent = ({ name }) => {
         </div>
 
         <div className="px-6 py-4">
-          <table className="table-auto w-full  py-2 px-4">
+          <table className="w-full px-4 py-2 table-auto">
             <tbody className="px-2 py-4">
               <tr
                 className={`${getThemeTextSecondaryColor(
