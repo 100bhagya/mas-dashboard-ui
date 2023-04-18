@@ -54,6 +54,7 @@ const Graph = ({ testData }) => {
   //     });
   // }, [user]);
   return (
+    
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart
         data={data}

@@ -13,7 +13,7 @@ import "../index.css"
 export default function App() {
   const app = useSelector((state) => state.app);
   const dispatch = useDispatch();
-  const [minDate, setMinDate] = useState(new Date("2023-01-01"));// this minDate is our Course Starting day
+  const [minDate, setMinDate] = useState(new Date("2023-04-16"));// this minDate is our Course Starting day
 
   return (
     <>

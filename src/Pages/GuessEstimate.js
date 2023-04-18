@@ -169,9 +169,9 @@ const GuessEstimate = (isOpen) => {
                 Practice Mode
               </span>
               <img src={Artboard1} className="w-48" />
-              <div className={`${getThemeLightTextColor(theme.themeMode)}`}>
+              {/* <div className={`${getThemeLightTextColor(theme.themeMode)}`}>
                 Lorem ipsum dolor sit amet consectetur adipisicing.
-              </div>
+              </div> */}
             </div>
             <div
               className={`basis-1/2  max-h-[400px] shadow-xl rounded-xl p-6 flex flex-col gap-6 justify-center items-center ${getThemeWhiteDarkBGColor(
@@ -186,9 +186,9 @@ const GuessEstimate = (isOpen) => {
                 Test Mode
               </span>
               <img src={Artboard2} className="w-48" />
-              <div className={`${getThemeLightTextColor(theme.themeMode)}`}>
+              {/* <div className={`${getThemeLightTextColor(theme.themeMode)}`}>
                 Lorem ipsum dolor sit amet consectetur adipisicing.
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="flex flex-col gap-6">
@@ -199,12 +199,12 @@ const GuessEstimate = (isOpen) => {
             >
               Guess Estimate Practice
             </div>
-            <div
+            {/* <div
               className={`${getThemeLightTextColor(theme.themeMode)} text-md`}
             >
               Lörem ipsum mansskatt postform, förutom genusbudgetering pretrede.
               Lunchdisco
-            </div>
+            </div> */}
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <TableContent name={"buddy"} />
               <div className="flex flex-col gap-4">
@@ -221,14 +221,14 @@ const GuessEstimate = (isOpen) => {
                   >
                     Self Evaluation
                   </div>
-                  <div
+                  {/* <div
                     className={`${getThemeLightTextColor(
                       theme.themeMode
                     )} text-center`}
                   >
                     Lörem ipsum mansskatt postform, förutom genusbudgetering
                     pretrede
-                  </div>
+                  </div> */}
                   <StarsRating
                     value={rating}
                     count={5}

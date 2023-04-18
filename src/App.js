@@ -26,6 +26,7 @@ import ResetPassword from "./Pages/ResetPassword";
 import SQL from "./Pages/SQL";
 import QuizDetail from "./Pages/QuizDetail";
 import ProtectedRoutes from "./Components/PrivateRoutes";
+import RoadMap from "./Pages/RoadMap.js";
 import Settings from "./Pages/Settings";
 import { useSelector } from "react-redux";
 import NonTechArticles from "./Pages/NonTechArticles";
@@ -62,6 +63,7 @@ function App() {
             <Route path="quant" element={<Quant />} />
             <Route path="lrdi" element={<LRandDI />} />
             <Route path="verbal" element={<Verbal />} />
+            <Route path="roadmap" element={<RoadMap />} />
             <Route path="casestudy" element={<CaseStudy />} />
             <Route path="guessestimate" element={<GuessEstimate />} />
             <Route path="puzzles" element={<Puzzles />} />
