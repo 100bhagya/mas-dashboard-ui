@@ -184,6 +184,7 @@ const Quant = (isOpen) => {
                 theme.themeMode
               )}`}
             >
+               <a href="https://learn.myanalyticsschool.com/" target="_blank">
               <span
                 className={`text-center block ${getThemeTextSecondaryColor(
                   theme.themeMode
@@ -191,7 +192,10 @@ const Quant = (isOpen) => {
               >
                 Practice Mode
               </span>
+              </a>
+              <a href="https://learn.myanalyticsschool.com/" target="_blank">
               <img src={Artboard1} className="w-48" />
+              </a>
               {/* <div className={`${getThemeLightTextColor(theme.themeMode)}`}>
                 Lorem ipsum dolor sit amet consectetur adipisicing.
               </div> */}
@@ -201,6 +205,8 @@ const Quant = (isOpen) => {
                 theme.themeMode
               )}`}
             >
+               <a href="http://myanalyticsschool.ezexam.in/login" target="_blank">
+              
               <span
                 className={`text-center block ${getThemeTextSecondaryColor(
                   theme.themeMode
@@ -208,7 +214,10 @@ const Quant = (isOpen) => {
               >
                 Test Mode
               </span>
+              </a>
+              <a href="http://myanalyticsschool.ezexam.in/login" target="_blank">
               <img src={Artboard2} className="w-48" />
+              </a>
               {/* <div className={`${getThemeLightTextColor(theme.themeMode)}`}>
                 Lorem ipsum dolor sit amet consectetur adipisicing.
               </div> */}

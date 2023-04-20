@@ -39,7 +39,7 @@ const MLAndPython = (isOpen) => {
           </div>
 
           <div className="flex flex-col">
-            <div className="flex flex-col md:flex-row justify-end md:justify-start my-2 gap-2">
+            <div className="flex flex-col justify-end gap-2 my-2 md:flex-row md:justify-start">
               <div className="md:hidden">
                 <img className="" alt="" src={Artboard} />
               </div>
@@ -92,7 +92,9 @@ const MLAndPython = (isOpen) => {
                 </p>
               </p>
               <div className="hidden md:block min-w-[50%]">
+              <a href="https://learn.myanalyticsschool.com/" target="_blank">
                 <img className="" alt="" src={Artboard} />
+                </a>
               </div>
             </div>
           </div>
