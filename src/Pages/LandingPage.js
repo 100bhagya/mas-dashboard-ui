@@ -30,7 +30,7 @@ const LandingPage = (isOpen) => {
   const theme = useSelector((state) => state.theme);
   const dispatch = useDispatch();
   const [testData, setTestData] = useState([]);
-  const [isRowVisible, setIsRowVisible] = useState(true);
+ 
   const app = useSelector((state) => state.app);
   const [leaderboard, setLeaderboard] = useState(false);
   const [leaderboardData, setLeaderboardData] = useState([]);
@@ -165,8 +165,8 @@ const LandingPage = (isOpen) => {
                     </thead>
                     <tbody>
                       {leaderboardData.slice(0, 10).map((student, i) => {
-                        if (student.rank === rank  && isRowVisible) {
-                          setIsRowVisible(false); // Set the state to false after rendering the row
+                        if (student.rank === rank  ) {
+                        
                           return (
                             <tr
                               key={i}
@@ -332,7 +332,7 @@ const LandingPage = (isOpen) => {
               <div
                 id="performanceCard"
                 className={
-                  `grid md:grid-cols-5 grid-cols-2 gap-5  md:p-10 overflow-x-scroll md:shadow-xl md:rounded-2xl   ${getThemeBackgroundColor(
+                  `grid md:grid-cols-5 grid-cols-2 gap-4  md:p-10 overflow-x-scroll md:shadow-xl md:rounded-2xl   ${getThemeBackgroundColor(
                     theme.themeMode
                   )} ` +
                   (isBeforeMay152023 ? "  blur-md" : "") +
