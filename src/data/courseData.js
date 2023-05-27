@@ -3,9 +3,9 @@ export const COURSE_DEADLINE = {
     startDate: "2023-03-03",
     endDate: "2023-08-15",
   },
-  "MAS2022 Quantitative Aptitude": {
-    startDate: "2023-03-03",
-    endDate: "2023-08-15",
+  "MAS 101 Quantitative Aptitude": {
+    startDate: "2023-05-15",
+    endDate: "2023-08-12",
   },
   varc: {
     startDate: "2023-03-03",
@@ -15,9 +15,9 @@ export const COURSE_DEADLINE = {
     startDate: "2023-03-03",
     endDate: "2023-08-15",
   },
-  sql: {
-    startDate: "2023-03-03",
-    endDate: "2023-08-15",
+  "MAS101 SQL": {
+    startDate: "2023-04-17",
+    endDate: "2023-04-30",
   },
   python: {
     startDate: "2023-03-03",

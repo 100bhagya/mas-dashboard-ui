@@ -27,7 +27,7 @@ const Graph = ({ testData }) => {
         testDate: testData[i].testDate.substr(0, 10),
       });
     }
-    console.log(data);
+    // console.log(data);
     setData(data);
   }, [testData]);
   // useEffect(() => {

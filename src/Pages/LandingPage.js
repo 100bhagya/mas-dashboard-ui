@@ -30,20 +30,17 @@ const LandingPage = (isOpen) => {
   const theme = useSelector((state) => state.theme);
   const dispatch = useDispatch();
   const [testData, setTestData] = useState([]);
+  const [isRowVisible, setIsRowVisible] = useState(true);
   const app = useSelector((state) => state.app);
   const [leaderboard, setLeaderboard] = useState(false);
   const [leaderboardData, setLeaderboardData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentDate, setCurrentDate] = useState(new Date());
-  
-  
+  const [rank, setRank] = useState(null);
 
-  const isBeforeMay152023 = currentDate < new Date("2023-05-15");
+  const isBeforeMay152023 = currentDate < new Date("2023-04-15");
 
-   // Callback function to receive data from child component
-  
-
-
+  // Callback function to receive data from child component
 
   const activateLeaderboard = () => {
     setLeaderboard(!leaderboard);
@@ -71,6 +68,7 @@ const LandingPage = (isOpen) => {
       .get(`${API_BASE_URL}/api/leaderboard/data`, config)
       .then((res) => {
         setLeaderboardData(res.data);
+        console.log(leaderboardData);
 
         setIsLoading(false);
       })
@@ -80,18 +78,28 @@ const LandingPage = (isOpen) => {
       });
   }, [user, dispatch]);
 
-  
   useEffect(() => {
     setTestData([...app.studentData]);
   }, [app.studentData]);
-  var rank = leaderboardData.findIndex(
-    (obj) => obj.rollNumber === user.loginInfo.rollNumber
-  );
- 
+  // var rank = leaderboardData.findIndex(
+  //   (obj) => obj.rollNumber === user.loginInfo.rollNumber
+  // );
+
+  const rollNumberToFind = user?.loginInfo?.rollNumber;
+
+  useEffect(() => {
+    const student = leaderboardData.find(
+      (item) => item.rollNumber === rollNumberToFind
+    );
+    setRank(student ? student.rank : "not-found");
+    console.log(leaderboardData);
+  }, [rollNumberToFind, leaderboardData.length]);
+
+  console.log(rollNumberToFind, rank);
 
   return (
     <div className="flex flex-col">
-      <Navbar rightControl={setIsLeaderboardOpen}  >
+      <Navbar rightControl={setIsLeaderboardOpen}>
         <AiFillTrophy size={35} />
       </Navbar>
       <LeftDrawer>
@@ -123,10 +131,9 @@ const LandingPage = (isOpen) => {
                         ` ${getThemeTextSecondaryColor(theme.themeMode)} ` +
                         " text-lg md:text-sm font-bold relative z-30 top-[34vh] left-5 "
                       }
-                    
                     >
-                      The analytics for Leaderboard will be
-                      generated as the course progresses
+                      The analytics for Leaderboard will be generated as the
+                      course progresses
                     </div>
                     <div className="text-sm text-gray-500"></div>
                   </div>
@@ -134,7 +141,6 @@ const LandingPage = (isOpen) => {
               ) : (
                 ""
               )}
-              
 
               <div className={"p-2" + (isBeforeMay152023 ? " blur-md" : "")}>
                 {isBeforeMay152023 ? (
@@ -158,44 +164,59 @@ const LandingPage = (isOpen) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {leaderboardData.slice(0, 10).map((student, i) =>
-                        student.rank === rank + 1 ? (
-                          <tr
-                            class={`${getThemeBLightBackgroundColor(
-                              theme.themeMode
-                            )} border-b dark:bg-gray-600 dark:border-gray-600`}
-                          >
-                            <th
-                              scope="row"
-                              class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      {leaderboardData.slice(0, 10).map((student, i) => {
+                        if (student.rank === rank  && isRowVisible) {
+                          setIsRowVisible(false); // Set the state to false after rendering the row
+                          return (
+                            <tr
+                              key={i}
+                              className={`${getThemeBLightBackgroundColor(
+                                theme.themeMode
+                              )} border-b dark:bg-gray-600 dark:border-gray-600`}
                             >
-                              {student.rank}
-                            </th>
-                            <td class="py-4 px-6">{student.studentName}</td>
-                            <td class="py-4 px-6">{student.totalMarks}</td>
-                          </tr>
-                        ) : (
-                          <tr
-                            class={`${getThemeBLightBackgroundColor(
-                              theme.themeMode
-                            )} border-b dark:bg-gray-800 dark:border-gray-700`}
-                          >
-                            <th
-                              scope="row"
-                              class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                              <th
+                                scope="row"
+                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                              >
+                                {student.rank}
+                              </th>
+                              <td className="px-6 py-4">
+                                {student.studentName}
+                              </td>
+                              <td className="px-6 py-4">
+                                {student.totalMarks}
+                              </td>
+                            </tr>
+                          );
+                        } else {
+                          return (
+                            <tr
+                              key={i}
+                              className={`${getThemeBLightBackgroundColor(
+                                theme.themeMode
+                              )} border-b dark:bg-gray-800 dark:border-gray-700`}
                             >
-                              {student.rank}
-                            </th>
-                            <td class="py-4 px-6">{student.studentName}</td>
-                            <td class="py-4 px-6">{student.totalMarks}</td>
-                          </tr>
-                        )
-                      )}
+                              <th
+                                scope="row"
+                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                              >
+                                {student.rank}
+                              </th>
+                              <td className="px-6 py-4">
+                                {student.studentName}
+                              </td>
+                              <td className="px-6 py-4">
+                                {student.totalMarks}
+                              </td>
+                            </tr>
+                          );
+                        }
+                      })}
                     </tbody>
                     {rank >= 10 ? (
                       <tbody>
                         {leaderboardData.map((student, i) =>
-                          student.rank === rank + 1 ? (
+                          student.rank === rank  ? (
                             <tr
                               class={`${getThemeBLightBackgroundColor(
                                 theme.themeMode
@@ -289,7 +310,7 @@ const LandingPage = (isOpen) => {
               >
                 Latest test Performance
               </div>
-              {isBeforeMay152023  ? (
+              {isBeforeMay152023 ? (
                 <div className="relative top-[14vh] z-10">
                   <div className="text-center">
                     <div
@@ -307,14 +328,15 @@ const LandingPage = (isOpen) => {
               ) : (
                 ""
               )}
-             
 
               <div
                 id="performanceCard"
                 className={
-                  `grid md:grid-cols-5 grid-cols-2 gap-4  md:p-10 md:shadow-xl md:rounded-2xl ${getThemeBackgroundColor(
+                  `grid md:grid-cols-5 grid-cols-2 gap-5  md:p-10 overflow-x-scroll md:shadow-xl md:rounded-2xl   ${getThemeBackgroundColor(
                     theme.themeMode
-                  )}` + (isBeforeMay152023 ? "  blur-md" : "") +  (testData.length===0 ? " md:p-[12vh] p-[12vh]  ":"" )
+                  )} ` +
+                  (isBeforeMay152023 ? "  blur-md" : "") +
+                  (testData.length === 0 ? " md:p-[12vh] p-[12vh]  " : "")
                 }
               >
                 {testData
@@ -326,12 +348,12 @@ const LandingPage = (isOpen) => {
                     return (
                       <div className="shadow-xl rounded-2xl md:shadow-none md:rounded-none">
                         <Tooltip text={test.testName}>
-                          <div className="flex flex-col items-center justify-center ">
+                          <div className="flex flex-col items-center justify-between ">
                             {/* <div className="pb-2 text-xl border-b-2 border-gray-500 md:text-2xl w-fit">
                             {test.examName}
                           </div> */}
                             <div
-                              className={`md:text-xl text-sm border-b border-blue-500 lg:text-xl text-sky-800 mt-3 ${getThemeTextSecondaryColor(
+                              className={`md:text-xl text-sm border-b border-blue-500 lg:text-sm text-sky-800 mt-3 ${getThemeTextSecondaryColor(
                                 theme.themeMode
                               )}`}
                             >
@@ -368,25 +390,25 @@ const LandingPage = (isOpen) => {
                   Performance History
                 </div>
                 {isBeforeMay152023 ? (
-                <div className="relative top-[20vh] md:top-[13vh] z-10">
-                  <div className="text-center">
-                    <div
-                      className={
-                        ` ${getThemeTextSecondaryColor(theme.themeMode)} my-5` +
-                        "mb-4 text-lg md:text-sm font-bold"
-                      }
-                    >
-                      The analytics for  Performance History will be
-                      generated as the course progresses
+                  <div className="relative top-[20vh] md:top-[13vh] z-10">
+                    <div className="text-center">
+                      <div
+                        className={
+                          ` ${getThemeTextSecondaryColor(
+                            theme.themeMode
+                          )} my-5` + "mb-4 text-lg md:text-sm font-bold"
+                        }
+                      >
+                        The analytics for Performance History will be generated
+                        as the course progresses
+                      </div>
+                      <div className="text-sm text-gray-500"></div>
                     </div>
-                    <div className="text-sm text-gray-500"></div>
                   </div>
-                </div>
-              ) : (
-                ""
-              )}
+                ) : (
+                  ""
+                )}
 
-                
                 <div
                   className={
                     `text-right shadow-2xl rounded-2xl h-[300px] w-full px-2 py-4 ${getThemeBackgroundColor(
@@ -405,27 +427,33 @@ const LandingPage = (isOpen) => {
                 >
                   Course completion
                   {isBeforeMay152023 ? (
-                <div className={`relative z-10 top-[14vh]`+(Array.isArray(courseData) &&
-                courseData.length==0? " top-[6vh]":"" )}>
-                  <div className="text-center">
                     <div
                       className={
-                        ` ${getThemeTextSecondaryColor(theme.themeMode)} my-5` +
-                        "mb-4 text-lg md:text-sm font-bold"
-                        }
+                        `relative z-10 top-[14vh]` +
+                        (Array.isArray(courseData) && courseData.length == 0
+                          ? " top-[6vh]"
+                          : "")
+                      }
                     >
-                      The analytics for Course Completion will be
-                      generated as the course progresses
+                      <div className="text-center">
+                        <div
+                          className={
+                            ` ${getThemeTextSecondaryColor(
+                              theme.themeMode
+                            )} my-5` + "mb-4 text-lg md:text-sm font-bold"
+                          }
+                        >
+                          The analytics for Course Completion will be generated
+                          as the course progresses
+                        </div>
+                        <div className="text-sm text-gray-500"></div>
+                      </div>
                     </div>
-                    <div className="text-sm text-gray-500"></div>
-                  </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
-              ) : (
-                ""
-              )}
 
-                </div>
-                
                 <div
                   className={
                     "grid grid-cols-2 gap-6 md:grid-cols-3" +
@@ -497,24 +525,23 @@ const LandingPage = (isOpen) => {
               Leaderboard
             </div>
             {isBeforeMay152023 ? (
-                <div className="">
-                  <div className="text-center w-[90%]">
-                    <div
-                      className={
-                        ` ${getThemeTextSecondaryColor(theme.themeMode)} ` +
-                        " text-lg md:text-sm font-bold relative z-10 top-[34vh] left-5 "
-                      }
-                      
-                    >
-                      The analytics for Leaderboard will be
-                      generated as the course progresses
-                    </div>
-                    <div className="text-sm text-gray-500"></div>
+              <div className="">
+                <div className="text-center w-[90%]">
+                  <div
+                    className={
+                      ` ${getThemeTextSecondaryColor(theme.themeMode)} ` +
+                      " text-lg md:text-sm font-bold relative z-10 top-[34vh] left-5 "
+                    }
+                  >
+                    The analytics for Leaderboard will be generated as the
+                    course progresses
                   </div>
+                  <div className="text-sm text-gray-500"></div>
                 </div>
-              ) : (
-                ""
-              )}
+              </div>
+            ) : (
+              ""
+            )}
             <div className={"p-2" + (isBeforeMay152023 ? " blur-sm" : "")}>
               <div class="overflow-x-auto relative">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -532,8 +559,8 @@ const LandingPage = (isOpen) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {leaderboardData.slice(0, 10).map((student, i) =>
-                      student.rank === rank + 1 ? (
+                    {leaderboardData.slice(0, 10).map((student, index) =>
+                      student.rank === rank ? (
                         <tr class=" border-t mt-5 dark:bg-gray-600 dark:border-gray-600">
                           <th
                             scope="row"
@@ -562,7 +589,7 @@ const LandingPage = (isOpen) => {
                   {rank >= 10 ? (
                     <tbody>
                       {leaderboardData.map((student, i) =>
-                        student.rank === rank + 1 ? (
+                        student.rank === rank ? (
                           <tr class=" border-t mt-5 dark:bg-gray-600 dark:border-gray-600">
                             <th
                               scope="row"
