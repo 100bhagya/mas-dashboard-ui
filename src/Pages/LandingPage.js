@@ -68,7 +68,7 @@ const LandingPage = (isOpen) => {
       .get(`${API_BASE_URL}/api/leaderboard/data`, config)
       .then((res) => {
         setLeaderboardData(res.data);
-        console.log(leaderboardData);
+        // console.log(leaderboardData);
 
         setIsLoading(false);
       })
@@ -92,10 +92,10 @@ const LandingPage = (isOpen) => {
       (item) => item.rollNumber === rollNumberToFind
     );
     setRank(student ? student.rank : "not-found");
-    console.log(leaderboardData);
+    // console.log(leaderboardData);
   }, [rollNumberToFind, leaderboardData.length]);
 
-  console.log(rollNumberToFind, rank);
+  // console.log(rollNumberToFind, rank);
 
   return (
     <div className="flex flex-col">
