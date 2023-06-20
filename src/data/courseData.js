@@ -7,7 +7,7 @@ export const COURSE_DEADLINE = {
     startDate: "2023-05-15",
     endDate: "2023-08-12",
   },
-  varc: {
+  "VARC": {
     startDate: "2023-03-03",
     endDate: "2023-08-15",
   },
@@ -19,15 +19,15 @@ export const COURSE_DEADLINE = {
     startDate: "2023-04-17",
     endDate: "2023-04-30",
   },
-  python: {
+  "MAS101 Python": {
     startDate: "2023-03-03",
     endDate: "2023-08-15",
   },
-  ml: {
+ "MAS101 Machine Learning": {
      startDate: "2023-03-03",
     endDate: "2023-08-15",
   },
-  dl: {
+  "DL": {
      startDate: "2023-03-03",
     endDate: "2023-08-15",
   },

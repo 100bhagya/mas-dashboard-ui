@@ -30,7 +30,7 @@ const LandingPage = (isOpen) => {
   const theme = useSelector((state) => state.theme);
   const dispatch = useDispatch();
   const [testData, setTestData] = useState([]);
- 
+
   const app = useSelector((state) => state.app);
   const [leaderboard, setLeaderboard] = useState(false);
   const [leaderboardData, setLeaderboardData] = useState([]);
@@ -92,10 +92,12 @@ const LandingPage = (isOpen) => {
       (item) => item.rollNumber === rollNumberToFind
     );
     setRank(student ? student.rank : "not-found");
+
     // console.log(leaderboardData);
   }, [rollNumberToFind, leaderboardData.length]);
 
   // console.log(rollNumberToFind, rank);
+  // console.log(leaderboardData);
 
   return (
     <div className="flex flex-col">
@@ -165,8 +167,7 @@ const LandingPage = (isOpen) => {
                     </thead>
                     <tbody>
                       {leaderboardData.slice(0, 10).map((student, i) => {
-                        if (student.rank === rank  ) {
-                        
+                        if (student.rank === rank) {
                           return (
                             <tr
                               key={i}
@@ -178,7 +179,7 @@ const LandingPage = (isOpen) => {
                                 scope="row"
                                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                               >
-                                {student.rank}
+                                {i + 1}
                               </th>
                               <td className="px-6 py-4">
                                 {student.studentName}
@@ -200,7 +201,7 @@ const LandingPage = (isOpen) => {
                                 scope="row"
                                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                               >
-                                {student.rank}
+                                {i + 1}
                               </th>
                               <td className="px-6 py-4">
                                 {student.studentName}
@@ -216,7 +217,7 @@ const LandingPage = (isOpen) => {
                     {rank >= 10 ? (
                       <tbody>
                         {leaderboardData.map((student, i) =>
-                          student.rank === rank  ? (
+                          student.rank === rank ? (
                             <tr
                               class={`${getThemeBLightBackgroundColor(
                                 theme.themeMode
@@ -226,7 +227,7 @@ const LandingPage = (isOpen) => {
                                 scope="row"
                                 class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                               >
-                                {student.rank}
+                                {i + 1}
                               </th>
                               <td class="py-4 px-6">{student.studentName}</td>
                               <td class="py-4 px-6">{student.totalMarks}</td>
@@ -340,10 +341,7 @@ const LandingPage = (isOpen) => {
                 }
               >
                 {testData
-                  .slice(
-                    testData.length >= 5 ? testData.length - 5 : 0,
-                    testData.length
-                  )
+                  .slice(Math.max(testData.length - 5, 0), testData.length)
                   .map((test) => {
                     return (
                       <div className="shadow-xl rounded-2xl md:shadow-none md:rounded-none">
@@ -566,7 +564,7 @@ const LandingPage = (isOpen) => {
                             scope="row"
                             class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                           >
-                            {student.rank}
+                            {index + 1}
                           </th>
                           <td class="py-4 px-6">{student.studentName}</td>
                           <td class="py-4 px-6">{student.totalMarks}</td>
@@ -577,7 +575,7 @@ const LandingPage = (isOpen) => {
                             scope="row"
                             class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                           >
-                            {student.rank}
+                            {index + 1}
                           </th>
                           <td class="py-4 px-6">{student.studentName}</td>
                           <td class="py-4 px-6">{student.totalMarks}</td>
@@ -588,14 +586,14 @@ const LandingPage = (isOpen) => {
 
                   {rank >= 10 ? (
                     <tbody>
-                      {leaderboardData.map((student, i) =>
+                      {leaderboardData.map((student, index) =>
                         student.rank === rank ? (
                           <tr class=" border-t mt-5 dark:bg-gray-600 dark:border-gray-600">
                             <th
                               scope="row"
                               class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                             >
-                              {student.rank}
+                              {index + 1}
                             </th>
                             <td class="py-4 px-6">{student.studentName}</td>
                             <td class="py-4 px-6">{student.totalMarks}</td>
