@@ -59,4 +59,14 @@ export const COURSE_DEADLINE = {
      startDate: "2023-03-03",
     endDate: "2023-08-15",
   },
+  "MAS101 Sessions":{
+    startDate: "2023-04-03",
+    endDate: "2023-11-30",
+
+  },
+  "MAS101 Quantitative Aptitude":{
+    startDate: "2023-05-15",
+    endDate: "2023-08-12",
+
+  },
 };
